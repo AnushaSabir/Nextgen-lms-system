@@ -18,6 +18,13 @@ export async function login(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
+  // Hardcoded Demo Account Bypass
+  if (email === 'demo@student.com') {
+    await enableDemoMode('Demo Student', email)
+    revalidatePath('/dashboard', 'layout')
+    redirect('/dashboard')
+  }
+
   try {
     const supabase = await createClient()
     const { error } = await supabase.auth.signInWithPassword({
@@ -47,6 +54,13 @@ export async function signup(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
   const name = formData.get('name') as string
+
+  // Hardcoded Demo Account Bypass
+  if (email === 'demo@student.com') {
+    await enableDemoMode(name || 'Demo Student', email)
+    revalidatePath('/dashboard', 'layout')
+    redirect('/dashboard')
+  }
 
   try {
     const supabase = await createClient()
