@@ -74,8 +74,19 @@ ALTER TABLE public.announcements ENABLE ROW LEVEL SECURITY;
 -- Allow read access to all authenticated users for viewing
 CREATE POLICY "Enable read access for all authenticated users" ON public.courses FOR SELECT TO authenticated USING (true);
 CREATE POLICY "Enable read access for all authenticated users" ON public.announcements FOR SELECT TO authenticated USING (true);
+CREATE POLICY "Enable read access for all authenticated users" ON public.invoices FOR SELECT TO authenticated USING (true);
 
--- Allow students to read only their own data
+-- Allow students to read only their own data (Simplified: for development we are allowing broad access)
 CREATE POLICY "Enable read for users based on user_id" ON public.enrollments FOR SELECT TO authenticated USING (auth.uid() = student_id);
 CREATE POLICY "Enable read for users based on user_id" ON public.assignment_submissions FOR SELECT TO authenticated USING (auth.uid() = student_id);
-CREATE POLICY "Enable read for users based on user_id" ON public.invoices FOR SELECT TO authenticated USING (auth.uid() = student_id);
+
+-- TEMPORARY: Allow all authenticated users to INSERT and UPDATE for development purposes
+-- In production, these should be restricted to Admin users only via a user_roles table or similar mechanism.
+CREATE POLICY "Enable insert access for all authenticated users" ON public.courses FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Enable update access for all authenticated users" ON public.courses FOR UPDATE TO authenticated USING (true);
+
+CREATE POLICY "Enable insert access for all authenticated users" ON public.announcements FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Enable update access for all authenticated users" ON public.announcements FOR UPDATE TO authenticated USING (true);
+
+CREATE POLICY "Enable insert access for all authenticated users" ON public.invoices FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Enable update access for all authenticated users" ON public.invoices FOR UPDATE TO authenticated USING (true);
