@@ -2,11 +2,8 @@
 
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
-import { ChevronRight, Plus } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { Card, CardTitle } from '@/components/ui/Card';
-import { Field, SelectInput, TextArea, TextInput } from '@/components/ui/Field';
-import { PageHeader } from '../components/TrainerShared';
+import { ChevronRight, ListChecks, Plus } from 'lucide-react';
+import { PageHeader, Card, SectionHeader } from '@/components/trainer/ui';
 import { getVideos as apiGetVideos, addMcq as apiAddMcq, getMcqs as apiGetMcqs } from '@/services/trainerApi';
 import { useToastStore } from '@/store/toast-store';
 import { getErrorMessage } from '@/utils/errorParser';
@@ -59,60 +56,80 @@ export function McqManagementScreen({ courseId, videoId }: { courseId: string; v
   }
 
   return (
-    <div className="space-y-8 pb-8 max-w-4xl mx-auto">
-      <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
-        <Link href={`/trainer/courses/${courseId}/videos`} className="hover:text-white transition-colors">Curriculum</Link>
+    <div className="mx-auto max-w-4xl space-y-6">
+      <div className="flex items-center gap-2 text-sm text-[var(--gt-text-3)]">
+        <Link href={`/trainer/courses/${courseId}/videos`} className="transition-colors hover:text-[var(--gt-text)]">Curriculum</Link>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-gray-300">MCQ Assessment</span>
+        <span className="text-[var(--gt-text-2)]">MCQ Assessment</span>
       </div>
 
-      <PageHeader title="Multiple Choice Questions" caption={`Add automated assessments for: ${video?.title ?? 'Lesson'}`} />
+      <PageHeader
+        eyebrow="Trainer Workspace"
+        title="Multiple Choice Questions"
+        subtitle={`Add automated assessments for: ${video?.title ?? 'Lesson'}`}
+      />
 
-      <Card className="border-gray-700/50 bg-gray-900/60 shadow-xl backdrop-blur-sm p-8">
-        <CardTitle title="Create New MCQ" caption="Questions are randomized for students." />
+      <Card className="p-6">
+        <SectionHeader icon={ListChecks} title="Create New MCQ" caption="Questions are randomized for students." />
 
-        <form className="mt-6 space-y-6" onSubmit={handleAdd}>
-          <Field label="Question Prompt"><TextArea name="prompt" className="min-h-[100px]" placeholder="What is the main advantage of using Flexbox?" required /></Field>
+        <form className="space-y-6" onSubmit={handleAdd}>
+          <div>
+            <label className="gt-label">Question Prompt</label>
+            <textarea className="gt-input" name="prompt" placeholder="What is the main advantage of using Flexbox?" required />
+          </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+          <div className="grid gap-6 rounded-2xl border border-[var(--gt-border)] bg-[var(--gt-bg-soft)] p-5 sm:grid-cols-2">
             {[1, 2, 3, 4].map((num) => (
-              <Field key={num} label={`Option ${num}`}>
+              <div key={num}>
+                <label className="gt-label">Option {num}</label>
                 <div className="relative">
-                  <div className="absolute left-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-800 text-xs font-bold text-gray-400">{num}</div>
-                  <TextInput name={`opt${num}`} placeholder={`Enter answer option ${num}`} className="pl-12" required />
+                  <span className="absolute left-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--gt-border-2)] bg-[var(--gt-surface-2)] text-xs font-bold text-[var(--gt-text-2)]">{num}</span>
+                  <input className="gt-input pl-12" name={`opt${num}`} placeholder={`Enter answer option ${num}`} required />
                 </div>
-              </Field>
+              </div>
             ))}
           </div>
 
-          <div className="flex items-end gap-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
             <div className="flex-1">
-              <Field label="Correct Answer">
-                <SelectInput name="correct" defaultValue="1" required className="py-3">
-                  {[1, 2, 3, 4].map(num => <option key={num} value={num}>Option {num} is correct</option>)}
-                </SelectInput>
-              </Field>
+              <label className="gt-label">Correct Answer</label>
+              <select className="gt-input" name="correct" defaultValue="1" required>
+                {[1, 2, 3, 4].map(num => <option key={num} value={num}>Option {num} is correct</option>)}
+              </select>
             </div>
-            <Button type="submit" size="lg" disabled={loading} className="shadow-lg shadow-orange-500/20">
-              <Plus className="mr-2 h-4 w-4" />{loading ? 'Saving...' : 'Add Question to Bank'}
-            </Button>
+            <button type="submit" disabled={loading} className="gt-btn gt-btn--primary">
+              <Plus className="h-4 w-4" />{loading ? 'Saving…' : 'Add Question to Bank'}
+            </button>
           </div>
         </form>
       </Card>
 
       {mcqs.length > 0 && (
-        <Card className="border-gray-700/50 bg-gray-900/60 shadow-xl backdrop-blur-sm p-8">
-          <CardTitle title="Existing MCQs" caption={`There are ${mcqs.length} multiple choice questions for this lesson.`} />
-          <div className="mt-6 space-y-4">
+        <Card className="p-6">
+          <SectionHeader
+            icon={ListChecks}
+            tone="success"
+            title="Existing MCQs"
+            caption={`There are ${mcqs.length} multiple choice questions for this lesson.`}
+          />
+          <div className="space-y-3">
             {mcqs.map((mcq, idx) => (
-              <div key={mcq.id} className="p-5 rounded-xl border border-gray-800 bg-gray-800/40">
-                <p className="font-semibold text-white mb-3 text-sm">Q{idx + 1}. {mcq.prompt}</p>
-                <div className="grid grid-cols-2 gap-3">
+              <div key={mcq.id} className="gt-card p-5">
+                <p className="mb-3 text-sm font-semibold text-[var(--gt-text)]">Q{idx + 1}. {mcq.prompt}</p>
+                <div className="grid gap-3 sm:grid-cols-2">
                   {(mcq.options || []).map((opt: string, i: number) => {
                     const isCorrect = (mcq.correctAnswer || []).includes(opt);
                     return (
-                      <div key={i} className={`text-xs p-2.5 rounded-lg border ${isCorrect ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200' : 'border-gray-700 bg-gray-800 text-gray-400'}`}>
-                        {opt} {isCorrect && '(Correct)'}
+                      <div
+                        key={i}
+                        className={`flex items-center justify-between gap-2 rounded-lg border p-2.5 text-xs ${
+                          isCorrect
+                            ? 'border-[var(--gt-success)]/30 bg-[var(--gt-success)]/10 text-[var(--gt-text)]'
+                            : 'border-[var(--gt-border)] bg-[var(--gt-surface)] text-[var(--gt-text-2)]'
+                        }`}
+                      >
+                        <span className="min-w-0 truncate">{opt}</span>
+                        {isCorrect && <span className="gt-badge gt-badge--success flex-none">Correct</span>}
                       </div>
                     );
                   })}

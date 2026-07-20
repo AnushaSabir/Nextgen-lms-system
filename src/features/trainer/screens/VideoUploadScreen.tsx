@@ -2,11 +2,8 @@
 
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
-import { ChevronRight, Upload } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { Card, CardTitle } from '@/components/ui/Card';
-import { Field, TextArea, TextInput } from '@/components/ui/Field';
-import { PageHeader, InfoList } from '../components/TrainerShared';
+import { CheckCircle2, ChevronRight, ShieldCheck, Upload, Video } from 'lucide-react';
+import { PageHeader, Card, SectionHeader } from '@/components/trainer/ui';
 import { videoRequirements } from '../trainerModuleData';
 import { getCourse as apiGetCourse, uploadVideo as apiUploadVideo } from '@/services/trainerApi';
 import { useToastStore } from '@/store/toast-store';
@@ -41,54 +38,94 @@ export function VideoUploadScreen({ courseId }: { courseId: string }) {
   }
 
   return (
-    <div className="space-y-8 pb-8">
-      <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
-        <Link href={`/trainer/courses/${courseId}`} className="hover:text-white transition-colors">Course Details</Link>
+    <div className="space-y-6">
+      <div className="flex items-center gap-2 text-sm text-[var(--gt-text-3)]">
+        <Link href={`/trainer/courses/${courseId}`} className="transition-colors hover:text-[var(--gt-text)]">Course Details</Link>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-gray-300">Upload Content</span>
+        <span className="text-[var(--gt-text-2)]">Upload Content</span>
       </div>
 
       <PageHeader
+        eyebrow="Trainer Workspace"
         title="Upload Video Lesson"
-        caption={course ? `Add HD content to module: ${course.title}` : 'Loading course context...'}
+        subtitle={course ? `Add HD content to module: ${course.title}` : 'Loading course context…'}
       />
 
-      <div className="grid gap-8 xl:grid-cols-[1fr_350px]">
-        <Card className="border-gray-700/50 bg-gray-900/60 shadow-xl backdrop-blur-sm p-8">
-          <CardTitle title="Lesson Details" caption="Provide clear titles and descriptions for better student navigation." />
+      <div className="grid gap-6 xl:grid-cols-[1fr_350px]">
+        <Card className="p-6">
+          <SectionHeader
+            icon={Video}
+            title="Lesson Details"
+            caption="Provide clear titles and descriptions for better student navigation."
+          />
 
-          <form className="mt-6 space-y-6" onSubmit={handleUpload}>
-            <Field label="Lesson Title"><TextInput name="title" placeholder="e.g. Understanding CSS Grid Layouts" required className="py-3" /></Field>
-            <Field label="Lesson Description"><TextArea name="description" className="min-h-[100px]" placeholder="Briefly explain what this specific lesson covers." required /></Field>
+          <form className="space-y-6" onSubmit={handleUpload}>
+            <div>
+              <label className="gt-label">Lesson Title</label>
+              <input className="gt-input" name="title" placeholder="e.g. Understanding CSS Grid Layouts" required />
+            </div>
+            <div>
+              <label className="gt-label">Lesson Description</label>
+              <textarea className="gt-input" name="description" placeholder="Briefly explain what this specific lesson covers." required />
+            </div>
 
-            <div className="grid gap-6 sm:grid-cols-2 pt-4 border-t border-gray-800">
-              <Field label="Video File (MP4/WebM)">
-                <TextInput name="videoFile" type="file" accept="video/*" required className="file:mr-4 file:rounded-full file:border-0 file:bg-orange-500/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-orange-400" />
-              </Field>
-              <Field label="Custom Thumbnail">
-                <TextInput name="thumbnail" type="file" accept="image/*" required className="file:mr-4 file:rounded-full file:border-0 file:bg-gray-700 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-300" />
-              </Field>
+            <div className="grid gap-6 border-t border-[var(--gt-border)] pt-6 sm:grid-cols-2">
+              <div>
+                <label className="gt-label">Video File (MP4/WebM)</label>
+                <input
+                  className="gt-input file:mr-3 file:rounded-lg file:border-0 file:bg-[var(--gt-accent-soft)] file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-[var(--gt-accent-2)]"
+                  name="videoFile"
+                  type="file"
+                  accept="video/*"
+                  required
+                />
+              </div>
+              <div>
+                <label className="gt-label">Custom Thumbnail</label>
+                <input
+                  className="gt-input file:mr-3 file:rounded-lg file:border-0 file:bg-[var(--gt-surface-2)] file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-[var(--gt-text-2)]"
+                  name="thumbnail"
+                  type="file"
+                  accept="image/*"
+                  required
+                />
+              </div>
             </div>
 
             <div className="grid gap-6 sm:grid-cols-2">
-              <Field label="Duration"><TextInput name="duration" placeholder="e.g. 15:30 or 28 min" required /></Field>
-              <Field label="Sequence Order"><TextInput name="position" type="number" min={1} defaultValue={(course?.videos?.length ?? 0) + 1} required /></Field>
+              <div>
+                <label className="gt-label">Duration</label>
+                <input className="gt-input" name="duration" placeholder="e.g. 15:30 or 28 min" required />
+              </div>
+              <div>
+                <label className="gt-label">Sequence Order</label>
+                <input key={`pos-${course?.videos?.length ?? 0}`} className="gt-input" name="position" type="number" min={1} defaultValue={(course?.videos?.length ?? 0) + 1} required />
+              </div>
             </div>
 
-            <div className="pt-6 border-t border-gray-800">
-              <Button type="submit" size="lg" disabled={loading} className="w-full shadow-lg shadow-orange-500/20">
-                <Upload className="mr-2 h-4 w-4" />{loading ? 'Uploading & Processing...' : 'Upload Lesson'}
-              </Button>
+            <div className="border-t border-[var(--gt-border)] pt-6">
+              <button type="submit" disabled={loading} className="gt-btn gt-btn--primary w-full">
+                <Upload className="h-4 w-4" />{loading ? 'Uploading & Processing…' : 'Upload Lesson'}
+              </button>
             </div>
           </form>
         </Card>
 
-        <div className="space-y-6">
-          <Card className="border-gray-700/50 bg-gray-800/40 sticky top-6">
-            <CardTitle title="Content Guidelines" caption="Ensure your videos meet platform standards." />
-            <InfoList items={videoRequirements} />
-          </Card>
-        </div>
+        <Card className="h-fit p-6 xl:sticky xl:top-6">
+          <SectionHeader
+            icon={ShieldCheck}
+            title="Content Guidelines"
+            caption="Ensure your videos meet platform standards."
+          />
+          <div className="space-y-2.5">
+            {videoRequirements.map((item) => (
+              <div key={item} className="flex items-start gap-3 rounded-xl border border-[var(--gt-border)] bg-[var(--gt-surface)] p-3.5">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 flex-none text-[var(--gt-accent)]" />
+                <span className="text-sm leading-snug text-[var(--gt-text-2)]">{item}</span>
+              </div>
+            ))}
+          </div>
+        </Card>
       </div>
     </div>
   );

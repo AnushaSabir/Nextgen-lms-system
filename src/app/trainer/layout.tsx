@@ -4,265 +4,276 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuthStore } from '@/store/auth-store';
-import { submissionsApi } from '@/lib/api';
-import { 
-  BookOpen, 
-  RotateCcw, 
-  CheckSquare, 
-  MessageSquare, 
-  Video, 
-  FileBarChart, 
-  Building2, 
-  DollarSign, 
-  History, 
-  Bell, 
-  ShieldCheck, 
+import { submissionsApi, trainerApi } from '@/lib/api';
+import {
+  BookOpen,
+  RotateCcw,
+  CheckSquare,
+  MessageSquare,
+  Video,
+  FileBarChart,
+  Building2,
+  DollarSign,
+  History,
+  Bell,
+  ShieldCheck,
   Layers,
   LayoutDashboard,
   Menu,
   X,
   User,
   Plus,
-  FileText,
-  ListChecks,
-  Clock,
+  Wallet,
+  ClipboardList,
   Search,
   ChevronRight,
   LogOut,
-  GraduationCap,
-  Activity
+  BadgeCheck,
 } from 'lucide-react';
 
-export default function TrainerDashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+type NavItem = { name: string; href: string; icon: typeof BookOpen; badge?: 'pending' };
+type NavGroup = { label: string; items: NavItem[] };
+
+const NAV: NavGroup[] = [
+  {
+    label: 'Overview',
+    items: [
+      { name: 'Dashboard', href: '/trainer/dashboard', icon: LayoutDashboard },
+      { name: 'Profile', href: '/trainer/profile', icon: User },
+    ],
+  },
+  {
+    label: 'Content',
+    items: [
+      { name: 'My Courses', href: '/trainer/courses', icon: BookOpen },
+      { name: 'Create Course', href: '/trainer/create-course', icon: Plus },
+      { name: 'Retry Sets', href: '/trainer/assessments/retry', icon: RotateCcw },
+    ],
+  },
+  {
+    label: 'Students',
+    items: [
+      { name: 'Submissions', href: '/trainer/submissions', icon: CheckSquare, badge: 'pending' },
+      { name: 'Assignments', href: '/trainer/assignments', icon: ClipboardList },
+      { name: 'Chat', href: '/trainer/chat', icon: MessageSquare },
+      { name: 'Live Q&A', href: '/trainer/meetings', icon: Video },
+      { name: 'Analytics', href: '/trainer/analytics', icon: FileBarChart },
+      { name: 'Student Reports', href: '/trainer/reports/students', icon: FileBarChart },
+      { name: 'Institution', href: '/trainer/reports/institution', icon: Building2 },
+    ],
+  },
+  {
+    label: 'Business',
+    items: [
+      { name: 'Earnings', href: '/trainer/earnings', icon: DollarSign },
+      { name: 'Revenue', href: '/trainer/earnings/history', icon: History },
+      { name: 'Withdrawals', href: '/trainer/withdrawal', icon: Wallet },
+      { name: 'Notifications', href: '/trainer/notifications', icon: Bell },
+    ],
+  },
+  {
+    label: 'Admin',
+    items: [
+      { name: 'Trainer Approvals', href: '/trainer/admin/trainers', icon: ShieldCheck },
+      { name: 'Course Approvals', href: '/trainer/admin/courses', icon: Layers },
+    ],
+  },
+];
+
+export default function TrainerDashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const { user, logout } = useAuthStore();
-  
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
+  const [unreadNotifs, setUnreadNotifs] = useState(0);
 
   useEffect(() => {
-    submissionsApi.trainerList()
-      .then((subs: any[]) => {
-        setPendingCount(subs.filter((s) => !s.reviewed).length);
-      })
+    submissionsApi
+      .trainerList()
+      .then((subs: any[]) => setPendingCount(subs.filter((s) => !s.reviewed).length))
+      .catch(() => {});
+    trainerApi
+      .notifications()
+      .then((n) => setUnreadNotifs(n.filter((x) => !x.read).length))
       .catch(() => {});
   }, []);
 
-  const navItems = [
-    { name: 'Dashboard', href: '/trainer/dashboard', icon: LayoutDashboard },
-    { name: 'Profile', href: '/trainer/profile', icon: User },
-    { name: 'My Courses', href: '/trainer/courses', icon: BookOpen },
-    { name: 'Create Course', href: '/trainer/create-course', icon: Plus },
-    { name: 'Videos List', href: '/trainer/courses?focus=videos', icon: Video },
-    { name: 'MCQs Management', href: '/trainer/courses?focus=mcqs', icon: ListChecks },
-    { name: 'Summary Task', href: '/trainer/courses?focus=summary', icon: FileText },
-    { name: 'Assignments', href: '/trainer/assignments', icon: BookOpen },
-    { name: 'Retry Qs', href: '/trainer/assessments/retry', icon: RotateCcw },
-    { name: 'Submissions', href: '/trainer/submissions', icon: CheckSquare },
-    { name: 'Chat', href: '/trainer/chat', icon: MessageSquare },
-    { name: 'Live Q&A', href: '/trainer/meetings', icon: Video },
-    { name: 'Student Analytics', href: '/trainer/analytics', icon: Activity },
-    { name: 'Student Reports', href: '/trainer/reports/students', icon: FileBarChart },
-    { name: 'Institution', href: '/trainer/reports/institution', icon: Building2 },
-    { name: 'Earnings', href: '/trainer/earnings', icon: DollarSign },
-    { name: 'Revenue', href: '/trainer/earnings/history', icon: History },
-    { name: 'Notifications', href: '/trainer/notifications', icon: Bell },
-    { name: 'Trainer Approvals', href: '/trainer/admin/trainers', icon: ShieldCheck },
-    { name: 'Course Approvals', href: '/trainer/admin/courses', icon: Layers },
-  ];
+  // Longest-match active route (so /trainer/earnings/history highlights only "Revenue", not "Earnings").
+  const activeHref = NAV.flatMap((g) => g.items)
+    .map((i) => i.href)
+    .filter((href) => pathname === href || pathname.startsWith(href + '/'))
+    .sort((a, b) => b.length - a.length)[0];
+  const isActive = (href: string) => href === activeHref;
 
-  // breadcrumb helper
-  const getBreadcrumbs = () => {
-    const parts = pathname.split('/').filter(Boolean);
-    return parts.map((part) => {
-      return part.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-    });
-  };
-  const breadcrumbs = getBreadcrumbs();
+  // Breadcrumb: drop UUID-ish segments so course/video IDs don't spill into the header.
+  const isId = (s: string) => /^[0-9a-f]{8}-[0-9a-f-]{10,}$/i.test(s) || /^\d+$/.test(s);
+  const crumbs = pathname
+    .split('/')
+    .filter(Boolean)
+    .filter((p) => !isId(p))
+    .map((p) => p.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()));
 
-  return (
-    <div className="flex h-screen bg-[#020617] text-white overflow-hidden font-sans p-4 gap-6">
-      
-      {/* CSS for complex blob animations */}
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes blob1 {
-          0% { transform: translate(0px, 0px) scale(1) translateZ(0); }
-          33% { transform: translate(30px, -50px) scale(1.1) translateZ(0); }
-          66% { transform: translate(-20px, 20px) scale(0.9) translateZ(0); }
-          100% { transform: translate(0px, 0px) scale(1) translateZ(0); }
-        }
-        @keyframes blob2 {
-          0% { transform: translate(0px, 0px) scale(1) translateZ(0); }
-          33% { transform: translate(-30px, 50px) scale(1.1) translateZ(0); }
-          66% { transform: translate(20px, -20px) scale(0.9) translateZ(0); }
-          100% { transform: translate(0px, 0px) scale(1) translateZ(0); }
-        }
-        .animate-blob1 { animation: blob1 10s infinite alternate ease-in-out; will-change: transform; }
-        .animate-blob2 { animation: blob2 12s infinite alternate ease-in-out; will-change: transform; }
-      `}} />
-
-      {/* Glow Effects (Animation Vibe: pin.it/10obDGXOZ) */}
-      <div className="fixed top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[#f0591f] opacity-[0.25] rounded-full blur-[120px] pointer-events-none animate-blob1" />
-      <div className="fixed bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-purple-600 opacity-[0.25] rounded-full blur-[120px] pointer-events-none animate-blob2" />
-      <div className="fixed top-[40%] left-[30%] w-[40%] h-[40%] bg-blue-600 opacity-[0.15] rounded-full blur-[100px] pointer-events-none animate-blob1" style={{ animationDelay: '2s' }} />
-
-      {/* Mobile Sidebar Overlay */}
-      {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden animate-fade-in"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-      )}
-
-      {/* Floating Detached Sidebar (Pinterest Style: pin.it/5HKP49RwL) */}
-      <aside className={`w-72 bg-[#0f172a]/60 backdrop-blur-3xl border border-white/10 rounded-[32px] flex flex-col relative z-50 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-300 ${isMobileMenuOpen ? 'fixed inset-y-4 left-4 right-auto translate-x-0' : 'hidden md:flex translate-x-0'}`}>
-        
-        {/* Mobile Close Button */}
-        <button 
-          onClick={() => setIsMobileMenuOpen(false)}
-          className="md:hidden absolute top-6 right-6 p-2 rounded-xl bg-white/5 text-white hover:bg-white/10 transition-colors z-50"
-        >
-          <X className="w-5 h-5" />
-        </button>
-        
-        {/* Animated Top Glow */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#f0591f] to-transparent opacity-50" />
-        
-        <div className="p-8 pb-4">
-          <h2 className="text-3xl font-black bg-gradient-to-r from-[#f0591f] to-orange-400 bg-clip-text text-transparent drop-shadow-lg">GrapeTask</h2>
-          <p className="text-[10px] text-[#94a3b8] mt-2 tracking-[0.2em] uppercase font-bold">Trainer Module</p>
+  const Sidebar = (
+    <aside className="gt-scroll flex h-full w-[264px] flex-col overflow-hidden rounded-[26px] border border-[var(--gt-border)] bg-[var(--gt-panel)]/80 backdrop-blur-2xl">
+      <div className="flex items-center justify-between px-6 pb-3 pt-6">
+        <div>
+          <h2 className="text-[22px] font-black tracking-tight text-white">
+            Grape<span className="text-[var(--gt-accent)]">Task</span>
+          </h2>
+          <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--gt-text-3)]">
+            Trainer Studio
+          </p>
         </div>
-        
-        <nav className="flex-1 overflow-y-auto py-2 px-4 space-y-1 hide-scrollbar">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href || (item.href !== '/trainer/dashboard' && pathname.startsWith(item.href));
-            return (
-              <Link 
-                key={item.name} 
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group relative overflow-hidden border-l-2 ${
-                  isActive 
-                    ? 'bg-gradient-to-r from-[#f0591f]/15 to-transparent text-white border-l-[#f0591f] shadow-[inset_10px_0_30px_rgba(240,89,31,0.05)]' 
-                    : 'text-[#94a3b8] hover:bg-gradient-to-r hover:from-[#f0591f]/10 hover:to-transparent hover:text-white hover:border-l-[#f0591f]/50 border-l-transparent'
-                }`}
-              >
-                <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <Icon className={`w-5 h-5 transition-colors relative z-10 ${isActive ? 'text-[#f0591f]' : 'group-hover:text-[#f0591f]'}`} />
-                <span className="font-bold text-sm tracking-wide relative z-10 flex-1">{item.name}</span>
-                {item.name === 'Submissions' && pendingCount > 0 && (
-                  <span className="relative z-10 px-2 py-0.5 text-[10px] font-bold bg-[#f0591f] text-white rounded-md">
-                    {pendingCount}
-                  </span>
-                )}
-              </Link>
-            );
-          })}
-        </nav>
-        
-        {/* Dynamic User Profile Card & Logout */}
-        <div className="p-6 border-t border-white/5 bg-[#020617]/30 mt-2 flex flex-col gap-3">
-          <div className="flex items-center gap-3.5 p-3 rounded-2xl hover:bg-white/5 transition-colors cursor-pointer border border-transparent hover:border-white/10">
-            <div className="relative flex-shrink-0">
-              {user?.avatar ? (
-                <img 
-                  src={`http://localhost:8000${user.avatar}`} 
-                  alt="Avatar" 
-                  className="w-11 h-11 rounded-full object-cover border-2 border-orange-500/50 shadow-[0_0_15px_rgba(240,89,31,0.3)]"
-                />
-              ) : (
-                <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 p-[2px] shadow-[0_0_15px_rgba(168,85,247,0.4)]">
-                  <div className="w-full h-full bg-[#020617] rounded-full flex items-center justify-center">
-                    <span className="font-black text-sm text-white">{user?.name?.[0]?.toUpperCase() || 'T'}</span>
-                  </div>
-                </div>
-              )}
-              <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#0f172a]" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-black text-white truncate leading-snug">{user?.name || 'Trainer'}</p>
-              <p className="text-[9px] text-[#f0591f] font-bold uppercase tracking-wider mt-0.5">
-                {user?.verifiedBadge ? 'Verified Trainer' : 'Trainer'}
-              </p>
-            </div>
+        <button
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="rounded-xl bg-white/5 p-2 text-white md:hidden"
+          aria-label="Close menu"
+        >
+          <X className="h-5 w-5" />
+        </button>
+      </div>
+
+      <nav className="gt-scroll flex-1 space-y-5 overflow-y-auto px-4 py-3">
+        {NAV.map((group) => (
+          <div key={group.label} className="space-y-1">
+            <p className="gt-nav-group mb-2">{group.label}</p>
+            {group.items.map((item) => {
+              const Icon = item.icon;
+              const active = isActive(item.href);
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  data-active={active}
+                  className="gt-nav-item"
+                >
+                  <Icon className={`h-[18px] w-[18px] ${active ? 'text-[var(--gt-accent)]' : ''}`} />
+                  <span className="flex-1">{item.name}</span>
+                  {item.badge === 'pending' && pendingCount > 0 && (
+                    <span className="flex h-5 min-w-5 items-center justify-center rounded-md bg-[var(--gt-accent)] px-1.5 text-[10px] font-bold text-white">
+                      {pendingCount}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+        ))}
+      </nav>
+
+      <div className="border-t border-[var(--gt-border)] p-4">
+        <div className="flex items-center gap-3 rounded-2xl border border-[var(--gt-border)] bg-[var(--gt-surface)] p-3">
+          <div className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[var(--gt-accent)] to-[#ff8a4c]">
+            {user?.avatar ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={user.avatar} alt="" className="h-10 w-10 rounded-full object-cover" />
+            ) : (
+              <span className="text-sm font-black text-white">{user?.name?.[0]?.toUpperCase() || 'T'}</span>
+            )}
+            <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-[var(--gt-panel)] bg-[var(--gt-success)]" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-bold text-white">{user?.name || 'Trainer'}</p>
+            <p className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--gt-accent)]">
+              {user?.verifiedBadge && <BadgeCheck className="h-3 w-3" />}
+              {user?.verifiedBadge ? 'Verified' : 'Trainer'}
+            </p>
           </div>
           <button
             onClick={() => {
               logout();
               router.replace('/login');
             }}
-            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-gray-500 hover:text-red-400 hover:bg-red-500/5 border border-transparent hover:border-red-500/20 transition-all duration-200 group text-xs font-bold uppercase tracking-wider"
+            className="rounded-lg p-2 text-[var(--gt-text-3)] transition-colors hover:bg-[var(--gt-danger)]/10 hover:text-[var(--gt-danger)]"
+            aria-label="Log out"
           >
-            <LogOut className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            Logout
+            <LogOut className="h-4 w-4" />
           </button>
         </div>
-      </aside>
+      </div>
+    </aside>
+  );
 
-      {/* Main Content Area (Detached Layout with Sticky Top Header) */}
-      <main className="flex-1 relative rounded-[32px] bg-[#020617] border border-white/5 shadow-2xl z-10 mt-16 md:mt-0 flex flex-col overflow-hidden h-full">
-        {/* Sticky Top Header */}
-        <header className="sticky top-0 z-30 h-16 bg-[#020617]/85 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-4 sm:px-6 lg:px-6 shadow-[0_2px_8px_rgba(0,0,0,0.3)] flex-shrink-0">
-          <div className="flex items-center gap-3">
+  return (
+    <div className="relative flex h-screen gap-5 overflow-hidden bg-[var(--gt-bg)] p-4 text-white">
+      <div className="gt-aurora" />
+
+      {/* Desktop sidebar */}
+      <div className="relative z-20 hidden md:block">{Sidebar}</div>
+
+      {/* Mobile drawer */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-40 md:hidden">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          <div className="absolute inset-y-4 left-4 z-50">{Sidebar}</div>
+        </div>
+      )}
+
+      {/* Main */}
+      <main className="relative z-10 flex h-full flex-1 flex-col overflow-hidden rounded-[26px] border border-[var(--gt-border)] bg-[var(--gt-bg-soft)]/70">
+        <header className="flex h-16 flex-shrink-0 items-center justify-between gap-3 border-b border-[var(--gt-border)] bg-[var(--gt-bg-soft)]/80 px-4 backdrop-blur-xl sm:px-6">
+          <div className="flex min-w-0 items-center gap-3">
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden p-2 -ml-2 rounded-xl hover:bg-white/5 transition-all duration-200 active:scale-95"
+              className="rounded-xl p-2 text-[var(--gt-text-2)] hover:bg-white/5 md:hidden"
+              aria-label="Open menu"
             >
-              <Menu className="w-5 h-5 text-gray-400" />
+              <Menu className="h-5 w-5" />
             </button>
-            <div className="flex items-center gap-1.5 text-xs text-gray-500 font-medium" suppressHydrationWarning>
-              {breadcrumbs.map((crumb, idx) => (
-                <React.Fragment key={crumb}>
-                  {idx > 0 && <ChevronRight className="w-3.5 h-3.5 text-gray-700" />}
-                  <span suppressHydrationWarning className={idx === breadcrumbs.length - 1 ? 'text-gray-300 font-semibold' : 'text-gray-600'}>
-                    {crumb}
+            <nav className="flex min-w-0 max-w-[38vw] items-center gap-1.5 overflow-hidden text-xs" suppressHydrationWarning>
+              {crumbs.map((c, i) => (
+                <React.Fragment key={`${c}-${i}`}>
+                  {i > 0 && <ChevronRight className="h-3.5 w-3.5 flex-shrink-0 text-[var(--gt-text-3)]" />}
+                  <span
+                    className={`truncate ${
+                      i === crumbs.length - 1
+                        ? 'font-semibold text-[var(--gt-text)]'
+                        : 'hidden text-[var(--gt-text-3)] sm:inline'
+                    }`}
+                  >
+                    {c}
                   </span>
                 </React.Fragment>
               ))}
-            </div>
+            </nav>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="hidden md:flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-800/40 border border-gray-800/60">
-              <Search className="w-4 h-4 text-gray-600" />
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="hidden items-center gap-2 rounded-xl border border-[var(--gt-border)] bg-[var(--gt-surface)] px-3 py-2 lg:flex">
+              <Search className="h-4 w-4 text-[var(--gt-text-3)]" />
               <input
-                type="text"
-                placeholder="Search..."
-                className="bg-transparent text-sm text-gray-400 placeholder-gray-600 outline-none w-32 focus:w-48 transition-all duration-300"
+                placeholder="Search…"
+                className="w-28 bg-transparent text-sm text-[var(--gt-text-2)] outline-none transition-all focus:w-44"
               />
             </div>
-            <div className="hidden md:flex items-center gap-2 text-xs text-gray-500 px-3 py-2 rounded-xl bg-gray-800/40 border border-gray-800/60" suppressHydrationWarning>
-              <Clock className="w-3.5 h-3.5" />
-              <span suppressHydrationWarning>{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</span>
-            </div>
-            <button className="relative p-2 rounded-xl hover:bg-white/5 transition-all duration-200 active:scale-95">
-              <Bell className="w-5 h-5 text-gray-400" />
-              {pendingCount > 0 && (
-                <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-[#f0591f] border-2 border-[#020617] shadow-[0_0_8px_rgba(240,89,31,0.6)] animate-[pulse-subtle_2s_ease-in-out_infinite]" />
+            <button
+              onClick={() => router.push('/trainer/notifications')}
+              className="relative rounded-xl border border-[var(--gt-border)] bg-[var(--gt-surface)] p-2.5 text-[var(--gt-text-2)] transition-colors hover:text-[var(--gt-text)]"
+              aria-label="Notifications"
+            >
+              <Bell className="h-[18px] w-[18px]" />
+              {unreadNotifs > 0 && (
+                <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[var(--gt-accent)] ring-2 ring-[var(--gt-bg-soft)]" />
               )}
             </button>
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#f0591f]/20 to-orange-500/10 border border-[#f0591f]/20 flex items-center justify-center flex-shrink-0 shadow-[0_4px_12px_-2px_rgba(240,89,31,0.2)] overflow-hidden">
+            <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[var(--gt-accent)] to-[#ff8a4c] text-sm font-black text-white">
               {user?.avatar ? (
-                <img 
-                  src={`http://localhost:8000${user.avatar}`} 
-                  alt="Avatar" 
-                  className="w-full h-full object-cover"
-                />
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={user.avatar} alt="" className="h-full w-full object-cover" />
               ) : (
-                <span className="text-orange-400 font-extrabold text-sm">{user?.name?.[0]?.toUpperCase() || 'T'}</span>
+                user?.name?.[0]?.toUpperCase() || 'T'
               )}
             </div>
           </div>
         </header>
 
-        {/* Scrollable Page Content Container */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-6 space-y-6 w-full max-w-[1600px] mx-auto">
+        <div key={pathname} className="gt-page gt-scroll mx-auto w-full max-w-[1400px] flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
           {children}
         </div>
       </main>

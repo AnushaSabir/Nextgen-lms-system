@@ -1,71 +1,133 @@
-import React from 'react';
-import { ArrowLeft, Download, Filter } from 'lucide-react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { ArrowLeft, Download } from 'lucide-react';
 import Link from 'next/link';
+import { trainerApi } from '@/lib/api';
+import { PageHeader, Card, Badge, Loading, EmptyState } from '@/components/trainer/ui';
+
+type HistoryRow = {
+  id: string;
+  course: string;
+  learner: string;
+  grossAmount: number;
+  trainerShare: number;
+  status: string;
+  date: string | null;
+};
 
 export default function RevenueHistoryPage() {
-  const history = [
-    { id: 'TRX-1092', date: 'Oct 24, 2026', type: 'Course Sale', details: 'Advanced Web Dev (Sale Price: $50)', amount: '+$35.00', status: 'Cleared' },
-    { id: 'TRX-1091', date: 'Oct 23, 2026', type: 'Withdrawal', details: 'Bank Transfer to Meezan Bank', amount: '-$1,000.00', status: 'Completed' },
-    { id: 'TRX-1090', date: 'Oct 22, 2026', type: 'Course Sale', details: 'UI/UX Masterclass (Sale Price: $40)', amount: '+$28.00', status: 'Pending' },
-    { id: 'TRX-1089', date: 'Oct 20, 2026', type: 'Course Sale', details: 'Python Data Scraping (Sale Price: $30)', amount: '+$21.00', status: 'Cleared' },
-  ];
+  const [history, setHistory] = useState<HistoryRow[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const res = await trainerApi.earningsHistory();
+        if (active) setHistory(res);
+      } catch {
+        if (active) setHistory([]);
+      } finally {
+        if (active) setLoading(false);
+      }
+    })();
+    return () => { active = false; };
+  }, []);
+
+  const formatDate = (d: string | null) => {
+    if (!d) return '—';
+    const parsed = new Date(d);
+    return isNaN(parsed.getTime()) ? d : parsed.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  };
+
+  const isCleared = (status: string) => status === 'Cleared' || status === 'Completed';
+
+  function exportCsv() {
+    const header = ['Transaction ID', 'Course', 'Learner', 'Sale Price (PKR)', 'Your Share (PKR)', 'Status', 'Date'];
+    const rows = history.map((r) => [
+      r.id,
+      r.course,
+      r.learner,
+      String(r.grossAmount ?? 0),
+      String(r.trainerShare ?? 0),
+      r.status,
+      formatDate(r.date),
+    ]);
+    const csv = [header, ...rows]
+      .map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(','))
+      .join('\n');
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'grapetask-revenue-history.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   return (
-    <div className="p-8 max-w-7xl mx-auto animate-in fade-in duration-500">
-      <Link href="/dashboard/trainer/earnings" className="inline-flex items-center gap-2 text-[#64748b] hover:text-white mb-6 transition-colors">
-        <ArrowLeft className="w-4 h-4" /> Back to Dashboard
+    <div className="space-y-6">
+      <Link
+        href="/trainer/earnings"
+        className="inline-flex items-center gap-2 text-sm font-medium text-[var(--gt-text-2)] transition-colors hover:text-[var(--gt-text)]"
+      >
+        <ArrowLeft className="h-4 w-4" /> Back to Earnings
       </Link>
 
-      <div className="flex justify-between items-end mb-10">
-        <div>
-          <h1 className="text-3xl font-black text-white mb-2">Revenue History</h1>
-          <p className="text-[#94a3b8]">Detailed log of all transactions and sales.</p>
-        </div>
-        <div className="flex gap-3">
-          <button className="flex items-center gap-2 bg-[#0f172a] border border-[#1e293b] text-white px-4 py-2.5 rounded-xl hover:bg-[#1e293b] transition-colors">
-            <Filter className="w-4 h-4" /> Filter
+      <PageHeader
+        eyebrow="Trainer Studio"
+        title="Revenue History"
+        subtitle="Detailed log of all transactions and sales."
+        actions={
+          <button className="gt-btn gt-btn--primary" onClick={exportCsv} disabled={history.length === 0}>
+            <Download className="h-4 w-4" /> Export CSV
           </button>
-          <button className="flex items-center gap-2 bg-[#f0591f] text-white px-4 py-2.5 rounded-xl hover:bg-[#ea580c] transition-colors shadow-[0_0_15px_rgba(240,89,31,0.3)]">
-            <Download className="w-4 h-4" /> Export CSV
-          </button>
-        </div>
-      </div>
+        }
+      />
 
-      <div className="bg-[#0f172a]/80 backdrop-blur-md border border-[#1e293b] rounded-3xl overflow-hidden shadow-2xl">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="border-b border-[#1e293b] bg-[#020617]/50">
-              <th className="p-5 text-xs font-bold text-[#64748b] uppercase tracking-wider">Transaction ID</th>
-              <th className="p-5 text-xs font-bold text-[#64748b] uppercase tracking-wider">Date</th>
-              <th className="p-5 text-xs font-bold text-[#64748b] uppercase tracking-wider">Type / Details</th>
-              <th className="p-5 text-xs font-bold text-[#64748b] uppercase tracking-wider text-right">Amount (70%)</th>
-              <th className="p-5 text-xs font-bold text-[#64748b] uppercase tracking-wider text-right">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {history.map((item) => (
-              <tr key={item.id} className="border-b border-[#1e293b] hover:bg-white/[0.02] transition-colors">
-                <td className="p-5 text-sm font-mono text-[#94a3b8]">{item.id}</td>
-                <td className="p-5 text-sm text-[#cbd5e1]">{item.date}</td>
-                <td className="p-5">
-                  <p className="font-bold text-white">{item.type}</p>
-                  <p className="text-xs text-[#64748b]">{item.details}</p>
-                </td>
-                <td className={`p-5 text-right font-black ${item.amount.startsWith('+') ? 'text-green-400' : 'text-white'}`}>
-                  {item.amount}
-                </td>
-                <td className="p-5 text-right">
-                  <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                    item.status === 'Cleared' || item.status === 'Completed' ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
-                  }`}>
-                    {item.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Card className="gt-rise overflow-hidden p-0">
+        {loading ? (
+          <Loading label="Loading transactions…" />
+        ) : history.length === 0 ? (
+          <EmptyState icon={Download} title="No transactions yet" detail="Sales and payouts will show up here as students enroll." />
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="gt-table">
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>Date</th>
+                  <th>Type / Details</th>
+                  <th className="text-right">Amount (70%)</th>
+                  <th className="text-right">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {history.map((item) => (
+                  <tr key={item.id}>
+                    <td className="font-mono text-[var(--gt-text-2)]">{item.id}</td>
+                    <td className="text-[var(--gt-text-2)]">{formatDate(item.date)}</td>
+                    <td>
+                      <p className="font-semibold text-[var(--gt-text)]">Course Sale</p>
+                      <p className="mt-0.5 text-xs text-[var(--gt-text-3)]">
+                        {item.course} &bull; {item.learner} (Sale Price: PKR {item.grossAmount.toLocaleString()})
+                      </p>
+                    </td>
+                    <td className="gt-num text-right font-bold text-[var(--gt-success)]">
+                      +PKR {item.trainerShare.toLocaleString()}
+                    </td>
+                    <td className="text-right">
+                      <Badge tone={isCleared(item.status) ? 'success' : 'warn'} dot>
+                        {item.status}
+                      </Badge>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Card>
     </div>
   );
 }

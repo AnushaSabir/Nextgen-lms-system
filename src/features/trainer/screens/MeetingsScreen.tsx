@@ -4,10 +4,14 @@ import { FormEvent, useEffect, useState } from 'react';
 import {
   Calendar, Clock, ExternalLink, Link2, Plus, Trash2, Video, Loader2,
 } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { Card, CardTitle } from '@/components/ui/Card';
-import { Field, SelectInput, TextArea, TextInput } from '@/components/ui/Field';
-import { PageHeader } from '../components/TrainerShared';
+import {
+  PageHeader,
+  Card,
+  SectionHeader,
+  Badge,
+  EmptyState,
+  Loading,
+} from '@/components/trainer/ui';
 import { meetingsApi, coursesApi } from '@/lib/api';
 import { useToastStore } from '@/store/toast-store';
 import { getErrorMessage } from '@/utils/errorParser';
@@ -29,9 +33,9 @@ const PROVIDER_LABELS: Record<string, string> = {
   google_meet: 'Google Meet',
 };
 
-const PROVIDER_COLORS: Record<string, string> = {
-  zoom: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  google_meet: 'bg-green-500/10 text-green-400 border-green-500/20',
+const PROVIDER_TONE: Record<string, 'info' | 'success'> = {
+  zoom: 'info',
+  google_meet: 'success',
 };
 
 function formatDateTime(dt: string) {
@@ -106,73 +110,91 @@ export function MeetingsScreen() {
 
   if (loading) {
     return (
-      <div className="flex h-64 items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" />
+      <div className="space-y-6">
+        <PageHeader
+          eyebrow="Live Q&A"
+          title="Meetings"
+          subtitle="Schedule and manage Google Meet or Zoom sessions for your learners."
+        />
+        <Card className="p-2">
+          <Loading label="Loading meetings…" />
+        </Card>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8 pb-8">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <PageHeader
-          title="Meetings"
-          caption="Schedule and manage Google Meet or Zoom sessions for your learners."
-        />
-        <Button onClick={() => setShowForm((v) => !v)} className="shrink-0 shadow-lg shadow-orange-500/20">
-          <Plus className="mr-2 h-4 w-4" />
-          {showForm ? 'Hide Form' : 'Schedule Meeting'}
-        </Button>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        eyebrow="Live Q&A"
+        title="Meetings"
+        subtitle="Schedule and manage Google Meet or Zoom sessions for your learners."
+        actions={
+          <button onClick={() => setShowForm((v) => !v)} className="gt-btn gt-btn--primary">
+            <Plus className="h-4 w-4" />
+            {showForm ? 'Hide Form' : 'Schedule Meeting'}
+          </button>
+        }
+      />
 
       {/* ── Create Form ── */}
       {showForm && (
-        <Card className="border-orange-500/20 bg-gray-900/70 shadow-xl p-8">
-          <CardTitle title="New Meeting" caption="Provide a manual Zoom or Google Meet link." />
-          <form className="mt-6 space-y-5" onSubmit={handleCreate}>
+        <Card className="p-6 sm:p-8">
+          <SectionHeader
+            icon={Calendar}
+            title="New Meeting"
+            caption="Provide a manual Zoom or Google Meet link."
+          />
+          <form className="space-y-5" onSubmit={handleCreate}>
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Course">
-                <SelectInput name="courseId" required>
+              <div>
+                <label className="gt-label">Course</label>
+                <select name="courseId" required className="gt-input appearance-none">
                   <option value="">— Select course —</option>
                   {courses.map((c) => (
                     <option key={c.id} value={c.id}>{c.title}</option>
                   ))}
-                </SelectInput>
-              </Field>
-              <Field label="Provider">
-                <SelectInput name="provider" defaultValue="zoom" required>
+                </select>
+              </div>
+              <div>
+                <label className="gt-label">Provider</label>
+                <select name="provider" defaultValue="zoom" required className="gt-input appearance-none">
                   <option value="zoom">Zoom</option>
                   <option value="google_meet">Google Meet</option>
-                </SelectInput>
-              </Field>
+                </select>
+              </div>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Date & Time">
-                <TextInput name="startsAt" type="datetime-local" required />
-              </Field>
-              <Field label="Meeting Link">
-                <TextInput
+              <div>
+                <label className="gt-label">Date &amp; Time</label>
+                <input name="startsAt" type="datetime-local" required className="gt-input" />
+              </div>
+              <div>
+                <label className="gt-label">Meeting Link</label>
+                <input
                   name="meetingUrl"
                   type="url"
                   placeholder="https://meet.google.com/xxx or https://zoom.us/j/xxx"
                   required
+                  className="gt-input"
                 />
-              </Field>
+              </div>
             </div>
 
-            <Field label="Agenda (optional)">
-              <TextArea name="agenda" placeholder="Topics to cover in this session..." />
-            </Field>
+            <div>
+              <label className="gt-label">Agenda (optional)</label>
+              <textarea name="agenda" placeholder="Topics to cover in this session…" className="gt-input" />
+            </div>
 
-            <div className="pt-2 flex gap-3">
-              <Button type="submit" disabled={submitting} className="shadow-lg shadow-orange-500/20">
-                {submitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Calendar className="mr-2 h-4 w-4" />}
-                {submitting ? 'Scheduling...' : 'Schedule Meeting'}
-              </Button>
-              <Button type="button" variant="ghost" className="border border-gray-700" onClick={() => setShowForm(false)}>
+            <div className="flex gap-3 pt-1">
+              <button type="submit" disabled={submitting} className="gt-btn gt-btn--primary">
+                {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Calendar className="h-4 w-4" />}
+                {submitting ? 'Scheduling…' : 'Schedule Meeting'}
+              </button>
+              <button type="button" className="gt-btn gt-btn--ghost" onClick={() => setShowForm(false)}>
                 Cancel
-              </Button>
+              </button>
             </div>
           </form>
         </Card>
@@ -180,41 +202,38 @@ export function MeetingsScreen() {
 
       {/* ── Meetings List ── */}
       {meetings.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-gray-700 p-16 text-center bg-gray-800/20">
-          <Calendar className="mx-auto h-12 w-12 text-gray-500 mb-4" />
-          <h3 className="text-lg font-semibold text-white">No meetings scheduled</h3>
-          <p className="mt-2 text-sm text-gray-400">
-            Click "Schedule Meeting" above to create your first session.
-          </p>
-        </div>
+        <Card className="p-2">
+          <EmptyState
+            icon={Calendar}
+            title="No meetings scheduled"
+            detail='Click "Schedule Meeting" above to create your first session.'
+          />
+        </Card>
       ) : (
-        <div className="space-y-4">
+        <div className="gt-stagger space-y-3">
           {meetings.map((meeting) => (
-            <div
+            <Card
               key={meeting.id}
-              className="group flex flex-col sm:flex-row sm:items-center justify-between gap-5 rounded-2xl border border-gray-700/50 bg-gray-800/40 p-5 transition-all hover:bg-gray-800/80 hover:border-gray-600"
+              hover
+              className="flex flex-col justify-between gap-5 p-5 sm:flex-row sm:items-center"
             >
               <div className="flex items-start gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 border border-orange-500/20">
-                  <Video className="h-6 w-6 text-orange-400" />
-                </div>
+                <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl border border-[rgba(240,89,31,0.3)] bg-[var(--gt-accent-soft)] text-[var(--gt-accent)]">
+                  <Video className="h-6 w-6" />
+                </span>
                 <div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span
-                      className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${PROVIDER_COLORS[meeting.provider] ?? 'bg-gray-700 text-gray-300 border-gray-600'}`}
-                    >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge tone={PROVIDER_TONE[meeting.provider]}>
                       {PROVIDER_LABELS[meeting.provider] ?? meeting.provider}
-                    </span>
-                    <span className="text-xs text-gray-500 bg-gray-800 px-2.5 py-1 rounded-full border border-gray-700">
-                      {meeting.course?.title ?? meeting.courseId}
-                    </span>
+                    </Badge>
+                    <Badge>{meeting.course?.title ?? meeting.courseId}</Badge>
                   </div>
-                  <div className="mt-2 flex items-center gap-2 text-sm text-gray-300">
-                    <Clock className="h-4 w-4 text-orange-400 shrink-0" />
+                  <div className="mt-2 flex items-center gap-2 text-sm text-[var(--gt-text)]">
+                    <Clock className="h-4 w-4 flex-shrink-0 text-[var(--gt-accent)]" />
                     <span>{formatDateTime(meeting.startsAt)}</span>
                   </div>
                   {meeting.agenda && (
-                    <p className="mt-1.5 text-xs text-gray-500 line-clamp-1">{meeting.agenda}</p>
+                    <p className="mt-1.5 line-clamp-1 text-xs text-[var(--gt-text-2)]">{meeting.agenda}</p>
                   )}
                 </div>
               </div>
@@ -224,7 +243,7 @@ export function MeetingsScreen() {
                   href={meeting.meetingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 rounded-lg bg-orange-500 hover:bg-orange-400 text-white text-sm font-semibold px-4 py-2 transition-colors"
+                  className="gt-btn gt-btn--primary gt-btn--sm"
                 >
                   <Link2 className="h-4 w-4" />
                   Join
@@ -233,7 +252,8 @@ export function MeetingsScreen() {
                 <button
                   onClick={() => handleDelete(meeting.id)}
                   disabled={deletingId === meeting.id}
-                  className="flex items-center gap-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 text-sm font-semibold px-4 py-2 border border-red-500/20 transition-colors"
+                  className="gt-btn gt-btn--sm"
+                  style={{ background: 'rgba(251,113,133,0.12)', color: 'var(--gt-danger)', border: '1px solid rgba(251,113,133,0.28)' }}
                 >
                   {deletingId === meeting.id ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -243,15 +263,19 @@ export function MeetingsScreen() {
                   Cancel
                 </button>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       )}
 
       {/* Future OAuth integration note */}
-      <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4 text-sm text-blue-300">
-        <strong className="text-blue-200">Note:</strong> Currently using manual meeting links. Zoom and Google Meet OAuth integration is prepared — add credentials to <code className="text-xs bg-blue-900/30 px-1.5 py-0.5 rounded">.env</code> when ready.
-      </div>
+      <Card
+        className="p-4 text-sm text-[var(--gt-info)]"
+        style={{ borderColor: 'rgba(56,189,248,0.28)', background: 'rgba(56,189,248,0.06)' }}
+      >
+        <strong className="text-[var(--gt-text)]">Note:</strong> Currently using manual meeting links. Zoom and Google Meet OAuth integration is prepared — add credentials to{' '}
+        <code className="rounded bg-[rgba(56,189,248,0.15)] px-1.5 py-0.5 text-xs">.env</code> when ready.
+      </Card>
     </div>
   );
 }

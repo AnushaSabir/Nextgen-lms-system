@@ -51,7 +51,7 @@ export async function registerTrainer(data: FormData | any) {
 }
 
 export async function login(credentials: { email: string; password: string }) {
-  const res = await api.post('/login', credentials)
+  const res = await api.post('/auth/login', credentials)
   return res.data
 }
 

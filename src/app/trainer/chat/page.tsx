@@ -1,128 +1,265 @@
-import React from 'react';
-import { Search, Send, Paperclip, MoreVertical, Phone, Video } from 'lucide-react';
+'use client';
+
+import React, { useEffect, useRef, useState } from 'react';
+import { Search, Send, MessageSquare } from 'lucide-react';
+import { trainerApi } from '@/lib/api';
+
+type Thread = { userId: string; name: string; email: string; lastMessage: string; lastAt: string };
+type ChatMessage = { id: string; body: string; fromMe: boolean; createdAt: string };
+type Conversation = { contact: { id: string; name: string; email: string } | null; messages: ChatMessage[] };
+
+function initials(name: string): string {
+  return (name || '')
+    .split(' ')
+    .filter(Boolean)
+    .map((n) => n[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+function formatClock(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '';
+  return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+}
+
+function formatThreadTime(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '';
+  const now = new Date();
+  if (d.toDateString() === now.toDateString()) {
+    return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  }
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+  if (d.toDateString() === yesterday.toDateString()) return 'Yesterday';
+  if ((now.getTime() - d.getTime()) / 86400000 < 7) {
+    return d.toLocaleDateString([], { weekday: 'long' });
+  }
+  return d.toLocaleDateString();
+}
 
 export default function ChatPage() {
-  const contacts = [
-    { id: 1, name: 'Sarah Khan', lastMessage: 'Thank you for the feedback!', time: '10:42 AM', active: true, unread: 0 },
-    { id: 2, name: 'Ali Raza', lastMessage: 'Can you explain the hooks?', time: 'Yesterday', active: false, unread: 2 },
-    { id: 3, name: 'Zainab B.', lastMessage: 'Assignment submitted.', time: 'Monday', active: false, unread: 0 },
-  ];
+  const [threads, setThreads] = useState<Thread[]>([]);
+  const [loadingThreads, setLoadingThreads] = useState(true);
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [conversation, setConversation] = useState<Conversation | null>(null);
+  const [loadingMessages, setLoadingMessages] = useState(false);
+  const [input, setInput] = useState('');
+  const [sending, setSending] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  async function loadThreads(autoSelect = false) {
+    try {
+      const data = await trainerApi.chatThreads();
+      const list = Array.isArray(data) ? data : [];
+      setThreads(list);
+      if (autoSelect && list.length > 0) {
+        setSelectedUserId((prev) => prev ?? list[0].userId);
+      }
+    } catch {
+      setThreads([]);
+    } finally {
+      setLoadingThreads(false);
+    }
+  }
+
+  useEffect(() => {
+    loadThreads(true);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedUserId) return;
+    let cancelled = false;
+    setLoadingMessages(true);
+    setConversation(null);
+    trainerApi
+      .chatMessages(selectedUserId)
+      .then((data) => {
+        if (cancelled) return;
+        setConversation({ contact: data?.contact ?? null, messages: Array.isArray(data?.messages) ? data.messages : [] });
+      })
+      .catch(() => {
+        if (!cancelled) setConversation({ contact: null, messages: [] });
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingMessages(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedUserId]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ block: 'end' });
+  }, [conversation?.messages.length]);
+
+  async function handleSend() {
+    const text = input.trim();
+    if (!text || !selectedUserId || sending) return;
+    setSending(true);
+    try {
+      const msg = await trainerApi.sendChat(selectedUserId, text);
+      setConversation((prev) =>
+        prev ? { ...prev, messages: [...prev.messages, msg] } : { contact: null, messages: [msg] },
+      );
+      setInput('');
+      loadThreads(); // refresh lastMessage in the sidebar
+    } catch {
+      // keep the typed text so the trainer can retry
+    } finally {
+      setSending(false);
+    }
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  }
+
+  const selectedThread = threads.find((t) => t.userId === selectedUserId) ?? null;
+  const headerName = conversation?.contact?.name ?? selectedThread?.name ?? '';
 
   return (
-    <div className="h-full max-w-7xl mx-auto flex flex-col md:flex-row gap-6 p-4 sm:p-6 animate-in fade-in duration-500">
-      
+    <div className="gt-rise flex h-[calc(100vh-8rem)] min-h-[520px] flex-col gap-5 md:flex-row">
+
       {/* Sidebar / Contacts */}
-      <div className="w-full md:w-80 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[40px] flex flex-col shadow-2xl overflow-hidden h-[85vh] transition-all duration-700 transform-style-3d hover:-translate-y-2 hover:scale-[1.01] hover:border-orange-500/30 hover:shadow-[0_20px_60px_rgba(240,89,31,0.2)]">
-        <div className="p-6 border-b border-[#1e293b]">
-          <h2 className="text-xl font-bold text-white mb-4">Messages</h2>
+      <div className="gt-card flex h-full w-full flex-col overflow-hidden md:w-80">
+        <div className="border-b border-[var(--gt-border)] p-5">
+          <h2 className="mb-4 text-lg font-bold text-[var(--gt-text)]">Messages</h2>
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#64748b]" />
-            <input 
-              type="text" 
-              placeholder="Search students..." 
-              className="w-full bg-[#020617] border border-[#1e293b] rounded-xl pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-[#f0591f] transition-all"
+            <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--gt-text-3)]" />
+            <input
+              type="text"
+              placeholder="Search students…"
+              className="gt-input pl-10"
             />
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto hide-scrollbar">
-          {contacts.map(contact => (
-            <div key={contact.id} className={`p-4 border-b border-[#1e293b] flex items-center gap-3 cursor-pointer transition-colors ${contact.active ? 'bg-white/[0.05] border-l-2 border-l-[#f0591f]' : 'hover:bg-white/[0.02] border-l-2 border-l-transparent'}`}>
-              <div className="relative">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
-                  {contact.name.split(' ').map(n => n[0]).join('')}
-                </div>
-                {contact.active && <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#0f172a]" />}
-              </div>
-              <div className="flex-1 overflow-hidden">
-                <div className="flex justify-between items-center mb-1">
-                  <h4 className="font-bold text-white text-sm truncate">{contact.name}</h4>
-                  <span className="text-xs text-[#64748b] whitespace-nowrap">{contact.time}</span>
-                </div>
-                <p className={`text-xs truncate ${contact.unread > 0 ? 'text-white font-medium' : 'text-[#64748b]'}`}>{contact.lastMessage}</p>
-              </div>
-              {contact.unread > 0 && (
-                <div className="w-5 h-5 rounded-full bg-[#f0591f] flex items-center justify-center text-white text-[10px] font-bold">
-                  {contact.unread}
-                </div>
-              )}
-            </div>
-          ))}
+        <div className="gt-scroll flex-1 overflow-y-auto">
+          {loadingThreads ? (
+            <div className="p-6 text-center text-sm text-[var(--gt-text-2)]">Loading conversations…</div>
+          ) : threads.length === 0 ? (
+            <div className="p-6 text-center text-sm text-[var(--gt-text-3)]">No conversations yet</div>
+          ) : (
+            threads.map((contact) => {
+              const active = contact.userId === selectedUserId;
+              return (
+                <button
+                  key={contact.userId}
+                  onClick={() => setSelectedUserId(contact.userId)}
+                  className={`flex w-full items-center gap-3 border-b border-[var(--gt-border)] border-l-2 p-4 text-left transition-colors ${
+                    active
+                      ? 'border-l-[var(--gt-accent)] bg-[var(--gt-accent-soft)]'
+                      : 'border-l-transparent hover:bg-[var(--gt-surface-2)]'
+                  }`}
+                >
+                  <div className="relative">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[var(--gt-accent)] to-[var(--gt-accent-2)] text-sm font-bold text-white">
+                      {initials(contact.name)}
+                    </div>
+                    {active && (
+                      <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-[var(--gt-panel)] bg-[var(--gt-success)]" />
+                    )}
+                  </div>
+                  <div className="flex-1 overflow-hidden">
+                    <div className="mb-1 flex items-center justify-between gap-2">
+                      <h4 className="truncate text-sm font-bold text-[var(--gt-text)]">{contact.name}</h4>
+                      <span className="whitespace-nowrap text-xs text-[var(--gt-text-3)]">{formatThreadTime(contact.lastAt)}</span>
+                    </div>
+                    <p className="truncate text-xs text-[var(--gt-text-2)]">{contact.lastMessage}</p>
+                  </div>
+                </button>
+              );
+            })
+          )}
         </div>
       </div>
 
       {/* Main Chat Area */}
-      <div className="flex-1 bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[24px] sm:rounded-[40px] flex flex-col shadow-2xl h-[60vh] md:h-[85vh] transition-all duration-700 transform-style-3d hover:-translate-y-2 hover:scale-[1.01] hover:border-orange-500/30 hover:shadow-[0_20px_60px_rgba(240,89,31,0.2)]">
-        {/* Chat Header */}
-        <div className="p-4 sm:p-6 border-b border-[#1e293b] flex justify-between items-center bg-[#020617]/50 rounded-t-[24px] sm:rounded-t-3xl">
-          <div className="flex items-center gap-3 sm:gap-4">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
-              SK
-            </div>
-            <div>
-              <h3 className="font-bold text-white">Sarah Khan</h3>
-              <p className="text-xs text-green-400">Online</p>
-            </div>
+      <div className="gt-panel flex h-full flex-1 flex-col overflow-hidden">
+        {!selectedUserId ? (
+          <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center text-[var(--gt-text-2)]">
+            <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--gt-border-2)] bg-[var(--gt-surface-2)] text-[var(--gt-text-3)]">
+              <MessageSquare className="h-5 w-5" />
+            </span>
+            <p className="text-sm">Select a conversation</p>
           </div>
-          <div className="flex items-center gap-2">
-            <button className="p-2 text-[#64748b] hover:text-white bg-[#1e293b] rounded-full transition-colors">
-              <Phone className="w-4 h-4" />
-            </button>
-            <button className="p-2 text-[#64748b] hover:text-white bg-[#1e293b] rounded-full transition-colors">
-              <Video className="w-4 h-4" />
-            </button>
-            <button className="p-2 text-[#64748b] hover:text-white bg-[#1e293b] rounded-full transition-colors ml-2">
-              <MoreVertical className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
+        ) : (
+          <>
+            {/* Chat Header */}
+            <div className="flex items-center justify-between border-b border-[var(--gt-border)] p-4 sm:p-5">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-[var(--gt-accent)] to-[var(--gt-accent-2)] text-sm font-bold text-white">
+                  {initials(headerName)}
+                </div>
+                <div>
+                  <h3 className="font-bold text-[var(--gt-text)]">{headerName}</h3>
+                  <p className="flex items-center gap-1.5 text-xs text-[var(--gt-success)]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--gt-success)]" /> Online
+                  </p>
+                </div>
+              </div>
+            </div>
 
-        {/* Messages */}
-        <div className="flex-1 p-6 overflow-y-auto space-y-6 hide-scrollbar">
-          <div className="text-center text-xs text-[#64748b] my-4">Today</div>
-          
-          <div className="flex items-end gap-3 max-w-[80%]">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex-shrink-0" />
-            <div className="bg-[#1e293b] p-4 rounded-2xl rounded-bl-sm text-sm text-[#cbd5e1]">
-              Hello! I had a question about the assignment submission. Do I need to include the node_modules folder?
+            {/* Messages */}
+            <div className="gt-scroll flex-1 space-y-5 overflow-y-auto p-6">
+              {loadingMessages ? (
+                <div className="my-4 text-center text-xs text-[var(--gt-text-3)]">Loading messages…</div>
+              ) : !conversation || conversation.messages.length === 0 ? (
+                <div className="my-4 text-center text-xs text-[var(--gt-text-3)]">No messages yet</div>
+              ) : (
+                conversation.messages.map((m) =>
+                  m.fromMe ? (
+                    <div key={m.id} className="ml-auto flex max-w-[80%] flex-row-reverse items-end gap-3">
+                      <div className="h-8 w-8 flex-shrink-0 rounded-full bg-gradient-to-br from-[var(--gt-accent)] to-[var(--gt-accent-2)]" />
+                      <div className="rounded-2xl rounded-br-sm bg-gradient-to-r from-[var(--gt-accent)] to-[var(--gt-accent-2)] p-3.5 text-sm text-white shadow-[0_8px_22px_-10px_rgba(240,89,31,0.75)]">
+                        {m.body}
+                      </div>
+                      <span className="mb-1 text-[10px] text-[var(--gt-text-3)]">{formatClock(m.createdAt)}</span>
+                    </div>
+                  ) : (
+                    <div key={m.id} className="flex max-w-[80%] items-end gap-3">
+                      <div className="h-8 w-8 flex-shrink-0 rounded-full border border-[var(--gt-border-2)] bg-[var(--gt-surface-2)]" />
+                      <div className="rounded-2xl rounded-bl-sm border border-[var(--gt-border)] bg-[var(--gt-surface-2)] p-3.5 text-sm text-[var(--gt-text)]">
+                        {m.body}
+                      </div>
+                      <span className="mb-1 text-[10px] text-[var(--gt-text-3)]">{formatClock(m.createdAt)}</span>
+                    </div>
+                  ),
+                )
+              )}
+              <div ref={messagesEndRef} />
             </div>
-            <span className="text-[10px] text-[#64748b] mb-1">10:30 AM</span>
-          </div>
 
-          <div className="flex items-end gap-3 max-w-[80%] ml-auto flex-row-reverse">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 flex-shrink-0" />
-            <div className="bg-gradient-to-r from-[#f0591f] to-orange-500 p-4 rounded-2xl rounded-br-sm text-sm text-white shadow-[0_0_15px_rgba(240,89,31,0.2)]">
-              Hi Sarah! No, please do not include the node_modules. Just push your code to GitHub or submit the zipped src folder.
+            {/* Input Area */}
+            <div className="border-t border-[var(--gt-border)] p-4">
+              <div className="flex items-center gap-3">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Type your message…"
+                  className="gt-input flex-1"
+                />
+                <button
+                  aria-label="Send message"
+                  onClick={handleSend}
+                  disabled={sending || !input.trim()}
+                  className="gt-btn gt-btn--primary gt-btn--icon"
+                >
+                  <Send className="h-4 w-4" />
+                </button>
+              </div>
             </div>
-            <span className="text-[10px] text-[#64748b] mb-1">10:40 AM</span>
-          </div>
-          
-          <div className="flex items-end gap-3 max-w-[80%]">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex-shrink-0" />
-            <div className="bg-[#1e293b] p-4 rounded-2xl rounded-bl-sm text-sm text-[#cbd5e1]">
-              Understood. Thank you for the feedback!
-            </div>
-            <span className="text-[10px] text-[#64748b] mb-1">10:42 AM</span>
-          </div>
-        </div>
-
-        {/* Input Area */}
-        <div className="p-4 border-t border-[#1e293b] bg-[#020617]/50 rounded-b-3xl">
-          <div className="flex items-center gap-3">
-            <button className="p-3 text-[#64748b] hover:text-white hover:bg-[#1e293b] rounded-xl transition-colors">
-              <Paperclip className="w-5 h-5" />
-            </button>
-            <input 
-              type="text" 
-              placeholder="Type your message..." 
-              className="flex-1 bg-[#1e293b]/50 border border-[#1e293b] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#f0591f] transition-all"
-            />
-            <button className="p-3 bg-[#f0591f] hover:bg-[#ea580c] text-white rounded-xl shadow-lg transition-all active:scale-95">
-              <Send className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
+          </>
+        )}
       </div>
-      
+
     </div>
   );
 }

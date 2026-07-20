@@ -3,10 +3,7 @@
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
 import { ChevronRight, ListChecks } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
-import { Field, TextArea, TextInput } from '@/components/ui/Field';
-import { PageHeader } from '../components/TrainerShared';
+import { PageHeader, Card, SectionHeader } from '@/components/trainer/ui';
 import { getVideos as apiGetVideos, addQuiz as apiAddQuiz, getQuizzes as apiGetQuizzes } from '@/services/trainerApi';
 import { useToastStore } from '@/store/toast-store';
 import { getErrorMessage } from '@/utils/errorParser';
@@ -55,44 +52,59 @@ export function QuizManagementScreen({ courseId, videoId }: { courseId: string; 
   }
 
   return (
-    <div className="space-y-8 pb-8 max-w-4xl mx-auto">
-      <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
-        <Link href={`/trainer/courses/${courseId}/videos`} className="hover:text-white transition-colors">Curriculum</Link>
+    <div className="mx-auto max-w-4xl space-y-6">
+      <div className="flex items-center gap-2 text-sm text-[var(--gt-text-3)]">
+        <Link href={`/trainer/courses/${courseId}/videos`} className="transition-colors hover:text-[var(--gt-text)]">Curriculum</Link>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-gray-300">Short Quiz</span>
+        <span className="text-[var(--gt-text-2)]">Short Quiz</span>
       </div>
 
-      <PageHeader title="Quiz Questions" caption={`Add conceptual questions for: ${video?.title ?? 'Lesson'}`} />
+      <PageHeader
+        eyebrow="Trainer Workspace"
+        title="Quiz Questions"
+        subtitle={`Add conceptual questions for: ${video?.title ?? 'Lesson'}`}
+      />
 
-      <Card className="border-gray-700/50 bg-gray-900/60 shadow-xl p-8">
+      <Card className="p-6">
+        <SectionHeader icon={ListChecks} title="Create New Quiz" caption="Short answer questions with an expected answer key." />
+
         <form className="space-y-6" onSubmit={handleAddQuiz}>
-          <Field label="Question Prompt"><TextArea name="prompt" placeholder="Write a short answer question..." required /></Field>
-          <Field label="Expected Answer Key"><TextArea name="correctAnswer" placeholder="Provide the key points expected in the answer..." required /></Field>
+          <div>
+            <label className="gt-label">Question Prompt</label>
+            <textarea className="gt-input" name="prompt" placeholder="Write a short answer question…" required />
+          </div>
+          <div>
+            <label className="gt-label">Expected Answer Key</label>
+            <textarea className="gt-input" name="correctAnswer" placeholder="Provide the key points expected in the answer…" required />
+          </div>
 
-          <div className="flex items-end gap-6">
-            <div className="w-32">
-              <Field label="Points"><TextInput name="points" type="number" min={1} defaultValue={5} required /></Field>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+            <div className="w-full sm:w-32">
+              <label className="gt-label">Points</label>
+              <input className="gt-input" name="points" type="number" min={1} defaultValue={5} required />
             </div>
-            <Button type="submit" size="lg" disabled={loading}>
-              <ListChecks className="mr-2 h-4 w-4" />{loading ? 'Saving...' : 'Add Quiz Question'}
-            </Button>
+            <button type="submit" disabled={loading} className="gt-btn gt-btn--primary">
+              <ListChecks className="h-4 w-4" />{loading ? 'Saving…' : 'Add Quiz Question'}
+            </button>
           </div>
         </form>
       </Card>
 
       {quizzes.length > 0 && (
-        <Card className="border-gray-700/50 bg-gray-900/60 shadow-xl p-8 mt-8">
-          <div className="flex flex-col gap-1 mb-6">
-            <h3 className="text-xl font-bold text-white tracking-tight">Existing Quizzes</h3>
-            <p className="text-sm text-gray-400">There are {quizzes.length} short answer questions for this lesson.</p>
-          </div>
-          <div className="space-y-4">
+        <Card className="p-6">
+          <SectionHeader
+            icon={ListChecks}
+            tone="info"
+            title="Existing Quizzes"
+            caption={`There are ${quizzes.length} short answer questions for this lesson.`}
+          />
+          <div className="space-y-3">
             {quizzes.map((quiz, idx) => (
-              <div key={quiz.id} className="p-5 rounded-xl border border-gray-800 bg-gray-800/40">
-                <p className="font-semibold text-white mb-3 text-sm">Q{idx + 1}. {quiz.prompt}</p>
-                <div className="mt-2 text-sm text-gray-400">
-                  <span className="text-gray-500 font-medium mr-2">Expected Answer:</span>
-                  {(quiz.correctAnswer || []).join(', ')}
+              <div key={quiz.id} className="gt-card p-5">
+                <p className="mb-3 text-sm font-semibold text-[var(--gt-text)]">Q{idx + 1}. {quiz.prompt}</p>
+                <div className="text-sm text-[var(--gt-text-2)]">
+                  <span className="mr-2 font-medium text-[var(--gt-text-3)]">Expected Answer:</span>
+                  {Array.isArray(quiz.correctAnswer) ? quiz.correctAnswer.join(', ') : (quiz.correctAnswer ?? '—')}
                 </div>
               </div>
             ))}

@@ -3,22 +3,44 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import { Award, CheckCircle2, ChevronRight, GraduationCap, Send, Upload, Video as VideoIcon } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { Card, CardTitle } from '@/components/ui/Card';
-import { StatusBadge } from '../components/TrainerShared';
+import { Award, BookOpen, CheckCircle2, ChevronRight, GraduationCap, Send, Upload, Video as VideoIcon } from 'lucide-react';
+import { PageHeader, Card, SectionHeader, Badge, Loading, EmptyState } from '@/components/trainer/ui';
 import { getCourse as apiGetCourse } from '@/services/trainerApi';
+import { coursesApi } from '@/lib/api';
 
 const VideoListScreen = dynamic(
   () => import('./VideoListScreen').then((mod) => mod.VideoListScreen),
-  { ssr: false, loading: () => <div className="py-8 text-center text-gray-500 text-sm">Loading lessons...</div> }
+  { ssr: false, loading: () => <div className="py-8 text-center text-sm text-[var(--gt-text-3)]">Loading lessons...</div> }
 );
 
 type Course = any;
 
+const STATUS_TONE: Record<string, 'success' | 'warn' | 'danger' | 'info'> = {
+  approved: 'success',
+  pending_review: 'warn',
+  draft: 'info',
+  rejected: 'danger',
+};
+
 export function CourseDetailsScreen({ courseId }: { courseId: string }) {
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [notice, setNotice] = useState('');
+
+  async function submitForReview() {
+    setSubmitting(true);
+    try {
+      const updated = await coursesApi.submitReview(courseId);
+      setCourse((prev: Course) => ({ ...prev, status: updated?.status ?? 'pending_review' }));
+      setNotice('Course submitted for admin review.');
+    } catch {
+      setNotice('Could not submit for review. Please try again.');
+    } finally {
+      setSubmitting(false);
+      setTimeout(() => setNotice(''), 3000);
+    }
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -31,75 +53,102 @@ export function CourseDetailsScreen({ courseId }: { courseId: string }) {
     return () => { mounted = false; };
   }, [courseId]);
 
-  if (loading) return <div className="flex h-64 items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" /></div>;
-  if (!course) return <div className="p-8 text-center text-gray-400">Course not found.</div>;
+  if (loading) return <Loading label="Loading course…" />;
+  if (!course) {
+    return (
+      <EmptyState
+        icon={BookOpen}
+        title="Course not found"
+        detail="We couldn't find this course. It may have been removed."
+        action={<Link href="/trainer/courses" className="gt-btn gt-btn--primary gt-btn--sm">Back to courses</Link>}
+      />
+    );
+  }
+
+  const status = course.status ?? 'pending_review';
 
   return (
-    <div className="space-y-8 pb-8">
-      <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
-        <Link href="/trainer/courses" className="hover:text-white transition-colors">Courses</Link>
+    <div className="space-y-6">
+      {notice && (
+        <div className="gt-rise fixed right-6 top-20 z-50 flex items-center gap-2.5 rounded-2xl border border-[var(--gt-accent)]/30 bg-[var(--gt-panel)] px-4 py-3 text-sm text-[var(--gt-accent-2)] shadow-2xl">
+          <CheckCircle2 className="h-4 w-4" /> {notice}
+        </div>
+      )}
+      {/* Breadcrumb */}
+      <div className="gt-rise flex items-center gap-2 text-sm text-[var(--gt-text-3)]">
+        <Link href="/trainer/courses" className="transition-colors hover:text-[var(--gt-text)]">Courses</Link>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-gray-300">Course Details</span>
+        <span className="text-[var(--gt-text-2)]">Course Details</span>
       </div>
 
-      <Card className="relative overflow-hidden border-gray-700/50 bg-gray-900/80 p-8 shadow-2xl">
-        <div className="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-orange-500/10 to-transparent pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-3 mb-4">
-              <StatusBadge status={course.status ?? 'pending_review'} />
-              <span className="rounded-md bg-gray-800 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-gray-400">{course.category}</span>
-            </div>
-
-            <h1 className="text-3xl font-bold text-white sm:text-4xl">{course.title}</h1>
-            <p className="mt-4 text-lg leading-relaxed text-gray-400">{course.description}</p>
-
-            <div className="mt-6 flex items-center gap-6 text-sm font-medium text-gray-300">
-              <div className="flex items-center gap-2"><GraduationCap className="h-5 w-5 text-orange-400" /> <span className="capitalize">{course.level}</span></div>
-              <div className="flex items-center gap-2"><Award className="h-5 w-5 text-orange-400" /> PKR {Number(course.price || 0).toLocaleString()}</div>
-              <div className="flex items-center gap-2"><VideoIcon className="h-5 w-5 text-orange-400" /> {course.videos?.length || 0} Lessons</div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-3 min-w-[200px]">
-            <Link href={`/trainer/courses/${courseId}/videos/upload`} className="w-full">
-              <Button size="lg" className="w-full shadow-lg shadow-orange-500/20"><Upload className="mr-2 h-4 w-4" /> Upload Content</Button>
+      <PageHeader
+        eyebrow="Trainer Workspace"
+        title={course.title}
+        subtitle={course.description}
+        actions={
+          <>
+            <Link href={`/trainer/courses/${courseId}/videos/upload`} className="gt-btn gt-btn--primary">
+              <Upload className="h-4 w-4" /> Upload Content
             </Link>
-            <Button size="lg" variant="ghost" className="w-full border border-gray-600 bg-gray-800 hover:bg-gray-700 hover:text-white">
-              <Send className="mr-2 h-4 w-4" /> Submit for Review
-            </Button>
-          </div>
+            <button
+              className="gt-btn gt-btn--ghost"
+              onClick={submitForReview}
+              disabled={submitting || course.status === 'pending_review'}
+            >
+              <Send className="h-4 w-4" />
+              {course.status === 'pending_review' ? 'In Review' : submitting ? 'Submitting…' : 'Submit for Review'}
+            </button>
+          </>
+        }
+      />
+
+      {/* Meta summary */}
+      <Card className="p-6">
+        <div className="flex flex-wrap items-center gap-4">
+          <Badge tone={STATUS_TONE[status] ?? 'warn'} dot>
+            {String(status).replace('_', ' ')}
+          </Badge>
+          <Badge tone="info">{course.category}</Badge>
+          <span className="flex items-center gap-2 text-sm font-medium text-[var(--gt-text-2)]">
+            <GraduationCap className="h-4 w-4 text-[var(--gt-accent)]" />
+            <span className="capitalize">{course.level}</span>
+          </span>
+          <span className="flex items-center gap-2 text-sm font-medium text-[var(--gt-text-2)]">
+            <Award className="h-4 w-4 text-[var(--gt-accent)]" /> PKR {Number(course.price || 0).toLocaleString()}
+          </span>
+          <span className="flex items-center gap-2 text-sm font-medium text-[var(--gt-text-2)]">
+            <VideoIcon className="h-4 w-4 text-[var(--gt-accent)]" /> {course.videos?.length || 0} Lessons
+          </span>
         </div>
       </Card>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card className="border-gray-700/50 bg-gray-800/30">
-          <CardTitle title="Prerequisites" caption="What students need before starting" />
-          <ul className="mt-4 space-y-3">
+        <Card className="p-6">
+          <SectionHeader icon={CheckCircle2} tone="info" title="Prerequisites" caption="What students need before starting" />
+          <ul className="space-y-3">
             {(course.requirements ?? []).map((req: string, i: number) => (
-              <li key={i} className="flex items-start gap-3 text-gray-300">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gray-500" /> {req}
+              <li key={i} className="flex items-start gap-3 text-sm text-[var(--gt-text-2)]">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[var(--gt-text-3)]" /> {req}
               </li>
             ))}
           </ul>
         </Card>
-        <Card className="border-gray-700/50 bg-gray-800/30">
-          <CardTitle title="Learning Outcomes" caption="What students will achieve" />
-          <ul className="mt-4 space-y-3">
+        <Card className="p-6">
+          <SectionHeader icon={Award} tone="success" title="Learning Outcomes" caption="What students will achieve" />
+          <ul className="space-y-3">
             {(course.learningOutcomes ?? course.outcomes ?? []).map((out: string, i: number) => (
-              <li key={i} className="flex items-start gap-3 text-gray-300">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" /> {out}
+              <li key={i} className="flex items-start gap-3 text-sm text-[var(--gt-text-2)]">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[var(--gt-success)]" /> {out}
               </li>
             ))}
           </ul>
         </Card>
       </div>
 
-      <div className="mt-12">
-        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2"><VideoIcon className="h-5 w-5 text-orange-400" /> Curriculum &amp; Lessons</h2>
+      <Card className="p-6">
+        <SectionHeader icon={VideoIcon} tone="accent" title="Curriculum & Lessons" caption="Manage your course lessons and content." />
         <VideoListScreen courseId={courseId} embedded />
-      </div>
+      </Card>
     </div>
   );
 }

@@ -3,8 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ChevronRight, Clock, ListChecks, PlayCircle, Upload } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { PageHeader } from '../components/TrainerShared';
+import { PageHeader, Card, EmptyState, Loading } from '@/components/trainer/ui';
 import { getCourse as apiGetCourse, getVideos as apiGetVideos } from '@/services/trainerApi';
 
 type Course = any;
@@ -28,69 +27,80 @@ export function VideoListScreen({ courseId, embedded = false }: { courseId: stri
     return () => { mounted = false; };
   }, [courseId]);
 
-  if (loading) return <div className="py-10 text-center"><div className="inline-block h-6 w-6 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" /></div>;
+  if (loading) return <Loading label="Loading lessons…" />;
 
-  const content = (
-    <div className="space-y-4">
-      {videos.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-gray-700 p-12 text-center bg-gray-800/20">
-          <PlayCircle className="mx-auto h-12 w-12 text-gray-500 mb-3" />
-          <h3 className="text-lg font-medium text-white">No lessons added yet</h3>
-          <p className="mt-1 text-sm text-gray-400 mb-6">Upload your first video to start building the curriculum.</p>
-          <Link href={`/trainer/courses/${courseId}/videos/upload`}>
-            <Button variant="ghost" className="border border-gray-700"><Upload className="mr-2 h-4 w-4" /> Upload Lesson</Button>
-          </Link>
-        </div>
-      ) : (
-        videos.map((video) => (
-          <div key={video.id} className="group flex flex-col md:flex-row md:items-center justify-between gap-6 rounded-2xl border border-gray-700/50 bg-gray-800/40 p-5 transition-all hover:bg-gray-800/80 hover:border-gray-600">
-            <div className="flex items-start gap-5">
-              <div className="flex h-16 w-24 shrink-0 items-center justify-center rounded-lg bg-gray-900 border border-gray-700 group-hover:border-orange-500/50 transition-colors relative overflow-hidden">
-                <PlayCircle className="h-8 w-8 text-orange-500/70 z-10 relative" />
-                <div className="absolute inset-0 bg-black/40" />
-              </div>
-              <div>
+  const content =
+    videos.length === 0 ? (
+      <Card className="p-6">
+        <EmptyState
+          icon={PlayCircle}
+          title="No lessons added yet"
+          detail="Upload your first video to start building the curriculum."
+          action={
+            <Link href={`/trainer/courses/${courseId}/videos/upload`} className="gt-btn gt-btn--primary gt-btn--sm">
+              <Upload className="h-4 w-4" /> Upload Lesson
+            </Link>
+          }
+        />
+      </Card>
+    ) : (
+      <div className="gt-stagger space-y-3">
+        {videos.map((video) => (
+          <div
+            key={video.id}
+            className="gt-card gt-card--hover group flex flex-col justify-between gap-4 p-5 md:flex-row md:items-center"
+          >
+            <div className="flex items-start gap-4">
+              <span className="relative flex h-16 w-24 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--gt-border-2)] bg-[var(--gt-surface-2)] text-[var(--gt-accent)] transition-colors group-hover:border-[var(--gt-accent)]/50">
+                <PlayCircle className="h-8 w-8" />
+              </span>
+              <div className="min-w-0">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-700 text-xs font-bold text-gray-300">{video.position || video.order || 1}</span>
-                  <h3 className="text-base font-bold text-white group-hover:text-orange-300 transition-colors">{video.title}</h3>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full border border-[var(--gt-border-2)] bg-[var(--gt-surface-2)] text-xs font-bold text-[var(--gt-text-2)]">
+                    {video.position || video.order || 1}
+                  </span>
+                  <h3 className="text-base font-bold text-[var(--gt-text)]">{video.title}</h3>
                 </div>
-                <p className="mt-1.5 text-sm text-gray-400 line-clamp-2">{video.description}</p>
-                <div className="mt-2 flex items-center gap-4 text-xs font-medium text-gray-500">
-                  <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5 text-gray-400" /> {video.duration}</span>
-                  <span className="flex items-center gap-1"><ListChecks className="h-3.5 w-3.5 text-emerald-400" /> Assessments Active</span>
+                <p className="mt-1.5 line-clamp-2 text-sm text-[var(--gt-text-2)]">{video.description}</p>
+                <div className="mt-2.5 flex items-center gap-4 text-xs font-medium text-[var(--gt-text-3)]">
+                  <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> {video.duration || '—'}</span>
+                  <span className="flex items-center gap-1.5"><ListChecks className="h-3.5 w-3.5" /> Assessments</span>
                 </div>
               </div>
             </div>
 
-            <div className="flex shrink-0 items-center gap-2 md:flex-col lg:flex-row border-t border-gray-700/50 pt-4 md:border-0 md:pt-0">
-              <Link href={`/trainer/courses/${courseId}/videos/${video.id}/mcqs`}><Button size="sm" variant="ghost" className="bg-gray-900/50 hover:bg-gray-700 hover:text-white border border-gray-700">MCQs</Button></Link>
-              <Link href={`/trainer/courses/${courseId}/videos/${video.id}/quiz`}><Button size="sm" variant="ghost" className="bg-gray-900/50 hover:bg-gray-700 hover:text-white border border-gray-700">Quiz</Button></Link>
-              <Link href={`/trainer/courses/${courseId}/videos/${video.id}/summary-task`}><Button size="sm" variant="ghost" className="bg-gray-900/50 hover:bg-gray-700 hover:text-white border border-gray-700">Summary</Button></Link>
+            <div className="flex shrink-0 items-center gap-2 border-t border-[var(--gt-border)] pt-4 md:border-0 md:pt-0">
+              <Link href={`/trainer/courses/${courseId}/videos/${video.id}/mcqs`} className="gt-btn gt-btn--ghost gt-btn--sm">MCQs</Link>
+              <Link href={`/trainer/courses/${courseId}/videos/${video.id}/quiz`} className="gt-btn gt-btn--ghost gt-btn--sm">Quiz</Link>
+              <Link href={`/trainer/courses/${courseId}/videos/${video.id}/summary-task`} className="gt-btn gt-btn--ghost gt-btn--sm">Summary</Link>
             </div>
           </div>
-        ))
-      )}
-    </div>
-  );
+        ))}
+      </div>
+    );
 
   if (embedded) return content;
 
   return (
-    <div className="space-y-8 pb-8">
-      <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
-        <Link href={`/trainer/courses/${courseId}`} className="hover:text-white transition-colors">Course Details</Link>
+    <div className="space-y-6">
+      <div className="flex items-center gap-2 text-sm text-[var(--gt-text-3)]">
+        <Link href={`/trainer/courses/${courseId}`} className="transition-colors hover:text-[var(--gt-text)]">Course Details</Link>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-gray-300">Curriculum Content</span>
+        <span className="text-[var(--gt-text-2)]">Curriculum Content</span>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
-        <PageHeader title="Curriculum Manager" caption={`Organize lessons and assessments for ${course?.title || 'this course'}.`} />
-        {videos.length > 0 && (
-          <Link href={`/trainer/courses/${courseId}/videos/upload`}>
-            <Button className="shadow-lg"><Upload className="mr-2 h-4 w-4" /> Add Lesson</Button>
-          </Link>
-        )}
-      </div>
+      <PageHeader
+        eyebrow="Trainer Workspace"
+        title="Curriculum Manager"
+        subtitle={`Organize lessons and assessments for ${course?.title || 'this course'}.`}
+        actions={
+          videos.length > 0 ? (
+            <Link href={`/trainer/courses/${courseId}/videos/upload`} className="gt-btn gt-btn--primary">
+              <Upload className="h-4 w-4" /> Add Lesson
+            </Link>
+          ) : undefined
+        }
+      />
 
       {content}
     </div>

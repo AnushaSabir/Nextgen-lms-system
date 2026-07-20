@@ -1,63 +1,280 @@
-import React from 'react';
-import { RotateCcw, AlertCircle, CheckCircle2 } from 'lucide-react';
+'use client';
+
+import React, { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
+import { RotateCcw, AlertCircle, CheckCircle2, Plus, Loader2 } from 'lucide-react';
+import { coursesApi, trainerApi } from '@/lib/api';
+import type { Course, VideoLesson } from '@/types/domain';
+import {
+  PageHeader,
+  Card,
+  SectionHeader,
+  Badge,
+  EmptyState,
+  Loading,
+} from '@/components/trainer/ui';
+
+type AssessmentSet = {
+  id: string;
+  title: string;
+  version: number;
+  active: boolean;
+  label: string;
+  counts: { mcq: number; quiz: number; summary: number };
+};
 
 export default function RetryQuestionsPage() {
-  const retrySets = [
-    { id: 1, course: 'Advanced Web Dev', module: 'Video 2: React Hooks', failedStudents: 12, setsAvailable: 3 },
-    { id: 2, course: 'UI/UX Masterclass', module: 'Video 4: Color Theory', failedStudents: 5, setsAvailable: 1 },
-    { id: 3, course: 'Python Data Scraping', module: 'Video 1: Basics', failedStudents: 0, setsAvailable: 2 },
-  ];
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [selectedCourseId, setSelectedCourseId] = useState<string>('');
+  const [setsByVideo, setSetsByVideo] = useState<Record<string, AssessmentSet[]>>({});
+  const [loadingCourses, setLoadingCourses] = useState(true);
+  const [loadingSets, setLoadingSets] = useState(false);
+  const [creatingVideoId, setCreatingVideoId] = useState<string | null>(null);
+
+  // 1. Fetch the trainer's courses on mount; default to the first one.
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      setLoadingCourses(true);
+      try {
+        const data = await coursesApi.list();
+        const list = Array.isArray(data) ? data : [];
+        if (!active) return;
+        setCourses(list);
+        setSelectedCourseId((prev) => prev || list[0]?.id || '');
+      } catch {
+        if (active) setCourses([]);
+      } finally {
+        if (active) setLoadingCourses(false);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const selectedCourse = courses.find((c) => c.id === selectedCourseId);
+  const videos: VideoLesson[] = selectedCourse?.videos ?? [];
+
+  // Fetch (or refetch) the assessment sets for a single video.
+  const fetchSetsForVideo = useCallback(async (videoId: string) => {
+    try {
+      const sets = await trainerApi.assessmentSets(videoId);
+      setSetsByVideo((prev) => ({ ...prev, [videoId]: Array.isArray(sets) ? sets : [] }));
+    } catch {
+      setSetsByVideo((prev) => ({ ...prev, [videoId]: [] }));
+    }
+  }, []);
+
+  // 2. When the selected course changes, load sets for each of its videos.
+  useEffect(() => {
+    if (!selectedCourseId) return;
+    const course = courses.find((c) => c.id === selectedCourseId);
+    const courseVideos = course?.videos ?? [];
+    let active = true;
+    (async () => {
+      setLoadingSets(true);
+      try {
+        const results = await Promise.all(
+          courseVideos.map(async (v) => {
+            try {
+              const sets = await trainerApi.assessmentSets(v.id);
+              return [v.id, Array.isArray(sets) ? sets : []] as const;
+            } catch {
+              return [v.id, [] as AssessmentSet[]] as const;
+            }
+          }),
+        );
+        if (active) setSetsByVideo(Object.fromEntries(results));
+      } finally {
+        if (active) setLoadingSets(false);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, [selectedCourseId, courses]);
+
+  // 3. Create the next backup set for a video, then refetch just that video.
+  const createBackupSet = async (videoId: string) => {
+    setCreatingVideoId(videoId);
+    try {
+      await trainerApi.createAssessmentSet(videoId);
+      await fetchSetsForVideo(videoId);
+    } catch {
+      // Safe fallback — leave existing sets untouched on failure.
+    } finally {
+      setCreatingVideoId(null);
+    }
+  };
 
   return (
-    <div className="p-8 max-w-7xl mx-auto animate-in fade-in duration-500">
-      <div className="mb-10">
-        <h1 className="text-3xl font-black text-white mb-2">Retry Question Sets</h1>
-        <p className="text-[#94a3b8]">Manage alternative assessment sets for students who fail initial attempts.</p>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        eyebrow="Assessments"
+        title="Retry Question Sets"
+        subtitle="Manage alternative assessment sets for students who fail initial attempts."
+        actions={
+          <div className="flex items-center gap-2.5">
+            <label className="gt-label mb-0">Course</label>
+            <select
+              value={selectedCourseId}
+              onChange={(e) => setSelectedCourseId(e.target.value)}
+              disabled={loadingCourses || courses.length === 0}
+              className="gt-input appearance-none min-w-[220px] disabled:opacity-60"
+            >
+              {courses.length === 0 ? (
+                <option value="">{loadingCourses ? 'Loading…' : 'No courses'}</option>
+              ) : (
+                courses.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.title}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+        }
+      />
 
-      <div className="bg-[#0f172a]/60 backdrop-blur-xl border border-[#1e293b] rounded-[32px] overflow-hidden shadow-2xl">
-        <div className="p-6 border-b border-[#1e293b] flex items-center gap-4 bg-gradient-to-r from-red-500/10 to-transparent">
-          <AlertCircle className="w-6 h-6 text-red-400" />
+      {/* Why multiple sets? */}
+      <Card className="p-5">
+        <div className="flex items-center gap-4">
+          <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-[rgba(251,191,36,0.28)] bg-[rgba(251,191,36,0.1)] text-[var(--gt-warn)]">
+            <AlertCircle className="h-5 w-5" />
+          </span>
           <div>
-            <h3 className="font-bold text-white">Why multiple sets?</h3>
-            <p className="text-sm text-[#94a3b8]">To prevent cheating, students who retry an assessment must receive a different set of questions.</p>
+            <h3 className="text-[15px] font-bold text-[var(--gt-text)]">Why multiple sets?</h3>
+            <p className="text-sm text-[var(--gt-text-2)]">To prevent cheating, students who retry an assessment must receive a different set of questions.</p>
           </div>
         </div>
+      </Card>
 
-        <div className="p-6">
-          <div className="space-y-4">
-            {retrySets.map((set) => (
-              <div key={set.id} className="flex items-center justify-between p-5 rounded-2xl border border-[#1e293b] hover:bg-[#1e293b]/50 transition-colors group">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
-                    <RotateCcw className="w-6 h-6 text-purple-400" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-white">{set.module}</h4>
-                    <p className="text-sm text-[#64748b]">{set.course}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-8">
-                  <div className="text-center">
-                    <p className="text-xs text-[#64748b] uppercase font-bold mb-1">Failed</p>
-                    <p className={`text-lg font-black ${set.failedStudents > 0 ? 'text-red-400' : 'text-green-400'}`}>{set.failedStudents}</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-xs text-[#64748b] uppercase font-bold mb-1">Alt Sets</p>
-                    <p className="text-lg font-black text-white flex items-center gap-1 justify-center">
-                      {set.setsAvailable} {set.setsAvailable >= 2 && <CheckCircle2 className="w-4 h-4 text-green-400" />}
+      {loadingCourses ? (
+        <Card className="p-2">
+          <Loading label="Loading courses…" />
+        </Card>
+      ) : courses.length === 0 ? (
+        <Card className="p-2">
+          <EmptyState
+            icon={RotateCcw}
+            title="No courses yet"
+            detail="Create a course and add videos to manage retry sets."
+          />
+        </Card>
+      ) : videos.length === 0 ? (
+        <Card className="p-2">
+          <EmptyState
+            icon={RotateCcw}
+            title="No videos in this course"
+            detail="Add video lessons to this course to create their assessment sets."
+          />
+        </Card>
+      ) : (
+        <div className="gt-stagger space-y-4">
+          {videos.map((video) => {
+            const sets = setsByVideo[video.id];
+            const isCreating = creatingVideoId === video.id;
+            return (
+              <Card key={video.id} className="overflow-hidden">
+                {/* Video header */}
+                <div className="flex flex-col justify-between gap-4 border-b border-[var(--gt-border)] bg-[var(--gt-surface)] p-5 sm:flex-row sm:items-center">
+                  <div className="min-w-0">
+                    <h4 className="truncate text-base font-bold text-[var(--gt-text)]">
+                      Video {video.position}: {video.title}
+                    </h4>
+                    <p className="text-sm text-[var(--gt-text-3)]">
+                      {sets === undefined
+                        ? 'Loading sets…'
+                        : `${sets.length} set${sets.length === 1 ? '' : 's'} · ${
+                            sets.length > 1 ? 'backup available' : 'no backup yet'
+                          }`}
                     </p>
                   </div>
-                  <button className="bg-[#1e293b] hover:bg-white hover:text-black text-white px-5 py-2.5 rounded-xl font-bold transition-all border border-[#334155] shadow-lg">
-                    Manage Sets
+                  <button
+                    onClick={() => createBackupSet(video.id)}
+                    disabled={isCreating}
+                    className="gt-btn gt-btn--primary gt-btn--sm flex-shrink-0"
+                  >
+                    {isCreating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
+                    {isCreating ? 'Creating…' : 'Create Backup Set'}
                   </button>
                 </div>
-              </div>
-            ))}
-          </div>
+
+                {/* Assessment sets */}
+                <div className="space-y-3 p-4">
+                  {sets === undefined ? (
+                    <div className="py-6 text-center text-sm font-medium text-[var(--gt-text-3)]">
+                      {loadingSets ? 'Loading assessment sets…' : ''}
+                    </div>
+                  ) : sets.length === 0 ? (
+                    <div className="py-6 text-center text-sm font-medium text-[var(--gt-text-3)]">
+                      No assessment sets yet. Create a backup set to get started.
+                    </div>
+                  ) : (
+                    sets.map((set) => (
+                      <div
+                        key={set.id}
+                        className="gt-card gt-card--hover flex flex-col gap-4 p-5 lg:flex-row lg:items-center lg:justify-between"
+                      >
+                        <div className="flex items-center gap-4">
+                          <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border border-[var(--gt-border-2)] bg-[var(--gt-surface-2)] text-[var(--gt-accent)]">
+                            <RotateCcw className="h-5 w-5" />
+                          </span>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <Badge tone="accent">{set.label}</Badge>
+                              {set.active && <CheckCircle2 className="h-4 w-4 text-[var(--gt-success)]" />}
+                            </div>
+                            <p className="mt-1 text-sm text-[var(--gt-text-3)]">
+                              {set.active ? 'Active' : 'Inactive'} · v{set.version}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-6">
+                          <div className="text-center">
+                            <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[var(--gt-text-3)]">MCQs</p>
+                            <p className="gt-num text-lg font-extrabold text-[var(--gt-text)]">{set.counts?.mcq ?? 0}</p>
+                          </div>
+                          <div className="text-center">
+                            <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[var(--gt-text-3)]">Quizzes</p>
+                            <p className="gt-num text-lg font-extrabold text-[var(--gt-text)]">{set.counts?.quiz ?? 0}</p>
+                          </div>
+                          <div className="text-center">
+                            <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[var(--gt-text-3)]">Summaries</p>
+                            <p className="gt-num text-lg font-extrabold text-[var(--gt-text)]">{set.counts?.summary ?? 0}</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Link
+                              href={`/trainer/courses/${selectedCourseId}/videos/${video.id}/mcqs`}
+                              className="gt-btn gt-btn--ghost gt-btn--sm"
+                            >
+                              MCQs
+                            </Link>
+                            <Link
+                              href={`/trainer/courses/${selectedCourseId}/videos/${video.id}/quiz`}
+                              className="gt-btn gt-btn--ghost gt-btn--sm"
+                            >
+                              Quiz
+                            </Link>
+                            <Link
+                              href={`/trainer/courses/${selectedCourseId}/videos/${video.id}/summary-task`}
+                              className="gt-btn gt-btn--ghost gt-btn--sm"
+                            >
+                              Summary
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </Card>
+            );
+          })}
         </div>
-      </div>
+      )}
     </div>
   );
 }
