@@ -60,23 +60,23 @@ export default function LmsStatsSection() {
                 className="group relative rounded-3xl overflow-hidden border border-orange-500/30 hover:-translate-y-2 transition-all duration-500 flex flex-col h-full shadow-[0_12px_34px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_22px_55px_rgba(26, 107, 46, 0.1)]"
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <Image src={s.image} alt={s.title} fill className="absolute inset-0 w-full h-full object-cover opacity-[0.85] group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" sizes="(max-width: 768px) 100vw, 25vw" />
-                <div className="absolute inset-0 bg-gradient-to-t from-white via-white/90 to-white/75 z-10 group-hover:via-white/85 transition-all duration-500" />
+                <Image src={s.image} alt={s.title} fill className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" sizes="(max-width: 768px) 100vw, 25vw" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/95 via-[#0f172a]/80 to-[#0f172a]/40 z-10 group-hover:via-[#0f172a]/70 transition-all duration-500" />
                 
                 <div className="relative z-20 p-5 sm:p-6 flex flex-col h-full">
                   <div className="flex items-center justify-between gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/30 text-orange-500 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-[#0f3d1a] transition-colors duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-500/40 text-orange-500 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300">
                       {s.icon}
                     </div>
-                    <div className="inline-flex items-center gap-1 rounded-full border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 text-[8px] font-black uppercase tracking-widest text-orange-500">
+                    <div className="inline-flex items-center gap-1 rounded-full border border-orange-500/30 bg-orange-500/20 px-2 py-0.5 text-[8px] font-black uppercase tracking-widest text-orange-500">
                       <CheckCircle2 className="w-2 h-2" /> Verified
                     </div>
                   </div>
                   
                   <div className="flex-1">
-                    <div className="text-3xl sm:text-4xl font-black tracking-tight text-orange-500 mb-2 leading-none">{s.val}</div>
-                    <h3 className="text-base sm:text-lg font-black text-[#0f3d1a] tracking-tight mb-2 leading-snug">{s.title}</h3>
-                    <p className="text-xs sm:text-sm text-[#1a6b2e] font-medium leading-relaxed">
+                    <div className="text-3xl sm:text-4xl font-black tracking-tight text-orange-500 mb-2 leading-none drop-shadow-md">{s.val}</div>
+                    <h3 className="text-base sm:text-lg font-black text-white tracking-tight mb-2 leading-snug drop-shadow-md">{s.title}</h3>
+                    <p className="text-xs sm:text-sm text-gray-300 font-medium leading-relaxed drop-shadow">
                       <span className="text-orange-500 font-bold">{s.val}</span> {s.label}
                     </p>
                   </div>
