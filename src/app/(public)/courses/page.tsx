@@ -149,22 +149,6 @@ const MOCK_COURSES = [
 const CoursesPage = () => {
   const [courses, setCourses] = useState(MOCK_COURSES);
   const [loading, setLoading] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [activeCategory, setActiveCategory] = useState("all");
-
-  const togglePlayPause = () => {
-    const newIsPlaying = !isPlaying;
-    setIsPlaying(newIsPlaying);
-    if (videoRef.current) {
-      if (newIsPlaying) {
-        videoRef.current.play().catch(() => {});
-      } else {
-        videoRef.current.pause();
-      }
-    }
-  };
-
   const [filters, setFilters] = useState({
     level: "All",
     category: "All",
@@ -208,43 +192,15 @@ const CoursesPage = () => {
         <div className="absolute bottom-0 -right-48 w-96 h-96 bg-primaryBlue/5 rounded-full blur-[120px]" />
       </div>
 
-      {/* Hero Video Background */}
+      {/* Hero Image Background */}
       <div className="absolute top-0 inset-x-0 h-[500px] sm:h-[600px] pointer-events-none overflow-hidden z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          ref={(el) => {
-            videoRef.current = el;
-            if (el) {
-              el.muted = true;
-              el.defaultMuted = true;
-              if (isPlaying) el.play().catch(() => {});
-              else el.pause();
-            }
-          }}
-          className="absolute inset-0 w-full h-full object-cover opacity-60 sm:opacity-75 z-10"
-        >
-          <source
-            src="/videos/Master the Skills that Drive CareersForward.mp4"
-            type="video/mp4"
-          />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/30 via-[#020617]/70 to-[#020617] z-20" />
+        <img
+          src="/images/course_hero_student.jpg"
+          alt="Student studying on NextGen LMS"
+          className="absolute inset-0 w-full h-full object-cover opacity-80 z-10"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/50 via-[#020617]/80 to-[#c8e6c9] z-20" />
       </div>
-
-      <button
-        onClick={togglePlayPause}
-        className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 flex items-center justify-center text-[#0f3d1a] transition-all duration-300 hover:scale-125 hover:rotate-12 shadow-lg"
-      >
-        {isPlaying ? (
-          <Pause className="w-5 h-5" />
-        ) : (
-          <Play className="w-5 h-5 ml-1" />
-        )}
-      </button>
 
       <div className="pt-28 sm:pt-40 pb-20 px-4 sm:px-6 lg:px-8 relative z-30">
         <div className="container mx-auto max-w-7xl">
@@ -433,18 +389,18 @@ const CoursesPage = () => {
                     <span className="text-[10px] font-bold text-[#d94d19] uppercase tracking-wider mb-1">
                       {courses[1].level}
                     </span>
-                    <h3 className="text-sm sm:text-base font-bold text-[#0f3d1a] mb-1 line-clamp-2 group-hover:text-[#d94d19] transition-colors">
+                    <h3 className="text-sm sm:text-base font-bold text-white mb-1 line-clamp-2 group-hover:text-[#d94d19] transition-colors">
                       {courses[1].title}
                     </h3>
-                    <p className="text-xs text-[#1a6b2e] mb-2 truncate">
+                    <p className="text-xs text-white/80 mb-2 truncate">
                       {courses[1].trainer_name}
                     </p>
                     <div className="flex items-center gap-2">
                       <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-yellow-400 text-yellow-400" />
-                      <span className="text-xs font-bold text-[#0f3d1a]">
+                      <span className="text-xs font-bold text-white">
                         {courses[1].rating}
                       </span>
-                      <span className="text-xs text-[#1a6b2e]">
+                      <span className="text-xs text-white/80">
                         ({courses[1].students})
                       </span>
                     </div>
@@ -466,18 +422,18 @@ const CoursesPage = () => {
                     <span className="text-[10px] font-bold text-[#d94d19] uppercase tracking-wider mb-1">
                       {courses[2].level}
                     </span>
-                    <h3 className="text-sm sm:text-base font-bold text-[#0f3d1a] mb-1 line-clamp-2 group-hover:text-[#d94d19] transition-colors">
+                    <h3 className="text-sm sm:text-base font-bold text-white mb-1 line-clamp-2 group-hover:text-[#d94d19] transition-colors">
                       {courses[2].title}
                     </h3>
-                    <p className="text-xs text-[#1a6b2e] mb-2 truncate">
+                    <p className="text-xs text-white/80 mb-2 truncate">
                       {courses[2].trainer_name}
                     </p>
                     <div className="flex items-center gap-2">
                       <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-yellow-400 text-yellow-400" />
-                      <span className="text-xs font-bold text-[#0f3d1a]">
+                      <span className="text-xs font-bold text-white">
                         {courses[2].rating}
                       </span>
-                      <span className="text-xs text-[#1a6b2e]">
+                      <span className="text-xs text-white/80">
                         ({courses[2].students})
                       </span>
                     </div>
@@ -556,7 +512,7 @@ const CoursesPage = () => {
                 <div className="flex items-center justify-between pb-3 border-b border-[#1a6b2e]/10">
                   <div className="flex items-center gap-2 group/icon cursor-default">
                     <LayoutDashboard className="w-4 h-4 text-primaryBlue group-hover/icon:scale-125 group-hover/icon:rotate-12 transition-transform duration-300" />
-                    <span className="text-xs font-semibold text-[#0f3d1a]">
+                    <span className="text-xs font-semibold text-white">
                       My Learning Path
                     </span>
                   </div>
@@ -569,10 +525,10 @@ const CoursesPage = () => {
                     <Code className="w-8 h-8" />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-[#0f3d1a]">
+                    <p className="text-sm font-bold text-white">
                       Full-Stack Web Development
                     </p>
-                    <p className="text-xs text-[#1a6b2e]">
+                    <p className="text-xs text-white/80">
                       7 of 12 Courses Completed
                     </p>
                   </div>
@@ -580,8 +536,8 @@ const CoursesPage = () => {
                 <div className="space-y-3">
                   <div>
                     <div className="flex justify-between text-xs mb-1">
-                      <span className="text-[#1a6b2e]">Overall Progress</span>
-                      <span className="text-[#0f3d1a] font-medium">58%</span>
+                      <span className="text-white/80">Overall Progress</span>
+                      <span className="text-white font-medium">58%</span>
                     </div>
                     <div className="h-2 bg-[#1a6b2e]/5 rounded-full overflow-hidden">
                       <div className="h-full w-[58%] bg-gradient-to-r from-primaryBlue to-[#d94d19] rounded-full group-hover:w-[70%] transition-all duration-1000"></div>
@@ -589,8 +545,8 @@ const CoursesPage = () => {
                   </div>
                   <div>
                     <div className="flex justify-between text-xs mb-1">
-                      <span className="text-[#1a6b2e]">Projects Built</span>
-                      <span className="text-[#0f3d1a] font-medium">4/6</span>
+                      <span className="text-white/80">Projects Built</span>
+                      <span className="text-white font-medium">4/6</span>
                     </div>
                     <div className="h-2 bg-[#1a6b2e]/5 rounded-full overflow-hidden">
                       <div className="h-full w-[66%] bg-white/30 rounded-full group-hover:w-[80%] transition-all duration-1000"></div>
@@ -647,23 +603,23 @@ const CoursesPage = () => {
                       <span className="text-xs text-primaryBlue font-bold bg-primaryBlue/10 px-2 py-0.5 rounded group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 inline-block">
                         {course.level}
                       </span>
-                      <span className="text-xs text-[#1a6b2e]">
+                      <span className="text-xs text-white/80">
                         {course.lectures} lectures
                       </span>
                     </div>
-                    <h3 className="font-bold text-[#0f3d1a] mb-2 line-clamp-2 group-hover:text-primaryBlue transition-colors h-12">
+                    <h3 className="font-bold text-white mb-2 line-clamp-2 group-hover:text-primaryBlue transition-colors h-12">
                       {course.title}
                     </h3>
-                    <p className="text-sm text-[#1a6b2e] mb-4">
+                    <p className="text-sm text-white/80 mb-4">
                       {course.trainer_name}
                     </p>
-                    <div className="flex items-center justify-between pt-3 border-t border-[#1a6b2e]/10">
+                    <div className="flex items-center justify-between pt-3 border-t border-white/10">
                       <div className="flex items-center gap-1">
                         <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300" />
-                        <span className="text-sm font-bold text-[#0f3d1a]">
+                        <span className="text-sm font-bold text-white">
                           {course.rating}
                         </span>
-                        <span className="text-xs text-[#1a6b2e]">
+                        <span className="text-xs text-white/80">
                           ({course.students})
                         </span>
                       </div>
@@ -791,10 +747,10 @@ const CoursesPage = () => {
 
                     {/* Stats Numbers */}
                     <div>
-                      <div className="text-3xl sm:text-4xl font-bold text-[#0f3d1a] mb-1 group-hover:text-[#d94d19] transition-colors duration-300">
+                      <div className="text-3xl sm:text-4xl font-bold text-white mb-1 group-hover:text-[#d94d19] transition-colors duration-300">
                         {stat.number}
                       </div>
-                      <p className="text-sm text-[#1a6b2e] font-medium">
+                      <p className="text-sm text-white/80 font-medium">
                         {stat.label}
                       </p>
                     </div>
@@ -825,12 +781,12 @@ const CoursesPage = () => {
                 </div>
 
                 {/* Heading */}
-                <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a] tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   Teach what you <span className="text-[#d94d19]">love</span>
                 </h2>
 
                 {/* Description */}
-                <p className="text-[#1a6b2e] text-base leading-relaxed">
+                <p className="text-white/80 text-base leading-relaxed">
                   Share your expertise with millions of learners worldwide. Join
                   our community of instructors and earn money doing what you
                   enjoy.

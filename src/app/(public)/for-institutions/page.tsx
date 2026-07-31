@@ -407,11 +407,11 @@ export default function ForInstitutionsPage() {
                               />
                             </svg>
                           </div>
-                          <h3 className="text-xl font-bold text-[#0f3d1a]">
+                          <h3 className="text-xl font-bold text-white">
                             Institution Overview
                           </h3>
                         </div>
-                        <p className="text-sm text-[#1a6b2e] leading-relaxed pl-10">
+                        <p className="text-sm text-white/80 leading-relaxed pl-10">
                           Manage student access, monitor course participation,
                           and keep track of active learning plans
                         </p>
@@ -424,7 +424,7 @@ export default function ForInstitutionsPage() {
                       <div className="flex items-center justify-between mb-5 pb-3 border-b border-[#1a6b2e]/20">
                         <div className="flex items-center gap-3">
                           <div className="w-2 h-2 rounded-full bg-[#5E6F58]" />
-                          <span className="text-xs font-bold uppercase tracking-wider text-[#1a6b2e]">
+                          <span className="text-xs font-bold uppercase tracking-wider text-white/80">
                             Active Student Access
                           </span>
                         </div>
@@ -460,7 +460,7 @@ export default function ForInstitutionsPage() {
                               <div className="flex items-center justify-between mb-2">
                                 <div className="flex items-center gap-3">
                                   <span className="text-lg">{item.icon}</span>
-                                  <span className="text-sm font-medium text-[#1a6b2e]">
+                                  <span className="text-sm font-medium text-white/80">
                                     {item.name}
                                   </span>
                                 </div>
@@ -486,14 +486,14 @@ export default function ForInstitutionsPage() {
                       {/* Total Stats */}
                       <div className="mt-5 pt-3 border-t border-[#1a6b2e]/20">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs text-[#7dab52]">
+                          <span className="text-xs text-white/60">
                             Total Active Students
                           </span>
                           <div className="flex items-center gap-2">
-                            <span className="text-2xl font-bold text-[#0f3d1a]">
+                            <span className="text-2xl font-bold text-white">
                               250
                             </span>
-                            <span className="text-xs text-[#7dab52]">/ 500</span>
+                            <span className="text-xs text-white/60">/ 500</span>
                           </div>
                         </div>
                         <div className="mt-2 h-1 bg-[#1a6b2e]/5 rounded-full overflow-hidden">
@@ -520,7 +520,7 @@ export default function ForInstitutionsPage() {
                             />
                           </svg>
                         </div>
-                        <span className="text-[10px] font-bold text-[#7dab52] uppercase tracking-widest">
+                        <span className="text-[10px] font-bold text-white/60 uppercase tracking-widest">
                           Secured by NextGen-LMS LMS Guard
                         </span>
                       </div>

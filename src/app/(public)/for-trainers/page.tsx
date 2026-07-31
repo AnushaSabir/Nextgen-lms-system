@@ -668,11 +668,11 @@ export default function ForTrainersPage() {
             Support Toolkit
           </span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a] mb-2">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Tools that keep trainers{" "}
           <span className="text-[#d94d19]">consistent</span>
         </h2>
-        <p className="text-sm text-[#0f3d1a] font-medium leading-relaxed">
+        <p className="text-sm text-white/80 font-medium leading-relaxed">
           Trainers get workflows for feedback, student questions,
           lesson updates, and performance tracking.
         </p>
@@ -723,10 +723,10 @@ export default function ForTrainersPage() {
           <div className="w-11 h-11 rounded-xl bg-[#d94d19]/10 border border-[#d94d19]/25 text-[#d94d19] flex items-center justify-center mb-4 group-hover:bg-[#d94d19] group-hover:text-[#0f3d1a] group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
             <Icon className="w-5 h-5" />
           </div>
-          <h3 className="text-base sm:text-lg font-bold text-[#0f3d1a] tracking-tight mb-2">
+          <h3 className="text-base sm:text-lg font-bold text-white tracking-tight mb-2">
             {tool.title}
           </h3>
-          <p className="text-sm text-[#1a6b2e] font-medium leading-relaxed">
+          <p className="text-sm text-white/80 font-medium leading-relaxed">
             {tool.desc}
           </p>
         </div>
