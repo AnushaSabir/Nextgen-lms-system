@@ -34,7 +34,7 @@ const HERO_SLIDES = [
     ctaLink: "/login?mode=signup",
     secCtaText: "Explore Courses",
     secCtaLink: "/courses",
-    video: "/videos/main_hero/new_hero.mp4"
+    video: "/videos/main_hero/new_hero.mp4.mp4"
   }
 ];
 
