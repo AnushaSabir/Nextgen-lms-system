@@ -30,27 +30,27 @@ const theme = {
     reflection: 'bg-gradient-to-br from-blue-400/5 via-transparent to-blue-600/10',
   },
   orange: {
-    bg: 'bg-orange-500/10',
-    border: 'border-orange-500/20',
-    text: 'text-orange-400',
-    gradient: 'from-orange-600/15 via-orange-500/10 to-orange-600/5',
-    glow: 'shadow-orange-500/10',
+    bg: 'bg-sky-500/10',
+    border: 'border-sky-500/20',
+    text: 'text-sky-400',
+    gradient: 'from-orange-600/15 via-sky-500/10 to-orange-600/5',
+    glow: 'shadow-sky-500/10',
     solid: 'bg-orange-600',
-    solidHover: 'hover:bg-orange-500',
-    subtle: 'bg-orange-500/5',
-    subtleBorder: 'border-orange-500/10',
-    subtleText: 'text-orange-400/60',
+    solidHover: 'hover:bg-sky-500',
+    subtle: 'bg-sky-500/5',
+    subtleBorder: 'border-sky-500/10',
+    subtleText: 'text-sky-400/60',
     depth: 'shadow-[0_8px_32px_-8px_rgba(249,115,22,0.2),0_4px_16px_-4px_rgba(249,115,22,0.1)]',
     glow3D: 'shadow-[0_0_40px_-8px_rgba(249,115,22,0.3),0_0_80px_-16px_rgba(249,115,22,0.15)]',
-    reflection: 'bg-gradient-to-br from-orange-400/5 via-transparent to-orange-600/10',
+    reflection: 'bg-gradient-to-br from-sky-400/5 via-transparent to-orange-600/10',
   },
 } as const;
 
 type ThemeKey = keyof typeof theme;
 
-const card3DClass = "transition-all duration-500 ease-out transform-gpu perspective-1000 hover:rotate-y-1 hover:rotate-x-0.5 hover:shadow-[0_20px_60px_-12px_rgba(0,0,0,0.5),0_10px_40px_-8px_rgba(0,0,0,0.3)] hover:-translate-y-2 hover:scale-[1.02]";
+const card3DClass = "transition-all duration-500 ease-out transform-gpu perspective-1000 hover:rotate-y-1 hover:rotate-x-0.5 hover:shadow-[0_20px_60px_-12px_rgba(26, 107, 46, 0.1),0_10px_40px_-8px_rgba(26, 107, 46, 0.1)] hover:-translate-y-2 hover:scale-[1.02]";
 
-const glassEffect = "backdrop-blur-xl bg-gradient-to-br from-gray-800/40 to-gray-900/60 border border-white/[0.08] shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4)]";
+const glassEffect = "backdrop-blur-xl bg-gradient-to-br from-gray-800/40 to-gray-900/60 border border-white/[0.08] shadow-[0_8px_32px_-8px_rgba(26, 107, 46, 0.1)]";
 
 function SectionHeader({
   icon: Icon,
@@ -67,7 +67,7 @@ function SectionHeader({
   return (
     <div className="flex items-center gap-3.5 mb-6 group">
       <div
-        className={`w-12 h-12 rounded-2xl ${t.bg} border ${t.border} flex items-center justify-center flex-shrink-0 ${t.depth} ${t.reflection} transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4),0_0_20px_-4px_rgba(59,130,246,0.2)] relative overflow-hidden`}
+        className={`w-12 h-12 rounded-2xl ${t.bg} border ${t.border} flex items-center justify-center flex-shrink-0 ${t.depth} ${t.reflection} transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_8px_32px_-8px_rgba(26, 107, 46, 0.1),0_0_20px_-4px_rgba(59,130,246,0.2)] relative overflow-hidden`}
         style={{ transformStyle: 'preserve-3d' }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent rounded-2xl" />
@@ -75,11 +75,11 @@ function SectionHeader({
         <Icon className={`w-5 h-5 ${t.text} relative z-10 drop-shadow-lg transition-transform duration-500 group-hover:scale-110`} />
       </div>
       <div>
-        <h3 className="text-[17px] font-semibold text-white leading-snug tracking-[-0.01em] relative">
+        <h3 className="text-[17px] font-semibold text-[#0f3d1a] leading-snug tracking-[-0.01em] relative">
           {title}
           <div className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-to-r from-blue-400/0 via-blue-400/50 to-blue-400/0 group-hover:w-full transition-all duration-700 ease-out" />
         </h3>
-        {caption && <p className="text-[13px] text-gray-500 mt-1 leading-relaxed font-normal">{caption}</p>}
+        {caption && <p className="text-[13px] text-[#7dab52] mt-1 leading-relaxed font-normal">{caption}</p>}
       </div>
     </div>
   );
@@ -137,19 +137,19 @@ export function CreateCourseScreen() {
       @keyframes float3D {
         0%, 100% { 
           transform: translate3d(0, 0, 0) rotateX(0deg); 
-          filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+          filter: drop-shadow(0 4px 8px rgba(26, 107, 46, 0.1));
         }
         25% { 
           transform: translate3d(3px, -6px, 15px) rotateX(1deg); 
-          filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
+          filter: drop-shadow(0 8px 16px rgba(26, 107, 46, 0.1));
         }
         50% { 
           transform: translate3d(-3px, -10px, 8px) rotateX(-0.5deg); 
-          filter: drop-shadow(0 6px 12px rgba(0,0,0,0.35));
+          filter: drop-shadow(0 6px 12px rgba(26, 107, 46, 0.1));
         }
         75% { 
           transform: translate3d(2px, -4px, 18px) rotateX(0.5deg); 
-          filter: drop-shadow(0 10px 20px rgba(0,0,0,0.45));
+          filter: drop-shadow(0 10px 20px rgba(26, 107, 46, 0.1));
         }
       }
       
@@ -245,7 +245,7 @@ export function CreateCourseScreen() {
       {/* 3D BACKGROUND PARTICLES */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl animate-[float3D_8s_ease-in-out_infinite]" />
-        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl animate-[float3D_10s_ease-in-out_infinite_1s]" />
+        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl animate-[float3D_10s_ease-in-out_infinite_1s]" />
         <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-400/5 rounded-full blur-3xl animate-[float3D_12s_ease-in-out_infinite_2s]" />
       </div>
 
@@ -265,7 +265,7 @@ export function CreateCourseScreen() {
         >
           {/* 3D ambient effects */}
           <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-blue-500/10 blur-3xl transition-all duration-700 group-hover:scale-110" />
-          <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-orange-500/5 blur-3xl transition-all duration-700 group-hover:scale-110" />
+          <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-sky-500/5 blur-3xl transition-all duration-700 group-hover:scale-110" />
 
           <div className="relative z-10">
             <SectionHeader icon={BookOpen} themeKey="navy" title="Course Essentials" caption="Provide accurate details to ensure faster approval." />
@@ -294,7 +294,7 @@ export function CreateCourseScreen() {
                     type="file"
                     accept="image/*"
                     required
-                    className="file:mr-4 file:rounded-full file:border-0 file:bg-orange-500/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-orange-400 hover:file:bg-orange-500/20 file:transition-all file:duration-300 file:hover:scale-105 file:hover:shadow-[0_4px_12px_rgba(249,115,22,0.3)]"
+                    className="file:mr-4 file:rounded-full file:border-0 file:bg-sky-500/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-sky-400 hover:file:bg-sky-500/20 file:transition-all file:duration-300 file:hover:scale-105 file:hover:shadow-[0_4px_12px_rgba(249,115,22,0.3)]"
                   />
                 </Field>
               </div>
@@ -318,7 +318,7 @@ export function CreateCourseScreen() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 text-white rounded-xl h-12 font-semibold transition-all duration-500 border border-gray-700/50 shadow-[0_4px_12px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_20px_-4px_rgba(0,0,0,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] transform-gpu"
+                  className="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 text-[#0f3d1a] rounded-xl h-12 font-semibold transition-all duration-500 border border-gray-700/50 shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_8px_20px_-4px_rgba(26, 107, 46, 0.1)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] transform-gpu"
                   disabled={loading}
                 >
                   <Save className="mr-2 h-4 w-4 group-hover:rotate-12 transition-transform duration-500" />
@@ -328,7 +328,7 @@ export function CreateCourseScreen() {
                   type="button"
                   size="lg"
                   onClick={(e) => handleCreate(e as any, true)}
-                  className="w-full sm:w-auto bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
+                  className="w-full sm:w-auto bg-gradient-to-r from-orange-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-[#0f3d1a] rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
                   disabled={loading}
                   style={{ transformStyle: 'preserve-3d' }}
                 >
@@ -358,7 +358,7 @@ export function CreateCourseScreen() {
             style={{ transformStyle: 'preserve-3d' }}
           >
             {/* 3D ambient light */}
-            <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-orange-500/10 blur-3xl transition-all duration-700 group-hover:scale-110" />
+            <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-sky-500/10 blur-3xl transition-all duration-700 group-hover:scale-110" />
             <div className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full bg-blue-500/5 blur-3xl transition-all duration-700 group-hover:scale-110" />
 
             <div className="p-6 relative z-10">

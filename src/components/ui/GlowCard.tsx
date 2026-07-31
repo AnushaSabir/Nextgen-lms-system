@@ -24,9 +24,9 @@ export function GlowCard({
     <div className={`group relative rounded-[20px] bg-[#111318] border border-white/[0.08] p-6 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-white/[0.12] ${className}`} {...props}>
       {/* Top Header */}
       <div className="flex justify-between items-start mb-12 relative z-10">
-        <h2 className="text-4xl font-medium text-white tracking-tight">{value}</h2>
+        <h2 className="text-4xl font-medium text-[#0f3d1a] tracking-tight">{value}</h2>
         {icon && (
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg ${iconBgColor}`}>
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[#0f3d1a] shadow-lg ${iconBgColor}`}>
             {icon}
           </div>
         )}
@@ -34,7 +34,7 @@ export function GlowCard({
 
       {/* Label and Glow Container */}
       <div className={`relative pb-6 z-10 ${items.length > 0 ? 'border-b border-white/[0.08]' : ''}`}>
-        <p className="text-sm font-medium text-gray-400">{label}</p>
+        <p className="text-sm font-medium text-[#1a6b2e]">{label}</p>
         
         {/* Hover Glow Effect */}
         <div className={`absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t ${glowColor} to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-700 blur-2xl translate-y-1/2 pointer-events-none`} />
@@ -48,12 +48,12 @@ export function GlowCard({
           {items.map((item, i) => (
             <div key={i} className="flex items-center justify-between py-2.5 px-2 -mx-2 rounded-lg hover:bg-white/[0.02] group/item cursor-pointer transition-colors">
               <div className="flex items-center gap-3">
-                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition-colors ${item.done ? `${iconBgColor} text-white` : 'border border-white/20 text-transparent group-hover/item:border-white/40'}`}>
+                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition-colors ${item.done ? `${iconBgColor} text-[#0f3d1a]` : 'border border-white/20 text-transparent group-hover/item:border-white/40'}`}>
                   {item.done && <Check className="w-3 h-3" />}
                 </div>
-                <span className={`text-sm transition-colors ${item.done ? 'text-gray-500 line-through' : 'text-gray-300 group-hover/item:text-white'}`}>{item.label}</span>
+                <span className={`text-sm transition-colors ${item.done ? 'text-[#7dab52] line-through' : 'text-[#1a6b2e] group-hover/item:text-[#0f3d1a]'}`}>{item.label}</span>
               </div>
-              <ChevronRight className="w-4 h-4 text-gray-600 group-hover/item:text-gray-400 transition-colors" />
+              <ChevronRight className="w-4 h-4 text-gray-600 group-hover/item:text-[#1a6b2e] transition-colors" />
             </div>
           ))}
         </div>

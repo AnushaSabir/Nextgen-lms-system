@@ -12,20 +12,20 @@ export default function RevenueHistoryPage() {
 
   return (
     <div className="p-8 max-w-7xl mx-auto animate-in fade-in duration-500">
-      <Link href="/dashboard/trainer/earnings" className="inline-flex items-center gap-2 text-[#64748b] hover:text-white mb-6 transition-colors">
+      <Link href="/dashboard/trainer/earnings" className="inline-flex items-center gap-2 text-[#64748b] hover:text-[#0f3d1a] mb-6 transition-colors">
         <ArrowLeft className="w-4 h-4" /> Back to Dashboard
       </Link>
 
       <div className="flex justify-between items-end mb-10">
         <div>
-          <h1 className="text-3xl font-black text-white mb-2">Revenue History</h1>
-          <p className="text-[#94a3b8]">Detailed log of all transactions and sales.</p>
+          <h1 className="text-3xl font-black text-[#0f3d1a] mb-2">Revenue History</h1>
+          <p className="text-[#1a6b2e]">Detailed log of all transactions and sales.</p>
         </div>
         <div className="flex gap-3">
-          <button className="flex items-center gap-2 bg-[#0f172a] border border-[#1e293b] text-white px-4 py-2.5 rounded-xl hover:bg-[#1e293b] transition-colors">
+          <button className="flex items-center gap-2 bg-[#0f172a] border border-[#1e293b] text-[#0f3d1a] px-4 py-2.5 rounded-xl hover:bg-[#1e293b] transition-colors">
             <Filter className="w-4 h-4" /> Filter
           </button>
-          <button className="flex items-center gap-2 bg-[#f0591f] text-white px-4 py-2.5 rounded-xl hover:bg-[#ea580c] transition-colors shadow-[0_0_15px_rgba(240,89,31,0.3)]">
+          <button className="flex items-center gap-2 bg-[#5E6F58] text-[#0f3d1a] px-4 py-2.5 rounded-xl hover:bg-[#ea580c] transition-colors shadow-[0_0_15px_rgba(240,89,31,0.3)]">
             <Download className="w-4 h-4" /> Export CSV
           </button>
         </div>
@@ -34,7 +34,7 @@ export default function RevenueHistoryPage() {
       <div className="bg-[#0f172a]/80 backdrop-blur-md border border-[#1e293b] rounded-3xl overflow-hidden shadow-2xl">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-[#1e293b] bg-[#020617]/50">
+            <tr className="border-b border-[#1e293b] bg-[#c8e6c9]/50">
               <th className="p-5 text-xs font-bold text-[#64748b] uppercase tracking-wider">Transaction ID</th>
               <th className="p-5 text-xs font-bold text-[#64748b] uppercase tracking-wider">Date</th>
               <th className="p-5 text-xs font-bold text-[#64748b] uppercase tracking-wider">Type / Details</th>
@@ -45,13 +45,13 @@ export default function RevenueHistoryPage() {
           <tbody>
             {history.map((item) => (
               <tr key={item.id} className="border-b border-[#1e293b] hover:bg-white/[0.02] transition-colors">
-                <td className="p-5 text-sm font-mono text-[#94a3b8]">{item.id}</td>
-                <td className="p-5 text-sm text-[#cbd5e1]">{item.date}</td>
+                <td className="p-5 text-sm font-mono text-[#1a6b2e]">{item.id}</td>
+                <td className="p-5 text-sm text-[#1a6b2e]">{item.date}</td>
                 <td className="p-5">
-                  <p className="font-bold text-white">{item.type}</p>
+                  <p className="font-bold text-[#0f3d1a]">{item.type}</p>
                   <p className="text-xs text-[#64748b]">{item.details}</p>
                 </td>
-                <td className={`p-5 text-right font-black ${item.amount.startsWith('+') ? 'text-green-400' : 'text-white'}`}>
+                <td className={`p-5 text-right font-black ${item.amount.startsWith('+') ? 'text-green-400' : 'text-[#0f3d1a]'}`}>
                   {item.amount}
                 </td>
                 <td className="p-5 text-right">

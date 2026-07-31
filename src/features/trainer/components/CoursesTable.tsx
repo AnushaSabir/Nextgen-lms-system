@@ -13,10 +13,10 @@ export function CoursesTable({ compact = false, courses }: { compact?: boolean; 
     return (
       <Card className="border-gray-700/50 bg-gray-800/30 flex flex-col items-center justify-center py-16 text-center">
         <div className="rounded-full bg-gray-800 p-4 border border-gray-700 mb-4">
-          <BookOpen className="h-8 w-8 text-gray-400" />
+          <BookOpen className="h-8 w-8 text-[#1a6b2e]" />
         </div>
-        <h3 className="text-lg font-semibold text-white">No Courses Found</h3>
-        <p className="mt-2 text-sm text-gray-400 max-w-sm mb-6">You haven't created any courses yet. Start building your curriculum today.</p>
+        <h3 className="text-lg font-semibold text-[#0f3d1a]">No Courses Found</h3>
+        <p className="mt-2 text-sm text-[#1a6b2e] max-w-sm mb-6">You haven't created any courses yet. Start building your curriculum today.</p>
         <Link href="/trainer/create-course">
           <Button><Plus className="mr-2 h-4 w-4" /> Create First Course</Button>
         </Link>
@@ -40,25 +40,25 @@ export function CoursesTable({ compact = false, courses }: { compact?: boolean; 
             <div className="relative z-10 flex items-start justify-between gap-4">
               <div className="space-y-1.5">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-orange-400">{course.category}</span>
+                  <span className="text-xs font-bold uppercase tracking-wider text-sky-400">{course.category}</span>
                   <span className="h-1 w-1 rounded-full bg-gray-600" />
-                  <span className="text-xs text-gray-400 capitalize">{course.level}</span>
+                  <span className="text-xs text-[#1a6b2e] capitalize">{course.level}</span>
                 </div>
-                <h3 className="text-lg font-bold text-white line-clamp-1 group-hover:text-orange-100 transition-colors">{course.title}</h3>
+                <h3 className="text-lg font-bold text-[#0f3d1a] line-clamp-1 group-hover:text-orange-100 transition-colors">{course.title}</h3>
               </div>
               <StatusBadge status={course.status} />
             </div>
 
-            <p className="relative z-10 mt-4 line-clamp-2 text-sm leading-relaxed text-gray-400 flex-grow">
+            <p className="relative z-10 mt-4 line-clamp-2 text-sm leading-relaxed text-[#1a6b2e] flex-grow">
               {course.description}
             </p>
 
             <div className="relative z-10 mt-6 pt-4 border-t border-gray-800/80 flex flex-wrap items-center gap-3">
               <Link href={`/trainer/courses/${course.id}`} className="flex-1">
-                <Button size="sm" variant="ghost" className="w-full bg-transparent border border-gray-700 hover:bg-gray-800 hover:text-white">Overview</Button>
+                <Button size="sm" variant="ghost" className="w-full bg-transparent border border-gray-700 hover:bg-gray-800 hover:text-[#0f3d1a]">Overview</Button>
               </Link>
               <Link href={`/trainer/courses/${course.id}/videos`} className="flex-1">
-                <Button size="sm" className="w-full bg-gray-800 text-white hover:bg-gray-700 border-none"><VideoIcon className="mr-2 h-3.5 w-3.5" /> Content</Button>
+                <Button size="sm" className="w-full bg-gray-800 text-[#0f3d1a] hover:bg-gray-700 border-none"><VideoIcon className="mr-2 h-3.5 w-3.5" /> Content</Button>
               </Link>
             </div>
           </div>

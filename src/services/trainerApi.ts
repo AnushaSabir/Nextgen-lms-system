@@ -36,7 +36,7 @@ function serializeToFormData(data: FormData | any) {
 // attach token if present
 api.interceptors.request.use((config) => {
   try {
-    const token = (typeof window !== 'undefined' && localStorage.getItem('grapetask_lms_token')) || null;
+    const token = (typeof window !== 'undefined' && localStorage.getItem('nextgen-lms_lms_token')) || null;
     if (token && config.headers) config.headers['Authorization'] = `Bearer ${token}`;
   } catch (e) {
     // ignore

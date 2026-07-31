@@ -16,13 +16,13 @@ const FaqSection = dynamic(() => import('@/components/home/FaqSection'), { ssr: 
 const FinalCtaSection = dynamic(() => import('@/components/home/FinalCtaSection'), { ssr: true });
 
 export const metadata = {
-  title: 'GrapeTask LMS | Pakistan\'s #1 Skill-to-Earn Platform',
-  description: 'Learn high-income digital skills and launch your freelance career directly from GrapeTask LMS.',
+  title: 'NextGen-LMS LMS | Pakistan\'s #1 Skill-to-Earn Platform',
+  description: 'Learn high-income digital skills and launch your freelance career directly from NextGen-LMS LMS.',
 };
 
 export default function HomePage() {
   return (
-    <div className="overflow-hidden bg-[#020617] text-white">
+    <div className="overflow-hidden bg-[#c8e6c9] text-[#0f3d1a]">
       <ScrollReveal />
       
       <HeroSection />

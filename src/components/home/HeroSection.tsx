@@ -22,19 +22,19 @@ const HERO_STATS = [
 const HERO_SLIDES = [
   {
     badge: "LEARN FROM THE BEST",
-    highlight: "Pakistan's #1 Skill-to-Earn Platform",
+    highlight: "NextGen-LMS Platform",
     title: (
       <>
-        Learn High-Income <br className="hidden sm:block" />
-        <span className="text-[#f0591f] text-3d-orange">Digital Skills.</span>
+        Master High-Income <br className="hidden sm:block" />
+        <span className="text-[#d94d19] drop-shadow-sm">Digital Skills.</span>
       </>
     ),
-    desc: "GrapeTask LMS brings you top-tier courses taught by vetted industry experts. Master programming, graphic design, and artificial intelligence with structured assessments.",
+    desc: "Experience world-class courses taught by top industry experts. Master programming, AI, and design with structured assessments and real-world projects.",
     ctaText: "Explore Courses",
     ctaLink: "/courses",
     secCtaText: "Partner Institutes",
     secCtaLink: "/for-institutions",
-    video: "/videos/main_hero/learn high-income digital skills.mp4"
+    video: "/videos/main_hero/new_hero.mp4"
   },
   {
     badge: "GLOBAL STANDARDS",
@@ -42,31 +42,31 @@ const HERO_SLIDES = [
     title: (
       <>
         Earn Professional <br className="hidden sm:block" />
-        <span className="text-[#f0591f] text-3d-orange">Verified Badges.</span>
+        <span className="text-[#d94d19] drop-shadow-sm">Verified Badges.</span>
       </>
     ),
-    desc: "Every certificate you earn is verified by certified trainers and directly synced with your live freelance profile on GrapeTask, showing real proof of expertise.",
+    desc: "Every certificate you earn is verified by certified trainers and directly synced with your live freelance profile on NextGen-LMS, showing real proof of expertise.",
     ctaText: "How It Works",
     ctaLink: "/how-it-works",
     secCtaText: "Apply as Trainer",
     secCtaLink: "/for-trainers",
-    video: "/videos/main_hero/Earn Professional Verifid Badges..mp4"
+    video: "/videos/main_hero/new_hero.mp4"
   },
   {
     badge: "INSTANT INCOME FLOW",
-    highlight: "Bridge the Gap to dollar earnings",
+    highlight: "Bridge the Gap to success",
     title: (
       <>
-        Launch Your Remote <br className="hidden sm:block" />
-        <span className="text-[#f0591f] text-3d-orange">Freelance Career.</span>
+        Launch Your Tech <br className="hidden sm:block" />
+        <span className="text-[#d94d19] drop-shadow-sm">Freelance Career.</span>
       </>
     ),
-    desc: "Stop chasing bids. GrapeTask connects certified students directly to global client contracts on our active freelance marketplace. Work, deliver, and get paid instantly.",
+    desc: "NextGen-LMS connects certified students directly to global client contracts on our active freelance marketplace. Work, deliver, and get paid instantly.",
     ctaText: "Join Free Now",
     ctaLink: "/login?mode=signup",
     secCtaText: "Pricing Plans",
     secCtaLink: "/pricing",
-    video: "/videos/main_hero/launch your remote freelance career..mp4"
+    video: "/videos/main_hero/new_hero.mp4"
   }
 ];
 
@@ -99,8 +99,8 @@ export default function HeroSection() {
   return (
     <>
       <section className="relative min-h-0 sm:min-h-[80vh] lg:min-h-screen flex items-start sm:items-center px-4 sm:px-6 pt-0 sm:pt-28 pb-4 sm:pb-20 overflow-hidden">
-        {/* Absolute Video Background Container: z-0 */}
-        <div className="absolute inset-0 bg-[#020617] overflow-hidden z-0">
+        {/* ── Full-bleed Video — NO overlays, shows 100% original ── */}
+        <div className="absolute inset-0 overflow-hidden z-0">
           {HERO_SLIDES.map((slide, idx) => (
             <video
               key={idx}
@@ -114,34 +114,25 @@ export default function HeroSection() {
                 if (el) {
                   el.muted = true;
                   el.defaultMuted = true;
-                  if (isPlaying) {
-                    el.play().catch(() => {});
-                  } else {
-                    el.pause();
-                  }
+                  if (isPlaying) el.play().catch(() => {});
+                  else el.pause();
                 }
               }}
               className={`absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-1000 ${
-                activeSlide === idx ? 'opacity-80' : 'opacity-0'
+                activeSlide === idx ? 'opacity-100' : 'opacity-0'
               }`}
             >
               <source src={slide.video} type="video/mp4" />
             </video>
           ))}
-
-          {/* Custom Theme Color Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#020617]/85 via-[#020617]/40 to-transparent z-20" />
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#020617]/60 via-transparent to-[#f0591f]/10 mix-blend-screen opacity-50 z-20" />
-          <div className="absolute inset-0 hero-grid opacity-15 pointer-events-none z-20" />
+          {/* Only a very subtle bottom vignette so stats bar is readable */}
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/40 to-transparent z-20 pointer-events-none" />
         </div>
-
-        {/* Ambient background glow blob */}
-        <div className="absolute top-1/4 right-1/4 w-[250px] sm:w-[450px] h-[250px] sm:h-[450px] rounded-full bg-[#f0591f] opacity-[0.07] blur-[100px] sm:blur-[130px] pointer-events-none animate-float-slow z-20" />
 
         {/* Play/Pause Button */}
         <button
           onClick={togglePlayPause}
-          className="absolute bottom-4 right-3 sm:bottom-10 sm:right-8 z-40 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md flex items-center justify-center text-white transition-all duration-300 hover:scale-110 shadow-lg"
+          className="absolute bottom-4 right-3 sm:bottom-10 sm:right-8 z-40 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-white/20 hover:bg-white/30 border border-white/40 backdrop-blur-md flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
           aria-label={isPlaying ? "Pause video" : "Play video"}
         >
           {isPlaying ? <Pause className="w-3.5 h-3.5 sm:w-5 sm:h-5" /> : <Play className="w-3.5 h-3.5 sm:w-5 sm:h-5 ml-0.5 sm:ml-1" />}
@@ -149,39 +140,45 @@ export default function HeroSection() {
 
         <div className="container mx-auto relative z-30">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-12 lg:gap-16 items-center">
-            {/* LEFT — Dynamic Text & Info */}
+            {/* LEFT — Text */}
             <div className="lg:col-span-7 space-y-2.5 sm:space-y-8 text-left max-w-2xl py-4 sm:py-0">
-              <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-xs sm:text-sm font-semibold text-white shadow-lg animate-fade-in">
-                <span className="flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-gradient-to-r from-[#f0591f] to-[#ff7a45] shadow-inner">
+
+              {/* Badge */}
+              <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border border-white/40 bg-white/20 backdrop-blur-md text-xs sm:text-sm font-semibold text-white shadow-lg animate-fade-in">
+                <span className="flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#1a6b2e] shadow-inner">
                   <Award className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
                 </span>
-                <span className="uppercase tracking-widest text-[9px] sm:text-[10px] font-black text-primaryOrange sm:mr-1">
+                <span className="uppercase tracking-widest text-[9px] sm:text-[10px] font-black text-white sm:mr-1 drop-shadow">
                   {HERO_SLIDES[activeSlide].badge}
                 </span>
-                <span className="text-[#e4e4e7] hidden sm:inline">| {HERO_SLIDES[activeSlide].highlight}</span>
+                <span className="text-white/70 hidden sm:inline">| {HERO_SLIDES[activeSlide].highlight}</span>
               </div>
 
-              <h1 className="text-[1.85rem] sm:text-5xl md:text-6xl font-black leading-[1.06] sm:leading-[1.1] tracking-tight text-white transition-all duration-700 transform translate-y-0 text-3d max-w-none">
+              {/* Heading */}
+              <h1 className="text-[1.85rem] sm:text-5xl md:text-6xl font-black leading-[1.06] sm:leading-[1.1] tracking-tight text-white drop-shadow-lg transition-all duration-700 max-w-none">
                 {HERO_SLIDES[activeSlide].title}
               </h1>
 
-              <p className="text-xs sm:text-base md:text-lg text-[#d4d4d8] leading-5 sm:leading-relaxed font-medium max-w-[32rem]">
+              {/* Description */}
+              <p className="text-xs sm:text-base md:text-lg text-white/80 leading-5 sm:leading-relaxed font-medium max-w-[32rem] drop-shadow">
                 {HERO_SLIDES[activeSlide].desc}
               </p>
 
+              {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row items-start gap-2 sm:gap-4 pt-0.5 sm:pt-2">
                 <Link href={HERO_SLIDES[activeSlide].ctaLink}
-                  className="group w-auto min-w-[180px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-1.5 sm:px-6 sm:py-2.5 bg-gradient-to-r from-[#f0591f] to-[#ff7a45] text-white font-bold text-[11px] sm:text-sm rounded-lg sm:rounded-xl shadow-[0_6px_20px_rgba(240,89,31,0.2)] hover:shadow-[0_0_25px_rgba(240,89,31,0.4)] transition-all duration-200 hover:-translate-y-0.5 hover:scale-105 active:scale-95 text-center">
+                  className="group w-auto min-w-[180px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-1.5 sm:px-6 sm:py-2.5 bg-[#1a6b2e] hover:bg-[#0f3d1a] text-white font-black text-[11px] sm:text-sm rounded-lg sm:rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:scale-105 active:scale-95 text-center">
                   <span>{HERO_SLIDES[activeSlide].ctaText}</span>
                   <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
 
                 <Link href={HERO_SLIDES[activeSlide].secCtaLink}
-                  className="w-auto min-w-[180px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-1.5 sm:px-6 sm:py-2.5 rounded-lg sm:rounded-xl border border-white/20 bg-white/5 text-white font-semibold text-[11px] sm:text-sm backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:scale-105 hover:bg-white/10 hover:border-white/30 active:scale-95 text-center">
+                  className="w-auto min-w-[180px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-1.5 sm:px-6 sm:py-2.5 rounded-lg sm:rounded-xl border border-white/50 bg-white/10 text-white font-semibold text-[11px] sm:text-sm backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:scale-105 hover:bg-white/20 active:scale-95 text-center">
                   <span>{HERO_SLIDES[activeSlide].secCtaText}</span>
                 </Link>
               </div>
 
+              {/* Avatars & Rating */}
               <div className="flex items-center gap-2.5 sm:gap-6 pt-0.5 sm:pt-4">
                 <div className="flex -space-x-2.5 sm:-space-x-3">
                   {AVATARS.map((src, i) => (
@@ -191,48 +188,48 @@ export default function HeroSection() {
                       alt="learner avatar"
                       width={40}
                       height={40}
-                      className="w-7 h-7 sm:w-10 sm:h-10 rounded-full border-2 border-[#020617] object-cover"
+                      className="w-7 h-7 sm:w-10 sm:h-10 rounded-full border-2 border-white/50 object-cover"
                     />
                   ))}
                 </div>
                 <div>
-                  <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-[#f0591f] text-[#f0591f]" />)}</div>
-                  <p className="text-[10px] sm:text-xs text-[#a1a1aa] mt-0.5 font-semibold leading-snug">50,000+ learners trust GrapeTask LMS</p>
+                  <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-[#1a6b2e] text-[#1a6b2e]" />)}</div>
+                  <p className="text-[10px] sm:text-xs text-white/70 mt-0.5 font-semibold leading-snug">50,000+ learners trust NextGen-LMS</p>
                 </div>
               </div>
             </div>
 
-            {/* RIGHT — Premium 3D Floating Widget */}
+            {/* RIGHT — Floating Widget */}
             <div className="lg:col-span-5 hidden lg:flex items-center justify-center h-[520px] relative">
-              <div className="absolute w-[380px] h-[380px] rounded-full border border-[rgba(240,89,31,0.15)] animate-spin-slow" />
-              <div className="absolute w-[280px] h-[280px] rounded-full border border-[rgba(240,89,31,0.08)]" style={{ animation: 'spin-slow 15s linear infinite reverse' }} />
+              <div className="absolute w-[380px] h-[380px] rounded-full border border-white/20 animate-spin-slow" />
+              <div className="absolute w-[280px] h-[280px] rounded-full border border-white/10" style={{ animation: 'spin-slow 15s linear infinite reverse' }} />
 
-              <div className="relative z-10 w-28 h-28 bg-gradient-to-br from-[#f0591f]/90 to-[#f0591f]/40 backdrop-blur-xl rounded-3xl flex flex-col items-center justify-center border border-white/20 shadow-[0_8px_32px_rgba(240,89,31,0.2)] animate-float-slow hover:rotate-6 transition-transform">
+              <div className="relative z-10 w-28 h-28 bg-[#1a6b2e]/90 backdrop-blur-xl rounded-3xl flex flex-col items-center justify-center border border-white/30 shadow-xl animate-float-slow hover:rotate-6 transition-transform">
                 <Award className="w-8 h-8 text-white mb-1" />
-                <span className="text-white font-black text-[9px] tracking-widest">CERTIFIED</span>
+                <span className="text-white font-black text-[9px] tracking-widest drop-shadow-sm">CERTIFIED</span>
               </div>
 
               <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-20">
-                <div className="glass-card w-48 p-4 rounded-xl border border-white/10 shadow-lg backdrop-blur-md transition-all hover:scale-105">
+                <div className="bg-white/80 backdrop-blur-md w-48 p-4 rounded-xl shadow-lg border border-white/50 transition-all hover:scale-105">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-[#f0591f]/10 rounded-lg flex items-center justify-center text-primaryOrange">
+                    <div className="w-8 h-8 bg-[#1a6b2e]/20 rounded-lg flex items-center justify-center text-[#0f3d1a]">
                       <TrendingUp className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-white font-black text-base leading-none">87%</div>
-                      <div className="text-[#a1a1aa] font-bold text-[10px] mt-0.5">Growth Rate</div>
+                      <div className="text-[#0f3d1a] font-black text-base leading-none">87%</div>
+                      <div className="text-[#1a6b2e] font-bold text-[10px] mt-0.5">Success Rate</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="glass-card w-48 p-4 rounded-xl border border-white/10 shadow-lg backdrop-blur-md transition-all hover:scale-105">
+                <div className="bg-white/80 backdrop-blur-md w-48 p-4 rounded-xl shadow-lg border border-white/50 transition-all hover:scale-105">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-primaryOrange/10 rounded-lg flex items-center justify-center text-primaryOrange">
+                    <div className="w-8 h-8 bg-[#a8c97a]/20 rounded-lg flex items-center justify-center text-[#0f3d1a]">
                       <Users className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-white font-black text-base leading-none">50K+</div>
-                      <div className="text-[#a1a1aa] font-bold text-[10px] mt-0.5">Active Users</div>
+                      <div className="text-[#0f3d1a] font-black text-base leading-none">50K+</div>
+                      <div className="text-[#1a6b2e] font-bold text-[10px] mt-0.5">Active Learners</div>
                     </div>
                   </div>
                 </div>
@@ -240,40 +237,42 @@ export default function HeroSection() {
             </div>
           </div>
 
+          {/* Slide Dots */}
           <div className="flex items-center justify-start gap-2.5 sm:gap-3 mt-2 sm:mt-16">
             {HERO_SLIDES.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setActiveSlide(idx)}
                 className={`h-2 sm:h-2.5 rounded-full transition-all duration-500 ${activeSlide === idx
-                  ? 'w-8 sm:w-10 bg-primaryOrange shadow-md shadow-primaryOrange/30'
-                  : 'w-2 sm:w-2.5 bg-white/20 hover:bg-white/40'
+                  ? 'w-8 sm:w-10 bg-[#1a6b2e] shadow-md'
+                  : 'w-2 sm:w-2.5 bg-white/40 hover:bg-white/70'
                   }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
           </div>
 
-          <div className="hidden md:grid mt-24 grid-cols-4 gap-6 p-8 rounded-3xl glass-card border border-[rgba(255,255,255,0.06)] backdrop-blur-md">
+          {/* Desktop Stats Bar */}
+          <div className="hidden md:grid mt-24 grid-cols-4 gap-6 p-8 rounded-3xl bg-white/20 backdrop-blur-md border border-white/30">
             {HERO_STATS.map((stat, i) => (
               <div key={i} className="text-center reveal" style={{ transitionDelay: `${i * 100}ms` }}>
-                <div className="flex justify-center mb-1.5 text-[#f0591f]">{stat.icon}</div>
-                <div className="text-3xl font-black text-white mb-0.5">{stat.value}</div>
-                <div className="text-[10px] text-[#a1a1aa] uppercase tracking-wider font-extrabold">{stat.label}</div>
+                <div className="flex justify-center mb-1.5 text-[#1a6b2e] drop-shadow">{stat.icon}</div>
+                <div className="text-3xl font-black text-white mb-0.5 drop-shadow-md">{stat.value}</div>
+                <div className="text-[10px] text-white/70 uppercase tracking-wider font-extrabold">{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Mobile Stats Section */}
-      <section className="block md:hidden px-4 pb-8 bg-transparent">
-        <div className="grid grid-cols-2 gap-3 p-5 rounded-[2rem] glass-card border border-[rgba(255,255,255,0.12)] backdrop-blur-xl shadow-[0_25px_60px_rgba(0,0,0,0.25)]">
+      {/* Mobile Stats */}
+      <section className="block md:hidden px-4 pb-8 bg-[#c8e6c9] relative z-30">
+        <div className="grid grid-cols-2 gap-3 p-5 rounded-[2rem] bg-white shadow-md border border-[#1a6b2e]/20">
           {HERO_STATS.map((stat, i) => (
-            <div key={i} className="card-3d bg-white/[0.04] border border-[rgba(255,255,255,0.08)] p-5 rounded-2xl text-center py-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(0,0,0,0.22)] hover:bg-white/[0.06]">
-              <div className="flex justify-center mb-3 text-[#f0591f]">{stat.icon}</div>
-              <div className="text-xl font-black text-white leading-tight">{stat.value}</div>
-              <div className="text-[9px] text-[#a1a1aa] uppercase tracking-wider font-extrabold mt-1">{stat.label}</div>
+            <div key={i} className="bg-[#c8e6c9] border border-[#1a6b2e]/20 p-5 rounded-2xl text-center py-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-md">
+              <div className="flex justify-center mb-3 text-[#1a6b2e]">{stat.icon}</div>
+              <div className="text-xl font-black text-[#0f3d1a] leading-tight">{stat.value}</div>
+              <div className="text-[9px] text-[#1a6b2e] uppercase tracking-wider font-extrabold mt-1">{stat.label}</div>
             </div>
           ))}
         </div>

@@ -15,11 +15,11 @@ export default function DashboardRedirectPage() {
 
   useEffect(() => {
     let rawUser = user;
-    const token = window.localStorage.getItem('grapetask_lms_token');
+    const token = window.localStorage.getItem('nextgen-lms_lms_token');
 
     if (!rawUser) {
       try {
-        rawUser = JSON.parse(window.localStorage.getItem('grapetask_lms_user') ?? 'null');
+        rawUser = JSON.parse(window.localStorage.getItem('nextgen-lms_lms_user') ?? 'null');
       } catch {
         rawUser = null;
       }

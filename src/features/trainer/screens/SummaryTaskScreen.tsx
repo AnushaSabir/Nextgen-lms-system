@@ -57,10 +57,10 @@ export function SummaryTaskScreen({ courseId, videoId }: { courseId: string; vid
 
   return (
     <div className="space-y-8 pb-8 max-w-4xl mx-auto">
-      <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
-        <Link href={`/trainer/courses/${courseId}/videos`} className="hover:text-white transition-colors">Curriculum</Link>
+      <div className="flex items-center gap-2 text-sm text-[#1a6b2e] mb-4">
+        <Link href={`/trainer/courses/${courseId}/videos`} className="hover:text-[#0f3d1a] transition-colors">Curriculum</Link>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-gray-300">Summary Task</span>
+        <span className="text-[#1a6b2e]">Summary Task</span>
       </div>
 
       <PageHeader title="Written Summary Task" caption={`Configure essay/summary requirements for: ${video?.title ?? 'Lesson'}`} />
@@ -75,7 +75,7 @@ export function SummaryTaskScreen({ courseId, videoId }: { courseId: string; vid
           </div>
 
           <div className="pt-4 border-t border-gray-800">
-            <Button type="submit" size="lg" disabled={loading} className="w-full sm:w-auto shadow-lg shadow-orange-500/20">
+            <Button type="submit" size="lg" disabled={loading} className="w-full sm:w-auto shadow-lg shadow-sky-500/20">
               <FileText className="mr-2 h-4 w-4" />{loading ? 'Saving Task...' : 'Configure Summary Task'}
             </Button>
           </div>
@@ -85,16 +85,16 @@ export function SummaryTaskScreen({ courseId, videoId }: { courseId: string; vid
       {tasks.length > 0 && (
         <Card className="border-gray-700/50 bg-gray-900/60 shadow-xl p-8 mt-8">
           <div className="flex flex-col gap-1 mb-6">
-            <h3 className="text-xl font-bold text-white tracking-tight">Configured Summary Tasks</h3>
-            <p className="text-sm text-gray-400">Students must complete these tasks to pass the lesson.</p>
+            <h3 className="text-xl font-bold text-[#0f3d1a] tracking-tight">Configured Summary Tasks</h3>
+            <p className="text-sm text-[#1a6b2e]">Students must complete these tasks to pass the lesson.</p>
           </div>
           <div className="space-y-4">
             {tasks.map((task, idx) => (
               <div key={task.id} className="p-5 rounded-xl border border-gray-800 bg-gray-800/40">
-                <p className="font-semibold text-white mb-3 text-sm">Task {idx + 1}. {task.prompt}</p>
-                <div className="mt-2 flex flex-wrap gap-4 text-sm text-gray-400 bg-gray-900/50 p-3 rounded-lg border border-gray-700/50">
-                  <div><span className="text-gray-500 font-medium mr-2">Minimum Words:</span> {task.correctAnswer?.minimumWords || 150}</div>
-                  <div><span className="text-gray-500 font-medium mr-2">Passing Criteria:</span> {task.correctAnswer?.passingCriteria || 'N/A'}</div>
+                <p className="font-semibold text-[#0f3d1a] mb-3 text-sm">Task {idx + 1}. {task.prompt}</p>
+                <div className="mt-2 flex flex-wrap gap-4 text-sm text-[#1a6b2e] bg-gray-900/50 p-3 rounded-lg border border-gray-700/50">
+                  <div><span className="text-[#7dab52] font-medium mr-2">Minimum Words:</span> {task.correctAnswer?.minimumWords || 150}</div>
+                  <div><span className="text-[#7dab52] font-medium mr-2">Passing Criteria:</span> {task.correctAnswer?.passingCriteria || 'N/A'}</div>
                 </div>
               </div>
             ))}

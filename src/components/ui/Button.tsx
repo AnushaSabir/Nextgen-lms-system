@@ -15,8 +15,8 @@ export function Button({ variant = 'primary', size = 'md', className = '', child
 
   const variantStyles =
     variant === 'primary'
-      ? 'border border-orange-600 bg-orange-600 text-white hover:bg-orange-500 hover:border-orange-500 active:bg-orange-700'
-      : 'border border-gray-700 bg-gray-800 text-gray-300 hover:border-gray-600 hover:bg-gray-700 hover:text-gray-200 active:bg-gray-800';
+      ? 'border border-orange-600 bg-orange-600 text-[#0f3d1a] hover:bg-sky-500 hover:border-sky-500 active:bg-orange-700'
+      : 'border border-gray-700 bg-gray-800 text-[#1a6b2e] hover:border-gray-600 hover:bg-gray-700 hover:text-[#0f3d1a] active:bg-gray-800';
 
   return (
     <button

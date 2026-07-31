@@ -28,7 +28,7 @@ const REST_BASE_URL = envApiUrl.replace(/\/graphql\/?$/, '') + '/api';
 function attachInterceptors(instance: AxiosInstance) {
   instance.interceptors.request.use((config) => {
     if (typeof window !== 'undefined') {
-      const token = window.localStorage.getItem('grapetask_lms_token');
+      const token = window.localStorage.getItem('nextgen-lms_lms_token');
       if (token) config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -48,8 +48,8 @@ function attachInterceptors(instance: AxiosInstance) {
         // Clear local session on 401. Do not force a navigation here —
         // leave routing decisions to the client-side auth guard to avoid
         // premature redirects triggered by background requests.
-        window.localStorage.removeItem('grapetask_lms_token');
-        window.localStorage.removeItem('grapetask_lms_user');
+        window.localStorage.removeItem('nextgen-lms_lms_token');
+        window.localStorage.removeItem('nextgen-lms_lms_user');
       }
       const message = error.response?.data?.message;
       return Promise.reject(
@@ -139,7 +139,7 @@ export const authApi = {
 
   async profile() {
     const raw =
-      typeof window !== 'undefined' ? window.localStorage.getItem('grapetask_lms_user') : null;
+      typeof window !== 'undefined' ? window.localStorage.getItem('nextgen-lms_lms_user') : null;
     return raw ? (JSON.parse(raw) as User) : null;
   },
 };

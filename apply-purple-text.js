@@ -1,0 +1,51 @@
+const fs = require('fs');
+const path = require('path');
+
+function walk(dir, done) {
+  let results = [];
+  fs.readdir(dir, function(err, list) {
+    if (err) return done(err);
+    let pending = list.length;
+    if (!pending) return done(null, results);
+    list.forEach(function(file) {
+      file = path.resolve(dir, file);
+      fs.stat(file, function(err, stat) {
+        if (stat && stat.isDirectory()) {
+          if (file.includes('node_modules') || file.includes('.git') || file.includes('.next')) {
+            if (!--pending) done(null, results);
+            return;
+          }
+          walk(file, function(err, res) {
+            results = results.concat(res);
+            if (!--pending) done(null, results);
+          });
+        } else {
+          results.push(file);
+          if (!--pending) done(null, results);
+        }
+      });
+    });
+  });
+}
+
+walk('./src', function(err, results) {
+  if (err) throw err;
+  let count = 0;
+  results.forEach(file => {
+    if (!file.endsWith('.tsx') && !file.endsWith('.ts')) return;
+    try {
+      let content = fs.readFileSync(file, 'utf8');
+      let original = content;
+
+      // Replace text-[#5E6F58] with light purple text-[#9b87f5]
+      content = content.replace(/text-\[\#5E6F58\]/g, 'text-[#9b87f5]');
+
+      if (content !== original) {
+        fs.writeFileSync(file, content, 'utf8');
+        count++;
+        console.log(`Updated text color to light purple in: ${path.relative('./src', file)}`);
+      }
+    } catch(e) { /* skip */ }
+  });
+  console.log(`\nDone! Applied light purple text color to ${count} files.`);
+});

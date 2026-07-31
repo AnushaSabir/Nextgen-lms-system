@@ -107,7 +107,7 @@ export function MeetingsScreen() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-sky-500 border-t-transparent" />
       </div>
     );
   }
@@ -119,7 +119,7 @@ export function MeetingsScreen() {
           title="Meetings"
           caption="Schedule and manage Google Meet or Zoom sessions for your learners."
         />
-        <Button onClick={() => setShowForm((v) => !v)} className="shrink-0 shadow-lg shadow-orange-500/20">
+        <Button onClick={() => setShowForm((v) => !v)} className="shrink-0 shadow-lg shadow-sky-500/20">
           <Plus className="mr-2 h-4 w-4" />
           {showForm ? 'Hide Form' : 'Schedule Meeting'}
         </Button>
@@ -127,7 +127,7 @@ export function MeetingsScreen() {
 
       {/* ── Create Form ── */}
       {showForm && (
-        <Card className="border-orange-500/20 bg-gray-900/70 shadow-xl p-8">
+        <Card className="border-sky-500/20 bg-gray-900/70 shadow-xl p-8">
           <CardTitle title="New Meeting" caption="Provide a manual Zoom or Google Meet link." />
           <form className="mt-6 space-y-5" onSubmit={handleCreate}>
             <div className="grid gap-5 sm:grid-cols-2">
@@ -166,7 +166,7 @@ export function MeetingsScreen() {
             </Field>
 
             <div className="pt-2 flex gap-3">
-              <Button type="submit" disabled={submitting} className="shadow-lg shadow-orange-500/20">
+              <Button type="submit" disabled={submitting} className="shadow-lg shadow-sky-500/20">
                 {submitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Calendar className="mr-2 h-4 w-4" />}
                 {submitting ? 'Scheduling...' : 'Schedule Meeting'}
               </Button>
@@ -181,9 +181,9 @@ export function MeetingsScreen() {
       {/* ── Meetings List ── */}
       {meetings.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-700 p-16 text-center bg-gray-800/20">
-          <Calendar className="mx-auto h-12 w-12 text-gray-500 mb-4" />
-          <h3 className="text-lg font-semibold text-white">No meetings scheduled</h3>
-          <p className="mt-2 text-sm text-gray-400">
+          <Calendar className="mx-auto h-12 w-12 text-[#7dab52] mb-4" />
+          <h3 className="text-lg font-semibold text-[#0f3d1a]">No meetings scheduled</h3>
+          <p className="mt-2 text-sm text-[#1a6b2e]">
             Click "Schedule Meeting" above to create your first session.
           </p>
         </div>
@@ -195,26 +195,26 @@ export function MeetingsScreen() {
               className="group flex flex-col sm:flex-row sm:items-center justify-between gap-5 rounded-2xl border border-gray-700/50 bg-gray-800/40 p-5 transition-all hover:bg-gray-800/80 hover:border-gray-600"
             >
               <div className="flex items-start gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 border border-orange-500/20">
-                  <Video className="h-6 w-6 text-orange-400" />
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-sky-500/10 border border-sky-500/20">
+                  <Video className="h-6 w-6 text-sky-400" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
                     <span
-                      className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${PROVIDER_COLORS[meeting.provider] ?? 'bg-gray-700 text-gray-300 border-gray-600'}`}
+                      className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${PROVIDER_COLORS[meeting.provider] ?? 'bg-gray-700 text-[#1a6b2e] border-gray-600'}`}
                     >
                       {PROVIDER_LABELS[meeting.provider] ?? meeting.provider}
                     </span>
-                    <span className="text-xs text-gray-500 bg-gray-800 px-2.5 py-1 rounded-full border border-gray-700">
+                    <span className="text-xs text-[#7dab52] bg-gray-800 px-2.5 py-1 rounded-full border border-gray-700">
                       {meeting.course?.title ?? meeting.courseId}
                     </span>
                   </div>
-                  <div className="mt-2 flex items-center gap-2 text-sm text-gray-300">
-                    <Clock className="h-4 w-4 text-orange-400 shrink-0" />
+                  <div className="mt-2 flex items-center gap-2 text-sm text-[#1a6b2e]">
+                    <Clock className="h-4 w-4 text-sky-400 shrink-0" />
                     <span>{formatDateTime(meeting.startsAt)}</span>
                   </div>
                   {meeting.agenda && (
-                    <p className="mt-1.5 text-xs text-gray-500 line-clamp-1">{meeting.agenda}</p>
+                    <p className="mt-1.5 text-xs text-[#7dab52] line-clamp-1">{meeting.agenda}</p>
                   )}
                 </div>
               </div>
@@ -224,7 +224,7 @@ export function MeetingsScreen() {
                   href={meeting.meetingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 rounded-lg bg-orange-500 hover:bg-orange-400 text-white text-sm font-semibold px-4 py-2 transition-colors"
+                  className="flex items-center gap-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-[#0f3d1a] text-sm font-semibold px-4 py-2 transition-colors"
                 >
                   <Link2 className="h-4 w-4" />
                   Join

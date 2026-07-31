@@ -46,7 +46,7 @@ export function TrainerRegistrationScreenContent() {
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-12">
       <div className="mb-8">
-        <Link href="/login" className="inline-flex items-center text-sm font-medium text-gray-400 transition-colors hover:text-orange-400">
+        <Link href="/login" className="inline-flex items-center text-sm font-medium text-[#1a6b2e] transition-colors hover:text-sky-400">
           <ChevronRight className="mr-1 h-4 w-4 rotate-180" />
           Back to login
         </Link>
@@ -56,8 +56,8 @@ export function TrainerRegistrationScreenContent() {
         <Card className="border-gray-700/50 bg-gray-900/80 backdrop-blur-xl shadow-2xl p-8">
           <form className="space-y-8" onSubmit={handleSubmit}>
             <div>
-              <h2 className="text-2xl font-bold text-white">Apply as Trainer</h2>
-              <p className="mt-2 text-sm text-gray-400">Join GrapeTask LMS and share your expertise. Admin review is required before access.</p>
+              <h2 className="text-2xl font-bold text-[#0f3d1a]">Apply as Trainer</h2>
+              <p className="mt-2 text-sm text-[#1a6b2e]">Join NextGen-LMS LMS and share your expertise. Admin review is required before access.</p>
             </div>
 
             <div className="grid gap-6 sm:grid-cols-2">
@@ -72,11 +72,11 @@ export function TrainerRegistrationScreenContent() {
             <Field label="Teaching Levels">
               <div className="grid gap-4 md:grid-cols-2">
                 {trainerLevels.map((level) => (
-                  <label key={level.value} className="group relative flex cursor-pointer rounded-xl border border-gray-700/50 bg-gray-800/40 p-4 transition-all hover:border-orange-500/50 hover:bg-gray-800/80">
-                    <input name="teachingLevels[]" type="checkbox" value={level.value} className="peer mt-0.5 h-4 w-4 shrink-0 rounded border-gray-600 bg-gray-700 text-orange-500 focus:ring-orange-500 focus:ring-offset-gray-900" defaultChecked={level.value !== 'school'} />
+                  <label key={level.value} className="group relative flex cursor-pointer rounded-xl border border-gray-700/50 bg-gray-800/40 p-4 transition-all hover:border-sky-500/50 hover:bg-gray-800/80">
+                    <input name="teachingLevels[]" type="checkbox" value={level.value} className="peer mt-0.5 h-4 w-4 shrink-0 rounded border-gray-600 bg-gray-700 text-sky-500 focus:ring-sky-500 focus:ring-offset-gray-900" defaultChecked={level.value !== 'school'} />
                     <div className="ml-3 flex flex-col">
-                      <span className="text-sm font-semibold text-white peer-checked:text-orange-400">{level.label}</span>
-                      <span className="mt-1 text-xs text-gray-400">{level.detail}</span>
+                      <span className="text-sm font-semibold text-[#0f3d1a] peer-checked:text-sky-400">{level.label}</span>
+                      <span className="mt-1 text-xs text-[#1a6b2e]">{level.detail}</span>
                     </div>
                   </label>
                 ))}
@@ -84,27 +84,27 @@ export function TrainerRegistrationScreenContent() {
             </Field>
 
             <Field label="Reason for Joining">
-              <TextArea name="joiningReason" className="min-h-[120px]" placeholder="Tell admin why you want to teach on GrapeTask and what student outcomes you can deliver." required />
+              <TextArea name="joiningReason" className="min-h-[120px]" placeholder="Tell admin why you want to teach on NextGen-LMS and what student outcomes you can deliver." required />
             </Field>
 
             <Field label="CV Upload">
-              <div className="flex w-full items-center justify-center rounded-xl border border-dashed border-gray-600/50 bg-gray-800/20 px-6 py-8 transition-all hover:border-orange-500/50 hover:bg-gray-800/40">
+              <div className="flex w-full items-center justify-center rounded-xl border border-dashed border-gray-600/50 bg-gray-800/20 px-6 py-8 transition-all hover:border-sky-500/50 hover:bg-gray-800/40">
                 <div className="text-center">
-                  <Upload className="mx-auto h-8 w-8 text-gray-400" />
-                  <div className="mt-4 flex text-sm leading-6 text-gray-300">
-                    <label className="relative cursor-pointer rounded-md font-semibold text-orange-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-orange-500 focus-within:ring-offset-2 hover:text-orange-300">
+                  <Upload className="mx-auto h-8 w-8 text-[#1a6b2e]" />
+                  <div className="mt-4 flex text-sm leading-6 text-[#1a6b2e]">
+                    <label className="relative cursor-pointer rounded-md font-semibold text-sky-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-sky-500 focus-within:ring-offset-2 hover:text-orange-300">
                       <span>Upload a file</span>
                       <TextInput name="cv" type="file" className="sr-only" accept=".pdf,.doc,.docx" required />
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
-                  <p className="text-xs leading-5 text-gray-500">PDF, DOC up to 10MB</p>
+                  <p className="text-xs leading-5 text-[#7dab52]">PDF, DOC up to 10MB</p>
                 </div>
               </div>
             </Field>
 
             <div className="flex items-center justify-between pt-4">
-              <Button type="submit" size="lg" className="w-full sm:w-auto shadow-lg shadow-orange-500/20" disabled={loading}>
+              <Button type="submit" size="lg" className="w-full sm:w-auto shadow-lg shadow-sky-500/20" disabled={loading}>
                 <Send className="mr-2 h-4 w-4" />
                 {loading ? 'Submitting Application...' : 'Apply for Review'}
               </Button>
@@ -125,10 +125,10 @@ export function TrainerRegistrationScreenContent() {
             <div className="relative space-y-6 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-700 before:to-transparent">
               {['Submit Application', 'Admin Review', 'Profile Verification', 'Dashboard Access'].map((step, index) => (
                 <div key={step} className="relative flex items-center gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gray-700 bg-gray-800 text-sm font-bold text-gray-400 shadow-sm z-10">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gray-700 bg-gray-800 text-sm font-bold text-[#1a6b2e] shadow-sm z-10">
                     {index + 1}
                   </div>
-                  <div className="flex-1 rounded-lg border border-gray-700/50 bg-gray-800/40 p-3 text-sm font-medium text-gray-300">
+                  <div className="flex-1 rounded-lg border border-gray-700/50 bg-gray-800/40 p-3 text-sm font-medium text-[#1a6b2e]">
                     {step}
                   </div>
                 </div>
@@ -143,7 +143,7 @@ export function TrainerRegistrationScreenContent() {
 
 export function TrainerRegistrationScreen() {
   return (
-    <Suspense fallback={<div className="flex h-screen items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" /></div>}>
+    <Suspense fallback={<div className="flex h-screen items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-sky-500 border-t-transparent" /></div>}>
       <TrainerRegistrationScreenContent />
     </Suspense>
   );

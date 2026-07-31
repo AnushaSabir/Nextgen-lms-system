@@ -56,10 +56,10 @@ export function QuizManagementScreen({ courseId, videoId }: { courseId: string; 
 
   return (
     <div className="space-y-8 pb-8 max-w-4xl mx-auto">
-      <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
-        <Link href={`/trainer/courses/${courseId}/videos`} className="hover:text-white transition-colors">Curriculum</Link>
+      <div className="flex items-center gap-2 text-sm text-[#1a6b2e] mb-4">
+        <Link href={`/trainer/courses/${courseId}/videos`} className="hover:text-[#0f3d1a] transition-colors">Curriculum</Link>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-gray-300">Short Quiz</span>
+        <span className="text-[#1a6b2e]">Short Quiz</span>
       </div>
 
       <PageHeader title="Quiz Questions" caption={`Add conceptual questions for: ${video?.title ?? 'Lesson'}`} />
@@ -83,15 +83,15 @@ export function QuizManagementScreen({ courseId, videoId }: { courseId: string; 
       {quizzes.length > 0 && (
         <Card className="border-gray-700/50 bg-gray-900/60 shadow-xl p-8 mt-8">
           <div className="flex flex-col gap-1 mb-6">
-            <h3 className="text-xl font-bold text-white tracking-tight">Existing Quizzes</h3>
-            <p className="text-sm text-gray-400">There are {quizzes.length} short answer questions for this lesson.</p>
+            <h3 className="text-xl font-bold text-[#0f3d1a] tracking-tight">Existing Quizzes</h3>
+            <p className="text-sm text-[#1a6b2e]">There are {quizzes.length} short answer questions for this lesson.</p>
           </div>
           <div className="space-y-4">
             {quizzes.map((quiz, idx) => (
               <div key={quiz.id} className="p-5 rounded-xl border border-gray-800 bg-gray-800/40">
-                <p className="font-semibold text-white mb-3 text-sm">Q{idx + 1}. {quiz.prompt}</p>
-                <div className="mt-2 text-sm text-gray-400">
-                  <span className="text-gray-500 font-medium mr-2">Expected Answer:</span>
+                <p className="font-semibold text-[#0f3d1a] mb-3 text-sm">Q{idx + 1}. {quiz.prompt}</p>
+                <div className="mt-2 text-sm text-[#1a6b2e]">
+                  <span className="text-[#7dab52] font-medium mr-2">Expected Answer:</span>
                   {(quiz.correctAnswer || []).join(', ')}
                 </div>
               </div>

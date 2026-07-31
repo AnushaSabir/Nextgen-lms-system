@@ -20,7 +20,7 @@ export function MyCoursesScreen() {
     }
   }, [loading, courses, searchParams, router]);
 
-  if (loading) return <div className="flex h-64 items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" /></div>;
+  if (loading) return <div className="flex h-64 items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-sky-500 border-t-transparent" /></div>;
 
   return (
     <div className="space-y-8 pb-8">

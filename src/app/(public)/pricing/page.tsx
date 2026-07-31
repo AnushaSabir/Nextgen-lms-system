@@ -97,7 +97,7 @@ export default function PricingPage() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-[#020617] text-white">
+    <div className="relative min-h-screen bg-[#c8e6c9] text-[#0f3d1a]">
       {/* ── HERO VIDEO BACKGROUND ── */}
       <div className="absolute top-0 inset-x-0 h-[500px] sm:h-[600px] pointer-events-none overflow-hidden z-0">
         <video
@@ -123,14 +123,14 @@ export default function PricingPage() {
           <source src="/videos/Flexible Pricing Plans.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/25 via-[#020617]/55 to-[#020617] z-20" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#020617]/60 via-transparent to-[#f0591f]/15 mix-blend-screen opacity-60 z-20" />
-        <div className="absolute top-0 right-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-primaryOrange/10 blur-[100px] sm:blur-[150px] rounded-full z-20" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#020617]/60 via-transparent to-[#5E6F58]/15 mix-blend-screen opacity-60 z-20" />
+        <div className="absolute top-0 right-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-primaryBlue/10 blur-[100px] sm:blur-[150px] rounded-full z-20" />
       </div>
 
       {/* Play/Pause Button */}
       <button
         onClick={togglePlayPause}
-        className="absolute top-[400px] sm:top-[450px] right-4 sm:right-8 z-40 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md flex items-center justify-center text-white transition-all duration-300 hover:scale-125 hover:-translate-y-2 shadow-lg hover:shadow-[0_15px_30px_rgba(240,89,31,0.3)]"
+        className="absolute top-[400px] sm:top-[450px] right-4 sm:right-8 z-40 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md flex items-center justify-center text-[#0f3d1a] transition-all duration-300 hover:scale-125 hover:-translate-y-2 shadow-lg hover:shadow-[0_15px_30px_rgba(240,89,31,0.3)]"
         aria-label={isPlaying ? "Pause video" : "Play video"}
       >
         {isPlaying ? (
@@ -144,16 +144,16 @@ export default function PricingPage() {
         <div className="container mx-auto max-w-6xl">
           {/* Header Info */}
           <div className="text-center mb-16 sm:mb-24 space-y-4 sm:space-y-6 max-w-4xl mx-auto px-2 sm:px-4">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryOrange/20 bg-primaryOrange/10 text-primaryOrange text-xs font-bold uppercase tracking-widest shadow-sm hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryBlue/20 bg-primaryBlue/10 text-primaryBlue text-xs font-bold uppercase tracking-widest shadow-sm hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
               <Clock className="w-3.5 h-3.5" /> Affordable Excellence
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-tight tracking-tight text-3d break-words">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0f3d1a] leading-tight tracking-tight text-3d break-words">
               Flexible{" "}
-              <span className="text-primaryOrange text-3d-orange">
+              <span className="text-primaryBlue text-3d-orange">
                 Pricing Plans
               </span>
             </h1>
-            <p className="text-base sm:text-lg text-[#a1a1aa] font-medium max-w-xl mx-auto leading-relaxed break-words">
+            <p className="text-base sm:text-lg text-[#1a6b2e] font-medium max-w-xl mx-auto leading-relaxed break-words">
               Find the perfect plan to master digital skills and connect
               directly to high-paying freelance contracts.
             </p>
@@ -166,31 +166,31 @@ export default function PricingPage() {
               {/* Left Card - Modern Interactive Hub */}
               <div className="relative group">
                 {/* Animated gradient border */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-primaryOrange/50 to-primaryOrange/10 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primaryBlue/50 to-primaryBlue/10 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
 
                 <div className="relative p-7 sm:p-8 rounded-[2.5rem] bg-gradient-to-br from-cardBg to-cardBg/95 border border-lightBorder shadow-2xl hover:-translate-y-4 hover:scale-[1.02] transition-all duration-500 h-full flex flex-col overflow-hidden">
                   {/* Decorative elements */}
-                  <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-primaryOrange/10 to-transparent rounded-full blur-3xl" />
-                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-primaryOrange/5 to-transparent rounded-full blur-2xl" />
+                  <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-primaryBlue/10 to-transparent rounded-full blur-3xl" />
+                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-primaryBlue/5 to-transparent rounded-full blur-2xl" />
 
                   <div className="relative z-10 flex-1 flex flex-col">
                     {/* Badge with animation */}
                     <div className="relative inline-block w-fit mb-6">
-                      <div className="absolute inset-0 bg-primaryOrange/20 rounded-full blur-md animate-pulse" />
-                      <div className="relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryOrange/30 bg-gradient-to-r from-primaryOrange/20 to-primaryOrange/5 text-primaryOrange text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all duration-300 cursor-default">
+                      <div className="absolute inset-0 bg-primaryBlue/20 rounded-full blur-md animate-pulse" />
+                      <div className="relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryBlue/30 bg-gradient-to-r from-primaryBlue/20 to-primaryBlue/5 text-primaryBlue text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all duration-300 cursor-default">
                         <UserCheck className="w-3.5 h-3.5" /> Learner Pathways
                       </div>
                     </div>
 
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight mb-4">
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#0f3d1a] tracking-tight leading-tight mb-4">
                       A cleaner learning experience for{" "}
-                      <span className="bg-gradient-to-r from-primaryOrange to-primaryOrange/70 bg-clip-text text-transparent">
+                      <span className="bg-gradient-to-r from-primaryBlue to-primaryBlue/70 bg-clip-text text-transparent">
                         learners, trainers, and institutions
                       </span>
                     </h2>
 
-                    <p className="text-sm text-[#a1a1aa] font-medium leading-relaxed mb-8">
-                      GrapeTask LMS is built for modern skill development:
+                    <p className="text-sm text-[#1a6b2e] font-medium leading-relaxed mb-8">
+                      NextGen-LMS LMS is built for modern skill development:
                       flexible course access, trainer-led review, and verified
                       certificates that prepare learners for real freelance
                       work.
@@ -209,7 +209,7 @@ export default function PricingPage() {
                           title: "Trainer-led review",
                           desc: "Get structured task assessments, practical feedback, and certified trainer support for each milestone.",
                           icon: Rocket,
-                          color: "from-orange-500/20 to-red-500/20",
+                          color: "from-sky-500/20 to-red-500/20",
                         },
                         {
                           title: "Institution-ready scale",
@@ -222,22 +222,22 @@ export default function PricingPage() {
                         return (
                           <div key={idx} className="group/item relative">
                             <div className="absolute inset-0 bg-gradient-to-r ${item.color} rounded-2xl blur opacity-0 group-hover/item:opacity-100 transition duration-500" />
-                            <div className="relative flex gap-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:border-primaryOrange/40 transition-all duration-300 hover:-translate-y-1">
-                              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primaryOrange/20 to-primaryOrange/5 text-primaryOrange border border-primaryOrange/30 group-hover/item:scale-110 group-hover/item:rotate-12 transition-all duration-300 flex-shrink-0">
+                            <div className="relative flex gap-4 rounded-2xl bg-[#1a6b2e]/5 backdrop-blur-sm border border-[#1a6b2e]/20 p-4 hover:border-primaryBlue/40 transition-all duration-300 hover:-translate-y-1">
+                              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primaryBlue/20 to-primaryBlue/5 text-primaryBlue border border-primaryBlue/30 group-hover/item:scale-110 group-hover/item:rotate-12 transition-all duration-300 flex-shrink-0">
                                 <IconComponent className="w-6 h-6" />
                               </div>
                               <div className="flex-1">
-                                <h3 className="text-sm font-bold text-white mb-1">
+                                <h3 className="text-sm font-bold text-[#0f3d1a] mb-1">
                                   {item.title}
                                 </h3>
-                                <p className="text-xs text-[#a1a1aa] leading-relaxed">
+                                <p className="text-xs text-[#1a6b2e] leading-relaxed">
                                   {item.desc}
                                 </p>
                               </div>
                               {/* Interactive arrow */}
                               <div className="opacity-0 group-hover/item:opacity-100 transition-all duration-300 transform translate-x-2 group-hover/item:translate-x-0">
                                 <svg
-                                  className="w-5 h-5 text-primaryOrange"
+                                  className="w-5 h-5 text-primaryBlue"
                                   fill="none"
                                   viewBox="0 0 24 24"
                                   stroke="currentColor"
@@ -257,7 +257,7 @@ export default function PricingPage() {
                     </div>
 
                     {/* Modern Image Showcase */}
-                  <div className="relative mt-4 rounded-2xl overflow-hidden border border-white/10">
+                  <div className="relative mt-4 rounded-2xl overflow-hidden border border-[#1a6b2e]/20">
   <div className="absolute inset-0 bg-gradient-to-t from-cardBg via-cardBg/50 to-transparent z-10" />
   <img
     src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80"
@@ -266,10 +266,10 @@ export default function PricingPage() {
   />
   {/* Always visible overlay - no hover needed */}
   <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-20">
-    <h3 className="text-white font-bold text-xl tracking-tight">
+    <h3 className="text-[#0f3d1a] font-bold text-xl tracking-tight">
       Record from Home & Office
     </h3>
-    <p className="text-white/80 text-sm">
+    <p className="text-[#0f3d1a]/80 text-sm">
       Complete tutorial & receiving support
     </p>
   </div>
@@ -280,7 +280,7 @@ export default function PricingPage() {
 
               {/* Right Card - Modern Feature Showcase */}
               <div className="relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-l from-primaryOrange/50 to-primaryOrange/10 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
+                <div className="absolute -inset-0.5 bg-gradient-to-l from-primaryBlue/50 to-primaryBlue/10 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
 
                 <div className="relative p-7 sm:p-8 rounded-[2.5rem] bg-gradient-to-br from-[#0b1223] to-[#0b1223]/90 border border-lightBorder shadow-2xl hover:-translate-y-4 hover:scale-[1.02] transition-all duration-500 h-full flex flex-col">
                   {/* Animated background pattern */}
@@ -299,12 +299,12 @@ export default function PricingPage() {
                     {/* Modern header with step indicator */}
                     <div className="flex items-center justify-between mb-8">
                       <div className="relative">
-                        <div className="text-primaryOrange text-[10px] font-black tracking-[0.2em] uppercase">
-                          What makes GrapeTask different
+                        <div className="text-primaryBlue text-[10px] font-black tracking-[0.2em] uppercase">
+                          What makes NextGen-LMS different
                         </div>
-                        <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-primaryOrange/50 rounded-full" />
+                        <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-primaryBlue/50 rounded-full" />
                       </div>
-                      <div className="text-4xl font-black text-primaryOrange/10">
+                      <div className="text-4xl font-black text-primaryBlue/10">
                         02
                       </div>
                     </div>
@@ -329,28 +329,28 @@ export default function PricingPage() {
                         },
                       ].map((item, idx) => (
                         <div key={idx} className="group/item relative">
-                          <div className="flex gap-4 p-4 rounded-xl hover:bg-white/5 transition-all duration-300 hover:-translate-x-1">
+                          <div className="flex gap-4 p-4 rounded-xl hover:bg-[#1a6b2e]/5 transition-all duration-300 hover:-translate-x-1">
                             <div className="relative">
-                              <div className="absolute inset-0 bg-primaryOrange/20 rounded-2xl blur-md opacity-0 group-hover/item:opacity-100 transition-opacity" />
-                              <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 text-primaryOrange group-hover/item:scale-110 group-hover/item:rotate-6 transition-all duration-300">
+                              <div className="absolute inset-0 bg-primaryBlue/20 rounded-2xl blur-md opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                              <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 text-primaryBlue group-hover/item:scale-110 group-hover/item:rotate-6 transition-all duration-300">
                                 <CheckCircle2 className="w-6 h-6" />
                               </div>
                             </div>
                             <div className="flex-1">
                               <div className="flex items-center justify-between mb-1">
-                                <h3 className="text-base font-bold text-white">
+                                <h3 className="text-base font-bold text-[#0f3d1a]">
                                   {item.title}
                                 </h3>
-                                <span className="text-xs font-black text-primaryOrange/60">
+                                <span className="text-xs font-black text-primaryBlue/60">
                                   {item.metric}
                                 </span>
                               </div>
-                              <p className="text-sm text-[#a1a1aa] leading-relaxed">
+                              <p className="text-sm text-[#1a6b2e] leading-relaxed">
                                 {item.desc}
                               </p>
                               {/* Progress indicator */}
                               <div className="mt-2 h-0.5 bg-white/10 rounded-full overflow-hidden">
-                                <div className="h-full bg-gradient-to-r from-primaryOrange to-primaryOrange/60 rounded-full w-0 group-hover/item:w-full transition-all duration-1000" />
+                                <div className="h-full bg-gradient-to-r from-primaryBlue to-primaryBlue/60 rounded-full w-0 group-hover/item:w-full transition-all duration-1000" />
                               </div>
                             </div>
                           </div>
@@ -359,7 +359,7 @@ export default function PricingPage() {
                     </div>
 
                     {/* Modern image card with stats */}
-                    <div className="relative mt-6 rounded-2xl overflow-hidden border border-white/10">
+                    <div className="relative mt-6 rounded-2xl overflow-hidden border border-[#1a6b2e]/20">
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0b1223] via-[#0b1223]/40 to-transparent z-10" />
                       <img
                         src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&auto=format&fit=crop&q=80"
@@ -370,18 +370,18 @@ export default function PricingPage() {
                       <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/20 z-20">
                         <div className="flex items-center justify-between">
                           <div>
-                            <h3 className="text-white font-bold text-sm">
+                            <h3 className="text-[#0f3d1a] font-bold text-sm">
                               Trainer Support & Consulting
                             </h3>
-                            <p className="text-white/70 text-xs">
+                            <p className="text-[#0f3d1a]/70 text-xs">
                               Expert guidance every step
                             </p>
                           </div>
                           <div className="text-right">
-                            <div className="text-primaryOrange font-black text-lg">
+                            <div className="text-primaryBlue font-black text-lg">
                               98%
                             </div>
-                            <div className="text-white/60 text-[10px]">
+                            <div className="text-[#0f3d1a]/60 text-[10px]">
                               success rate
                             </div>
                           </div>
@@ -398,13 +398,13 @@ export default function PricingPage() {
             <div className="max-w-6xl mx-auto px-4">
               {/* Section header - Clean & Modern */}
               <div className="text-center mb-12">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primaryOrange/10 border border-primaryOrange/20 text-primaryOrange text-xs font-black uppercase tracking-wider mb-4">
-                  <span className="w-1.5 h-1.5 bg-primaryOrange rounded-full" />
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primaryBlue/10 border border-primaryBlue/20 text-primaryBlue text-xs font-black uppercase tracking-wider mb-4">
+                  <span className="w-1.5 h-1.5 bg-primaryBlue rounded-full" />
                   Pricing Plans
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-black text-white">
+                <h2 className="text-3xl sm:text-4xl font-black text-[#0f3d1a]">
                   Choose your{" "}
-                  <span className="text-primaryOrange">learning journey</span>
+                  <span className="text-primaryBlue">learning journey</span>
                 </h2>
               </div>
 
@@ -418,20 +418,20 @@ export default function PricingPage() {
                     >
                       {/* Simple glow for popular plan - no animation */}
                       {plan.popular && (
-                        <div className="absolute -inset-0.5 bg-gradient-to-r from-primaryOrange to-primaryOrange/50 rounded-[2rem] blur-xl opacity-50" />
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-primaryBlue to-primaryBlue/50 rounded-[2rem] blur-xl opacity-50" />
                       )}
 
                       <div
                         className={`relative theme-card p-6 sm:p-8 rounded-[2rem] flex flex-col justify-between ${
                           plan.popular
-                            ? "bg-gradient-to-br from-cardBgActive/30 to-cardBg border-2 border-primaryOrange/40 shadow-xl"
-                            : "bg-cardBg border border-lightBorder hover:border-primaryOrange/30"
+                            ? "bg-gradient-to-br from-cardBgActive/30 to-cardBg border-2 border-primaryBlue/40 shadow-xl"
+                            : "bg-cardBg border border-lightBorder hover:border-primaryBlue/30"
                         } transition-all duration-300 hover:-translate-y-2`}
                       >
                         {/* Simple ribbon for popular */}
                         {plan.popular && (
                           <div className="absolute top-6 right-6 z-20">
-                            <div className="px-4 py-1.5 rounded-full bg-primaryOrange text-white text-[10px] font-black uppercase tracking-widest shadow-md">
+                            <div className="px-4 py-1.5 rounded-full bg-primaryBlue text-[#0f3d1a] text-[10px] font-black uppercase tracking-widest shadow-md">
                               {plan.badge}
                             </div>
                           </div>
@@ -452,11 +452,11 @@ export default function PricingPage() {
                         <div className="relative space-y-6">
                           {/* Header with icon - Simple hover */}
                           <div className="flex items-start gap-4">
-                            <div className="w-14 h-14 rounded-2xl bg-primaryOrange/15 border border-primaryOrange/25 text-primaryOrange flex items-center justify-center transition-all duration-300 hover:scale-105 hover:bg-primaryOrange/25">
+                            <div className="w-14 h-14 rounded-2xl bg-primaryBlue/15 border border-primaryBlue/25 text-primaryBlue flex items-center justify-center transition-all duration-300 hover:scale-105 hover:bg-primaryBlue/25">
                               <IconComponent className="w-7 h-7" />
                             </div>
                             <div className="flex-grow">
-                              <h3 className="text-2xl font-black text-white">
+                              <h3 className="text-2xl font-black text-[#0f3d1a]">
                                 {plan.level}
                               </h3>
                               <p className="text-sm text-bodyGrayText font-medium mt-1">
@@ -467,10 +467,10 @@ export default function PricingPage() {
 
                           {/* Price with simple underline */}
                           <div>
-                            <div className="text-3xl sm:text-4xl font-black text-white">
+                            <div className="text-3xl sm:text-4xl font-black text-[#0f3d1a]">
                               {plan.price}
                             </div>
-                            <div className="mt-2 w-12 h-0.5 bg-primaryOrange/40 rounded-full" />
+                            <div className="mt-2 w-12 h-0.5 bg-primaryBlue/40 rounded-full" />
                           </div>
 
                           {/* Features - Clean and simple */}
@@ -480,8 +480,8 @@ export default function PricingPage() {
                                 key={idx}
                                 className="flex items-start space-x-3 transition-all duration-200 hover:translate-x-1"
                               >
-                                <div className="w-5 h-5 rounded-full bg-primaryOrange/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                  <CheckCircle2 className="w-3 h-3 text-primaryOrange" />
+                                <div className="w-5 h-5 rounded-full bg-primaryBlue/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                  <CheckCircle2 className="w-3 h-3 text-primaryBlue" />
                                 </div>
                                 <span className="text-sm text-bodyGrayText font-medium leading-relaxed">
                                   {feature}
@@ -497,8 +497,8 @@ export default function PricingPage() {
                             href={plan.href}
                             className={`w-full py-3.5 rounded-xl font-black text-sm text-center block transition-all duration-300 ${
                               plan.popular
-                                ? "bg-primaryOrange text-white shadow-md hover:shadow-lg hover:bg-primaryOrange/90"
-                                : "bg-white/5 border border-white/20 text-white hover:bg-white/10"
+                                ? "bg-primaryBlue text-[#0f3d1a] shadow-md hover:shadow-lg hover:bg-primaryBlue/90"
+                                : "bg-[#1a6b2e]/5 border border-white/20 text-[#0f3d1a] hover:bg-white/10"
                             }`}
                           >
                             {plan.cta}
@@ -514,15 +514,15 @@ export default function PricingPage() {
 
           {/* Included Value */}
 
-          <div className="mb-24 p-6 sm:p-12 md:p-16 rounded-[2.5rem] sm:rounded-[3rem] bg-[#020617] border border-lightBorder relative overflow-hidden shadow-2xl">
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primaryOrange/10 via-transparent to-transparent" />
+          <div className="mb-24 p-6 sm:p-12 md:p-16 rounded-[2.5rem] sm:rounded-[3rem] bg-[#c8e6c9] border border-lightBorder relative overflow-hidden shadow-2xl">
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primaryBlue/10 via-transparent to-transparent" />
 
             <div className="text-center mb-14 space-y-4">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryOrange/20 bg-primaryOrange/10 backdrop-blur-sm text-primaryOrange text-xs font-black uppercase">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryBlue/20 bg-primaryBlue/10 backdrop-blur-sm text-primaryBlue text-xs font-black uppercase">
                 <Shield className="w-3.5 h-3.5" /> Premium Features
               </div>
-              <h2 className="text-4xl sm:text-5xl font-black text-white leading-tight">
-                The <span className="text-primaryOrange">learning proof</span>
+              <h2 className="text-4xl sm:text-5xl font-black text-[#0f3d1a] leading-tight">
+                The <span className="text-primaryBlue">learning proof</span>
                 <br />
                 advantage
               </h2>
@@ -559,32 +559,32 @@ export default function PricingPage() {
                   >
                     <div className="relative transform-gpu transition-all duration-700 group-hover:rotate-y-10 group-hover:scale-105">
                       {/* Glass morphism card */}
-                      <div className="relative backdrop-blur-xl bg-white/[0.02] rounded-2xl p-8 border border-white/10 shadow-xl overflow-hidden">
+                      <div className="relative backdrop-blur-xl bg-white/[0.02] rounded-2xl p-8 border border-[#1a6b2e]/20 shadow-xl overflow-hidden">
                         {/* Shine effect */}
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
                         <div className="space-y-5">
                           {/* Icon with ring */}
                           <div className="relative">
-                            <div className="absolute inset-0 bg-primaryOrange/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
-                            <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-primaryOrange to-primaryOrange/40 flex items-center justify-center shadow-lg">
-                              <IconComponent className="w-8 h-8 text-white" />
+                            <div className="absolute inset-0 bg-primaryBlue/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
+                            <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-primaryBlue to-primaryBlue/40 flex items-center justify-center shadow-lg">
+                              <IconComponent className="w-8 h-8 text-[#0f3d1a]" />
                             </div>
                           </div>
 
                           {/* Content */}
                           <div>
-                            <h3 className="text-xl font-black text-white mb-3">
+                            <h3 className="text-xl font-black text-[#0f3d1a] mb-3">
                               {item.title}
                             </h3>
-                            <p className="text-sm text-gray-400 leading-relaxed">
+                            <p className="text-sm text-[#1a6b2e] leading-relaxed">
                               {item.desc}
                             </p>
                           </div>
 
                           {/* Interactive element */}
                           <div className="pt-4 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                            <div className="flex items-center gap-2 text-primaryOrange text-sm font-medium">
+                            <div className="flex items-center gap-2 text-primaryBlue text-sm font-medium">
                               <span>Explore feature</span>
                               <svg
                                 className="w-4 h-4 group-hover:translate-x-1 transition-transform"
@@ -611,19 +611,19 @@ export default function PricingPage() {
           </div>
 
           {/* Institutional Subscription Section */}
-          <div className="mb-24 p-6 sm:p-12 md:p-20 rounded-[2.5rem] sm:rounded-[3.5rem] bg-[#020617] border border-lightBorder relative overflow-hidden shadow-2xl">
+          <div className="mb-24 p-6 sm:p-12 md:p-20 rounded-[2.5rem] sm:rounded-[3.5rem] bg-[#c8e6c9] border border-lightBorder relative overflow-hidden shadow-2xl">
             <div className="absolute top-0 right-0 w-80 h-80 secondary-glow opacity-10" />
 
             <div className="text-center mb-16 space-y-4">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryOrange/20 bg-primaryOrange/10 text-primaryOrange text-xs font-bold uppercase tracking-widest shadow-sm hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryBlue/20 bg-primaryBlue/10 text-primaryBlue text-xs font-bold uppercase tracking-widest shadow-sm hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
                 <Building2 className="w-3.5 h-3.5" /> Institutional Access
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight text-3d px-4 break-words">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] tracking-tight text-3d px-4 break-words">
                 For Institutions{" "}
-                <span className="text-primaryOrange text-3d-orange">Plans</span>
+                <span className="text-primaryBlue text-3d-orange">Plans</span>
               </h2>
-              <p className="text-sm sm:text-base text-[#a1a1aa] font-medium max-w-xl mx-auto leading-relaxed px-4">
-                Connect your school, college, or university to GrapeTask LMS.
+              <p className="text-sm sm:text-base text-[#1a6b2e] font-medium max-w-xl mx-auto leading-relaxed px-4">
+                Connect your school, college, or university to NextGen-LMS LMS.
                 Train all your students on professional freelance standards.
               </p>
             </div>
@@ -652,44 +652,44 @@ export default function PricingPage() {
                 const IconComponent = plan.icon;
                 return (
                   <div key={plan.level} className="relative group">
-                    <div className="pricing-card p-4 sm:p-5 rounded-2xl border border-white/10 flex flex-col items-center text-center space-y-3 bg-cardBg hover:bg-primaryOrange hover:border-primaryOrange hover:text-white transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(240,89,31,0.3)] relative overflow-hidden h-full">
+                    <div className="pricing-card p-4 sm:p-5 rounded-2xl border border-[#1a6b2e]/20 flex flex-col items-center text-center space-y-3 bg-cardBg hover:bg-primaryBlue hover:border-primaryBlue hover:text-[#0f3d1a] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(240,89,31,0.3)] relative overflow-hidden h-full">
                       {/* Background Effect - Subtle */}
-                      <div className="absolute top-0 right-0 w-16 h-16 bg-white/5 rounded-full blur-xl group-hover:bg-white/20 transition-all pointer-events-none" />
+                      <div className="absolute top-0 right-0 w-16 h-16 bg-[#1a6b2e]/5 rounded-full blur-xl group-hover:bg-white/20 transition-all pointer-events-none" />
 
                       {/* Icon - Smaller */}
-                      <div className="w-12 h-12 rounded-xl bg-primaryOrange/10 border border-primaryOrange/25 text-primaryOrange flex items-center justify-center group-hover:bg-white group-hover:text-primaryOrange group-hover:scale-105 transition-all duration-300 relative z-10 flex-shrink-0">
+                      <div className="w-12 h-12 rounded-xl bg-primaryBlue/10 border border-primaryBlue/25 text-primaryBlue flex items-center justify-center group-hover:bg-white group-hover:text-primaryBlue group-hover:scale-105 transition-all duration-300 relative z-10 flex-shrink-0">
                         <IconComponent className="w-5 h-5" />
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-sm sm:text-base font-black text-white group-hover:text-white uppercase tracking-wider relative z-10 break-words">
+                      <h3 className="text-sm sm:text-base font-black text-[#0f3d1a] group-hover:text-[#0f3d1a] uppercase tracking-wider relative z-10 break-words">
                         {plan.level}
                       </h3>
 
                       {/* Price */}
                       <div className="flex flex-col items-center relative z-10">
                         <div className="flex items-baseline justify-center gap-0.5">
-                          <span className="font-sans text-xs font-semibold text-primaryOrange group-hover:text-white transition-colors">
+                          <span className="font-sans text-xs font-semibold text-primaryBlue group-hover:text-[#0f3d1a] transition-colors">
                             PKR
                           </span>
-                          <span className="text-2xl sm:text-3xl font-black text-white group-hover:text-white transition-colors">
+                          <span className="text-2xl sm:text-3xl font-black text-[#0f3d1a] group-hover:text-[#0f3d1a] transition-colors">
                             {plan.price}
                           </span>
                         </div>
-                        <span className="text-[9px] sm:text-[10px] text-darkGrayNumber group-hover:text-white/60 transition-colors font-black uppercase tracking-wider mt-1">
+                        <span className="text-[9px] sm:text-[10px] text-darkGrayNumber group-hover:text-[#0f3d1a]/60 transition-colors font-black uppercase tracking-wider mt-1">
                           Per Student / Month
                         </span>
                       </div>
 
                       {/* Description */}
-                      <p className="text-xs sm:text-sm text-bodyGrayText group-hover:text-white/80 transition-colors leading-relaxed font-medium relative z-10 px-2">
+                      <p className="text-xs sm:text-sm text-bodyGrayText group-hover:text-[#0f3d1a]/80 transition-colors leading-relaxed font-medium relative z-10 px-2">
                         {plan.desc}
                       </p>
 
                       {/* Button - Smaller */}
                       <Link
                         href="/contact?type=institution"
-                        className="w-full py-2.5 sm:py-3 bg-white/5 border border-white/10 rounded-xl text-white font-semibold hover:bg-white hover:text-primaryOrange group-hover:bg-white group-hover:text-primaryOrange transition-all duration-300 text-center text-xs relative z-10 hover:-translate-y-0.5"
+                        className="w-full py-2.5 sm:py-3 bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 rounded-xl text-[#0f3d1a] font-semibold hover:bg-white hover:text-primaryBlue group-hover:bg-white group-hover:text-primaryBlue transition-all duration-300 text-center text-xs relative z-10 hover:-translate-y-0.5"
                       >
                         Get Started
                       </Link>
@@ -701,31 +701,31 @@ export default function PricingPage() {
           </div>
 
           {/* Long Term Packages - FIXED LAYOUT NO EXTRA SPACE */}
-          <div className="p-6 sm:p-10 md:p-16 lg:p-20 rounded-[2.5rem] sm:rounded-[3.5rem] bg-[#020617] border border-lightBorder relative overflow-hidden shadow-2xl mb-24">
+          <div className="p-6 sm:p-10 md:p-16 lg:p-20 rounded-[2.5rem] sm:rounded-[3.5rem] bg-[#c8e6c9] border border-lightBorder relative overflow-hidden shadow-2xl mb-24">
             <div className="absolute bottom-0 left-0 w-80 h-80 secondary-glow opacity-10" />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start relative z-10">
               {/* Left – Heading, description & Image */}
               <div className="lg:col-span-5 space-y-5 sm:space-y-6 px-2 sm:px-4 lg:sticky lg:top-24">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryOrange/20 bg-primaryOrange/10 text-primaryOrange text-xs font-bold uppercase tracking-widest shadow-sm hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default w-fit">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryBlue/20 bg-primaryBlue/10 text-primaryBlue text-xs font-bold uppercase tracking-widest shadow-sm hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default w-fit">
                   <Star className="w-3.5 h-3.5" /> Long-Term Savings
                 </div>
 
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white leading-tight tracking-tight text-3d break-words">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#0f3d1a] leading-tight tracking-tight text-3d break-words">
                   Discounted packages for lasting LMS adoption
                 </h2>
 
-                <p className="text-sm text-[#a1a1aa] font-medium leading-relaxed max-w-lg">
+                <p className="text-sm text-[#1a6b2e] font-medium leading-relaxed max-w-lg">
                   The longer you commit, the more you save. Designed for
                   institutions and training partners who plan ahead and scale
                   learning over time.
                 </p>
 
                 <div className="hidden lg:flex items-center gap-3 text-xs text-[#71717a] font-medium group cursor-default">
-                  <Award className="w-4 h-4 text-primaryOrange group-hover:scale-125 group-hover:-translate-y-1 transition-all duration-300" />
+                  <Award className="w-4 h-4 text-primaryBlue group-hover:scale-125 group-hover:-translate-y-1 transition-all duration-300" />
                   <span>
                     Up to{" "}
-                    <span className="text-primaryOrange font-bold text-sm">
+                    <span className="text-primaryBlue font-bold text-sm">
                       40%
                     </span>{" "}
                     savings on 3-year plans
@@ -733,7 +733,7 @@ export default function PricingPage() {
                 </div>
 
                 {/* Perfectly sized image to match right column height */}
-                <div className="relative mt-4 rounded-2xl overflow-hidden border border-white/5 group/img aspect-[4/3]">
+                <div className="relative mt-4 rounded-2xl overflow-hidden border border-[#1a6b2e]/10 group/img aspect-[4/3]">
                   <img
                     src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&auto=format&fit=crop&q=80"
                     alt="Strategic planning and growth"
@@ -788,9 +788,9 @@ export default function PricingPage() {
                         sm:col-span-1
                         ${
                           plan.best
-                            ? "sm:col-span-2 border-primaryOrange/40 bg-gradient-to-br from-primaryOrange/15 via-[#0b1223]/95 to-[#0b1223]/95"
+                            ? "sm:col-span-2 border-primaryBlue/40 bg-gradient-to-br from-primaryBlue/15 via-[#0b1223]/95 to-[#0b1223]/95"
                             : plan.accent
-                              ? "border-primaryOrange/25 bg-gradient-to-br from-primaryOrange/8 via-[#0b1223]/90 to-[#0b1223]/90"
+                              ? "border-primaryBlue/25 bg-gradient-to-br from-primaryBlue/8 via-[#0b1223]/90 to-[#0b1223]/90"
                               : "border-white/[0.07] bg-[#0b1223]/80 hover:border-white/15"
                         }
                       `}
@@ -802,15 +802,15 @@ export default function PricingPage() {
                             w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 border
                             ${
                               plan.best
-                                ? "bg-primaryOrange/20 border-primaryOrange/30 text-primaryOrange"
-                                : "bg-white/[0.04] border-white/[0.08] text-[#a1a1aa] group-hover:text-primaryOrange group-hover:bg-primaryOrange/10 group-hover:border-primaryOrange/20 transition-colors"
+                                ? "bg-primaryBlue/20 border-primaryBlue/30 text-primaryBlue"
+                                : "bg-[#1a6b2e]/5 border-white/[0.08] text-[#1a6b2e] group-hover:text-primaryBlue group-hover:bg-primaryBlue/10 group-hover:border-primaryBlue/20 transition-colors"
                             }
                             group-hover:scale-110 group-hover:rotate-6 group-hover:-translate-y-1 transition-all duration-300
                           `}
                           >
                             <Clock className="w-4 h-4" />
                           </div>
-                          <p className="text-sm sm:text-base font-bold text-white">
+                          <p className="text-sm sm:text-base font-bold text-[#0f3d1a]">
                             {plan.term}
                           </p>
                         </div>
@@ -820,8 +820,8 @@ export default function PricingPage() {
                           flex items-center gap-1.5 rounded-full px-3 py-1 text-xs sm:text-sm font-bold flex-shrink-0
                           ${
                             plan.best
-                              ? "bg-primaryOrange text-[#020617] shadow-lg shadow-primaryOrange/25 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300"
-                              : "bg-primaryOrange/10 text-primaryOrange border border-primaryOrange/20 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300"
+                              ? "bg-primaryBlue text-[#020617] shadow-lg shadow-primaryBlue/25 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300"
+                              : "bg-primaryBlue/10 text-primaryBlue border border-primaryBlue/20 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300"
                           }
                         `}
                         >
@@ -833,7 +833,7 @@ export default function PricingPage() {
                       <p
                         className={`
                         mt-3 text-xs sm:text-sm leading-relaxed sm:pl-12
-                        ${plan.best ? "text-[#d4d4d8] font-medium" : "text-[#71717a]"}
+                        ${plan.best ? "text-[#1a6b2e] font-medium" : "text-[#71717a]"}
                       `}
                       >
                         {plan.highlight}
@@ -847,8 +847,8 @@ export default function PricingPage() {
                               ${plan.barWidth}
                               ${
                                 plan.best
-                                  ? "bg-gradient-to-r from-primaryOrange to-orange-400"
-                                  : "bg-primaryOrange/40"
+                                  ? "bg-gradient-to-r from-primaryBlue to-sky-400"
+                                  : "bg-primaryBlue/40"
                               }
                             `}
                           />
@@ -857,7 +857,7 @@ export default function PricingPage() {
 
                       {plan.best && (
                         <div className="absolute -top-px right-6">
-                          <div className="bg-primaryOrange text-[#020617] text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-b-lg shadow-lg shadow-primaryOrange/20 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
+                          <div className="bg-primaryBlue text-[#020617] text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-b-lg shadow-lg shadow-primaryBlue/20 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
                             Best Value
                           </div>
                         </div>
@@ -872,14 +872,14 @@ export default function PricingPage() {
           {/* Pricing FAQ Section */}
           <div className="max-w-4xl mx-auto px-2 sm:px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-black text-white mb-3 text-3d break-words">
+              <h2 className="text-3xl sm:text-4xl font-black text-[#0f3d1a] mb-3 text-3d break-words">
                 Frequently Asked{" "}
-                <span className="text-primaryOrange text-3d-orange">
+                <span className="text-primaryBlue text-3d-orange">
                   Questions
                 </span>
               </h2>
-              <p className="text-sm sm:text-base text-[#a1a1aa] font-medium">
-                Simple answers to common questions about GrapeTask
+              <p className="text-sm sm:text-base text-[#1a6b2e] font-medium">
+                Simple answers to common questions about NextGen-LMS
                 subscriptions.
               </p>
             </div>
@@ -910,8 +910,8 @@ export default function PricingPage() {
                       onClick={() => setIsOpen(!isOpen)}
                       className="w-full text-left cursor-pointer"
                     >
-                      <h3 className="text-base sm:text-lg font-bold text-white mb-2 flex items-start gap-3 flex-shrink-0 break-words">
-                        <span className="w-6 h-6 rounded-lg bg-[rgba(240,89,31,0.1)] flex items-center justify-center text-primaryOrange flex-shrink-0 group-hover:bg-[#f0591f] group-hover:text-white transition-all duration-300">
+                      <h3 className="text-base sm:text-lg font-bold text-[#0f3d1a] mb-2 flex items-start gap-3 flex-shrink-0 break-words">
+                        <span className="w-6 h-6 rounded-lg bg-[rgba(240,89,31,0.1)] flex items-center justify-center text-primaryBlue flex-shrink-0 group-hover:bg-[#5E6F58] group-hover:text-[#0f3d1a] transition-all duration-300">
                           <svg
                             className="w-3.5 h-3.5"
                             fill="none"

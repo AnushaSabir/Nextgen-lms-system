@@ -52,28 +52,28 @@ const theme = {
     reflection: 'bg-gradient-to-br from-blue-400/5 via-transparent to-blue-600/10',
   },
   orange: {
-    bg: 'bg-orange-500/10',
-    border: 'border-orange-500/20',
-    text: 'text-orange-400',
-    gradient: 'from-orange-600/15 via-orange-500/10 to-orange-600/5',
-    glow: 'shadow-orange-500/10',
+    bg: 'bg-sky-500/10',
+    border: 'border-sky-500/20',
+    text: 'text-sky-400',
+    gradient: 'from-orange-600/15 via-sky-500/10 to-orange-600/5',
+    glow: 'shadow-sky-500/10',
     solid: 'bg-orange-600',
-    solidHover: 'hover:bg-orange-500',
-    subtle: 'bg-orange-500/5',
-    subtleBorder: 'border-orange-500/10',
-    subtleText: 'text-orange-400/60',
+    solidHover: 'hover:bg-sky-500',
+    subtle: 'bg-sky-500/5',
+    subtleBorder: 'border-sky-500/10',
+    subtleText: 'text-sky-400/60',
     depth: 'shadow-[0_8px_32px_-8px_rgba(249,115,22,0.2),0_4px_16px_-4px_rgba(249,115,22,0.1)]',
     glow3D: 'shadow-[0_0_40px_-8px_rgba(249,115,22,0.3),0_0_80px_-16px_rgba(249,115,22,0.15)]',
-    reflection: 'bg-gradient-to-br from-orange-400/5 via-transparent to-orange-600/10',
+    reflection: 'bg-gradient-to-br from-sky-400/5 via-transparent to-orange-600/10',
   },
 } as const;
 
 type ThemeKey = keyof typeof theme;
 
 const card3DClass =
-  'transition-all duration-500 ease-out transform-gpu perspective-1000 hover:rotate-y-1 hover:rotate-x-0.5 hover:shadow-[0_20px_60px_-12px_rgba(0,0,0,0.5),0_10px_40px_-8px_rgba(0,0,0,0.3)] hover:-translate-y-2 hover:scale-[1.02]';
+  'transition-all duration-500 ease-out transform-gpu perspective-1000 hover:rotate-y-1 hover:rotate-x-0.5 hover:shadow-[0_20px_60px_-12px_rgba(26, 107, 46, 0.1),0_10px_40px_-8px_rgba(26, 107, 46, 0.1)] hover:-translate-y-2 hover:scale-[1.02]';
 const glassEffect =
-  'backdrop-blur-xl bg-gradient-to-br from-gray-800/40 to-gray-900/60 border border-white/[0.08] shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4)]';
+  'backdrop-blur-xl bg-gradient-to-br from-gray-800/40 to-gray-900/60 border border-white/[0.08] shadow-[0_8px_32px_-8px_rgba(26, 107, 46, 0.1)]';
 
 function SectionHeader({
   icon: Icon,
@@ -93,7 +93,7 @@ function SectionHeader({
     <div className="flex items-start sm:items-center justify-between gap-4 mb-7 group">
       <div className="flex items-center gap-3.5">
         <div
-          className={`w-12 h-12 rounded-2xl ${t.bg} border ${t.border} flex items-center justify-center flex-shrink-0 ${t.depth} ${t.reflection} transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4),0_0_20px_-4px_rgba(59,130,246,0.2)] relative overflow-hidden`}
+          className={`w-12 h-12 rounded-2xl ${t.bg} border ${t.border} flex items-center justify-center flex-shrink-0 ${t.depth} ${t.reflection} transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_8px_32px_-8px_rgba(26, 107, 46, 0.1),0_0_20px_-4px_rgba(59,130,246,0.2)] relative overflow-hidden`}
           style={{ transformStyle: 'preserve-3d' }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent rounded-2xl" />
@@ -103,11 +103,11 @@ function SectionHeader({
           />
         </div>
         <div>
-          <h2 className="text-[17px] font-semibold text-white leading-snug tracking-[-0.01em] relative">
+          <h2 className="text-[17px] font-semibold text-[#0f3d1a] leading-snug tracking-[-0.01em] relative">
             {title}
             <div className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-to-r from-blue-400/0 via-blue-400/50 to-blue-400/0 group-hover:w-full transition-all duration-700 ease-out" />
           </h2>
-          <p className="text-[13px] text-gray-500 mt-1 leading-relaxed font-normal">{caption}</p>
+          <p className="text-[13px] text-[#7dab52] mt-1 leading-relaxed font-normal">{caption}</p>
         </div>
       </div>
       {badge && <div className="animate-[fadeIn_0.5s_ease-out_forwards]">{badge}</div>}
@@ -144,16 +144,16 @@ function StatCard({
 
       <div className="relative flex items-start justify-between">
         <div className="relative z-10">
-          <p className="text-[11px] font-medium text-gray-500 uppercase tracking-wider mb-3">{label}</p>
+          <p className="text-[11px] font-medium text-[#7dab52] uppercase tracking-wider mb-3">{label}</p>
           <div className="relative">
-            <p className="text-[32px] font-bold text-white tracking-tight leading-none tabular-nums bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">
+            <p className="text-[32px] font-bold text-[#0f3d1a] tracking-tight leading-none tabular-nums bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">
               {value}
             </p>
             <div className="absolute -bottom-2 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           </div>
         </div>
         <div
-          className={`w-12 h-12 rounded-2xl ${t.bg} border ${t.border} flex items-center justify-center flex-shrink-0 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-[0_4px_16px_-2px_rgba(0,0,0,0.3)] group-hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.4)] relative overflow-hidden`}
+          className={`w-12 h-12 rounded-2xl ${t.bg} border ${t.border} flex items-center justify-center flex-shrink-0 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-[0_4px_16px_-2px_rgba(26, 107, 46, 0.1)] group-hover:shadow-[0_8px_24px_-4px_rgba(26, 107, 46, 0.1)] relative overflow-hidden`}
           style={{ transformStyle: 'preserve-3d' }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent rounded-2xl" />
@@ -411,22 +411,22 @@ export function TrainerDashboard() {
       {/* 3D BACKGROUND PARTICLES */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl animate-[float3D_8s_ease-in-out_infinite]" />
-        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl animate-[float3D_10s_ease-in-out_infinite_1s]" />
+        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl animate-[float3D_10s_ease-in-out_infinite_1s]" />
         <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-400/5 rounded-full blur-3xl animate-[float3D_12s_ease-in-out_infinite_2s]" />
       </div>
 
       {message && (
         <div
-          className={`fixed top-20 right-6 z-50 max-w-sm w-full rounded-2xl border p-5 flex items-start gap-3 backdrop-blur-2xl transition-all duration-500 animate-[slideInRight_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards] shadow-[0_20px_60px_-12px_rgba(0,0,0,0.5),0_8px_24px_-8px_rgba(0,0,0,0.3)] ${messageType === 'success' ? 'border-blue-500/25 bg-gray-900/95' : 'border-orange-500/25 bg-gray-900/95'
+          className={`fixed top-20 right-6 z-50 max-w-sm w-full rounded-2xl border p-5 flex items-start gap-3 backdrop-blur-2xl transition-all duration-500 animate-[slideInRight_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards] shadow-[0_20px_60px_-12px_rgba(26, 107, 46, 0.1),0_8px_24px_-8px_rgba(26, 107, 46, 0.1)] ${messageType === 'success' ? 'border-blue-500/25 bg-gray-900/95' : 'border-sky-500/25 bg-gray-900/95'
             } transform-gpu hover:scale-105 hover:rotate-y-1`}
           style={{ transformStyle: 'preserve-3d' }}
         >
           <div
-            className={`absolute inset-0 rounded-2xl ${messageType === 'success' ? 'bg-blue-500/5' : 'bg-orange-500/5'} blur-xl`}
+            className={`absolute inset-0 rounded-2xl ${messageType === 'success' ? 'bg-blue-500/5' : 'bg-sky-500/5'} blur-xl`}
           />
           <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
           <CheckCircle2
-            className={`w-5 h-5 flex-shrink-0 mt-0.5 relative z-10 ${messageType === 'success' ? 'text-blue-400' : 'text-orange-400'}`}
+            className={`w-5 h-5 flex-shrink-0 mt-0.5 relative z-10 ${messageType === 'success' ? 'text-blue-400' : 'text-sky-400'}`}
           />
           <p
             className={`text-sm flex-1 leading-relaxed relative z-10 ${messageType === 'success' ? 'text-blue-200' : 'text-orange-200'
@@ -436,7 +436,7 @@ export function TrainerDashboard() {
           </p>
           <button
             onClick={() => setMessage('')}
-            className="text-gray-500 hover:text-gray-300 transition-colors flex-shrink-0 mt-0.5 active:scale-90 relative z-10 hover:rotate-90 transition-transform duration-300"
+            className="text-[#7dab52] hover:text-[#1a6b2e] transition-colors flex-shrink-0 mt-0.5 active:scale-90 relative z-10 hover:rotate-90 transition-transform duration-300"
             aria-label="Dismiss"
           >
             <XCircle className="w-4 h-4" />
@@ -448,16 +448,16 @@ export function TrainerDashboard() {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div className="flex items-center gap-4">
             <div
-              className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-[#f0591f]/20 to-orange-500/10 border border-[#f0591f]/20 flex items-center justify-center flex-shrink-0 shadow-[0_8px_32px_-8px_rgba(240,89,31,0.3),0_4px_16px_-4px_rgba(240,89,31,0.2)] transition-all duration-500 group hover:shadow-[0_12px_40px_-8px_rgba(240,89,31,0.4),0_0_20px_-4px_rgba(240,89,31,0.3)] hover:scale-110 hover:rotate-6"
+              className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-[#5E6F58]/20 to-sky-500/10 border border-[#5E6F58]/20 flex items-center justify-center flex-shrink-0 shadow-[0_8px_32px_-8px_rgba(240,89,31,0.3),0_4px_16px_-4px_rgba(240,89,31,0.2)] transition-all duration-500 group hover:shadow-[0_12px_40px_-8px_rgba(240,89,31,0.4),0_0_20px_-4px_rgba(240,89,31,0.3)] hover:scale-110 hover:rotate-6"
               style={{ transformStyle: 'preserve-3d' }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent rounded-2xl" />
-              <GraduationCap className="w-7 h-7 text-[#f0591f] relative z-10 group-hover:scale-110 transition-transform duration-500 drop-shadow-lg" />
+              <GraduationCap className="w-7 h-7 text-[#d94d19] relative z-10 group-hover:scale-110 transition-transform duration-500 drop-shadow-lg" />
               <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-blue-500 border-2 border-[#020617] shadow-[0_0_12px_rgba(59,130,246,0.6)] animate-[pulse-subtle_2s_ease-in-out_infinite]" />
             </div>
             <div>
-              <h1 className="text-2xl font-black text-white tracking-tight">Trainer Dashboard</h1>
-              <p className="text-xs text-[#94a3b8] mt-1.5">Welcome back, {user?.name || 'Trainer'}! Here is your current overview.</p>
+              <h1 className="text-2xl font-black text-[#0f3d1a] tracking-tight">Trainer Dashboard</h1>
+              <p className="text-xs text-[#1a6b2e] mt-1.5">Welcome back, {user?.name || 'Trainer'}! Here is your current overview.</p>
             </div>
           </div>
         </div>
@@ -510,7 +510,7 @@ export function TrainerDashboard() {
             </Field>
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
+              className="w-full bg-gradient-to-r from-orange-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-[#0f3d1a] rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
               style={{ transformStyle: 'preserve-3d' }}
             >
               <span className="relative z-10 flex items-center justify-center">
@@ -592,7 +592,7 @@ export function TrainerDashboard() {
             </Field>
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
+              className="w-full bg-gradient-to-r from-orange-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-[#0f3d1a] rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
               style={{ transformStyle: 'preserve-3d' }}
             >
               <span className="relative z-10 flex items-center justify-center">
@@ -621,7 +621,7 @@ export function TrainerDashboard() {
           title="My Courses"
           caption="Manage courses awaiting or submitted for admin approval."
           badge={
-            <span className="text-xs text-gray-500 font-medium bg-gray-800/60 px-3 py-1.5 rounded-lg border border-gray-700/50 backdrop-blur-xl shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+            <span className="text-xs text-[#7dab52] font-medium bg-gray-800/60 px-3 py-1.5 rounded-lg border border-gray-700/50 backdrop-blur-xl shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)]">
               {courses.length} course{courses.length !== 1 ? 's' : ''}
             </span>
           }
@@ -640,17 +640,17 @@ export function TrainerDashboard() {
                   icon: CheckCircle2,
                 },
                 rejected: {
-                  bg: 'bg-orange-500/12',
+                  bg: 'bg-sky-500/12',
                   text: 'text-orange-300',
-                  border: 'border-orange-500/25',
-                  dot: 'bg-orange-400',
+                  border: 'border-sky-500/25',
+                  dot: 'bg-sky-400',
                   icon: XCircle,
                 },
                 draft: {
-                  bg: 'bg-orange-500/8',
-                  text: 'text-orange-400/70',
-                  border: 'border-orange-500/15',
-                  dot: 'bg-orange-400/60',
+                  bg: 'bg-sky-500/8',
+                  text: 'text-sky-400/70',
+                  border: 'border-sky-500/15',
+                  dot: 'bg-sky-400/60',
                   icon: AlertCircle,
                 },
               };
@@ -659,7 +659,7 @@ export function TrainerDashboard() {
               return (
                 <div
                   key={course.id}
-                  className={`group/card rounded-xl border border-gray-800 bg-gradient-to-br from-gray-900/60 to-gray-900/40 backdrop-blur-sm overflow-hidden transition-all duration-500 ease-out parallax-card shadow-[0_4px_16px_rgba(0,0,0,0.3),0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_20px_60px_-12px_rgba(0,0,0,0.5),0_10px_40px_-8px_rgba(0,0,0,0.4)] hover:-translate-y-3 hover:scale-[1.03] hover:rotate-y-1 transform-gpu animate-[staggeredFadeIn_0.6s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0`}
+                  className={`group/card rounded-xl border border-gray-800 bg-gradient-to-br from-gray-900/60 to-gray-900/40 backdrop-blur-sm overflow-hidden transition-all duration-500 ease-out parallax-card shadow-[0_4px_16px_rgba(26, 107, 46, 0.1),0_2px_8px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_20px_60px_-12px_rgba(26, 107, 46, 0.1),0_10px_40px_-8px_rgba(26, 107, 46, 0.1)] hover:-translate-y-3 hover:scale-[1.03] hover:rotate-y-1 transform-gpu animate-[staggeredFadeIn_0.6s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0`}
                   style={{ animationDelay: `${index * 100}ms`, transformStyle: 'preserve-3d' }}
                 >
                   <div className="relative h-28 bg-gradient-to-br from-blue-600/10 via-gray-800/80 to-gray-900/80 overflow-hidden">
@@ -678,7 +678,7 @@ export function TrainerDashboard() {
 
                     <div className="absolute top-3 right-3 z-10">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-semibold uppercase tracking-wider ${s.bg} ${s.text} border ${s.border} backdrop-blur-md shadow-[0_4px_12px_rgba(0,0,0,0.3)] transition-all duration-300 group-hover/card:shadow-[0_8px_20px_rgba(0,0,0,0.4)] group-hover/card:-translate-y-0.5`}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-semibold uppercase tracking-wider ${s.bg} ${s.text} border ${s.border} backdrop-blur-md shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] transition-all duration-300 group-hover/card:shadow-[0_8px_20px_rgba(26, 107, 46, 0.1)] group-hover/card:-translate-y-0.5`}
                       >
                         <span
                           className={`w-1.5 h-1.5 rounded-full ${s.dot} ${status === 'draft' ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''} shadow-[0_0_6px_rgba(59,130,246,0.5)]`}
@@ -688,7 +688,7 @@ export function TrainerDashboard() {
                     </div>
 
                     <div className="absolute bottom-3 left-3">
-                      <div className="w-12 h-12 rounded-2xl bg-gray-900/60 border border-gray-700/30 flex items-center justify-center backdrop-blur-sm shadow-[0_4px_16px_-2px_rgba(0,0,0,0.4)] group-hover/card:border-blue-500/30 group-hover/card:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.5)] transition-all duration-500 group-hover/card:scale-110 group-hover/card:rotate-6">
+                      <div className="w-12 h-12 rounded-2xl bg-gray-900/60 border border-gray-700/30 flex items-center justify-center backdrop-blur-sm shadow-[0_4px_16px_-2px_rgba(26, 107, 46, 0.1)] group-hover/card:border-blue-500/30 group-hover/card:shadow-[0_8px_24px_-4px_rgba(26, 107, 46, 0.1)] transition-all duration-500 group-hover/card:scale-110 group-hover/card:rotate-6">
                         <BookOpen className="w-5 h-5 text-blue-400 group-hover/card:scale-110 transition-transform duration-500" />
                       </div>
                     </div>
@@ -697,23 +697,23 @@ export function TrainerDashboard() {
                   </div>
 
                   <div className="p-5 relative">
-                    <h3 className="font-semibold text-white text-[15px] mb-1.5 line-clamp-2 leading-snug group-hover/card:text-blue-300 transition-colors duration-500">
+                    <h3 className="font-semibold text-[#0f3d1a] text-[15px] mb-1.5 line-clamp-2 leading-snug group-hover/card:text-blue-300 transition-colors duration-500">
                       {course.title}
                     </h3>
                     <div className="flex items-center gap-1.5 mb-3">
                       <GraduationCap className="w-3.5 h-3.5 text-gray-600" />
-                      <p className="text-[12px] text-gray-500 capitalize">{course.level}</p>
-                      <span className="w-1 h-1 rounded-full bg-gradient-to-r from-blue-400 to-orange-400 mx-0.5" />
+                      <p className="text-[12px] text-[#7dab52] capitalize">{course.level}</p>
+                      <span className="w-1 h-1 rounded-full bg-gradient-to-r from-blue-400 to-sky-400 mx-0.5" />
                       <Video className="w-3.5 h-3.5 text-gray-600" />
-                      <span className="text-[12px] text-gray-500">Lessons</span>
+                      <span className="text-[12px] text-[#7dab52]">Lessons</span>
                     </div>
-                    <p className="text-[13px] text-gray-500 mb-5 line-clamp-2 leading-relaxed">{course.description}</p>
+                    <p className="text-[13px] text-[#7dab52] mb-5 line-clamp-2 leading-relaxed">{course.description}</p>
 
                     <div className="flex flex-col gap-2">
                       <div className="flex items-center gap-2">
                         <Button
                           variant="ghost"
-                          className="flex-1 text-[12px] h-10 rounded-lg border border-gray-700/50 hover:border-blue-500/40 hover:bg-blue-500/8 hover:text-blue-300 transition-all duration-500 group/btn backdrop-blur-sm shadow-[0_4px_12px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-0.5 active:scale-[0.98]"
+                          className="flex-1 text-[12px] h-10 rounded-lg border border-gray-700/50 hover:border-blue-500/40 hover:bg-blue-500/8 hover:text-blue-300 transition-all duration-500 group/btn backdrop-blur-sm shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-0.5 active:scale-[0.98]"
                           onClick={() => router.push(`/trainer/courses/${course.id}`)}
                         >
                           <BookOpen className="w-3.5 h-3.5 mr-1.5" />
@@ -721,7 +721,7 @@ export function TrainerDashboard() {
                         </Button>
                         <Button
                           variant="ghost"
-                          className="flex-1 text-[12px] h-10 rounded-lg border border-gray-700/50 hover:border-orange-500/40 hover:bg-orange-500/8 hover:text-orange-300 transition-all duration-500 group/btn backdrop-blur-sm shadow-[0_4px_12px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_20px_-4px_rgba(234,88,12,0.3)] hover:-translate-y-0.5 active:scale-[0.98]"
+                          className="flex-1 text-[12px] h-10 rounded-lg border border-gray-700/50 hover:border-sky-500/40 hover:bg-sky-500/8 hover:text-orange-300 transition-all duration-500 group/btn backdrop-blur-sm shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_8px_20px_-4px_rgba(234,88,12,0.3)] hover:-translate-y-0.5 active:scale-[0.98]"
                           onClick={() => router.push(`/trainer/courses/${course.id}/videos`)}
                         >
                           <Video className="w-3.5 h-3.5 mr-1.5" />
@@ -730,7 +730,7 @@ export function TrainerDashboard() {
                       </div>
                       <Button
                         variant="ghost"
-                        className="w-full text-[12px] h-10 rounded-lg border border-gray-700/50 hover:border-blue-500/40 hover:bg-blue-500/8 hover:text-blue-300 transition-all duration-500 group/btn backdrop-blur-sm shadow-[0_4px_12px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-0.5 active:scale-[0.98]"
+                        className="w-full text-[12px] h-10 rounded-lg border border-gray-700/50 hover:border-blue-500/40 hover:bg-blue-500/8 hover:text-blue-300 transition-all duration-500 group/btn backdrop-blur-sm shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-0.5 active:scale-[0.98]"
                         onClick={() => coursesApi.submitReview(course.id).then(load)}
                       >
                         <Send className="w-3.5 h-3.5 mr-1.5 group-hover/btn:-translate-y-0.5 transition-transform duration-500" />
@@ -743,7 +743,7 @@ export function TrainerDashboard() {
             })}
           </div>
         ) : (
-          <EmptyState title="No courses yet" detail="Create your first course to start teaching on GrapeTask." />
+          <EmptyState title="No courses yet" detail="Create your first course to start teaching on NextGen-LMS." />
         )}
       </section>
 
@@ -753,8 +753,8 @@ export function TrainerDashboard() {
         className={`relative rounded-2xl ${glassEffect} p-6 sm:p-7 overflow-hidden mb-8 ${card3DClass} parallax-card before:absolute before:top-0 before:left-8 before:right-8 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/[0.12] before:to-transparent after:absolute after:bottom-0 after:left-8 after:right-8 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/[0.04] after:to-transparent transform-gpu animate-[scaleIn_0.7s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0`}
         style={{ transformStyle: 'preserve-3d' }}
       >
-        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-orange-500/10 blur-3xl transition-all duration-700 group-hover:scale-110" />
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-orange-400/5 blur-3xl transition-all duration-700 group-hover:scale-110" />
+        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-sky-500/10 blur-3xl transition-all duration-700 group-hover:scale-110" />
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-sky-400/5 blur-3xl transition-all duration-700 group-hover:scale-110" />
 
         <SectionHeader
           icon={FileText}
@@ -763,8 +763,8 @@ export function TrainerDashboard() {
           caption="Review homework and practical assignments from your learners."
           badge={
             pendingCount > 0 ? (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium bg-orange-500/15 text-orange-300 border border-orange-500/25 backdrop-blur-md shadow-[0_4px_16px_rgba(249,115,22,0.3)] animate-[pulse-subtle_2s_ease-in-out_infinite]">
-                <span className="w-2 h-2 rounded-full bg-orange-400 shadow-[0_0_8px_rgba(249,115,22,0.6)] animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium bg-sky-500/15 text-orange-300 border border-sky-500/25 backdrop-blur-md shadow-[0_4px_16px_rgba(249,115,22,0.3)] animate-[pulse-subtle_2s_ease-in-out_infinite]">
+                <span className="w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(249,115,22,0.6)] animate-pulse" />
                 {pendingCount} Pending
               </span>
             ) : submissions.length > 0 ? (
@@ -786,7 +786,7 @@ export function TrainerDashboard() {
               const isReviewed = submission.reviewed;
 
               const avatarPalettes = [
-                { gradient: 'from-orange-500/25 to-orange-600/10', border: 'border-orange-500/20', text: 'text-orange-300' },
+                { gradient: 'from-sky-500/25 to-orange-600/10', border: 'border-sky-500/20', text: 'text-orange-300' },
                 { gradient: 'from-blue-500/25 to-blue-600/10', border: 'border-blue-500/20', text: 'text-blue-300' },
                 { gradient: 'from-blue-600/25 to-blue-700/10', border: 'border-blue-600/20', text: 'text-blue-200' },
                 { gradient: 'from-orange-600/25 to-orange-700/10', border: 'border-orange-600/20', text: 'text-orange-200' },
@@ -798,8 +798,8 @@ export function TrainerDashboard() {
                 <div
                   key={submission.id}
                   className={`rounded-xl border p-5 transition-all duration-500 ease-out animate-[staggeredFadeIn_0.6s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0 parallax-card ${isReviewed
-                      ? 'border-gray-800/60 bg-gray-900/40 backdrop-blur-sm shadow-[0_4px_16px_rgba(0,0,0,0.2)]'
-                      : 'border-gray-800 bg-gray-900/70 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_60px_-12px_rgba(0,0,0,0.5)] hover:-translate-y-2 hover:scale-[1.02] hover:rotate-y-0.5'
+                      ? 'border-gray-800/60 bg-gray-900/40 backdrop-blur-sm shadow-[0_4px_16px_rgba(26, 107, 46, 0.1)]'
+                      : 'border-gray-800 bg-gray-900/70 backdrop-blur-sm shadow-[0_8px_24px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_20px_60px_-12px_rgba(26, 107, 46, 0.1)] hover:-translate-y-2 hover:scale-[1.02] hover:rotate-y-0.5'
                     } transform-gpu`}
                   style={{ animationDelay: `${index * 120}ms`, transformStyle: 'preserve-3d' }}
                 >
@@ -809,30 +809,30 @@ export function TrainerDashboard() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-3">
                         <div
-                          className={`w-12 h-12 rounded-full bg-gradient-to-br ${palette.gradient} flex items-center justify-center text-[14px] font-semibold ${palette.text} border ${palette.border} flex-shrink-0 shadow-[0_4px_16px_-2px_rgba(0,0,0,0.4)] transition-all duration-500 hover:scale-110 hover:rotate-6 relative overflow-hidden group`}
+                          className={`w-12 h-12 rounded-full bg-gradient-to-br ${palette.gradient} flex items-center justify-center text-[14px] font-semibold ${palette.text} border ${palette.border} flex-shrink-0 shadow-[0_4px_16px_-2px_rgba(26, 107, 46, 0.1)] transition-all duration-500 hover:scale-110 hover:rotate-6 relative overflow-hidden group`}
                         >
                           <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent rounded-full" />
                           <span className="relative z-10">{learnerInitial}</span>
                         </div>
                         <div className="min-w-0">
-                          <p className="font-semibold text-white text-[14px] leading-snug">{learnerName}</p>
-                          <p className="text-[12px] text-gray-500 mt-0.5 truncate">{videoTitle}</p>
+                          <p className="font-semibold text-[#0f3d1a] text-[14px] leading-snug">{learnerName}</p>
+                          <p className="text-[12px] text-[#7dab52] mt-0.5 truncate">{videoTitle}</p>
                         </div>
 
                         {!isReviewed && (
-                          <span className="ml-auto flex-shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-orange-500/15 text-orange-300 border border-orange-500/25 uppercase tracking-wider backdrop-blur-md shadow-[0_4px_12px_rgba(249,115,22,0.3)]">
-                            <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-[pulse_1.5s_ease-in-out_infinite] shadow-[0_0_6px_rgba(249,115,22,0.6)]" />
+                          <span className="ml-auto flex-shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-sky-500/15 text-orange-300 border border-sky-500/25 uppercase tracking-wider backdrop-blur-md shadow-[0_4px_12px_rgba(249,115,22,0.3)]">
+                            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-[pulse_1.5s_ease-in-out_infinite] shadow-[0_0_6px_rgba(249,115,22,0.6)]" />
                             New
                           </span>
                         )}
 
                         {isReviewed && submission.reviewDecision && (
                           <span
-                            className={`ml-auto flex-shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold uppercase tracking-wider backdrop-blur-md shadow-[0_4px_12px_rgba(0,0,0,0.3)] ${submission.reviewDecision === 'pass'
+                            className={`ml-auto flex-shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold uppercase tracking-wider backdrop-blur-md shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] ${submission.reviewDecision === 'pass'
                                 ? 'bg-blue-500/12 text-blue-300 border border-blue-500/20'
                                 : submission.reviewDecision === 'fail'
-                                  ? 'bg-orange-500/12 text-orange-300 border border-orange-500/20'
-                                  : 'bg-orange-500/8 text-orange-400/70 border border-orange-500/10'
+                                  ? 'bg-sky-500/12 text-orange-300 border border-sky-500/20'
+                                  : 'bg-sky-500/8 text-sky-400/70 border border-sky-500/10'
                               }`}
                           >
                             {submission.reviewDecision === 'pass' ? <ThumbsUp className="w-3 h-3" /> : <ThumbsDown className="w-3 h-3" />}
@@ -841,15 +841,15 @@ export function TrainerDashboard() {
                         )}
                       </div>
 
-                      <div className="mt-2 p-4 rounded-lg bg-gray-800/50 border border-gray-700/40 backdrop-blur-sm shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] transition-all duration-500 hover:bg-gray-800/70 hover:border-gray-700/60 hover:shadow-[inset_0_2px_8px_rgba(0,0,0,0.3)] group-hover:translate-z-2">
-                        <p className="text-[13px] text-gray-400 line-clamp-3 leading-relaxed">{submissionContent}</p>
+                      <div className="mt-2 p-4 rounded-lg bg-gray-800/50 border border-gray-700/40 backdrop-blur-sm shadow-[inset_0_2px_4px_rgba(26, 107, 46, 0.1)] transition-all duration-500 hover:bg-gray-800/70 hover:border-gray-700/60 hover:shadow-[inset_0_2px_8px_rgba(26, 107, 46, 0.1)] group-hover:translate-z-2">
+                        <p className="text-[13px] text-[#1a6b2e] line-clamp-3 leading-relaxed">{submissionContent}</p>
                       </div>
                     </div>
 
                     <div className="lg:flex-shrink-0 flex lg:flex-col gap-2 lg:gap-2.5">
                       <Button
                         onClick={() => reviewSubmission(submission.id, 'pass')}
-                        className="flex-1 lg:flex-none bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white text-[12px] h-10 rounded-lg font-semibold transition-all duration-500 border-0 shadow-[0_4px_12px_-2px_rgba(37,99,235,0.4),0_2px_6px_-1px_rgba(37,99,235,0.3)] hover:shadow-[0_8px_20px_-4px_rgba(37,99,235,0.5),0_4px_12px_-2px_rgba(37,99,235,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(37,99,235,0.3)] transform-gpu"
+                        className="flex-1 lg:flex-none bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-[#0f3d1a] text-[12px] h-10 rounded-lg font-semibold transition-all duration-500 border-0 shadow-[0_4px_12px_-2px_rgba(37,99,235,0.4),0_2px_6px_-1px_rgba(37,99,235,0.3)] hover:shadow-[0_8px_20px_-4px_rgba(37,99,235,0.5),0_4px_12px_-2px_rgba(37,99,235,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(37,99,235,0.3)] transform-gpu"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5 mr-1.5" />
                         Pass
@@ -857,7 +857,7 @@ export function TrainerDashboard() {
                       <Button
                         onClick={() => reviewSubmission(submission.id, 'fail')}
                         variant="ghost"
-                        className="flex-1 lg:flex-none border border-orange-500/25 text-orange-400 hover:bg-orange-500/10 hover:border-orange-500/40 text-[12px] h-10 rounded-lg font-semibold transition-all duration-500 shadow-[0_4px_12px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-sm"
+                        className="flex-1 lg:flex-none border border-sky-500/25 text-sky-400 hover:bg-sky-500/10 hover:border-sky-500/40 text-[12px] h-10 rounded-lg font-semibold transition-all duration-500 shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-sm"
                       >
                         <XCircle className="w-3.5 h-3.5 mr-1.5" />
                         Fail
@@ -865,7 +865,7 @@ export function TrainerDashboard() {
                       <Button
                         onClick={() => reviewSubmission(submission.id, 'improve')}
                         variant="ghost"
-                        className="flex-1 lg:flex-none border border-blue-500/20 text-blue-400 hover:bg-blue-500/8 hover:border-blue-500/30 text-[12px] h-10 rounded-lg font-semibold transition-all duration-500 shadow-[0_4px_12px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-sm"
+                        className="flex-1 lg:flex-none border border-blue-500/20 text-blue-400 hover:bg-blue-500/8 hover:border-blue-500/30 text-[12px] h-10 rounded-lg font-semibold transition-all duration-500 shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-sm"
                       >
                         <AlertCircle className="w-3.5 h-3.5 mr-1.5" />
                         Improve
@@ -957,7 +957,7 @@ export function TrainerDashboard() {
 
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
+              className="w-full bg-gradient-to-r from-orange-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-[#0f3d1a] rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
               style={{ transformStyle: 'preserve-3d' }}
             >
               <span className="relative z-10 flex items-center justify-center">
@@ -979,12 +979,12 @@ export function TrainerDashboard() {
         >
           <div className="space-y-5">
             <div
-              className={`rounded-xl bg-gradient-to-br from-orange-500/8 to-orange-600/5 border border-orange-500/20 p-5 backdrop-blur-sm shadow-[0_4px_16px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.02)] transition-all duration-500 hover:bg-orange-500/12 hover:border-orange-500/30 hover:shadow-[0_8px_24px_-4px_rgba(249,115,22,0.3)] ${card3DClass}`}
+              className={`rounded-xl bg-gradient-to-br from-sky-500/8 to-orange-600/5 border border-sky-500/20 p-5 backdrop-blur-sm shadow-[0_4px_16px_rgba(26, 107, 46, 0.1),inset_0_1px_0_rgba(255,255,255,0.02)] transition-all duration-500 hover:bg-sky-500/12 hover:border-sky-500/30 hover:shadow-[0_8px_24px_-4px_rgba(249,115,22,0.3)] ${card3DClass}`}
             >
               <div className="flex items-start gap-3 mb-4">
                 <div className="relative">
-                  <Sparkles className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5 animate-[pulse-subtle_2s_ease-in-out_infinite]" />
-                  <div className="absolute inset-0 bg-orange-400/20 blur-xl animate-pulse" />
+                  <Sparkles className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5 animate-[pulse-subtle_2s_ease-in-out_infinite]" />
+                  <div className="absolute inset-0 bg-sky-400/20 blur-xl animate-pulse" />
                 </div>
                 <div>
                   <p className="text-[15px] font-semibold text-orange-200 mb-1.5">Report Generation</p>
@@ -1001,7 +1001,7 @@ export function TrainerDashboard() {
                 ].map(({ label, icon: ItemIcon }) => (
                   <div
                     key={label}
-                    className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-blue-500/8 border border-blue-500/15 backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.2)] transition-all duration-300 hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-1 hover:scale-[1.02] hover:bg-blue-500/12 hover:border-blue-500/25 cursor-pointer transform-gpu"
+                    className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-blue-500/8 border border-blue-500/15 backdrop-blur-sm shadow-[0_2px_8px_rgba(26, 107, 46, 0.1)] transition-all duration-300 hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-1 hover:scale-[1.02] hover:bg-blue-500/12 hover:border-blue-500/25 cursor-pointer transform-gpu"
                   >
                     <ItemIcon className="w-3.5 h-3.5 text-blue-400/60 flex-shrink-0" />
                     <span className="text-[12px] text-blue-300/70">{label}</span>
@@ -1016,7 +1016,7 @@ export function TrainerDashboard() {
                 setMessageType('info');
                 setMessage('Reports API is configured. Use POST /api/reports with course, learner, and institute IDs.');
               }}
-              className="w-full border border-orange-500/25 text-orange-400 hover:bg-orange-500/10 hover:border-orange-500/40 rounded-xl h-12 font-semibold transition-all duration-500 shadow-[0_4px_16px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99] backdrop-blur-sm group transform-gpu"
+              className="w-full border border-sky-500/25 text-sky-400 hover:bg-sky-500/10 hover:border-sky-500/40 rounded-xl h-12 font-semibold transition-all duration-500 shadow-[0_4px_16px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99] backdrop-blur-sm group transform-gpu"
             >
               <BarChart3 className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-500" />
               Generate Report

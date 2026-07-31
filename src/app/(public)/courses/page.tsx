@@ -200,11 +200,11 @@ const CoursesPage = () => {
   ];
 
   return (
-    <div className="relative min-h-screen bg-[#020617] text-white overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#c8e6c9] text-[#0f3d1a] overflow-x-hidden">
       {/* Background Elements */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 -left-48 w-96 h-96 bg-primaryOrange/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 -right-48 w-96 h-96 bg-primaryOrange/5 rounded-full blur-[120px]" />
+        <div className="absolute top-0 -left-48 w-96 h-96 bg-primaryBlue/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 -right-48 w-96 h-96 bg-primaryBlue/5 rounded-full blur-[120px]" />
       </div>
 
       {/* Hero Video Background */}
@@ -236,7 +236,7 @@ const CoursesPage = () => {
 
       <button
         onClick={togglePlayPause}
-        className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white transition-all duration-300 hover:scale-125 hover:rotate-12 shadow-lg"
+        className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 flex items-center justify-center text-[#0f3d1a] transition-all duration-300 hover:scale-125 hover:rotate-12 shadow-lg"
       >
         {isPlaying ? (
           <Pause className="w-5 h-5" />
@@ -249,16 +249,16 @@ const CoursesPage = () => {
         <div className="container mx-auto max-w-7xl">
           {/* Header Section */}
           <div className="text-center mb-12 space-y-4 max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryOrange/20 bg-primaryOrange/10 text-primaryOrange text-xs font-bold uppercase tracking-widest backdrop-blur-sm hover:scale-110 hover:rotate-3 transition-all duration-300 cursor-default">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryBlue/20 bg-primaryBlue/10 text-primaryBlue text-xs font-bold uppercase tracking-widest backdrop-blur-sm hover:scale-110 hover:rotate-3 transition-all duration-300 cursor-default">
               <Sparkles className="w-3.5 h-3.5" /> Start Learning Today
             </div>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-[#0f3d1a] tracking-tight leading-tight">
               Master the Skills that <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryOrange to-[#ff7a45]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryBlue to-[#C6D6C0]">
                 Drive Careers Forward
               </span>
             </h1>
-            <p className="text-sm sm:text-base text-[#a1a1aa] max-w-2xl mx-auto text-left sm:text-center">
+            <p className="text-sm sm:text-base text-[#1a6b2e] max-w-2xl mx-auto text-left sm:text-center">
               Join millions of learners worldwide. Learn from industry experts
               with real-world projects and certificates.
             </p>
@@ -268,21 +268,21 @@ const CoursesPage = () => {
          <div className="max-w-3xl mx-auto mb-16">
   <div className="relative group">
     {/* Search Icon - FIXED: properly centered on all screen sizes */}
-    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[#a1a1aa] w-5 h-5 group-hover:scale-110 group-hover:text-primaryOrange transition-all duration-300 z-10" />
+    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[#1a6b2e] w-5 h-5 group-hover:scale-110 group-hover:text-primaryBlue transition-all duration-300 z-10" />
     <input
       type="text"
       placeholder="Search for any skill..."
-      className="w-full bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl sm:rounded-full py-4 pl-12 pr-4 sm:pr-28 text-white focus:outline-none focus:border-primaryOrange/50 focus:shadow-[0_0_25px_rgba(240,89,31,0.15)] transition-all text-sm sm:text-base"
+      className="w-full bg-[#1a6b2e]/5 backdrop-blur-sm border border-[#1a6b2e]/20 rounded-2xl sm:rounded-full py-4 pl-12 pr-4 sm:pr-28 text-[#0f3d1a] focus:outline-none focus:border-primaryBlue/50 focus:shadow-[0_0_25px_rgba(240,89,31,0.15)] transition-all text-sm sm:text-base"
       value={filters.search}
       onChange={(e) => setFilters({ ...filters, search: e.target.value })}
     />
     {/* Desktop button - hidden on mobile, shown on sm and up */}
-    <button className="hidden sm:block absolute right-2 top-1/2 -translate-y-1/2 px-5 py-2 bg-primaryOrange rounded-full text-sm font-semibold hover:bg-orange-600 transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-[0_10px_20px_rgba(240,89,31,0.3)]">
+    <button className="hidden sm:block absolute right-2 top-1/2 -translate-y-1/2 px-5 py-2 bg-primaryBlue rounded-full text-sm font-semibold hover:bg-orange-600 transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-[0_10px_20px_rgba(240,89,31,0.3)]">
       Search
     </button>
   </div>
   {/* Mobile button - shown only below sm breakpoint, full width below input */}
-  <button className="mt-3 w-full sm:hidden px-5 py-2 bg-primaryOrange rounded-full text-sm font-semibold hover:bg-orange-600 transition-all duration-300 hover:scale-[1.02] active:scale-95">
+  <button className="mt-3 w-full sm:hidden px-5 py-2 bg-primaryBlue rounded-full text-sm font-semibold hover:bg-orange-600 transition-all duration-300 hover:scale-[1.02] active:scale-95">
     Search
   </button>
   <div className="flex flex-wrap justify-center gap-2 mt-4">
@@ -296,7 +296,7 @@ const CoursesPage = () => {
     ].map((tag) => (
       <button
         key={tag}
-        className="px-3 py-1.5 rounded-full bg-white/5 border border-white/5 text-xs text-[#a1a1aa] hover:bg-primaryOrange/10 hover:border-primaryOrange/20 hover:text-white hover:scale-110 hover:-translate-y-1 active:scale-95 transition-all duration-300"
+        className="px-3 py-1.5 rounded-full bg-[#1a6b2e]/5 border border-[#1a6b2e]/10 text-xs text-[#1a6b2e] hover:bg-primaryBlue/10 hover:border-primaryBlue/20 hover:text-[#0f3d1a] hover:scale-110 hover:-translate-y-1 active:scale-95 transition-all duration-300"
       >
         {tag}
       </button>
@@ -305,8 +305,8 @@ const CoursesPage = () => {
 </div>
 
           {/* Trust Bar */}
-          <div className="bg-[#0f172a]/50 backdrop-blur-md border border-white/5 rounded-2xl p-4 sm:p-5 mb-16 hover:scale-[1.01] hover:shadow-xl transition-all duration-300">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-10 text-sm text-[#94a3b8]">
+          <div className="bg-[#0f172a]/50 backdrop-blur-md border border-[#1a6b2e]/10 rounded-2xl p-4 sm:p-5 mb-16 hover:scale-[1.01] hover:shadow-xl transition-all duration-300">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-10 text-sm text-[#1a6b2e]">
               {[
                 { icon: Users2, text: "25M+ learners" },
                 { icon: VideoIcon, text: "75+ languages" },
@@ -317,8 +317,8 @@ const CoursesPage = () => {
                   key={i}
                   className="flex items-center justify-center gap-2 group cursor-default text-center"
                 >
-                  <item.icon className="w-4 h-4 text-primaryOrange group-hover:scale-150 group-hover:rotate-12 group-hover:-translate-y-1 transition-all duration-300" />
-                  <span className="font-medium group-hover:text-white transition-colors">
+                  <item.icon className="w-4 h-4 text-primaryBlue group-hover:scale-150 group-hover:rotate-12 group-hover:-translate-y-1 transition-all duration-300" />
+                  <span className="font-medium group-hover:text-[#0f3d1a] transition-colors">
                     {item.text}
                   </span>
                 </div>
@@ -335,8 +335,8 @@ const CoursesPage = () => {
                   onClick={() => setActiveCategory(cat.toLowerCase())}
                   className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 whitespace-nowrap hover:-translate-y-1 hover:shadow-lg ${
                     activeCategory === cat.toLowerCase()
-                      ? "bg-primaryOrange text-white shadow-lg shadow-primaryOrange/25 scale-105 hover:scale-110"
-                      : "bg-white/5 text-[#94a3b8] hover:bg-white/10 border border-white/5 hover:border-white/10 hover:scale-105"
+                      ? "bg-primaryBlue text-[#0f3d1a] shadow-lg shadow-primaryBlue/25 scale-105 hover:scale-110"
+                      : "bg-[#1a6b2e]/5 text-[#1a6b2e] hover:bg-white/10 border border-[#1a6b2e]/10 hover:border-[#1a6b2e]/20 hover:scale-105"
                   }`}
                 >
                   {cat}
@@ -350,16 +350,16 @@ const CoursesPage = () => {
             {/* Header Section - Cleaner Design */}
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a] tracking-tight">
                   Top courses in Development
                 </h2>
-                <p className="text-sm text-gray-400 mt-1">
+                <p className="text-sm text-[#1a6b2e] mt-1">
                   Most popular among our learners
                 </p>
               </div>
               <Link
                 href="/courses"
-                className="text-orange-500 text-sm font-semibold hover:underline flex items-center gap-1 group transition-all duration-300 hover:gap-2"
+                className="text-sky-500 text-sm font-semibold hover:underline flex items-center gap-1 group transition-all duration-300 hover:gap-2"
               >
                 View all{" "}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
@@ -368,7 +368,7 @@ const CoursesPage = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
               {/* Main Featured Card - Larger and Clearer */}
-              <div className="lg:col-span-3 relative rounded-xl overflow-hidden bg-gray-900 group cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-500 border border-orange-500/30">
+              <div className="lg:col-span-3 relative rounded-xl overflow-hidden bg-gray-900 group cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-sky-500/10 transition-all duration-500 border border-sky-500/30">
                 {/* Image Container with fixed aspect ratio */}
                 <div className="relative w-full pt-[56.25%] overflow-hidden">
                   <img
@@ -381,34 +381,34 @@ const CoursesPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
 
                 {/* Badge */}
-                <div className="absolute top-5 left-5 px-3 py-1.5 rounded-lg bg-orange-500 text-white text-xs font-bold shadow-lg z-10">
+                <div className="absolute top-5 left-5 px-3 py-1.5 rounded-lg bg-sky-500 text-[#0f3d1a] text-xs font-bold shadow-lg z-10">
                   Bestseller
                 </div>
 
                 {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8 z-10">
                   <div className="space-y-2 sm:space-y-3">
-                    <span className="text-xs font-semibold text-orange-400 uppercase tracking-wider">
+                    <span className="text-xs font-semibold text-sky-400 uppercase tracking-wider">
                       {courses[0].level} • {courses[0].duration}
                     </span>
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white leading-tight group-hover:text-orange-400 transition-colors duration-300 line-clamp-2">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#0f3d1a] leading-tight group-hover:text-sky-400 transition-colors duration-300 line-clamp-2">
                       {courses[0].title}
                     </h3>
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
                       <div className="flex items-center gap-1">
                         <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-yellow-400 text-yellow-400" />
-                        <span className="font-bold text-white">
+                        <span className="font-bold text-[#0f3d1a]">
                           {courses[0].rating}
                         </span>
                       </div>
-                      <span className="text-gray-300">
+                      <span className="text-[#1a6b2e]">
                         ({courses[0].students} students)
                       </span>
-                      <span className="text-gray-300">
+                      <span className="text-[#1a6b2e]">
                         • {courses[0].trainer_name}
                       </span>
                     </div>
-                    <button className="mt-2 px-4 sm:px-6 py-2 sm:py-2.5 bg-orange-500 hover:bg-orange-600 rounded-lg text-white font-semibold transition-all duration-300 shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 active:scale-95 text-sm sm:text-base">
+                    <button className="mt-2 px-4 sm:px-6 py-2 sm:py-2.5 bg-sky-500 hover:bg-orange-600 rounded-lg text-[#0f3d1a] font-semibold transition-all duration-300 shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:scale-105 active:scale-95 text-sm sm:text-base">
                       Enroll Now
                     </button>
                   </div>
@@ -418,7 +418,7 @@ const CoursesPage = () => {
               {/* Right side cards container */}
               <div className="lg:col-span-2 space-y-5">
                 {/* Course Card 1 - Clean Horizontal Design */}
-                <div className="flex flex-row bg-navy-900 rounded-xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300 hover:-translate-y-1 border border-orange-500/30">
+                <div className="flex flex-row bg-navy-900 rounded-xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl hover:shadow-sky-500/10 transition-all duration-300 hover:-translate-y-1 border border-sky-500/30">
                   <div className="w-2/5 relative overflow-hidden">
                     <div className="relative w-full pt-[100%]">
                       <img
@@ -429,21 +429,21 @@ const CoursesPage = () => {
                     </div>
                   </div>
                   <div className="w-3/5 p-3 sm:p-4 md:p-5 flex flex-col justify-center">
-                    <span className="text-[10px] font-bold text-orange-500 uppercase tracking-wider mb-1">
+                    <span className="text-[10px] font-bold text-sky-500 uppercase tracking-wider mb-1">
                       {courses[1].level}
                     </span>
-                    <h3 className="text-sm sm:text-base font-bold text-white mb-1 line-clamp-2 group-hover:text-orange-500 transition-colors">
+                    <h3 className="text-sm sm:text-base font-bold text-[#0f3d1a] mb-1 line-clamp-2 group-hover:text-sky-500 transition-colors">
                       {courses[1].title}
                     </h3>
-                    <p className="text-xs text-gray-400 mb-2 truncate">
+                    <p className="text-xs text-[#1a6b2e] mb-2 truncate">
                       {courses[1].trainer_name}
                     </p>
                     <div className="flex items-center gap-2">
                       <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-yellow-400 text-yellow-400" />
-                      <span className="text-xs font-bold text-white">
+                      <span className="text-xs font-bold text-[#0f3d1a]">
                         {courses[1].rating}
                       </span>
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs text-[#1a6b2e]">
                         ({courses[1].students})
                       </span>
                     </div>
@@ -451,7 +451,7 @@ const CoursesPage = () => {
                 </div>
 
                 {/* Course Card 2 - Clean Horizontal Design */}
-                <div className="flex flex-row bg-navy-900 rounded-xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300 hover:-translate-y-1 border border-orange-500/30">
+                <div className="flex flex-row bg-navy-900 rounded-xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl hover:shadow-sky-500/10 transition-all duration-300 hover:-translate-y-1 border border-sky-500/30">
                   <div className="w-2/5 relative overflow-hidden">
                     <div className="relative w-full pt-[100%]">
                       <img
@@ -462,21 +462,21 @@ const CoursesPage = () => {
                     </div>
                   </div>
                   <div className="w-3/5 p-3 sm:p-4 md:p-5 flex flex-col justify-center">
-                    <span className="text-[10px] font-bold text-orange-500 uppercase tracking-wider mb-1">
+                    <span className="text-[10px] font-bold text-sky-500 uppercase tracking-wider mb-1">
                       {courses[2].level}
                     </span>
-                    <h3 className="text-sm sm:text-base font-bold text-white mb-1 line-clamp-2 group-hover:text-orange-500 transition-colors">
+                    <h3 className="text-sm sm:text-base font-bold text-[#0f3d1a] mb-1 line-clamp-2 group-hover:text-sky-500 transition-colors">
                       {courses[2].title}
                     </h3>
-                    <p className="text-xs text-gray-400 mb-2 truncate">
+                    <p className="text-xs text-[#1a6b2e] mb-2 truncate">
                       {courses[2].trainer_name}
                     </p>
                     <div className="flex items-center gap-2">
                       <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-yellow-400 text-yellow-400" />
-                      <span className="text-xs font-bold text-white">
+                      <span className="text-xs font-bold text-[#0f3d1a]">
                         {courses[2].rating}
                       </span>
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs text-[#1a6b2e]">
                         ({courses[2].students})
                       </span>
                     </div>
@@ -489,11 +489,11 @@ const CoursesPage = () => {
           {/* Learning Paths - Split Layout + Dashboard UI */}
           <div className="mb-24 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div className="space-y-6 text-left">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f3d1a] tracking-tight">
                 Curated{" "}
-                <span className="text-primaryOrange">Learning Paths</span>
+                <span className="text-primaryBlue">Learning Paths</span>
               </h2>
-              <p className="text-[#94a3b8] text-base leading-relaxed">
+              <p className="text-[#1a6b2e] text-base leading-relaxed">
                 From beginner to professional, follow structured paths designed
                 by industry experts to get job-ready faster.
               </p>
@@ -528,20 +528,20 @@ const CoursesPage = () => {
                   return (
                     <div
                       key={path.title}
-                      className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-primaryOrange/30 hover:bg-white/[0.04] transition-all duration-300 group cursor-pointer hover:scale-[1.03] hover:-translate-y-2 hover:rotate-1 hover:shadow-[0_20px_40px_-10px_rgba(240,89,31,0.2)]"
+                      className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-[#1a6b2e]/10 hover:border-primaryBlue/30 hover:bg-[#1a6b2e]/5 transition-all duration-300 group cursor-pointer hover:scale-[1.03] hover:-translate-y-2 hover:rotate-1 hover:shadow-[0_20px_40px_-10px_rgba(240,89,31,0.2)]"
                     >
-                      <div className="w-12 h-12 rounded-xl bg-white/5 group-hover:bg-primaryOrange text-white/60 group-hover:text-white flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-125 group-hover:rotate-12 group-hover:shadow-[0_0_15px_rgba(240,89,31,0.3)]">
+                      <div className="w-12 h-12 rounded-xl bg-[#1a6b2e]/5 group-hover:bg-primaryBlue text-[#0f3d1a]/60 group-hover:text-[#0f3d1a] flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-125 group-hover:rotate-12 group-hover:shadow-[0_0_15px_rgba(240,89,31,0.3)]">
                         <IconComp className="w-6 h-6" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-sm font-bold text-white mb-0.5">
+                        <h3 className="text-sm font-bold text-[#0f3d1a] mb-0.5">
                           {path.title}
                         </h3>
-                        <p className="text-xs text-[#94a3b8]">
+                        <p className="text-xs text-[#1a6b2e]">
                           {path.level} • {path.courses} Courses
                         </p>
                       </div>
-                      <ChevronRight className="w-5 h-5 text-[#94a3b8] group-hover:text-primaryOrange group-hover:translate-x-2 group-hover:scale-125 transition-all duration-300" />
+                      <ChevronRight className="w-5 h-5 text-[#1a6b2e] group-hover:text-primaryBlue group-hover:translate-x-2 group-hover:scale-125 transition-all duration-300" />
                     </div>
                   );
                 })}
@@ -550,12 +550,12 @@ const CoursesPage = () => {
 
             {/* Mock Dashboard UI */}
             <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-to-bl from-primaryOrange/10 to-transparent rounded-3xl blur-2xl opacity-40 pointer-events-none group-hover:opacity-70 transition-opacity duration-500"></div>
-              <div className="relative bg-[#0f172a] border border-white/5 rounded-2xl p-5 shadow-2xl space-y-4 hover:scale-[1.02] hover:-translate-y-4 hover:rotate-1 hover:shadow-[0_30px_60px_-15px_rgba(240,89,31,0.3)] transition-all duration-500">
-                <div className="flex items-center justify-between pb-3 border-b border-white/5">
+              <div className="absolute -inset-4 bg-gradient-to-bl from-primaryBlue/10 to-transparent rounded-3xl blur-2xl opacity-40 pointer-events-none group-hover:opacity-70 transition-opacity duration-500"></div>
+              <div className="relative bg-[#0f172a] border border-[#1a6b2e]/10 rounded-2xl p-5 shadow-2xl space-y-4 hover:scale-[1.02] hover:-translate-y-4 hover:rotate-1 hover:shadow-[0_30px_60px_-15px_rgba(240,89,31,0.3)] transition-all duration-500">
+                <div className="flex items-center justify-between pb-3 border-b border-[#1a6b2e]/10">
                   <div className="flex items-center gap-2 group/icon cursor-default">
-                    <LayoutDashboard className="w-4 h-4 text-primaryOrange group-hover/icon:scale-125 group-hover/icon:rotate-12 transition-transform duration-300" />
-                    <span className="text-xs font-semibold text-white">
+                    <LayoutDashboard className="w-4 h-4 text-primaryBlue group-hover/icon:scale-125 group-hover/icon:rotate-12 transition-transform duration-300" />
+                    <span className="text-xs font-semibold text-[#0f3d1a]">
                       My Learning Path
                     </span>
                   </div>
@@ -564,14 +564,14 @@ const CoursesPage = () => {
                   </span>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center text-primaryOrange group-hover:scale-110 group-hover:rotate-6 group-hover:bg-primaryOrange/20 transition-all duration-300">
+                  <div className="w-14 h-14 rounded-xl bg-[#1a6b2e]/5 flex items-center justify-center text-primaryBlue group-hover:scale-110 group-hover:rotate-6 group-hover:bg-primaryBlue/20 transition-all duration-300">
                     <Code className="w-8 h-8" />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-white">
+                    <p className="text-sm font-bold text-[#0f3d1a]">
                       Full-Stack Web Development
                     </p>
-                    <p className="text-xs text-[#94a3b8]">
+                    <p className="text-xs text-[#1a6b2e]">
                       7 of 12 Courses Completed
                     </p>
                   </div>
@@ -579,24 +579,24 @@ const CoursesPage = () => {
                 <div className="space-y-3">
                   <div>
                     <div className="flex justify-between text-xs mb-1">
-                      <span className="text-[#94a3b8]">Overall Progress</span>
-                      <span className="text-white font-medium">58%</span>
+                      <span className="text-[#1a6b2e]">Overall Progress</span>
+                      <span className="text-[#0f3d1a] font-medium">58%</span>
                     </div>
-                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-                      <div className="h-full w-[58%] bg-gradient-to-r from-primaryOrange to-orange-400 rounded-full group-hover:w-[70%] transition-all duration-1000"></div>
+                    <div className="h-2 bg-[#1a6b2e]/5 rounded-full overflow-hidden">
+                      <div className="h-full w-[58%] bg-gradient-to-r from-primaryBlue to-sky-400 rounded-full group-hover:w-[70%] transition-all duration-1000"></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between text-xs mb-1">
-                      <span className="text-[#94a3b8]">Projects Built</span>
-                      <span className="text-white font-medium">4/6</span>
+                      <span className="text-[#1a6b2e]">Projects Built</span>
+                      <span className="text-[#0f3d1a] font-medium">4/6</span>
                     </div>
-                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-2 bg-[#1a6b2e]/5 rounded-full overflow-hidden">
                       <div className="h-full w-[66%] bg-white/30 rounded-full group-hover:w-[80%] transition-all duration-1000"></div>
                     </div>
                   </div>
                 </div>
-                <button className="w-full mt-2 py-2.5 bg-primaryOrange/10 text-primaryOrange text-sm font-semibold rounded-lg hover:bg-primaryOrange hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group/btn hover:scale-105 hover:shadow-lg active:scale-95">
+                <button className="w-full mt-2 py-2.5 bg-primaryBlue/10 text-primaryBlue text-sm font-semibold rounded-lg hover:bg-primaryBlue hover:text-[#0f3d1a] transition-all duration-300 flex items-center justify-center gap-2 group/btn hover:scale-105 hover:shadow-lg active:scale-95">
                   Continue Learning{" "}
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                 </button>
@@ -608,16 +608,16 @@ const CoursesPage = () => {
           <div className="mb-24">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f3d1a]">
                   Recommended for you
                 </h2>
-                <p className="text-sm text-[#94a3b8] mt-1">
+                <p className="text-sm text-[#1a6b2e] mt-1">
                   Based on your interests
                 </p>
               </div>
               <Link
                 href="/recommended"
-                className="text-primaryOrange text-sm font-semibold hover:underline flex items-center gap-1 group hover:scale-110 transition-transform duration-300"
+                className="text-primaryBlue text-sm font-semibold hover:underline flex items-center gap-1 group hover:scale-110 transition-transform duration-300"
               >
                 View all{" "}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
@@ -628,7 +628,7 @@ const CoursesPage = () => {
               {courses.slice(3, 6).map((course) => (
                 <div
                   key={course.id}
-                  className="min-w-[min(18rem,calc(100vw-2rem))] w-[min(20rem,calc(100vw-2rem))] rounded-2xl overflow-hidden bg-[#0f172a] border border-white/5 group cursor-pointer hover:scale-[1.05] hover:-translate-y-6 hover:rotate-1 hover:shadow-[0_30px_60px_-15px_rgba(240,89,31,0.4)] transition-all duration-500 ease-out flex-shrink-0"
+                  className="min-w-[min(18rem,calc(100vw-2rem))] w-[min(20rem,calc(100vw-2rem))] rounded-2xl overflow-hidden bg-[#0f172a] border border-[#1a6b2e]/10 group cursor-pointer hover:scale-[1.05] hover:-translate-y-6 hover:rotate-1 hover:shadow-[0_30px_60px_-15px_rgba(240,89,31,0.4)] transition-all duration-500 ease-out flex-shrink-0"
                 >
                   <div className="aspect-video relative overflow-hidden">
                     <img
@@ -636,37 +636,37 @@ const CoursesPage = () => {
                       alt={course.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
-                    <div className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-sm text-xs font-semibold text-white flex items-center gap-1 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-                      <Clock className="w-3 h-3 text-primaryOrange" />{" "}
+                    <div className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-sm text-xs font-semibold text-[#0f3d1a] flex items-center gap-1 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                      <Clock className="w-3 h-3 text-primaryBlue" />{" "}
                       {course.duration}
                     </div>
                   </div>
                   <div className="p-5 text-left">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xs text-primaryOrange font-bold bg-primaryOrange/10 px-2 py-0.5 rounded group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 inline-block">
+                      <span className="text-xs text-primaryBlue font-bold bg-primaryBlue/10 px-2 py-0.5 rounded group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 inline-block">
                         {course.level}
                       </span>
-                      <span className="text-xs text-[#94a3b8]">
+                      <span className="text-xs text-[#1a6b2e]">
                         {course.lectures} lectures
                       </span>
                     </div>
-                    <h3 className="font-bold text-white mb-2 line-clamp-2 group-hover:text-primaryOrange transition-colors h-12">
+                    <h3 className="font-bold text-[#0f3d1a] mb-2 line-clamp-2 group-hover:text-primaryBlue transition-colors h-12">
                       {course.title}
                     </h3>
-                    <p className="text-sm text-[#94a3b8] mb-4">
+                    <p className="text-sm text-[#1a6b2e] mb-4">
                       {course.trainer_name}
                     </p>
-                    <div className="flex items-center justify-between pt-3 border-t border-white/5">
+                    <div className="flex items-center justify-between pt-3 border-t border-[#1a6b2e]/10">
                       <div className="flex items-center gap-1">
                         <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300" />
-                        <span className="text-sm font-bold text-white">
+                        <span className="text-sm font-bold text-[#0f3d1a]">
                           {course.rating}
                         </span>
-                        <span className="text-xs text-[#94a3b8]">
+                        <span className="text-xs text-[#1a6b2e]">
                           ({course.students})
                         </span>
                       </div>
-                      <button className="text-xs font-semibold text-primaryOrange hover:text-white hover:bg-primaryOrange px-3 py-1.5 rounded-lg border border-primaryOrange/30 hover:border-primaryOrange transition-all duration-300 hover:scale-110 hover:-translate-y-1 active:scale-95 active:translate-y-0 hover:shadow-[0_10px_20px_rgba(240,89,31,0.3)]">
+                      <button className="text-xs font-semibold text-primaryBlue hover:text-[#0f3d1a] hover:bg-primaryBlue px-3 py-1.5 rounded-lg border border-primaryBlue/30 hover:border-primaryBlue transition-all duration-300 hover:scale-110 hover:-translate-y-1 active:scale-95 active:translate-y-0 hover:shadow-[0_10px_20px_rgba(240,89,31,0.3)]">
                         Enroll
                       </button>
                     </div>
@@ -681,10 +681,10 @@ const CoursesPage = () => {
           <div className="mb-24">
             {/* Header Section - Cleaner Design */}
             <div className="text-center mb-12">
-              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a] tracking-tight">
                 Trusted by learners globally
               </h2>
-              <p className="text-sm text-gray-400 mt-2">
+              <p className="text-sm text-[#1a6b2e] mt-2">
                 Real numbers, real impact.
               </p>
             </div>
@@ -704,7 +704,7 @@ const CoursesPage = () => {
                   label: "Expert Courses",
                   icon: BookOpen,
                   trend: "+45",
-                  trendColor: "text-orange-500",
+                  trendColor: "text-sky-500",
                 },
                 {
                   number: "75+",
@@ -725,12 +725,12 @@ const CoursesPage = () => {
                 return (
                   <div
                     key={stat.label}
-                    className="group relative p-6 rounded-2xl bg-navy-900 border border-orange-500/30 shadow-sm hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300 hover:-translate-y-1"
+                    className="group relative p-6 rounded-2xl bg-navy-900 border border-sky-500/30 shadow-sm hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-300 hover:-translate-y-1"
                   >
                     {/* Icon Section */}
                     <div className="flex items-start justify-between mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center group-hover:bg-orange-500 transition-colors duration-300">
-                        <IconComp className="w-6 h-6 text-orange-500 group-hover:text-white transition-colors duration-300" />
+                      <div className="w-12 h-12 rounded-xl bg-sky-500/10 flex items-center justify-center group-hover:bg-sky-500 transition-colors duration-300">
+                        <IconComp className="w-6 h-6 text-sky-500 group-hover:text-[#0f3d1a] transition-colors duration-300" />
                       </div>
                       {/* Trend Indicator */}
                       <span
@@ -742,17 +742,17 @@ const CoursesPage = () => {
 
                     {/* Stats Numbers */}
                     <div>
-                      <div className="text-3xl sm:text-4xl font-bold text-white mb-1 group-hover:text-orange-500 transition-colors duration-300">
+                      <div className="text-3xl sm:text-4xl font-bold text-[#0f3d1a] mb-1 group-hover:text-sky-500 transition-colors duration-300">
                         {stat.number}
                       </div>
-                      <p className="text-sm text-gray-400 font-medium">
+                      <p className="text-sm text-[#1a6b2e] font-medium">
                         {stat.label}
                       </p>
                     </div>
 
                     {/* Subtle Progress Bar */}
                     <div className="mt-4 h-0.5 w-full bg-gray-700 rounded-full overflow-hidden">
-                      <div className="h-full w-0 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full group-hover:w-full transition-all duration-700" />
+                      <div className="h-full w-0 bg-gradient-to-r from-sky-500 to-sky-400 rounded-full group-hover:w-full transition-all duration-700" />
                     </div>
                   </div>
                 );
@@ -761,34 +761,34 @@ const CoursesPage = () => {
           </div>
           {/* Instructor CTA - Glassmorphism & 3D */}
 
-          <div className="relative mb-16 rounded-2xl overflow-hidden bg-navy-900 border border-orange-500/30 shadow-lg hover:shadow-xl transition-all duration-500 group">
+          <div className="relative mb-16 rounded-2xl overflow-hidden bg-navy-900 border border-sky-500/30 shadow-lg hover:shadow-xl transition-all duration-500 group">
             {/* Decorative elements - subtle and clean */}
-            <div className="absolute top-0 right-0 w-72 h-72 bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-72 h-72 bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-72 h-72 bg-sky-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-72 h-72 bg-sky-500/5 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative z-10 grid md:grid-cols-2 gap-8 sm:gap-10 p-6 sm:p-8 md:p-12 items-center">
               {/* Left side - Content */}
               <div className="space-y-5 text-left">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 text-orange-600 dark:text-orange-400 text-xs font-bold uppercase tracking-wider">
-                  <Crown className="w-3.5 h-3.5 text-orange-500" />
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100 dark:bg-sky-500/10 border border-orange-200 dark:border-sky-500/20 text-orange-600 dark:text-sky-400 text-xs font-bold uppercase tracking-wider">
+                  <Crown className="w-3.5 h-3.5 text-sky-500" />
                   Become an Instructor
                 </div>
 
                 {/* Heading */}
-                <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                  Teach what you <span className="text-orange-500">love</span>
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a] tracking-tight">
+                  Teach what you <span className="text-sky-500">love</span>
                 </h2>
 
                 {/* Description */}
-                <p className="text-gray-300 text-base leading-relaxed">
+                <p className="text-[#1a6b2e] text-base leading-relaxed">
                   Share your expertise with millions of learners worldwide. Join
                   our community of instructors and earn money doing what you
                   enjoy.
                 </p>
 
                 {/* CTA Button */}
-                <button className="group/btn px-6 py-3 bg-orange-500 hover:bg-orange-600 rounded-xl text-white font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-orange-500/25 flex items-center gap-2 w-fit">
+                <button className="group/btn px-6 py-3 bg-sky-500 hover:bg-orange-600 rounded-xl text-[#0f3d1a] font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-sky-500/25 flex items-center gap-2 w-fit">
                   Start Teaching Today
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                 </button>
@@ -798,9 +798,9 @@ const CoursesPage = () => {
               <div className="relative flex flex-col items-center justify-center py-8">
                 {/* Main Stat Circle */}
                 <div className="relative mb-6">
-                  <div className="w-36 h-36 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg">
+                  <div className="w-36 h-36 rounded-full bg-gradient-to-br from-sky-500 to-orange-600 flex items-center justify-center shadow-lg">
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-white">5K+</div>
+                      <div className="text-3xl font-bold text-[#0f3d1a]">5K+</div>
                       <div className="text-xs text-orange-100 mt-1">
                         Instructors
                       </div>
@@ -808,26 +808,26 @@ const CoursesPage = () => {
                   </div>
 
                   {/* Orbiting elements - icons with navy blue background */}
-                  <div className="absolute -top-6 -right-6 w-14 h-14 rounded-xl bg-navy-900 shadow-md border border-orange-500/30 flex items-center justify-center">
-                    <Video className="w-6 h-6 text-orange-500" />
+                  <div className="absolute -top-6 -right-6 w-14 h-14 rounded-xl bg-navy-900 shadow-md border border-sky-500/30 flex items-center justify-center">
+                    <Video className="w-6 h-6 text-sky-500" />
                   </div>
-                  <div className="absolute -bottom-6 -left-6 w-14 h-14 rounded-xl bg-navy-900 shadow-md border border-orange-500/30 flex items-center justify-center">
-                    <Mic className="w-6 h-6 text-orange-500" />
+                  <div className="absolute -bottom-6 -left-6 w-14 h-14 rounded-xl bg-navy-900 shadow-md border border-sky-500/30 flex items-center justify-center">
+                    <Mic className="w-6 h-6 text-sky-500" />
                   </div>
-                  <div className="absolute top-1/2 -right-10 -translate-y-1/2 w-12 h-12 rounded-lg bg-navy-900 shadow-md border border-orange-500/30 flex items-center justify-center">
-                    <Palette className="w-5 h-5 text-orange-500" />
+                  <div className="absolute top-1/2 -right-10 -translate-y-1/2 w-12 h-12 rounded-lg bg-navy-900 shadow-md border border-sky-500/30 flex items-center justify-center">
+                    <Palette className="w-5 h-5 text-sky-500" />
                   </div>
                 </div>
 
                 {/* Stats Row */}
-                <div className="flex gap-6 mt-4 pt-4 border-t border-orange-500/20">
+                <div className="flex gap-6 mt-4 pt-4 border-t border-sky-500/20">
                   <div className="text-center">
-                    <div className="text-xl font-bold text-white">$3.2M+</div>
-                    <div className="text-xs text-gray-400">Earnings</div>
+                    <div className="text-xl font-bold text-[#0f3d1a]">$3.2M+</div>
+                    <div className="text-xs text-[#1a6b2e]">Earnings</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-xl font-bold text-white">150+</div>
-                    <div className="text-xs text-gray-400">Countries</div>
+                    <div className="text-xl font-bold text-[#0f3d1a]">150+</div>
+                    <div className="text-xs text-[#1a6b2e]">Countries</div>
                   </div>
                 </div>
               </div>

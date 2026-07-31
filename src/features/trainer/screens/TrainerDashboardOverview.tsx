@@ -22,7 +22,7 @@ export function TrainerDashboardOverview() {
   const { user } = useAuthStore();
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-8 font-sans bg-[#050505] min-h-screen text-gray-200">
+    <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-8 font-sans bg-[#050505] min-h-screen text-[#0f3d1a]">
       
       {/* Premium 3D Hero Banner */}
       <div className="relative w-full h-[320px] rounded-[2rem] overflow-hidden group">
@@ -45,18 +45,18 @@ export function TrainerDashboardOverview() {
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-4">
                 <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse" />
-                <span className="text-xs font-semibold text-white tracking-wide">LIVE DASHBOARD</span>
+                <span className="text-xs font-semibold text-[#0f3d1a] tracking-wide">LIVE DASHBOARD</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-2 drop-shadow-lg">
+              <h1 className="text-4xl sm:text-5xl font-extrabold text-[#0f3d1a] mb-2 drop-shadow-lg">
                 Welcome back, {user?.name || 'Trainer'}
               </h1>
-              <p className="text-gray-300 text-lg max-w-lg drop-shadow-md">
+              <p className="text-[#1a6b2e] text-lg max-w-lg drop-shadow-md">
                 Your courses are trending! You have <span className="text-[#CCFF00] font-bold">12 new students</span> this week.
               </p>
             </div>
             
             {/* Quick action button */}
-            <button className="hidden sm:flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-lg hover:bg-white/20 border border-white/20 text-white font-bold rounded-2xl transition-all shadow-xl">
+            <button className="hidden sm:flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-lg hover:bg-white/20 border border-white/20 text-[#0f3d1a] font-bold rounded-2xl transition-all shadow-xl">
               <Calendar className="w-5 h-5" />
               <span>Export Report</span>
             </button>
@@ -78,18 +78,18 @@ export function TrainerDashboardOverview() {
         <div className="lg:col-span-2 space-y-8">
           
           {/* Modern Chart Card */}
-          <div className="bg-[#101010] border border-white/5 rounded-[2rem] p-8 relative overflow-hidden">
+          <div className="bg-[#101010] border border-[#1a6b2e]/10 rounded-[2rem] p-8 relative overflow-hidden">
             {/* Glow effect */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#CCFF00]/5 rounded-full blur-[120px] pointer-events-none" />
             
             <div className="flex items-center justify-between mb-8 relative z-10">
               <div>
-                <h2 className="text-xl font-bold text-white mb-1">Revenue Overview</h2>
-                <p className="text-sm text-gray-500">Track your course sales across the week</p>
+                <h2 className="text-xl font-bold text-[#0f3d1a] mb-1">Revenue Overview</h2>
+                <p className="text-sm text-[#7dab52]">Track your course sales across the week</p>
               </div>
               <div className="flex gap-2">
-                <button className="px-4 py-2 bg-white/5 rounded-xl text-sm font-medium text-white border border-white/10 hover:bg-white/10 transition">Weekly</button>
-                <button className="px-4 py-2 text-sm font-medium text-gray-500 hover:text-white transition">Monthly</button>
+                <button className="px-4 py-2 bg-[#1a6b2e]/5 rounded-xl text-sm font-medium text-[#0f3d1a] border border-[#1a6b2e]/20 hover:bg-white/10 transition">Weekly</button>
+                <button className="px-4 py-2 text-sm font-medium text-[#7dab52] hover:text-[#0f3d1a] transition">Monthly</button>
               </div>
             </div>
 
@@ -109,10 +109,10 @@ export function TrainerDashboardOverview() {
                       style={{ height: `${height}%` }}
                     >
                       {/* Inner highlight */}
-                      <div className="absolute top-0 left-0 right-0 h-1 bg-white/50" />
+                      <div className="absolute top-0 left-0 right-0 h-1 bg-[#1a6b2e]/50" />
                     </div>
                   </div>
-                  <span className="text-xs text-gray-500 mt-4 font-medium uppercase tracking-wider">
+                  <span className="text-xs text-[#7dab52] mt-4 font-medium uppercase tracking-wider">
                     {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][i]}
                   </span>
                 </div>
@@ -123,7 +123,7 @@ export function TrainerDashboardOverview() {
           {/* Bottom Left: Featured Courses / Activity */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* 3D Illustration Card for a specific Course */}
-            <div className="bg-gradient-to-br from-[#1c1c1c] to-[#0a0a0a] border border-white/5 rounded-[2rem] p-6 relative overflow-hidden group cursor-pointer hover:border-[#CCFF00]/50 transition-colors">
+            <div className="bg-gradient-to-br from-[#1c1c1c] to-[#0a0a0a] border border-[#1a6b2e]/10 rounded-[2rem] p-6 relative overflow-hidden group cursor-pointer hover:border-[#CCFF00]/50 transition-colors">
               <div className="absolute -right-10 -bottom-10 w-40 h-40 opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
                  {/* Using a 3D-like object image */}
                 <Image 
@@ -134,11 +134,11 @@ export function TrainerDashboardOverview() {
                 />
               </div>
               <div className="relative z-10">
-                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white mb-4 border border-white/10">
+                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#0f3d1a] mb-4 border border-[#1a6b2e]/20">
                   <Star className="w-5 h-5" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">UI/UX Masterclass</h3>
-                <p className="text-sm text-gray-400 mb-6 max-w-[80%]">Top performing course this month.</p>
+                <h3 className="text-xl font-bold text-[#0f3d1a] mb-2">UI/UX Masterclass</h3>
+                <p className="text-sm text-[#1a6b2e] mb-6 max-w-[80%]">Top performing course this month.</p>
                 <div className="flex items-center gap-2 text-[#CCFF00] font-semibold text-sm">
                   <TrendingUp className="w-4 h-4" />
                   <span>+24% Sales</span>
@@ -147,13 +147,13 @@ export function TrainerDashboardOverview() {
             </div>
 
             {/* Engagement Card */}
-            <div className="bg-[#101010] border border-white/5 rounded-[2rem] p-6 flex flex-col justify-between">
+            <div className="bg-[#101010] border border-[#1a6b2e]/10 rounded-[2rem] p-6 flex flex-col justify-between">
               <div>
-                <h3 className="text-lg font-bold text-white mb-1">Student Engagement</h3>
-                <p className="text-sm text-gray-500">Average completion rate</p>
+                <h3 className="text-lg font-bold text-[#0f3d1a] mb-1">Student Engagement</h3>
+                <p className="text-sm text-[#7dab52]">Average completion rate</p>
               </div>
               <div className="flex items-end gap-4 mt-8">
-                <span className="text-5xl font-black text-white">84<span className="text-2xl text-gray-500">%</span></span>
+                <span className="text-5xl font-black text-[#0f3d1a]">84<span className="text-2xl text-[#7dab52]">%</span></span>
                 <span className="text-sm text-[#CCFF00] font-medium flex items-center gap-1 mb-2">
                   <ArrowUpRight className="w-4 h-4" /> 4% up
                 </span>
@@ -179,7 +179,7 @@ export function TrainerDashboardOverview() {
               <h3 className="text-3xl font-extrabold leading-tight mb-4">Live Q&A<br/>Session</h3>
               <p className="text-black/70 font-medium mb-8">Discuss UI trends with your top tier students.</p>
               
-              <button className="w-full py-4 bg-black text-white font-bold rounded-2xl hover:bg-gray-900 transition-all hover:scale-[1.02] active:scale-95 shadow-2xl flex items-center justify-center gap-2">
+              <button className="w-full py-4 bg-black text-[#0f3d1a] font-bold rounded-2xl hover:bg-gray-900 transition-all hover:scale-[1.02] active:scale-95 shadow-2xl flex items-center justify-center gap-2">
                 <Play className="w-5 h-5 fill-white" />
                 Join Studio
               </button>
@@ -187,10 +187,10 @@ export function TrainerDashboardOverview() {
           </div>
 
           {/* Recent Activity List with Image Avatars */}
-          <div className="bg-[#101010] border border-white/5 rounded-[2rem] p-6">
+          <div className="bg-[#101010] border border-[#1a6b2e]/10 rounded-[2rem] p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-bold text-white">Recent Submissions</h2>
-              <button className="text-gray-500 hover:text-white transition">
+              <h2 className="text-lg font-bold text-[#0f3d1a]">Recent Submissions</h2>
+              <button className="text-[#7dab52] hover:text-[#0f3d1a] transition">
                 <MoreHorizontal className="w-5 h-5" />
               </button>
             </div>
@@ -202,21 +202,21 @@ export function TrainerDashboardOverview() {
                 { name: 'Emma Wilson', task: 'Mobile App Design', time: '3h ago', img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop' },
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4 group cursor-pointer">
-                  <div className="relative w-12 h-12 rounded-2xl overflow-hidden border border-white/10 group-hover:border-[#CCFF00]/50 transition-colors">
+                  <div className="relative w-12 h-12 rounded-2xl overflow-hidden border border-[#1a6b2e]/20 group-hover:border-[#CCFF00]/50 transition-colors">
                     <Image src={item.img} alt={item.name} fill className="object-cover" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-sm font-bold text-white group-hover:text-[#CCFF00] transition-colors">{item.name}</h4>
-                    <p className="text-xs text-gray-500 truncate max-w-[150px]">{item.task}</p>
+                    <h4 className="text-sm font-bold text-[#0f3d1a] group-hover:text-[#CCFF00] transition-colors">{item.name}</h4>
+                    <p className="text-xs text-[#7dab52] truncate max-w-[150px]">{item.task}</p>
                   </div>
-                  <span className="text-[11px] font-medium text-gray-600 bg-white/5 px-2 py-1 rounded-lg">
+                  <span className="text-[11px] font-medium text-gray-600 bg-[#1a6b2e]/5 px-2 py-1 rounded-lg">
                     {item.time}
                   </span>
                 </div>
               ))}
             </div>
             
-            <button className="w-full mt-8 py-3 bg-white/5 rounded-xl text-sm font-bold text-white hover:bg-white/10 transition-colors border border-white/5">
+            <button className="w-full mt-8 py-3 bg-[#1a6b2e]/5 rounded-xl text-sm font-bold text-[#0f3d1a] hover:bg-white/10 transition-colors border border-[#1a6b2e]/10">
               View All 24 Submissions
             </button>
           </div>
@@ -231,9 +231,9 @@ export function TrainerDashboardOverview() {
 function GlassStat({ title, value, trend, isNegative }: any) {
   return (
     <div className="min-w-[160px] p-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl flex-shrink-0">
-      <h3 className="text-gray-300 text-xs font-medium uppercase tracking-wider mb-2">{title}</h3>
+      <h3 className="text-[#1a6b2e] text-xs font-medium uppercase tracking-wider mb-2">{title}</h3>
       <div className="flex items-end justify-between">
-        <span className="text-2xl font-bold text-white">{value}</span>
+        <span className="text-2xl font-bold text-[#0f3d1a]">{value}</span>
         <span className={`text-xs font-bold flex items-center ${isNegative ? 'text-red-400' : 'text-[#CCFF00]'}`}>
           {isNegative ? <ArrowDownRight className="w-3 h-3" /> : <ArrowUpRight className="w-3 h-3" />}
           {trend}

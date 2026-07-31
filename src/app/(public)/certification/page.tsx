@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function CertificationPage() {
   const details = [
-    { title: 'Official Badge', desc: 'A verified GrapeTask LMS Certified Badge on your profile.', icon: '🏅' },
+    { title: 'Official Badge', desc: 'A verified NextGen-LMS LMS Certified Badge on your profile.', icon: '🏅' },
     { title: 'Your Full Name', desc: 'Displaying your professional name as registered.', icon: '📛' },
     { title: 'Skill Category', desc: 'The specific course name and skill category you mastered.', icon: '📚' },
     { title: 'Certification Date', desc: 'The exact date you completed all assessments.', icon: '📅' },
@@ -22,31 +22,31 @@ export default function CertificationPage() {
     <div className="pt-28 sm:pt-40 pb-16 sm:pb-20 px-4 sm:px-6">
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto text-center mb-16 sm:mb-24 space-y-4">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white leading-tight">The GrapeTask LMS Certificate</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-[#0f3d1a] leading-tight">The NextGen-LMS LMS Certificate</h1>
           <p className="text-base sm:text-xl text-bodyGrayText leading-relaxed">Proof That You're Ready to Earn. Not just a PDF, but a marketplace-connected credential.</p>
         </div>
 
         {/* What is it? */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-16 items-center mb-20 sm:mb-32">
            <div className="space-y-8">
-              <h2 className="text-2xl sm:text-3xl font-bold text-white">What Is the GrapeTask LMS Certificate?</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a]">What Is the NextGen-LMS LMS Certificate?</h2>
               <div className="space-y-5 sm:space-y-6 text-sm sm:text-lg text-bodyGrayText leading-relaxed">
                  <p>
-                   The GrapeTask LMS Certificate is awarded to learners who successfully complete all course videos, pass every progressive assessment, and receive a passing recommendation from their trainer.
+                   The NextGen-LMS LMS Certificate is awarded to learners who successfully complete all course videos, pass every progressive assessment, and receive a passing recommendation from their trainer.
                  </p>
-                 <p className="p-6 rounded-2xl glass-navbar border border-orangeBorderActive/20 text-white font-medium italic">
+                 <p className="p-6 rounded-2xl glass-navbar border border-orangeBorderActive/20 text-[#0f3d1a] font-medium italic">
                    "This is not an automated certificate. It is earned through structured testing, trainer review, and demonstrated practical skill."
                  </p>
               </div>
            </div>
-           <div className="theme-card p-5 sm:p-10 lg:p-12 rounded-2xl sm:rounded-[3rem] border-primaryOrange/20 relative overflow-hidden">
+           <div className="theme-card p-5 sm:p-10 lg:p-12 rounded-2xl sm:rounded-[3rem] border-primaryBlue/20 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 orange-gradient rounded-full blur-3xl opacity-20" />
               <div className="space-y-8 relative z-10">
                  <div className="flex items-center gap-3 sm:gap-4">
                     <div className="w-16 h-16 orange-gradient rounded-2xl flex items-center justify-center text-3xl">🏅</div>
                     <div>
-                       <div className="text-sm font-bold text-primaryOrange uppercase tracking-widest">GrapeTask Certified</div>
-                       <div className="text-base sm:text-xl font-bold text-white">Skill Verification</div>
+                       <div className="text-sm font-bold text-primaryBlue uppercase tracking-widest">NextGen-LMS Certified</div>
+                       <div className="text-base sm:text-xl font-bold text-[#0f3d1a]">Skill Verification</div>
                     </div>
                  </div>
                  <div className="space-y-4">
@@ -64,12 +64,12 @@ export default function CertificationPage() {
 
         {/* What it includes */}
         <div className="mb-20 sm:mb-32">
-           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8 sm:mb-12 text-center">What the Certificate Includes</h2>
+           <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a] mb-8 sm:mb-12 text-center">What the Certificate Includes</h2>
            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
               {details.map((item) => (
-                <div key={item.title} className="theme-card p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl text-center space-y-3 sm:space-y-4 hover:border-primaryOrange transition-colors">
+                <div key={item.title} className="theme-card p-5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl text-center space-y-3 sm:space-y-4 hover:border-primaryBlue transition-colors">
                    <div className="text-3xl">{item.icon}</div>
-                   <h4 className="text-sm font-bold text-white uppercase tracking-wider">{item.title}</h4>
+                   <h4 className="text-sm font-bold text-[#0f3d1a] uppercase tracking-wider">{item.title}</h4>
                    <p className="text-xs text-bodyGrayText leading-relaxed">{item.desc}</p>
                 </div>
               ))}
@@ -81,16 +81,16 @@ export default function CertificationPage() {
            <div className="absolute bottom-0 left-0 w-64 h-64 secondary-glow opacity-10" />
            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center">
               <div className="space-y-6">
-                 <h2 className="text-2xl sm:text-3xl font-bold text-white">Certificate on Your Marketplace Profile</h2>
+                 <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a]">Certificate on Your Marketplace Profile</h2>
                  <p className="text-bodyGrayText leading-relaxed">
-                   Once certified, your GrapeTask freelance profile will display the "GrapeTask LMS Certified" badge. Clients browsing the marketplace can see this badge — and studies consistently show that verified credentials significantly increase hiring rates.
+                   Once certified, your NextGen-LMS freelance profile will display the "NextGen-LMS LMS Certified" badge. Clients browsing the marketplace can see this badge — and studies consistently show that verified credentials significantly increase hiring rates.
                  </p>
               </div>
               <div className="space-y-4">
                  {['Badge Displayed', 'Certification Date', 'Verified Skills'].map((check) => (
-                   <div key={check} className="flex items-center gap-3 sm:gap-4 p-4 rounded-xl bg-white/5 border border-lightBorder">
-                      <div className="text-primaryOrange font-bold">✓</div>
-                      <span className="text-white font-medium">{check}</span>
+                   <div key={check} className="flex items-center gap-3 sm:gap-4 p-4 rounded-xl bg-[#1a6b2e]/5 border border-lightBorder">
+                      <div className="text-primaryBlue font-bold">✓</div>
+                      <span className="text-[#0f3d1a] font-medium">{check}</span>
                    </div>
                  ))}
               </div>
@@ -99,14 +99,14 @@ export default function CertificationPage() {
 
         {/* How to Earn */}
         <div className="max-w-3xl mx-auto space-y-8 sm:space-y-12 mb-20 sm:mb-32">
-           <h2 className="text-2xl sm:text-3xl font-bold text-white text-center">How to Earn Your Certificate</h2>
+           <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a] text-center">How to Earn Your Certificate</h2>
            <div className="space-y-3 sm:space-y-4">
               {steps.map((step, i) => (
-                <div key={i} className="flex items-start gap-4 sm:gap-6 p-4 sm:p-6 rounded-2xl bg-cardBg border border-lightBorder group hover:border-primaryOrange transition-all">
-                   <div className="w-8 h-8 rounded-full bg-lightBorder group-hover:bg-primaryOrange flex items-center justify-center text-xs font-bold text-white transition-colors">
+                <div key={i} className="flex items-start gap-4 sm:gap-6 p-4 sm:p-6 rounded-2xl bg-cardBg border border-lightBorder group hover:border-primaryBlue transition-all">
+                   <div className="w-8 h-8 rounded-full bg-lightBorder group-hover:bg-primaryBlue flex items-center justify-center text-xs font-bold text-[#0f3d1a] transition-colors">
                       {i + 1}
                    </div>
-                   <p className="text-sm sm:text-base text-white font-medium leading-relaxed">{step}</p>
+                   <p className="text-sm sm:text-base text-[#0f3d1a] font-medium leading-relaxed">{step}</p>
                 </div>
               ))}
            </div>
@@ -115,7 +115,7 @@ export default function CertificationPage() {
         <div className="text-center">
           <Link
             href="/courses"
-            className="inline-flex w-full sm:w-auto justify-center px-6 py-3.5 sm:px-8 sm:py-4 bg-primaryOrange hover:bg-opacity-90 text-white font-bold text-sm sm:text-base rounded-xl shadow-lg shadow-primaryOrange/20 transition-all hover:scale-105 active:scale-95"
+            className="inline-flex w-full sm:w-auto justify-center px-6 py-3.5 sm:px-8 sm:py-4 bg-primaryBlue hover:bg-opacity-90 text-[#0f3d1a] font-bold text-sm sm:text-base rounded-xl shadow-lg shadow-primaryBlue/20 transition-all hover:scale-105 active:scale-95"
           >
             Start a Course Today →
           </Link>

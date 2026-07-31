@@ -30,27 +30,27 @@ const theme = {
     reflection: 'bg-gradient-to-br from-blue-400/5 via-transparent to-blue-600/10',
   },
   orange: {
-    bg: 'bg-orange-500/10',
-    border: 'border-orange-500/20',
-    text: 'text-orange-400',
-    gradient: 'from-orange-600/15 via-orange-500/10 to-orange-600/5',
-    glow: 'shadow-orange-500/10',
+    bg: 'bg-sky-500/10',
+    border: 'border-sky-500/20',
+    text: 'text-sky-400',
+    gradient: 'from-orange-600/15 via-sky-500/10 to-orange-600/5',
+    glow: 'shadow-sky-500/10',
     solid: 'bg-orange-600',
-    solidHover: 'hover:bg-orange-500',
-    subtle: 'bg-orange-500/5',
-    subtleBorder: 'border-orange-500/10',
-    subtleText: 'text-orange-400/60',
+    solidHover: 'hover:bg-sky-500',
+    subtle: 'bg-sky-500/5',
+    subtleBorder: 'border-sky-500/10',
+    subtleText: 'text-sky-400/60',
     depth: 'shadow-[0_8px_32px_-8px_rgba(249,115,22,0.2),0_4px_16px_-4px_rgba(249,115,22,0.1)]',
     glow3D: 'shadow-[0_0_40px_-8px_rgba(249,115,22,0.3),0_0_80px_-16px_rgba(249,115,22,0.15)]',
-    reflection: 'bg-gradient-to-br from-orange-400/5 via-transparent to-orange-600/10',
+    reflection: 'bg-gradient-to-br from-sky-400/5 via-transparent to-orange-600/10',
   },
 } as const;
 
 type ThemeKey = keyof typeof theme;
 
-const card3DClass = "transition-all duration-500 ease-out transform-gpu perspective-1000 hover:rotate-y-1 hover:rotate-x-0.5 hover:shadow-[0_20px_60px_-12px_rgba(0,0,0,0.5),0_10px_40px_-8px_rgba(0,0,0,0.3)] hover:-translate-y-2 hover:scale-[1.02]";
+const card3DClass = "transition-all duration-500 ease-out transform-gpu perspective-1000 hover:rotate-y-1 hover:rotate-x-0.5 hover:shadow-[0_20px_60px_-12px_rgba(26, 107, 46, 0.1),0_10px_40px_-8px_rgba(26, 107, 46, 0.1)] hover:-translate-y-2 hover:scale-[1.02]";
 
-const glassEffect = "backdrop-blur-xl bg-gradient-to-br from-gray-800/40 to-gray-900/60 border border-white/[0.08] shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4)]";
+const glassEffect = "backdrop-blur-xl bg-gradient-to-br from-gray-800/40 to-gray-900/60 border border-white/[0.08] shadow-[0_8px_32px_-8px_rgba(26, 107, 46, 0.1)]";
 
 function SectionHeader({
   icon: Icon,
@@ -67,7 +67,7 @@ function SectionHeader({
   return (
     <div className="flex items-center gap-3.5 mb-6 group">
       <div
-        className={`w-12 h-12 rounded-2xl ${t.bg} border ${t.border} flex items-center justify-center flex-shrink-0 ${t.depth} ${t.reflection} transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4),0_0_20px_-4px_rgba(59,130,246,0.2)] relative overflow-hidden`}
+        className={`w-12 h-12 rounded-2xl ${t.bg} border ${t.border} flex items-center justify-center flex-shrink-0 ${t.depth} ${t.reflection} transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_8px_32px_-8px_rgba(26, 107, 46, 0.1),0_0_20px_-4px_rgba(59,130,246,0.2)] relative overflow-hidden`}
         style={{ transformStyle: 'preserve-3d' }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent rounded-2xl" />
@@ -75,11 +75,11 @@ function SectionHeader({
         <Icon className={`w-5 h-5 ${t.text} relative z-10 drop-shadow-lg transition-transform duration-500 group-hover:scale-110`} />
       </div>
       <div>
-        <h3 className="text-[17px] font-semibold text-white leading-snug tracking-[-0.01em] relative">
+        <h3 className="text-[17px] font-semibold text-[#0f3d1a] leading-snug tracking-[-0.01em] relative">
           {title}
           <div className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-to-r from-blue-400/0 via-blue-400/50 to-blue-400/0 group-hover:w-full transition-all duration-700 ease-out" />
         </h3>
-        {caption && <p className="text-[13px] text-gray-500 mt-1 leading-relaxed font-normal">{caption}</p>}
+        {caption && <p className="text-[13px] text-[#7dab52] mt-1 leading-relaxed font-normal">{caption}</p>}
       </div>
     </div>
   );
@@ -173,19 +173,19 @@ export function TrainerProfileScreen() {
       @keyframes float3D {
         0%, 100% { 
           transform: translate3d(0, 0, 0) rotateX(0deg); 
-          filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+          filter: drop-shadow(0 4px 8px rgba(26, 107, 46, 0.1));
         }
         25% { 
           transform: translate3d(3px, -6px, 15px) rotateX(1deg); 
-          filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
+          filter: drop-shadow(0 8px 16px rgba(26, 107, 46, 0.1));
         }
         50% { 
           transform: translate3d(-3px, -10px, 8px) rotateX(-0.5deg); 
-          filter: drop-shadow(0 6px 12px rgba(0,0,0,0.35));
+          filter: drop-shadow(0 6px 12px rgba(26, 107, 46, 0.1));
         }
         75% { 
           transform: translate3d(2px, -4px, 18px) rotateX(0.5deg); 
-          filter: drop-shadow(0 10px 20px rgba(0,0,0,0.45));
+          filter: drop-shadow(0 10px 20px rgba(26, 107, 46, 0.1));
         }
       }
       
@@ -327,9 +327,9 @@ export function TrainerProfileScreen() {
   if (initLoading) return (
     <div className="flex h-96 items-center justify-center">
       <div className="relative">
-        <div className="h-16 w-16 animate-spin rounded-full border-4 border-orange-500/20 border-t-orange-500 shadow-[0_0_30px_rgba(249,115,22,0.3)]" />
+        <div className="h-16 w-16 animate-spin rounded-full border-4 border-sky-500/20 border-t-sky-500 shadow-[0_0_30px_rgba(249,115,22,0.3)]" />
         <div className="absolute inset-0 h-16 w-16 rounded-full border-4 border-blue-500/10 border-b-blue-500 animate-[spin_3s_linear_infinite]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-blue-500/20 rounded-full blur-xl animate-pulse" />
+        <div className="absolute inset-0 bg-gradient-to-r from-sky-500/20 to-blue-500/20 rounded-full blur-xl animate-pulse" />
       </div>
     </div>
   );
@@ -339,7 +339,7 @@ export function TrainerProfileScreen() {
       {/* 3D BACKGROUND PARTICLES */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl animate-[float3D_8s_ease-in-out_infinite]" />
-        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl animate-[float3D_10s_ease-in-out_infinite_1s]" />
+        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl animate-[float3D_10s_ease-in-out_infinite_1s]" />
         <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-400/5 rounded-full blur-3xl animate-[float3D_12s_ease-in-out_infinite_2s]" />
       </div>
 
@@ -360,25 +360,25 @@ export function TrainerProfileScreen() {
             style={{ transformStyle: 'preserve-3d' }}
           >
             {/* 3D ambient lights */}
-            <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-orange-500/20 blur-3xl transition-all duration-700 group-hover:opacity-30 group-hover:scale-110" />
+            <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-sky-500/20 blur-3xl transition-all duration-700 group-hover:opacity-30 group-hover:scale-110" />
             <div className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full bg-blue-500/10 blur-3xl transition-all duration-700 group-hover:opacity-20 group-hover:scale-110" />
 
             {/* Avatar with orbiting ring */}
             <div className="relative mx-auto w-28 h-28 group/avatar cursor-pointer" onClick={handleAvatarClick}>
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-500 via-blue-500 to-orange-500 animate-[spin_4s_linear_infinite] opacity-75 blur-sm group-hover/avatar:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-sky-500 via-blue-500 to-sky-500 animate-[spin_4s_linear_infinite] opacity-75 blur-sm group-hover/avatar:opacity-100 transition-opacity" />
               <div className="absolute inset-[3px] rounded-full bg-gray-900" />
               
-              <div className="absolute inset-[3px] flex items-center justify-center rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/10 shadow-inner overflow-hidden">
+              <div className="absolute inset-[3px] flex items-center justify-center rounded-full bg-gradient-to-br from-sky-500/20 to-orange-600/10 shadow-inner overflow-hidden">
                 {avatarPreview || profile?.avatar ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={avatarPreview || `http://localhost:8000${profile?.avatar}`} alt="Avatar" className="w-full h-full object-cover" />
                 ) : (
-                  <UserRound className="h-12 w-12 text-orange-400 relative z-10 drop-shadow-lg" />
+                  <UserRound className="h-12 w-12 text-sky-400 relative z-10 drop-shadow-lg" />
                 )}
                 
                 {/* Hover overlay for upload */}
                 <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity duration-300">
-                  <Camera className="w-8 h-8 text-white" />
+                  <Camera className="w-8 h-8 text-[#0f3d1a]" />
                 </div>
               </div>
 
@@ -393,12 +393,12 @@ export function TrainerProfileScreen() {
               <input type="file" ref={avatarInputRef} className="hidden" accept="image/*" onChange={handleAvatarChange} />
 
               {/* Floating particles around avatar */}
-              <div className="absolute -top-1 -right-1 w-2 h-2 bg-orange-400 rounded-full shadow-[0_0_10px_rgba(249,115,22,0.8)] animate-pulse" />
+              <div className="absolute -top-1 -right-1 w-2 h-2 bg-sky-400 rounded-full shadow-[0_0_10px_rgba(249,115,22,0.8)] animate-pulse" />
               <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-blue-400 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.8)] animate-pulse" style={{ animationDelay: '0.5s' }} />
             </div>
 
-            <h2 className="mt-6 text-3xl font-bold text-white bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">{profile?.name ?? '—'}</h2>
-            <p className="mt-1 text-sm font-medium text-gray-400">{profile?.role ?? 'Trainer'}</p>
+            <h2 className="mt-6 text-3xl font-bold text-[#0f3d1a] bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">{profile?.name ?? '—'}</h2>
+            <p className="mt-1 text-sm font-medium text-[#1a6b2e]">{profile?.role ?? 'Trainer'}</p>
 
             <div className="mt-6 flex justify-center">
               {profile?.verifiedBadge ? (
@@ -406,7 +406,7 @@ export function TrainerProfileScreen() {
                   <BadgeCheck className="h-4 w-4" /> Verified Educator
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-gray-600/50 bg-gray-800/50 px-4 py-2 text-xs font-medium text-gray-400 backdrop-blur-sm transition-all duration-300 hover:border-orange-500/30 hover:text-orange-300 hover:shadow-[0_4px_12px_rgba(249,115,22,0.2)]">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-gray-600/50 bg-gray-800/50 px-4 py-2 text-xs font-medium text-[#1a6b2e] backdrop-blur-sm transition-all duration-300 hover:border-sky-500/30 hover:text-orange-300 hover:shadow-[0_4px_12px_rgba(249,115,22,0.2)]">
                   <AlertCircle className="h-4 w-4" /> Unverified Profile
                 </span>
               )}
@@ -444,39 +444,39 @@ export function TrainerProfileScreen() {
                   return (
                     <div
                       key={label}
-                      className={`rounded-xl border ${t.subtleBorder} ${t.subtle} p-4 backdrop-blur-sm transition-all duration-300 hover:border-orange-500/20 hover:bg-gray-800/60 hover:shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:-translate-y-1 transform-gpu
+                      className={`rounded-xl border ${t.subtleBorder} ${t.subtle} p-4 backdrop-blur-sm transition-all duration-300 hover:border-sky-500/20 hover:bg-gray-800/60 hover:shadow-[0_4px_16px_rgba(26, 107, 46, 0.1)] hover:-translate-y-1 transform-gpu
                         animate-[staggeredFadeIn_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0`}
                       style={{ animationDelay: `${index * 100}ms` }}
                     >
                       <div className="flex items-center gap-2 mb-2">
                         <Icon className={`w-3.5 h-3.5 ${t.subtleText}`} />
-                        <p className="text-xs uppercase tracking-wider text-gray-500">{label}</p>
+                        <p className="text-xs uppercase tracking-wider text-[#7dab52]">{label}</p>
                       </div>
-                      <p className="mt-1 text-sm font-medium text-gray-200 break-all">{value}</p>
+                      <p className="mt-1 text-sm font-medium text-[#0f3d1a] break-all">{value}</p>
                     </div>
                   );
                 })}
 
                 {/* Skills Section */}
-                <div className={`rounded-xl border border-orange-500/10 bg-orange-500/5 p-4 backdrop-blur-sm transition-all duration-300 hover:border-orange-500/20 hover:bg-gray-800/60 hover:shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:-translate-y-1 transform-gpu
+                <div className={`rounded-xl border border-sky-500/10 bg-sky-500/5 p-4 backdrop-blur-sm transition-all duration-300 hover:border-sky-500/20 hover:bg-gray-800/60 hover:shadow-[0_4px_16px_rgba(26, 107, 46, 0.1)] hover:-translate-y-1 transform-gpu
                   animate-[staggeredFadeIn_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0`}
                   style={{ animationDelay: '200ms' }}
                 >
                   <div className="flex items-center gap-2 mb-3">
-                    <Zap className="w-3.5 h-3.5 text-orange-400/60" />
-                    <p className="text-xs uppercase tracking-wider text-gray-500">Skills</p>
+                    <Zap className="w-3.5 h-3.5 text-sky-400/60" />
+                    <p className="text-xs uppercase tracking-wider text-[#7dab52]">Skills</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {(profile?.trainerSkills || []).map((skill: string, index: number) => (
                       <span
                         key={skill}
-                        className="rounded-lg bg-gradient-to-r from-orange-500/10 to-blue-500/5 px-3 py-1.5 text-xs font-medium text-gray-300 border border-orange-500/20 backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.2)] transition-all duration-300 hover:scale-110 hover:rotate-1 hover:shadow-[0_4px_16px_rgba(249,115,22,0.3)] hover:border-orange-500/40 cursor-default"
+                        className="rounded-lg bg-gradient-to-r from-sky-500/10 to-blue-500/5 px-3 py-1.5 text-xs font-medium text-[#1a6b2e] border border-sky-500/20 backdrop-blur-sm shadow-[0_2px_8px_rgba(26, 107, 46, 0.1)] transition-all duration-300 hover:scale-110 hover:rotate-1 hover:shadow-[0_4px_16px_rgba(249,115,22,0.3)] hover:border-sky-500/40 cursor-default"
                       >
                         {skill}
                       </span>
                     ))}
                     {(!profile?.trainerSkills || profile.trainerSkills.length === 0) &&
-                      <span className="text-sm text-gray-500">None listed</span>
+                      <span className="text-sm text-[#7dab52]">None listed</span>
                     }
                   </div>
                 </div>
@@ -497,7 +497,7 @@ export function TrainerProfileScreen() {
             style={{ transformStyle: 'preserve-3d' }}
           >
           {/* 3D ambient effects */}
-          <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-orange-500/10 blur-3xl transition-all duration-700 group-hover:scale-110" />
+          <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-sky-500/10 blur-3xl transition-all duration-700 group-hover:scale-110" />
           <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-blue-500/5 blur-3xl transition-all duration-700 group-hover:scale-110" />
 
           <div className="relative z-10">
@@ -531,17 +531,17 @@ export function TrainerProfileScreen() {
                   {trainerLevels.map((level, index) => (
                     <label
                       key={level.value}
-                      className="flex cursor-pointer items-start gap-3 rounded-xl border border-gray-700/50 bg-gray-800/40 p-4 backdrop-blur-sm transition-all duration-300 hover:border-orange-500/30 hover:bg-gray-800/60 hover:shadow-[0_4px_16px_rgba(249,115,22,0.2)] hover:-translate-y-1 transform-gpu group"
+                      className="flex cursor-pointer items-start gap-3 rounded-xl border border-gray-700/50 bg-gray-800/40 p-4 backdrop-blur-sm transition-all duration-300 hover:border-sky-500/30 hover:bg-gray-800/60 hover:shadow-[0_4px_16px_rgba(249,115,22,0.2)] hover:-translate-y-1 transform-gpu group"
                       style={{ animationDelay: `${index * 50}ms` }}
                     >
                       <input
                         name="teachingLevels[]"
                         type="checkbox"
                         value={level.value}
-                        className="mt-1 h-4 w-4 rounded border-gray-600 bg-gray-700 text-orange-500 focus:ring-orange-500 transition-all duration-300 group-hover:scale-110"
+                        className="mt-1 h-4 w-4 rounded border-gray-600 bg-gray-700 text-sky-500 focus:ring-sky-500 transition-all duration-300 group-hover:scale-110"
                         defaultChecked={(profile?.teachingLevels || []).includes(level.value)}
                       />
-                      <span className="text-sm font-medium text-gray-200 group-hover:text-white transition-colors duration-300">{level.label}</span>
+                      <span className="text-sm font-medium text-[#0f3d1a] group-hover:text-[#0f3d1a] transition-colors duration-300">{level.label}</span>
                     </label>
                   ))}
                 </div>
@@ -552,7 +552,7 @@ export function TrainerProfileScreen() {
                   name="cv"
                   type="file"
                   accept=".pdf,.doc,.docx"
-                  className="file:mr-4 file:rounded-full file:border-0 file:bg-orange-500/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-orange-400 hover:file:bg-orange-500/20 file:transition-all file:duration-300 file:hover:scale-105 file:hover:shadow-[0_4px_12px_rgba(249,115,22,0.3)]"
+                  className="file:mr-4 file:rounded-full file:border-0 file:bg-sky-500/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-sky-400 hover:file:bg-sky-500/20 file:transition-all file:duration-300 file:hover:scale-105 file:hover:shadow-[0_4px_12px_rgba(249,115,22,0.3)]"
                 />
               </Field>
 
@@ -561,7 +561,7 @@ export function TrainerProfileScreen() {
                   type="submit"
                   size="lg"
                   disabled={loading}
-                  className="w-full sm:w-auto bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
+                  className="w-full sm:w-auto bg-gradient-to-r from-orange-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-[#0f3d1a] rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
                   style={{ transformStyle: 'preserve-3d' }}
                 >
                   <span className="relative z-10 flex items-center justify-center">
@@ -600,7 +600,7 @@ export function TrainerProfileScreen() {
                     variant="ghost" 
                     size="sm" 
                     onClick={() => setShowAddMethod(true)}
-                    className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
+                    className="border-sky-500/30 text-sky-400 hover:bg-sky-500/10"
                   >
                     <Plus className="w-4 h-4 mr-2" /> Add New
                   </Button>
@@ -612,7 +612,7 @@ export function TrainerProfileScreen() {
                   <div className="grid gap-4 sm:grid-cols-2">
                     <Field label="Provider">
                       <select 
-                        className="w-full px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                        className="w-full px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-[#0f3d1a] focus:outline-none focus:ring-2 focus:ring-sky-500/50"
                         value={newMethod.provider}
                         onChange={(e) => setNewMethod({...newMethod, provider: e.target.value})}
                       >
@@ -642,37 +642,37 @@ export function TrainerProfileScreen() {
                   </Field>
                   <div className="flex gap-3 justify-end pt-2">
                     <Button variant="ghost" className="border border-gray-600" type="button" onClick={() => setShowAddMethod(false)}>Cancel</Button>
-                    <Button type="submit" className="bg-orange-600 hover:bg-orange-500">Save Method</Button>
+                    <Button type="submit" className="bg-orange-600 hover:bg-sky-500">Save Method</Button>
                   </div>
                 </form>
               )}
 
               <div className="space-y-3">
                 {withdrawalMethods.length === 0 ? (
-                  <p className="text-gray-500 text-sm italic">No withdrawal methods added yet. Add one to receive payments.</p>
+                  <p className="text-[#7dab52] text-sm italic">No withdrawal methods added yet. Add one to receive payments.</p>
                 ) : (
                   withdrawalMethods.map(method => (
-                    <div key={method.id} className={`p-4 rounded-xl border flex items-center justify-between transition-all ${method.isActive ? 'border-orange-500/50 bg-orange-500/5' : 'border-gray-700/50 bg-gray-800/40 hover:border-gray-600'}`}>
+                    <div key={method.id} className={`p-4 rounded-xl border flex items-center justify-between transition-all ${method.isActive ? 'border-sky-500/50 bg-sky-500/5' : 'border-gray-700/50 bg-gray-800/40 hover:border-gray-600'}`}>
                       <div className="flex items-center gap-4">
-                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm uppercase ${method.isActive ? 'bg-orange-500/20 text-orange-400' : 'bg-gray-700 text-gray-300'}`}>
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm uppercase ${method.isActive ? 'bg-sky-500/20 text-sky-400' : 'bg-gray-700 text-[#1a6b2e]'}`}>
                           {method.provider.substring(0, 2)}
                         </div>
                         <div>
-                          <p className="font-semibold text-gray-200 capitalize">{method.provider}</p>
-                          <p className="text-xs text-gray-400">{method.accountTitle} &bull; {method.accountNumber}</p>
+                          <p className="font-semibold text-[#0f3d1a] capitalize">{method.provider}</p>
+                          <p className="text-xs text-[#1a6b2e]">{method.accountTitle} &bull; {method.accountNumber}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
                         {method.isActive ? (
-                          <span className="flex items-center text-xs font-semibold text-orange-400 bg-orange-400/10 px-2.5 py-1 rounded-full">
+                          <span className="flex items-center text-xs font-semibold text-sky-400 bg-sky-400/10 px-2.5 py-1 rounded-full">
                             <CheckCircle2 className="w-3.5 h-3.5 mr-1" /> Primary
                           </span>
                         ) : (
-                          <button onClick={() => setPrimaryMethod(method.id)} className="text-xs text-gray-400 hover:text-white transition-colors">
+                          <button onClick={() => setPrimaryMethod(method.id)} className="text-xs text-[#1a6b2e] hover:text-[#0f3d1a] transition-colors">
                             Set Primary
                           </button>
                         )}
-                        <button onClick={() => removeMethod(method.id)} className="text-gray-500 hover:text-red-400 transition-colors">
+                        <button onClick={() => removeMethod(method.id)} className="text-[#7dab52] hover:text-red-400 transition-colors">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>

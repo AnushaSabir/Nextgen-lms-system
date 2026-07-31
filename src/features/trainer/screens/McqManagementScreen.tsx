@@ -60,10 +60,10 @@ export function McqManagementScreen({ courseId, videoId }: { courseId: string; v
 
   return (
     <div className="space-y-8 pb-8 max-w-4xl mx-auto">
-      <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
-        <Link href={`/trainer/courses/${courseId}/videos`} className="hover:text-white transition-colors">Curriculum</Link>
+      <div className="flex items-center gap-2 text-sm text-[#1a6b2e] mb-4">
+        <Link href={`/trainer/courses/${courseId}/videos`} className="hover:text-[#0f3d1a] transition-colors">Curriculum</Link>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-gray-300">MCQ Assessment</span>
+        <span className="text-[#1a6b2e]">MCQ Assessment</span>
       </div>
 
       <PageHeader title="Multiple Choice Questions" caption={`Add automated assessments for: ${video?.title ?? 'Lesson'}`} />
@@ -78,7 +78,7 @@ export function McqManagementScreen({ courseId, videoId }: { courseId: string; v
             {[1, 2, 3, 4].map((num) => (
               <Field key={num} label={`Option ${num}`}>
                 <div className="relative">
-                  <div className="absolute left-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-800 text-xs font-bold text-gray-400">{num}</div>
+                  <div className="absolute left-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-800 text-xs font-bold text-[#1a6b2e]">{num}</div>
                   <TextInput name={`opt${num}`} placeholder={`Enter answer option ${num}`} className="pl-12" required />
                 </div>
               </Field>
@@ -93,7 +93,7 @@ export function McqManagementScreen({ courseId, videoId }: { courseId: string; v
                 </SelectInput>
               </Field>
             </div>
-            <Button type="submit" size="lg" disabled={loading} className="shadow-lg shadow-orange-500/20">
+            <Button type="submit" size="lg" disabled={loading} className="shadow-lg shadow-sky-500/20">
               <Plus className="mr-2 h-4 w-4" />{loading ? 'Saving...' : 'Add Question to Bank'}
             </Button>
           </div>
@@ -106,12 +106,12 @@ export function McqManagementScreen({ courseId, videoId }: { courseId: string; v
           <div className="mt-6 space-y-4">
             {mcqs.map((mcq, idx) => (
               <div key={mcq.id} className="p-5 rounded-xl border border-gray-800 bg-gray-800/40">
-                <p className="font-semibold text-white mb-3 text-sm">Q{idx + 1}. {mcq.prompt}</p>
+                <p className="font-semibold text-[#0f3d1a] mb-3 text-sm">Q{idx + 1}. {mcq.prompt}</p>
                 <div className="grid grid-cols-2 gap-3">
                   {(mcq.options || []).map((opt: string, i: number) => {
                     const isCorrect = (mcq.correctAnswer || []).includes(opt);
                     return (
-                      <div key={i} className={`text-xs p-2.5 rounded-lg border ${isCorrect ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200' : 'border-gray-700 bg-gray-800 text-gray-400'}`}>
+                      <div key={i} className={`text-xs p-2.5 rounded-lg border ${isCorrect ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200' : 'border-gray-700 bg-gray-800 text-[#1a6b2e]'}`}>
                         {opt} {isCorrect && '(Correct)'}
                       </div>
                     );

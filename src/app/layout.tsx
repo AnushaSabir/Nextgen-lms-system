@@ -9,7 +9,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'GrapeTask LMS System',
+  title: 'NextGen-LMS LMS System',
   description: 'Skill learning, assessments, certification, institutions, trainers, and freelance marketplace readiness.',
 };
 

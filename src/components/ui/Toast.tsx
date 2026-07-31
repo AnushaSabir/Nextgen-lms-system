@@ -23,8 +23,8 @@ export function Toast() {
   const typeStyles = {
     error: {
       bg: 'bg-gray-900',
-      border: 'border-orange-500/50',
-      icon: <AlertCircle className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />,
+      border: 'border-sky-500/50',
+      icon: <AlertCircle className="w-5 h-5 text-sky-500 shrink-0 mt-0.5" />,
       shadow: 'shadow-[0_8px_30px_-4px_rgba(249,115,22,0.15)]',
     },
     success: {
@@ -53,12 +53,12 @@ export function Toast() {
         }`}
       >
         {currentStyle.icon}
-        <div className="flex-1 text-sm font-medium text-white pt-0.5 leading-snug">
+        <div className="flex-1 text-sm font-medium text-[#0f3d1a] pt-0.5 leading-snug">
           {message}
         </div>
         <button
           onClick={hideToast}
-          className="shrink-0 p-1 rounded-md text-gray-400 hover:text-white hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white/20"
+          className="shrink-0 p-1 rounded-md text-[#1a6b2e] hover:text-[#0f3d1a] hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white/20"
           aria-label="Close"
         >
           <X className="w-4 h-4" />

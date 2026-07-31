@@ -5,21 +5,21 @@ import { LineChart, CheckCircle2, BarChart3, Building2, BookOpen, TrendingUp } f
 export default function LmsStatsSection() {
   return (
     <section className="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden bg-navy-900">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-[#f0591f]/[0.04] to-transparent rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-[#5E6F58]/[0.04] to-transparent rounded-full blur-[120px] pointer-events-none" />
       
       <div className="container mx-auto max-w-6xl relative z-10">
-        <div className="p-5 sm:p-12 md:p-16 rounded-[2rem] sm:rounded-[3rem] border border-orange-500/30 relative overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-xl bg-navy-900/50">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/5 opacity-10 -mr-24 -mt-24 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-500/5 opacity-[0.04] blur-3xl -ml-24 -mb-24 pointer-events-none" />
+        <div className="p-5 sm:p-12 md:p-16 rounded-[2rem] sm:rounded-[3rem] border border-sky-500/30 relative overflow-hidden shadow-[0_24px_80px_rgba(26, 107, 46, 0.1)] backdrop-blur-xl bg-navy-900/50">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-sky-500/5 opacity-10 -mr-24 -mt-24 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-sky-500/5 opacity-[0.04] blur-3xl -ml-24 -mb-24 pointer-events-none" />
 
           <div className="text-center mb-10 sm:mb-12 relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-500/20 bg-orange-500/10 text-orange-500 text-xs font-black uppercase tracking-widest mb-4 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-sky-500/20 bg-sky-500/10 text-sky-500 text-xs font-black uppercase tracking-widest mb-4 shadow-sm">
               <LineChart className="w-3.5 h-3.5" /> Industry Insights
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-3 tracking-tight">
-              The LMS Market Is <span className="text-orange-500">Booming</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] mb-3 tracking-tight">
+              The LMS Market Is <span className="text-sky-500">Booming</span>
             </h2>
-            <p className="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto font-medium leading-relaxed">
+            <p className="text-sm sm:text-base text-[#1a6b2e] max-w-2xl mx-auto font-medium leading-relaxed">
               Data-driven reasons why institutions and enterprises are shifting to learning management systems.
             </p>
           </div>
@@ -57,7 +57,7 @@ export default function LmsStatsSection() {
             ].map((s, i) => (
               <div
                 key={i}
-                className="group relative rounded-3xl overflow-hidden border border-orange-500/30 hover:-translate-y-2 transition-all duration-500 flex flex-col h-full shadow-[0_12px_34px_rgba(0,0,0,0.18)] hover:shadow-[0_22px_55px_rgba(0,0,0,0.24)]"
+                className="group relative rounded-3xl overflow-hidden border border-sky-500/30 hover:-translate-y-2 transition-all duration-500 flex flex-col h-full shadow-[0_12px_34px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_22px_55px_rgba(26, 107, 46, 0.1)]"
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
                 <Image src={s.image} alt={s.title} fill className="absolute inset-0 w-full h-full object-cover opacity-[0.4] group-hover:opacity-[0.5] group-hover:scale-105 transition-all duration-700" sizes="(max-width: 768px) 100vw, 25vw" />
@@ -65,19 +65,19 @@ export default function LmsStatsSection() {
                 
                 <div className="relative z-20 p-5 sm:p-6 flex flex-col h-full">
                   <div className="flex items-center justify-between gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/30 text-orange-500 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-500 flex items-center justify-center group-hover:bg-sky-500 group-hover:text-[#0f3d1a] transition-colors duration-300">
                       {s.icon}
                     </div>
-                    <div className="inline-flex items-center gap-1 rounded-full border border-orange-500/20 bg-orange-500/10 px-2 py-0.5 text-[8px] font-black uppercase tracking-widest text-orange-500">
+                    <div className="inline-flex items-center gap-1 rounded-full border border-sky-500/20 bg-sky-500/10 px-2 py-0.5 text-[8px] font-black uppercase tracking-widest text-sky-500">
                       <CheckCircle2 className="w-2 h-2" /> Verified
                     </div>
                   </div>
                   
                   <div className="flex-1">
-                    <div className="text-3xl sm:text-4xl font-black tracking-tight text-orange-500 mb-2 leading-none">{s.val}</div>
-                    <h3 className="text-base sm:text-lg font-black text-white tracking-tight mb-2 leading-snug">{s.title}</h3>
-                    <p className="text-xs sm:text-sm text-gray-400 font-medium leading-relaxed">
-                      <span className="text-orange-500 font-bold">{s.val}</span> {s.label}
+                    <div className="text-3xl sm:text-4xl font-black tracking-tight text-sky-500 mb-2 leading-none">{s.val}</div>
+                    <h3 className="text-base sm:text-lg font-black text-[#0f3d1a] tracking-tight mb-2 leading-snug">{s.title}</h3>
+                    <p className="text-xs sm:text-sm text-[#1a6b2e] font-medium leading-relaxed">
+                      <span className="text-sky-500 font-bold">{s.val}</span> {s.label}
                     </p>
                   </div>
                 </div>

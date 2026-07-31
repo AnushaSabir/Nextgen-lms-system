@@ -3,20 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --main-bg: #020617;
-  --card-bg: rgba(255, 255, 255, 0.02);
-  --card-bg-active: rgba(255, 255, 255, 0.04);
-  --primary-orange: #f0591f;
-  --secondary-blue-blur: rgba(59, 130, 246, 0.05);
-  --pure-white: #ffffff;
+  --main-bg: #c8e6c9;
+  --card-bg: rgba(184, 204, 149, 0.5);
+  --card-bg-active: rgba(255, 255, 255, 0.95);
+  --primary-orange: #1a6b2e;
+  --primary-blue: #0f3d1a;
+  --neon-red: #ef4444;
+  --secondary-blue-blur: rgba(26, 107, 46, 0.1);
+  --pure-white: #0f3d1a;
   --pure-black: #000000;
-  --light-gray-hover: #d4d4d8;
-  --medium-gray-title: #a1a1aa;
-  --body-gray-text: #71717a;
-  --dark-gray-number: #52525b;
-  --light-border: rgba(255, 255, 255, 0.06);
-  --medium-border: rgba(255, 255, 255, 0.07);
-  --orange-border-active: rgba(240, 89, 31, 0.4);
+  --light-gray-hover: rgba(255, 255, 255, 0.1);
+  --medium-gray-title: #0f3d1a;
+  --body-gray-text: rgba(255, 255, 255, 0.85);
+  --dark-gray-number: #ffffff;
+  --light-border: rgba(26, 107, 46, 0.15);
+  --medium-border: rgba(26, 107, 46, 0.3);
+  --orange-border-active: rgba(26, 107, 46, 0.6);
+  --blue-border-active: rgba(15, 61, 26, 0.6);
 }
 
 * {
@@ -26,8 +29,7 @@
 html,
 body {
   min-height: 100%;
-  background: var(--main-bg);
-  color: var(--pure-white);
+  background: var(--main-bg); color: #0f3d1a;
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
@@ -82,9 +84,9 @@ textarea {
   background: var(--card-bg);
   border: 1px solid var(--light-border);
   min-width: 0;
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.12), 0 1px 0 rgba(255,255,255,0.02) inset;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 20px rgba(26, 107, 46, 0.1), inset 0 1px 0 rgba(168, 201, 122, 0.05);
   transform: perspective(1200px) translateZ(0);
   transform-origin: center center;
   transform-style: preserve-3d;
@@ -94,12 +96,12 @@ textarea {
 
 .theme-card:hover {
   background: var(--card-bg-active);
-  transform: perspective(1200px) translateY(-8px) translateZ(0) scale(1.01);
-  border-color: rgba(240, 89, 31, 0.3);
+  transform: perspective(1200px) translateY(-5px) translateZ(0) scale(1.01);
+  border-color: rgba(168, 201, 122, 0.4);
   box-shadow: 
-    0 24px 60px rgba(0, 0, 0, 0.3), 
-    0 0 30px rgba(240, 89, 31, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 15px 40px rgba(26, 107, 46, 0.1), 
+    0 0 25px rgba(168, 201, 122, 0.15),
+    inset 0 1px 0 rgba(168, 201, 122, 0.1);
 }
 
 /* 3D floating card variant */
@@ -107,26 +109,26 @@ textarea {
   background: var(--card-bg);
   border: 1px solid var(--light-border);
   min-width: 0;
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
   transform: perspective(1200px) translateZ(0);
   transform-style: preserve-3d;
   will-change: transform, box-shadow, border-color;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              background 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.03) inset;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 40px rgba(26, 107, 46, 0.1), 0 1px 0 rgba(168, 201, 122,0.05) inset;
   transform-origin: center center;
   backface-visibility: hidden;
 }
 
 .card-3d:hover {
   transform: perspective(1200px) translateY(-8px) rotateX(2deg) rotateY(-1deg) scale(1.015);
-  border-color: rgba(240, 89, 31, 0.3);
+  border-color: rgba(168, 201, 122, 0.4);
   box-shadow:
-    0 30px 80px rgba(0,0,0,0.4),
-    0 0 40px rgba(240, 89, 31, 0.15),
-    inset 0 1px 0 rgba(255,255,255,0.06);
+    0 25px 60px rgba(26, 107, 46, 0.1),
+    0 0 40px rgba(168, 201, 122, 0.2),
+    inset 0 1px 0 rgba(168, 201, 122,0.1);
 }
 
 @media (hover: none) {
@@ -147,14 +149,14 @@ textarea {
   transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.7s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.2), 0 1px 0 rgba(255,255,255,0.04) inset;
+  box-shadow: 0 8px 40px rgba(26, 107, 46, 0.1), 0 1px 0 rgba(255,255,255,0.04) inset;
 }
 
 .pricing-card:hover {
   transform: translateY(-10px) rotateX(3deg) rotateY(-1.5deg) scale(1.02);
   border-color: rgba(240, 89, 31, 0.4);
   box-shadow:
-    0 40px 100px rgba(0,0,0,0.5),
+    0 40px 100px rgba(26, 107, 46, 0.1),
     0 0 50px rgba(240, 89, 31, 0.2),
     inset 0 1px 0 rgba(255,255,255,0.08);
 }
@@ -409,7 +411,7 @@ textarea {
 }
 
 .marquee-pill:hover {
-  color: #f0591f;
+  color: #5E6F58;
   border-color: rgba(240,89,31,0.45);
   background: rgba(240,89,31,0.06);
 }
@@ -418,7 +420,7 @@ textarea {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #f0591f;
+  background: #5E6F58;
   flex-shrink: 0;
   box-shadow: 0 0 6px rgba(240,89,31,0.7);
 }
@@ -445,18 +447,18 @@ textarea {
    GLASSMORPHISM COMPONENTS
    ============================================= */
 .glass-navbar {
-  background: rgba(2, 6, 23, 0.85);
+  background: rgba(163, 181, 155, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--light-border);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.04) inset;
+  background: rgba(149, 166, 141, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(26, 107, 46, 0.15);
+  box-shadow: 0 10px 40px rgba(26, 107, 46, 0.1), 0 1px 0 rgba(26, 107, 46, 0.08) inset;
   transform: perspective(1200px) translateZ(0);
   transform-origin: center center;
   transform-style: preserve-3d;
@@ -468,7 +470,8 @@ textarea {
 
 .glass-card:hover {
   transform: perspective(1200px) translateY(-5px) rotateX(1deg) rotateY(-0.4deg);
-  box-shadow: 0 22px 70px rgba(0,0,0,0.28), 0 0 30px rgba(240,89,31,0.08);
+  border-color: rgba(168, 201, 122, 0.4);
+  box-shadow: 0 22px 70px rgba(26, 107, 46, 0.1), 0 0 30px rgba(168, 201, 122,0.15);
 }
 
 
@@ -507,14 +510,14 @@ textarea {
 }
 
 .text-orange-gradient {
-  background: linear-gradient(135deg, #f0591f 0%, #ff8c5a 100%);
+  background: linear-gradient(135deg, #5E6F58 0%, #ff8c5a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .orange-gradient {
-  background: linear-gradient(135deg, #f0591f 0%, #ff8c5a 100%);
+  background: linear-gradient(135deg, #5E6F58 0%, #ff8c5a 100%);
 }
 
 .secondary-glow {
@@ -673,13 +676,13 @@ a, button {
   -webkit-text-stroke: 0.2px rgba(255, 255, 255, 0.2);
   text-shadow:
     0 1px 0 rgba(255, 255, 255, 0.08),
-    0 8px 18px rgba(0, 0, 0, 0.28);
+    0 8px 18px rgba(26, 107, 46, 0.1);
 }
 
 .text-3d-orange {
   -webkit-text-stroke: 0.25px rgba(255, 149, 94, 0.45);
   text-shadow:
     0 1px 0 rgba(255, 179, 128, 0.16),
-    0 7px 16px rgba(0, 0, 0, 0.32),
+    0 7px 16px rgba(26, 107, 46, 0.1),
     0 0 10px rgba(240, 89, 31, 0.16);
 }

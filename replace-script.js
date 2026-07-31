@@ -16,7 +16,7 @@ function walk(dir) {
   return results;
 }
 
-const files = walk('c:/GrapTask LMS/grapetask/frontend/src/app/trainer');
+const files = walk('c:/GrapTask LMS/nextgen-lms/frontend/src/app/trainer');
 let replacedCount = 0;
 files.forEach(file => {
   let content = fs.readFileSync(file, 'utf8');

@@ -86,12 +86,12 @@ export function AdminDashboard() {
     <div className="space-y-8">
       {/* Error Banner */}
       {error && (
-        <div className="rounded-xl border border-orange-500/30 bg-gray-800 p-4 flex items-start gap-3">
+        <div className="rounded-xl border border-sky-500/30 bg-gray-800 p-4 flex items-start gap-3">
           <XCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
           <p className="text-sm text-red-400 flex-1">{error}</p>
           <button 
             onClick={() => setError('')} 
-            className="text-gray-400 hover:text-white transition-colors"
+            className="text-[#1a6b2e] hover:text-[#0f3d1a] transition-colors"
           >
             <XCircle className="w-4 h-4" />
           </button>
@@ -101,25 +101,25 @@ export function AdminDashboard() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Admin Dashboard</h1>
-          <p className="text-sm text-gray-400 mt-1">Monitor platform metrics and manage course approvals</p>
+          <h1 className="text-2xl font-bold text-[#0f3d1a] tracking-tight">Admin Dashboard</h1>
+          <p className="text-sm text-[#1a6b2e] mt-1">Monitor platform metrics and manage course approvals</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#1a6b2e]" />
             <input 
               type="text" 
               placeholder="Search users or courses..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-orange-500/50 transition-colors w-64"
+              className="pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-[#0f3d1a] placeholder-gray-500 focus:outline-none focus:border-sky-500/50 transition-colors w-64"
             />
           </div>
-          <Button variant="ghost" className="border border-gray-700 hover:bg-gray-800 text-gray-300">
+          <Button variant="ghost" className="border border-gray-700 hover:bg-gray-800 text-[#1a6b2e]">
             <Filter className="w-4 h-4 mr-2" />
             Filter
           </Button>
-          <Button variant="ghost" className="border border-gray-700 hover:bg-gray-800 text-gray-300">
+          <Button variant="ghost" className="border border-gray-700 hover:bg-gray-800 text-[#1a6b2e]">
             <Download className="w-4 h-4 mr-2" />
             Export
           </Button>
@@ -133,13 +133,13 @@ export function AdminDashboard() {
             <div className="flex items-start justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-lg bg-orange-500/10">
-                    <Users className="w-4 h-4 text-orange-400" />
+                  <div className="p-2 rounded-lg bg-sky-500/10">
+                    <Users className="w-4 h-4 text-sky-400" />
                   </div>
-                  <p className="text-sm font-medium text-gray-400">Total Learners</p>
+                  <p className="text-sm font-medium text-[#1a6b2e]">Total Learners</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-white">{(analytics.learners ?? 0).toLocaleString()}</p>
+                  <p className="text-3xl font-bold text-[#0f3d1a]">{(analytics.learners ?? 0).toLocaleString()}</p>
                   <span className="flex items-center text-xs font-medium text-emerald-400">
                     <ArrowUpRight className="w-3 h-3 mr-0.5" />
                     +12%
@@ -155,13 +155,13 @@ export function AdminDashboard() {
             <div className="flex items-start justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-lg bg-orange-500/10">
-                    <GraduationCap className="w-4 h-4 text-orange-400" />
+                  <div className="p-2 rounded-lg bg-sky-500/10">
+                    <GraduationCap className="w-4 h-4 text-sky-400" />
                   </div>
-                  <p className="text-sm font-medium text-gray-400">Active Trainers</p>
+                  <p className="text-sm font-medium text-[#1a6b2e]">Active Trainers</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-white">{(analytics.trainers ?? 0).toLocaleString()}</p>
+                  <p className="text-3xl font-bold text-[#0f3d1a]">{(analytics.trainers ?? 0).toLocaleString()}</p>
                   <span className="flex items-center text-xs font-medium text-emerald-400">
                     <ArrowUpRight className="w-3 h-3 mr-0.5" />
                     +5%
@@ -177,12 +177,12 @@ export function AdminDashboard() {
             <div className="flex items-start justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-lg bg-orange-500/10">
-                    <Building2 className="w-4 h-4 text-orange-400" />
+                  <div className="p-2 rounded-lg bg-sky-500/10">
+                    <Building2 className="w-4 h-4 text-sky-400" />
                   </div>
-                  <p className="text-sm font-medium text-gray-400">Institutes</p>
+                  <p className="text-sm font-medium text-[#1a6b2e]">Institutes</p>
                 </div>
-                <p className="text-3xl font-bold text-white">{(analytics.institutes ?? 0).toLocaleString()}</p>
+                <p className="text-3xl font-bold text-[#0f3d1a]">{(analytics.institutes ?? 0).toLocaleString()}</p>
               </div>
             </div>
           </div>
@@ -193,13 +193,13 @@ export function AdminDashboard() {
             <div className="flex items-start justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-lg bg-orange-500/10">
-                    <BookOpen className="w-4 h-4 text-orange-400" />
+                  <div className="p-2 rounded-lg bg-sky-500/10">
+                    <BookOpen className="w-4 h-4 text-sky-400" />
                   </div>
-                  <p className="text-sm font-medium text-gray-400">Total Courses</p>
+                  <p className="text-sm font-medium text-[#1a6b2e]">Total Courses</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-white">{(analytics.courses ?? 0).toLocaleString()}</p>
+                  <p className="text-3xl font-bold text-[#0f3d1a]">{(analytics.courses ?? 0).toLocaleString()}</p>
                   <span className="flex items-center text-xs font-medium text-emerald-400">
                     <ArrowUpRight className="w-3 h-3 mr-0.5" />
                     +18%
@@ -215,13 +215,13 @@ export function AdminDashboard() {
             <div className="flex items-start justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-lg bg-orange-500/10">
-                    <UserCheck className="w-4 h-4 text-orange-400" />
+                  <div className="p-2 rounded-lg bg-sky-500/10">
+                    <UserCheck className="w-4 h-4 text-sky-400" />
                   </div>
-                  <p className="text-sm font-medium text-gray-400">Enrollments</p>
+                  <p className="text-sm font-medium text-[#1a6b2e]">Enrollments</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-white">{(analytics.enrollments ?? 0).toLocaleString()}</p>
+                  <p className="text-3xl font-bold text-[#0f3d1a]">{(analytics.enrollments ?? 0).toLocaleString()}</p>
                   <span className="flex items-center text-xs font-medium text-emerald-400">
                     <ArrowUpRight className="w-3 h-3 mr-0.5" />
                     +24%
@@ -237,13 +237,13 @@ export function AdminDashboard() {
             <div className="flex items-start justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-lg bg-orange-500/10">
-                    <Award className="w-4 h-4 text-orange-400" />
+                  <div className="p-2 rounded-lg bg-sky-500/10">
+                    <Award className="w-4 h-4 text-sky-400" />
                   </div>
-                  <p className="text-sm font-medium text-gray-400">Certificates</p>
+                  <p className="text-sm font-medium text-[#1a6b2e]">Certificates</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-white">{(analytics.certificates ?? 0).toLocaleString()}</p>
+                  <p className="text-3xl font-bold text-[#0f3d1a]">{(analytics.certificates ?? 0).toLocaleString()}</p>
                   <span className="flex items-center text-xs font-medium text-emerald-400">
                     <ArrowUpRight className="w-3 h-3 mr-0.5" />
                     +8%
@@ -280,17 +280,17 @@ export function AdminDashboard() {
                     <div className="flex flex-col lg:flex-row lg:items-center gap-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start gap-3">
-                          <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500/20 to-orange-500/5 flex items-center justify-center border border-orange-500/20">
-                            <BookOpen className="w-5 h-5 text-orange-400" />
+                          <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-sky-500/20 to-sky-500/5 flex items-center justify-center border border-sky-500/20">
+                            <BookOpen className="w-5 h-5 text-sky-400" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                              <h3 className="font-semibold text-white truncate">{course.title}</h3>
+                              <h3 className="font-semibold text-[#0f3d1a] truncate">{course.title}</h3>
                               <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-amber-500/20 text-amber-300 border-amber-500/30">
                                 {(course as any).status || 'pending'}
                               </span>
                             </div>
-                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-400">
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-[#1a6b2e]">
                               <span className="flex items-center gap-1">
                                 <BookOpen className="w-3.5 h-3.5" />
                                 {course.level}
@@ -312,7 +312,7 @@ export function AdminDashboard() {
                         <div className="flex items-center gap-2 lg:flex-shrink-0">
                           <Button 
                             onClick={() => reviewCourse(course.id, 'approved')}
-                            className="bg-emerald-600 hover:bg-emerald-500 text-white"
+                            className="bg-emerald-600 hover:bg-emerald-500 text-[#0f3d1a]"
                           >
                             <CheckCircle2 className="w-4 h-4 mr-2" />
                             Approve
@@ -354,7 +354,7 @@ export function AdminDashboard() {
                 caption="Complete overview of all platform users and their roles." 
               />
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-400">{users.length} total users</span>
+                <span className="text-sm text-[#1a6b2e]">{users.length} total users</span>
                 <div className="w-2 h-2 rounded-full bg-emerald-400" />
               </div>
             </div>
@@ -363,11 +363,11 @@ export function AdminDashboard() {
               <table className="w-full min-w-[800px]">
                 <thead>
                   <tr className="bg-gray-800/50">
-                    <th className="py-3 px-4 text-left text-xs font-semibold text-gray-400 uppercase">User</th>
-                    <th className="py-3 px-4 text-left text-xs font-semibold text-gray-400 uppercase">Role</th>
-                    <th className="py-3 px-4 text-left text-xs font-semibold text-gray-400 uppercase">Category</th>
-                    <th className="py-3 px-4 text-left text-xs font-semibold text-gray-400 uppercase">Marketplace</th>
-                    <th className="py-3 px-4 text-left text-xs font-semibold text-gray-400 uppercase">Actions</th>
+                    <th className="py-3 px-4 text-left text-xs font-semibold text-[#1a6b2e] uppercase">User</th>
+                    <th className="py-3 px-4 text-left text-xs font-semibold text-[#1a6b2e] uppercase">Role</th>
+                    <th className="py-3 px-4 text-left text-xs font-semibold text-[#1a6b2e] uppercase">Category</th>
+                    <th className="py-3 px-4 text-left text-xs font-semibold text-[#1a6b2e] uppercase">Marketplace</th>
+                    <th className="py-3 px-4 text-left text-xs font-semibold text-[#1a6b2e] uppercase">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-700">
@@ -376,12 +376,12 @@ export function AdminDashboard() {
                       <tr key={user.id} className="hover:bg-gray-800/50 transition-colors">
                         <td className="py-4 px-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center text-sm font-medium text-white border border-gray-500/30">
+                            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center text-sm font-medium text-[#0f3d1a] border border-gray-500/30">
                               {user.name?.charAt(0)?.toUpperCase() || 'U'}
                             </div>
                             <div>
-                              <p className="font-medium text-gray-200">{user.name}</p>
-                              <p className="text-xs text-gray-400">{user.email}</p>
+                              <p className="font-medium text-[#0f3d1a]">{user.name}</p>
+                              <p className="text-xs text-[#1a6b2e]">{user.email}</p>
                             </div>
                           </div>
                         </td>
@@ -390,11 +390,11 @@ export function AdminDashboard() {
                             {(user as any).role || 'learner'}
                           </span>
                         </td>
-                        <td className="py-4 px-4 text-sm text-gray-400">
+                        <td className="py-4 px-4 text-sm text-[#1a6b2e]">
                           {(user as any).learnerCategory || (user as any).trainerLevel || 'Portal'}
                         </td>
                         <td className="py-4 px-4">
-                          <span className={`inline-flex items-center gap-1.5 text-sm ${(user as any).marketplaceGigAccess ? 'text-emerald-400' : 'text-gray-500'}`}>
+                          <span className={`inline-flex items-center gap-1.5 text-sm ${(user as any).marketplaceGigAccess ? 'text-emerald-400' : 'text-[#7dab52]'}`}>
                             <div className={`w-1.5 h-1.5 rounded-full ${(user as any).marketplaceGigAccess ? 'bg-emerald-400' : 'bg-gray-500'}`} />
                             {(user as any).marketplaceGigAccess ? 'Enabled' : 'Locked'}
                           </span>
@@ -427,36 +427,36 @@ export function AdminDashboard() {
           {/* Platform Activity */}
           <Card>
             <div className="flex items-center gap-2 mb-4">
-              <Activity className="w-5 h-5 text-orange-400" />
-              <h3 className="font-semibold text-white">Recent Activity</h3>
+              <Activity className="w-5 h-5 text-sky-400" />
+              <h3 className="font-semibold text-[#0f3d1a]">Recent Activity</h3>
             </div>
             <div className="space-y-4">
               <div className="flex items-start gap-3 pb-3 border-b border-gray-700">
-                <div className="w-2 h-2 rounded-full bg-orange-400 mt-2 flex-shrink-0" />
+                <div className="w-2 h-2 rounded-full bg-sky-400 mt-2 flex-shrink-0" />
                 <div>
-                  <p className="text-sm text-gray-200">New course submitted for review</p>
-                  <p className="text-xs text-gray-400 mt-1">1h ago</p>
+                  <p className="text-sm text-[#0f3d1a]">New course submitted for review</p>
+                  <p className="text-xs text-[#1a6b2e] mt-1">1h ago</p>
                 </div>
               </div>
               <div className="flex items-start gap-3 pb-3 border-b border-gray-700">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0" />
                 <div>
-                  <p className="text-sm text-gray-200">Course "React Masters" approved</p>
-                  <p className="text-xs text-gray-400 mt-1">2h ago</p>
+                  <p className="text-sm text-[#0f3d1a]">Course "React Masters" approved</p>
+                  <p className="text-xs text-[#1a6b2e] mt-1">2h ago</p>
                 </div>
               </div>
               <div className="flex items-start gap-3 pb-3 border-b border-gray-700">
                 <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0" />
                 <div>
-                  <p className="text-sm text-gray-200">New trainer registration</p>
-                  <p className="text-xs text-gray-400 mt-1">4h ago</p>
+                  <p className="text-sm text-[#0f3d1a]">New trainer registration</p>
+                  <p className="text-xs text-[#1a6b2e] mt-1">4h ago</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0" />
                 <div>
-                  <p className="text-sm text-gray-200">50 new learners enrolled</p>
-                  <p className="text-xs text-gray-400 mt-1">6h ago</p>
+                  <p className="text-sm text-[#0f3d1a]">50 new learners enrolled</p>
+                  <p className="text-xs text-[#1a6b2e] mt-1">6h ago</p>
                 </div>
               </div>
             </div>
@@ -465,13 +465,13 @@ export function AdminDashboard() {
           {/* Platform Health */}
           <Card>
             <div className="flex items-center gap-2 mb-4">
-              <TrendingUp className="w-5 h-5 text-orange-400" />
-              <h3 className="font-semibold text-white">Platform Health</h3>
+              <TrendingUp className="w-5 h-5 text-sky-400" />
+              <h3 className="font-semibold text-[#0f3d1a]">Platform Health</h3>
             </div>
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-gray-400">Course Approval Rate</span>
+                  <span className="text-[#1a6b2e]">Course Approval Rate</span>
                   <span className="text-emerald-400 font-medium">94%</span>
                 </div>
                 <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
@@ -480,11 +480,11 @@ export function AdminDashboard() {
               </div>
               <div>
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-gray-400">User Engagement</span>
-                  <span className="text-orange-400 font-medium">78%</span>
+                  <span className="text-[#1a6b2e]">User Engagement</span>
+                  <span className="text-sky-400 font-medium">78%</span>
                 </div>
                 <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-orange-500 to-amber-500 rounded-full" style={{ width: '78%' }} />
+                  <div className="h-full bg-gradient-to-r from-sky-500 to-amber-500 rounded-full" style={{ width: '78%' }} />
                 </div>
               </div>
             </div>
@@ -499,7 +499,7 @@ export function AdminDashboard() {
             title="Trainer Verification" 
             caption="Portfolio, teaching experience, and joining reason during registration." 
           />
-          <span className="text-sm text-gray-400">
+          <span className="text-sm text-[#1a6b2e]">
             {trainerCount} Trainers
           </span>
         </div>
@@ -509,19 +509,19 @@ export function AdminDashboard() {
             {users.filter((u: any) => u.role === 'trainer').map((trainer: any) => (
               <div 
                 key={trainer.id} 
-                className="group rounded-xl border border-gray-700 bg-gray-800 p-5 transition-all duration-300 hover:shadow-xl hover:shadow-black/20 hover:-translate-y-1 hover:border-orange-500/30"
+                className="group rounded-xl border border-gray-700 bg-gray-800 p-5 transition-all duration-300 hover:shadow-xl hover:shadow-black/20 hover:-translate-y-1 hover:border-sky-500/30"
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-orange-500/20 to-purple-500/20 flex items-center justify-center border border-orange-500/20">
-                    <span className="text-xl font-bold text-orange-400">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-sky-500/20 to-purple-500/20 flex items-center justify-center border border-sky-500/20">
+                    <span className="text-xl font-bold text-sky-400">
                       {trainer.name?.charAt(0)?.toUpperCase() || 'T'}
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-gray-200 truncate">{trainer.name}</h3>
-                    <p className="text-sm text-gray-400 truncate mt-0.5">{trainer.email}</p>
+                    <h3 className="font-semibold text-[#0f3d1a] truncate">{trainer.name}</h3>
+                    <p className="text-sm text-[#1a6b2e] truncate mt-0.5">{trainer.email}</p>
                     <div className="flex items-center gap-2 mt-2">
-                      <span className="inline-flex items-center gap-1 text-xs text-gray-400">
+                      <span className="inline-flex items-center gap-1 text-xs text-[#1a6b2e]">
                         <Star className="w-3 h-3 text-amber-400" />
                         {trainer.trainerLevel || 'New Trainer'}
                       </span>

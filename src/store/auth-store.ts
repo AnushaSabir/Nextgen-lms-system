@@ -24,13 +24,13 @@ export const useAuthStore = create<AuthState>((set) => ({
   error: null,
   hydrate: () => {
     if (typeof window === 'undefined') return;
-    const token = window.localStorage.getItem('grapetask_lms_token');
-    const rawUser = window.localStorage.getItem('grapetask_lms_user');
+    const token = window.localStorage.getItem('nextgen-lms_lms_token');
+    const rawUser = window.localStorage.getItem('nextgen-lms_lms_user');
     try {
       set({ token, user: rawUser ? JSON.parse(rawUser) : null });
     } catch {
-      window.localStorage.removeItem('grapetask_lms_token');
-      window.localStorage.removeItem('grapetask_lms_user');
+      window.localStorage.removeItem('nextgen-lms_lms_token');
+      window.localStorage.removeItem('nextgen-lms_lms_user');
       set({ token: null, user: null });
     }
   },
@@ -38,8 +38,8 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ loading: true, error: null });
     try {
       const session = await authApi.login(input);
-      window.localStorage.setItem('grapetask_lms_token', session.accessToken);
-      window.localStorage.setItem('grapetask_lms_user', JSON.stringify(session.user));
+      window.localStorage.setItem('nextgen-lms_lms_token', session.accessToken);
+      window.localStorage.setItem('nextgen-lms_lms_user', JSON.stringify(session.user));
       set({ token: session.accessToken, user: session.user, loading: false });
       return dashboardForRole(session.user.role);
     } catch (error) {
@@ -52,8 +52,8 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ loading: true, error: null });
     try {
       const session = await authApi.register(input);
-      window.localStorage.setItem('grapetask_lms_token', session.accessToken);
-      window.localStorage.setItem('grapetask_lms_user', JSON.stringify(session.user));
+      window.localStorage.setItem('nextgen-lms_lms_token', session.accessToken);
+      window.localStorage.setItem('nextgen-lms_lms_user', JSON.stringify(session.user));
       set({ token: session.accessToken, user: session.user, loading: false });
       return dashboardForRole(session.user.role);
     } catch (error) {
@@ -63,15 +63,15 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
   logout: () => {
-    window.localStorage.removeItem('grapetask_lms_token');
-    window.localStorage.removeItem('grapetask_lms_user');
+    window.localStorage.removeItem('nextgen-lms_lms_token');
+    window.localStorage.removeItem('nextgen-lms_lms_user');
     set({ token: null, user: null });
   },
   updateUser: (updates) => {
     set((state) => {
       if (!state.user) return state;
       const updatedUser = { ...state.user, ...updates };
-      window.localStorage.setItem('grapetask_lms_user', JSON.stringify(updatedUser));
+      window.localStorage.setItem('nextgen-lms_lms_user', JSON.stringify(updatedUser));
       return { user: updatedUser as User };
     });
   },

@@ -42,10 +42,10 @@ export function VideoUploadScreen({ courseId }: { courseId: string }) {
 
   return (
     <div className="space-y-8 pb-8">
-      <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
-        <Link href={`/trainer/courses/${courseId}`} className="hover:text-white transition-colors">Course Details</Link>
+      <div className="flex items-center gap-2 text-sm text-[#1a6b2e] mb-4">
+        <Link href={`/trainer/courses/${courseId}`} className="hover:text-[#0f3d1a] transition-colors">Course Details</Link>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-gray-300">Upload Content</span>
+        <span className="text-[#1a6b2e]">Upload Content</span>
       </div>
 
       <PageHeader
@@ -63,10 +63,10 @@ export function VideoUploadScreen({ courseId }: { courseId: string }) {
 
             <div className="grid gap-6 sm:grid-cols-2 pt-4 border-t border-gray-800">
               <Field label="Video File (MP4/WebM)">
-                <TextInput name="videoFile" type="file" accept="video/*" required className="file:mr-4 file:rounded-full file:border-0 file:bg-orange-500/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-orange-400" />
+                <TextInput name="videoFile" type="file" accept="video/*" required className="file:mr-4 file:rounded-full file:border-0 file:bg-sky-500/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-sky-400" />
               </Field>
               <Field label="Custom Thumbnail">
-                <TextInput name="thumbnail" type="file" accept="image/*" required className="file:mr-4 file:rounded-full file:border-0 file:bg-gray-700 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-300" />
+                <TextInput name="thumbnail" type="file" accept="image/*" required className="file:mr-4 file:rounded-full file:border-0 file:bg-gray-700 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[#1a6b2e]" />
               </Field>
             </div>
 
@@ -76,7 +76,7 @@ export function VideoUploadScreen({ courseId }: { courseId: string }) {
             </div>
 
             <div className="pt-6 border-t border-gray-800">
-              <Button type="submit" size="lg" disabled={loading} className="w-full shadow-lg shadow-orange-500/20">
+              <Button type="submit" size="lg" disabled={loading} className="w-full shadow-lg shadow-sky-500/20">
                 <Upload className="mr-2 h-4 w-4" />{loading ? 'Uploading & Processing...' : 'Upload Lesson'}
               </Button>
             </div>

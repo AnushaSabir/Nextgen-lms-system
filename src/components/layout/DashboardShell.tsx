@@ -62,7 +62,7 @@ export function DashboardShell({ area, children }: { area: keyof typeof navByAre
         {/* Desktop Sidebar */}
         <aside className="hidden w-64 lg:w-72 border-r border-lightBorder bg-cardBg md:block shrink-0">
           <div className="border-b border-lightBorder p-4 lg:p-6">
-            <p className="text-base lg:text-lg font-semibold text-pureWhite">GrapeTask LMS</p>
+            <p className="text-base lg:text-lg font-semibold text-pureWhite">NextGen-LMS LMS</p>
             <p className="mt-1 text-xs lg:text-sm text-bodyGrayText">{area} Portal</p>
           </div>
           <nav className="space-y-1 p-3 lg:p-4">
@@ -92,7 +92,7 @@ export function DashboardShell({ area, children }: { area: keyof typeof navByAre
             >
               <div className="border-b border-lightBorder p-4 flex items-center justify-between">
                 <div>
-                  <p className="text-base font-semibold text-pureWhite">GrapeTask LMS</p>
+                  <p className="text-base font-semibold text-pureWhite">NextGen-LMS LMS</p>
                   <p className="text-xs text-bodyGrayText">{area} Portal</p>
                 </div>
                 <button 
@@ -100,7 +100,7 @@ export function DashboardShell({ area, children }: { area: keyof typeof navByAre
                   className="p-2 hover:bg-white/10 rounded-lg transition-colors duration-100"
                   aria-label="Close menu"
                 >
-                  <X className="w-5 h-5 text-white" />
+                  <X className="w-5 h-5 text-[#0f3d1a]" />
                 </button>
               </div>
               <nav className="space-y-1 p-3">
@@ -129,14 +129,14 @@ export function DashboardShell({ area, children }: { area: keyof typeof navByAre
                   className="md:hidden p-2 -ml-1 hover:bg-white/10 active:bg-white/15 rounded-lg transition-colors duration-100"
                   aria-label="Open menu"
                 >
-                  <Menu className="w-5 h-5 text-white" />
+                  <Menu className="w-5 h-5 text-[#0f3d1a]" />
                 </button>
                 <div className="flex items-center gap-3">
                   {user?.avatar && (
                     <img 
                       src={`http://localhost:8000${user.avatar}`} 
                       alt="Avatar" 
-                      className="w-10 h-10 rounded-full object-cover border-2 border-orange-500/50"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-sky-500/50"
                     />
                   )}
                   <div>

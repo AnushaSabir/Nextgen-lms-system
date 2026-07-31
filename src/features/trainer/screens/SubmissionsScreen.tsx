@@ -28,7 +28,7 @@ const DECISION_STYLES: Record<string, string> = {
   pass:    'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
   fail:    'bg-red-500/10    text-red-400    border-red-500/20',
   improve: 'bg-amber-500/10  text-amber-400  border-amber-500/20',
-  pending: 'bg-gray-700/50   text-gray-400   border-gray-700',
+  pending: 'bg-gray-700/50   text-[#1a6b2e]   border-gray-700',
 };
 
 const DECISION_LABELS: Record<string, string> = {
@@ -82,7 +82,7 @@ export function SubmissionsScreen() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-sky-500 border-t-transparent" />
       </div>
     );
   }
@@ -103,17 +103,17 @@ export function SubmissionsScreen() {
           { label: 'Failed',  value: submissions.filter(s => s.decision === 'fail').length,    color: 'border-red-500/20 bg-red-500/5' },
         ].map(({ label, value, color }) => (
           <div key={label} className={`rounded-xl border p-4 text-center ${color}`}>
-            <div className="text-2xl font-bold text-white">{value}</div>
-            <div className="text-xs text-gray-400 mt-0.5">{label}</div>
+            <div className="text-2xl font-bold text-[#0f3d1a]">{value}</div>
+            <div className="text-xs text-[#1a6b2e] mt-0.5">{label}</div>
           </div>
         ))}
       </div>
 
       {submissions.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-700 p-16 text-center bg-gray-800/20">
-          <FileText className="mx-auto h-12 w-12 text-gray-500 mb-4" />
-          <h3 className="text-lg font-semibold text-white">No submissions yet</h3>
-          <p className="mt-2 text-sm text-gray-400">
+          <FileText className="mx-auto h-12 w-12 text-[#7dab52] mb-4" />
+          <h3 className="text-lg font-semibold text-[#0f3d1a]">No submissions yet</h3>
+          <p className="mt-2 text-sm text-[#1a6b2e]">
             Learner submissions will appear here once your courses have enrolled students.
           </p>
         </div>
@@ -141,7 +141,7 @@ export function SubmissionsScreen() {
           {/* Reviewed section */}
           {reviewed.length > 0 && (
             <div>
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-4 flex items-center gap-2">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-[#7dab52] mb-4 flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4" /> Reviewed ({reviewed.length})
               </h2>
               <div className="space-y-4">
@@ -183,16 +183,16 @@ function SubmissionCard({
             <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${DECISION_STYLES[sub.decision]}`}>
               {DECISION_LABELS[sub.decision]}
             </span>
-            <span className="text-xs text-gray-500">{formatDate(sub.submittedAt)}</span>
+            <span className="text-xs text-[#7dab52]">{formatDate(sub.submittedAt)}</span>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-            <h3 className="text-base font-bold text-white truncate">{sub.learnerName}</h3>
+            <h3 className="text-base font-bold text-[#0f3d1a] truncate">{sub.learnerName}</h3>
             <span className="hidden sm:block text-gray-600">·</span>
-            <span className="text-sm text-gray-400 truncate">{sub.learnerEmail}</span>
+            <span className="text-sm text-[#1a6b2e] truncate">{sub.learnerEmail}</span>
           </div>
 
-          <div className="mt-1.5 flex items-center gap-3 text-xs text-gray-500 flex-wrap">
+          <div className="mt-1.5 flex items-center gap-3 text-xs text-[#7dab52] flex-wrap">
             <span className="flex items-center gap-1">
               <FileText className="h-3.5 w-3.5" /> {sub.courseTitle}
             </span>
@@ -202,7 +202,7 @@ function SubmissionCard({
 
           {/* Content preview */}
           {sub.textAnswer && (
-            <p className="mt-3 text-sm text-gray-400 bg-gray-900/50 rounded-lg p-3 border border-gray-700 line-clamp-3">
+            <p className="mt-3 text-sm text-[#1a6b2e] bg-gray-900/50 rounded-lg p-3 border border-gray-700 line-clamp-3">
               {sub.textAnswer}
             </p>
           )}
@@ -211,13 +211,13 @@ function SubmissionCard({
               href={sub.fileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center gap-1.5 text-xs text-orange-400 hover:text-orange-300"
+              className="mt-2 inline-flex items-center gap-1.5 text-xs text-sky-400 hover:text-orange-300"
             >
               <FileText className="h-3.5 w-3.5" /> View Attached File
             </a>
           )}
           {sub.trainerRemarks && !isPending && (
-            <p className="mt-2 text-xs text-gray-500 italic">Remark: {sub.trainerRemarks}</p>
+            <p className="mt-2 text-xs text-[#7dab52] italic">Remark: {sub.trainerRemarks}</p>
           )}
         </div>
 

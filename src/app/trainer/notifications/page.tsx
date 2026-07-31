@@ -12,10 +12,10 @@ export default function NotificationsPage() {
     <div className="p-8 max-w-4xl mx-auto animate-in fade-in duration-500">
       <div className="flex justify-between items-end mb-10">
         <div>
-          <h1 className="text-3xl font-black text-white mb-2">Notifications</h1>
-          <p className="text-[#94a3b8]">Stay updated with student activity.</p>
+          <h1 className="text-3xl font-black text-[#0f3d1a] mb-2">Notifications</h1>
+          <p className="text-[#1a6b2e]">Stay updated with student activity.</p>
         </div>
-        <button className="text-sm font-bold text-[#f0591f] hover:text-[#ea580c]">
+        <button className="text-sm font-bold text-[#d94d19] hover:text-[#ea580c]">
           Mark all as read
         </button>
       </div>
@@ -25,12 +25,12 @@ export default function NotificationsPage() {
           const Icon = notif.icon;
           return (
             <div key={notif.id} className={`p-6 flex items-start gap-5 hover:bg-white/[0.02] transition-colors ${index !== notifications.length - 1 ? 'border-b border-[#1e293b]' : ''}`}>
-              <div className={`p-4 rounded-2xl ${notif.bg} border border-white/5`}>
+              <div className={`p-4 rounded-2xl ${notif.bg} border border-[#1a6b2e]/10`}>
                 <Icon className={`w-6 h-6 ${notif.color}`} />
               </div>
               <div className="flex-1">
-                <h3 className="font-bold text-white text-lg">{notif.title}</h3>
-                <p className="text-[#94a3b8] mt-1">{notif.desc}</p>
+                <h3 className="font-bold text-[#0f3d1a] text-lg">{notif.title}</h3>
+                <p className="text-[#1a6b2e] mt-1">{notif.desc}</p>
                 <p className="text-xs text-[#64748b] mt-3 font-medium uppercase tracking-wider">{notif.time}</p>
               </div>
             </div>
