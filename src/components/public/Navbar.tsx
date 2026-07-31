@@ -323,20 +323,20 @@ const Navbar = () => {
               onMouseEnter={() => setIsButtonHovered(true)}
               onMouseLeave={() => setIsButtonHovered(false)}
             >
-              <div className={`absolute -inset-1 bg-gradient-to-r from-[#5E6F58] to-[#4B5946] rounded-xl blur-md transition-all duration-500 ${
+              <div className={`absolute -inset-1 bg-gradient-to-r from-[#d94d19] to-orange-500 rounded-xl blur-md transition-all duration-500 ${
                 isButtonHovered ? 'opacity-40 scale-105' : 'opacity-20 scale-100'
               }`} />
               
               <Link
                 href="/login?mode=signup"
-                className="ripple-effect relative flex items-center space-x-2 px-5 xl:px-7 py-3 bg-gradient-to-r from-[#5E6F58] to-[#4B5946] text-[#0f3d1a] text-sm font-black rounded-xl transition-all duration-500 shadow-lg shadow-[#5E6F58]/20 hover:shadow-[#5E6F58]/40 transform hover:scale-105 active:scale-95 group overflow-hidden border border-[#C6D6C0]/50"
+                className="ripple-effect relative flex items-center space-x-2 px-5 xl:px-7 py-3 bg-gradient-to-r from-[#d94d19] to-orange-500 text-white text-sm font-black rounded-xl transition-all duration-500 shadow-lg shadow-[#d94d19]/20 hover:shadow-[#d94d19]/40 transform hover:scale-105 active:scale-95 group overflow-hidden border border-orange-400/50"
               >
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2),transparent_70%)]" />
                 </div>
                 
                 <UserPlus className="w-4 h-4 relative z-10 transition-all duration-300 group-hover:rotate-12 group-hover:scale-110" />
-                <span className="relative z-10">Join Free</span>
+                <span className="relative z-10">Join Now</span>
                 <ChevronRight className="w-4 h-4 relative z-10 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110" />
                 
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
