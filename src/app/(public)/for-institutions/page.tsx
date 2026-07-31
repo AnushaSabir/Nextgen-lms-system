@@ -99,7 +99,7 @@ export default function ForInstitutionsPage() {
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/25 via-[#020617]/55 to-[#020617] z-20" />
         <div className="absolute inset-0 bg-gradient-to-tr from-[#020617]/60 via-transparent to-[#5E6F58]/15 mix-blend-screen opacity-60 z-20" />
-        <div className="absolute top-0 right-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-primaryBlue/10 blur-[100px] sm:blur-[150px] rounded-full z-20" />
+        <div className="absolute top-0 right-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-[#d94d19]/10 blur-[100px] sm:blur-[150px] rounded-full z-20" />
       </div>
 
       {/* Play/Pause Button */}
@@ -119,12 +119,12 @@ export default function ForInstitutionsPage() {
         <div className="container mx-auto max-w-6xl">
           {/* Header Info */}
           <div className="text-center mb-16 sm:mb-24 space-y-4 sm:space-y-6 max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryBlue/20 bg-primaryBlue/10 text-primaryBlue text-xs font-bold uppercase tracking-widest shadow-sm hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#d94d19]/20 bg-[#d94d19]/10 text-[#d94d19] text-xs font-bold uppercase tracking-widest shadow-sm hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
               <Building2 className="w-3.5 h-3.5" /> Academic Partnerships
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0f3d1a] leading-tight tracking-tight text-3d">
               Partner with{" "}
-              <span className="text-primaryBlue text-3d-orange">
+              <span className="text-[#d94d19] text-3d-orange">
                 NextGen-LMS LMS
               </span>
             </h1>
@@ -139,7 +139,7 @@ export default function ForInstitutionsPage() {
           <div className="mb-24">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#0f3d1a] mb-12 sm:mb-16 text-center tracking-tight text-3d">
               Why Partner with{" "}
-              <span className="text-primaryBlue text-3d-orange">
+              <span className="text-[#d94d19] text-3d-orange">
                 NextGen-LMS LMS?
               </span>
             </h2>
@@ -168,16 +168,16 @@ export default function ForInstitutionsPage() {
               ].map((benefit) => (
                 <div
                   key={benefit.title}
-                  className="theme-card h-full p-6 sm:p-8 rounded-[2rem] flex flex-col items-start text-left relative overflow-hidden bg-gradient-to-b from-white/[0.03] to-white/[0.01] hover:from-primaryBlue/[0.08] hover:to-transparent border border-[#1a6b2e]/20 hover:border-primaryBlue/40 transition-all duration-500 shadow-xl hover:-translate-y-6 hover:scale-[1.02] hover:shadow-[0_30px_60px_-15px_rgba(240,89,31,0.4)] group"
+                  className="theme-card h-full p-6 sm:p-8 rounded-[2rem] flex flex-col items-start text-left relative overflow-hidden bg-gradient-to-b from-white/[0.03] to-white/[0.01] hover:from-[#d94d19]/[0.08] hover:to-transparent border border-[#1a6b2e]/20 hover:border-[#d94d19]/40 transition-all duration-500 shadow-xl hover:-translate-y-6 hover:scale-[1.02] hover:shadow-[0_30px_60px_-15px_rgba(240,89,31,0.4)] group"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primaryBlue/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#d94d19]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
-                  <div className="w-14 h-14 mb-6 rounded-2xl bg-[#1a6b2e]/5 group-hover:bg-primaryBlue/10 text-[#0f3d1a]/80 group-hover:text-primaryBlue border border-[#1a6b2e]/20 group-hover:border-primaryBlue/30 flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(240,89,31,0.2)] transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-6 group-hover:-translate-y-1 flex-shrink-0 z-10">
+                  <div className="w-14 h-14 mb-6 rounded-2xl bg-[#1a6b2e]/5 group-hover:bg-[#d94d19]/10 text-[#0f3d1a]/80 group-hover:text-[#d94d19] border border-[#1a6b2e]/20 group-hover:border-[#d94d19]/30 flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(240,89,31,0.2)] transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-6 group-hover:-translate-y-1 flex-shrink-0 z-10">
                     {benefit.icon}
                   </div>
 
                   <div className="flex-1 flex flex-col justify-start z-10 w-full text-left">
-                    <h3 className="text-lg sm:text-xl font-bold text-[#0f3d1a] tracking-tight mb-3 group-hover:text-primaryBlue transition-colors duration-300">
+                    <h3 className="text-lg sm:text-xl font-bold text-[#0f3d1a] tracking-tight mb-3 group-hover:text-[#d94d19] transition-colors duration-300">
                       {benefit.title}
                     </h3>
                     <p className="text-sm text-bodyGrayText group-hover:text-[#1a6b2e] font-medium leading-relaxed transition-colors duration-300">
@@ -194,7 +194,7 @@ export default function ForInstitutionsPage() {
             <div className="absolute top-0 right-0 w-80 h-80 secondary-glow opacity-10" />
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#0f3d1a] mb-12 sm:mb-16 text-center tracking-tight text-3d">
               How the Partnership{" "}
-              <span className="text-primaryBlue text-3d-orange">Works</span>
+              <span className="text-[#d94d19] text-3d-orange">Works</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative items-stretch">
               {[
@@ -216,16 +216,16 @@ export default function ForInstitutionsPage() {
               ].map((step, idx) => (
                 <div
                   key={step.step}
-                  className="theme-card h-full p-6 sm:p-8 rounded-[2rem] flex flex-col items-start text-left relative overflow-hidden bg-gradient-to-b from-white/[0.03] to-white/[0.01] hover:from-primaryBlue/[0.08] hover:to-transparent border border-[#1a6b2e]/20 hover:border-primaryBlue/40 transition-all duration-500 shadow-xl hover:-translate-y-6 hover:scale-[1.02] hover:shadow-[0_30px_60px_-15px_rgba(240,89,31,0.4)] group"
+                  className="theme-card h-full p-6 sm:p-8 rounded-[2rem] flex flex-col items-start text-left relative overflow-hidden bg-gradient-to-b from-white/[0.03] to-white/[0.01] hover:from-[#d94d19]/[0.08] hover:to-transparent border border-[#1a6b2e]/20 hover:border-[#d94d19]/40 transition-all duration-500 shadow-xl hover:-translate-y-6 hover:scale-[1.02] hover:shadow-[0_30px_60px_-15px_rgba(240,89,31,0.4)] group"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primaryBlue/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#d94d19]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
-                  <div className="text-5xl sm:text-6xl font-black text-primaryBlue/20 group-hover:text-primaryBlue/40 tracking-tighter leading-none mb-6 transition-all duration-500 transform group-hover:scale-110 group-hover:-translate-y-2 z-10">
+                  <div className="text-5xl sm:text-6xl font-black text-[#d94d19]/20 group-hover:text-[#d94d19]/40 tracking-tighter leading-none mb-6 transition-all duration-500 transform group-hover:scale-110 group-hover:-translate-y-2 z-10">
                     {step.step}
                   </div>
 
                   <div className="flex-1 flex flex-col justify-start z-10 w-full text-left">
-                    <h3 className="text-xl font-bold text-[#0f3d1a] tracking-tight mb-3 group-hover:text-primaryBlue transition-colors duration-300">
+                    <h3 className="text-xl font-bold text-[#0f3d1a] tracking-tight mb-3 group-hover:text-[#d94d19] transition-colors duration-300">
                       {step.title}
                     </h3>
                     <p className="text-sm text-bodyGrayText group-hover:text-[#1a6b2e] font-medium leading-relaxed transition-colors duration-300">
@@ -249,12 +249,12 @@ export default function ForInstitutionsPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/70 to-[#020617]/20 z-10"></div>
 
               <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 z-20 space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primaryBlue/20 bg-primaryBlue/10 text-primaryBlue text-[10px] font-black uppercase tracking-widest backdrop-blur-md hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#d94d19]/20 bg-[#d94d19]/10 text-[#d94d19] text-[10px] font-black uppercase tracking-widest backdrop-blur-md hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
                   <Clock className="w-3.5 h-3.5" /> 30-Day Rollout
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-black text-[#0f3d1a] tracking-tight drop-shadow-lg">
                   Launch without adding{" "}
-                  <span className="text-primaryBlue">IT complexity</span>
+                  <span className="text-[#d94d19]">IT complexity</span>
                 </h2>
                 <p className="text-sm text-[#1a6b2e] font-medium leading-relaxed max-w-lg">
                   A guided onboarding flow helps administrators activate
@@ -287,11 +287,11 @@ export default function ForInstitutionsPage() {
               ].map((item, i) => (
                 <div
                   key={item.day}
-                  className="theme-card p-4 sm:p-6 rounded-2xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 hover:border-primaryBlue/40 hover:bg-white/[0.055] transition-all duration-500 hover:-translate-y-4 hover:scale-[1.01] hover:shadow-[0_25px_50px_-12px_rgba(240,89,31,0.3)] group flex items-start gap-4 sm:gap-5 flex-1"
+                  className="theme-card p-4 sm:p-6 rounded-2xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 hover:border-[#d94d19]/40 hover:bg-white/[0.055] transition-all duration-500 hover:-translate-y-4 hover:scale-[1.01] hover:shadow-[0_25px_50px_-12px_rgba(240,89,31,0.3)] group flex items-start gap-4 sm:gap-5 flex-1"
                 >
                   {/* Timeline Step Icon & Connector */}
                   <div className="flex flex-col items-center gap-2 pt-1">
-                    <div className="w-10 h-10 rounded-xl bg-primaryBlue/10 border border-primaryBlue/20 text-primaryBlue flex items-center justify-center font-black text-base flex-shrink-0 group-hover:bg-primaryBlue group-hover:text-[#0f3d1a] group-hover:scale-110 group-hover:rotate-6 group-hover:-translate-y-1 transition-all duration-300 shadow-[0_0_15px_rgba(240,89,31,0)] group-hover:shadow-[0_0_15px_rgba(240,89,31,0.3)]">
+                    <div className="w-10 h-10 rounded-xl bg-[#d94d19]/10 border border-[#d94d19]/20 text-[#d94d19] flex items-center justify-center font-black text-base flex-shrink-0 group-hover:bg-[#d94d19] group-hover:text-[#0f3d1a] group-hover:scale-110 group-hover:rotate-6 group-hover:-translate-y-1 transition-all duration-300 shadow-[0_0_15px_rgba(240,89,31,0)] group-hover:shadow-[0_0_15px_rgba(240,89,31,0.3)]">
                       {item.step}
                     </div>
                     {/* Connector Line */}
@@ -302,10 +302,10 @@ export default function ForInstitutionsPage() {
 
                   {/* Text Content */}
                   <div className="flex-1 pb-4">
-                    <div className="text-[10px] font-black uppercase tracking-widest text-primaryBlue/60 group-hover:text-primaryBlue mb-1 transition-colors duration-300">
+                    <div className="text-[10px] font-black uppercase tracking-widest text-[#d94d19]/60 group-hover:text-[#d94d19] mb-1 transition-colors duration-300">
                       {item.day}
                     </div>
-                    <h3 className="text-lg font-black text-[#0f3d1a] tracking-tight mb-2 group-hover:text-primaryBlue transition-colors duration-300">
+                    <h3 className="text-lg font-black text-[#0f3d1a] tracking-tight mb-2 group-hover:text-[#d94d19] transition-colors duration-300">
                       {item.title}
                     </h3>
                     <p className="text-sm text-bodyGrayText group-hover:text-[#1a6b2e] font-medium leading-relaxed transition-colors duration-300">
@@ -324,7 +324,7 @@ export default function ForInstitutionsPage() {
               <div className="lg:col-span-7 space-y-6 sm:space-y-8">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#0f3d1a] leading-tight tracking-tight text-3d">
                   Your Institution{" "}
-                  <span className="text-primaryBlue text-3d-orange">
+                  <span className="text-[#d94d19] text-3d-orange">
                     Portal
                   </span>
                 </h2>
@@ -349,14 +349,14 @@ export default function ForInstitutionsPage() {
                   {portalFeatures.map((feat) => (
                     <div
                       key={feat.title}
-                      className="theme-card h-full p-5 sm:p-6 rounded-2xl flex flex-col items-start text-left relative overflow-hidden bg-gradient-to-b from-white/[0.03] to-white/[0.01] hover:from-primaryBlue/[0.08] hover:to-transparent border border-[#1a6b2e]/20 hover:border-primaryBlue/40 transition-all duration-500 shadow-md hover:-translate-y-4 hover:scale-[1.02] hover:shadow-[0_20px_40px_-10px_rgba(240,89,31,0.3)] group"
+                      className="theme-card h-full p-5 sm:p-6 rounded-2xl flex flex-col items-start text-left relative overflow-hidden bg-gradient-to-b from-white/[0.03] to-white/[0.01] hover:from-[#d94d19]/[0.08] hover:to-transparent border border-[#1a6b2e]/20 hover:border-[#d94d19]/40 transition-all duration-500 shadow-md hover:-translate-y-4 hover:scale-[1.02] hover:shadow-[0_20px_40px_-10px_rgba(240,89,31,0.3)] group"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-tr from-primaryBlue/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-[#d94d19]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
                       <div className="flex-1 flex flex-col justify-start z-10 w-full text-left">
                         <div className="flex items-center space-x-3 mb-2 sm:mb-3">
-                          <div className="w-2.5 h-2.5 rounded-full bg-primaryBlue/50 group-hover:bg-primaryBlue group-hover:scale-150 group-hover:-translate-y-1 transition-all duration-300 flex-shrink-0 shadow-[0_0_8px_rgba(240,89,31,0)] group-hover:shadow-[0_0_8px_rgba(240,89,31,0.6)]" />
-                          <h4 className="text-sm sm:text-base font-bold text-[#0f3d1a] tracking-tight group-hover:text-primaryBlue transition-colors duration-300">
+                          <div className="w-2.5 h-2.5 rounded-full bg-[#d94d19]/50 group-hover:bg-[#d94d19] group-hover:scale-150 group-hover:-translate-y-1 transition-all duration-300 flex-shrink-0 shadow-[0_0_8px_rgba(240,89,31,0)] group-hover:shadow-[0_0_8px_rgba(240,89,31,0.6)]" />
+                          <h4 className="text-sm sm:text-base font-bold text-[#0f3d1a] tracking-tight group-hover:text-[#d94d19] transition-colors duration-300">
                             {feat.title}
                           </h4>
                         </div>
@@ -428,7 +428,7 @@ export default function ForInstitutionsPage() {
                             Active Student Access
                           </span>
                         </div>
-                        <span className="px-4 text-center py-1.5 bg-gradient-to-r from-[#5E6F58] to-sky-500 text-[#0f3d1a] text-xs font-bold rounded-full shadow-md">
+                        <span className="px-4 text-center py-1.5 bg-gradient-to-r from-[#5E6F58] to-[#d94d19] text-[#0f3d1a] text-xs font-bold rounded-full shadow-md">
                           250 Allocated
                         </span>
                       </div>
@@ -473,7 +473,7 @@ export default function ForInstitutionsPage() {
                               <div className="relative">
                                 <div className="h-1.5 bg-[#1a6b2e]/5 rounded-full overflow-hidden">
                                   <div
-                                    className="h-full bg-gradient-to-r from-[#5E6F58] to-sky-400 rounded-full"
+                                    className="h-full bg-gradient-to-r from-[#5E6F58] to-[#d94d19] rounded-full"
                                     style={{ width: `${item.percentage}%` }}
                                   />
                                 </div>
@@ -497,7 +497,7 @@ export default function ForInstitutionsPage() {
                           </div>
                         </div>
                         <div className="mt-2 h-1 bg-[#1a6b2e]/5 rounded-full overflow-hidden">
-                          <div className="h-full w-[50%] bg-gradient-to-r from-[#5E6F58] to-sky-500 rounded-full" />
+                          <div className="h-full w-[50%] bg-gradient-to-r from-[#5E6F58] to-[#d94d19] rounded-full" />
                         </div>
                       </div>
                     </div>
@@ -535,12 +535,12 @@ export default function ForInstitutionsPage() {
           <div className="mb-24 p-6 sm:p-12 md:p-16 rounded-[2.5rem] sm:rounded-[3rem] bg-[#c8e6c9] border border-lightBorder relative overflow-hidden shadow-2xl">
             <div className="absolute bottom-0 left-0 w-80 h-80 secondary-glow opacity-10 pointer-events-none" />
             <div className="text-center mb-12 space-y-4 relative z-10">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryBlue/20 bg-primaryBlue/10 text-primaryBlue text-xs font-black uppercase tracking-widest hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#d94d19]/20 bg-[#d94d19]/10 text-[#d94d19] text-xs font-black uppercase tracking-widest hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
                 <BarChart3 className="w-3.5 h-3.5" /> Academic Visibility
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#0f3d1a] tracking-tight text-3d">
                 Reports leaders can{" "}
-                <span className="text-primaryBlue text-3d-orange">
+                <span className="text-[#d94d19] text-3d-orange">
                   act on
                 </span>
               </h2>
@@ -569,9 +569,9 @@ export default function ForInstitutionsPage() {
               ].map((metric) => (
                 <div
                   key={metric.title}
-                  className="theme-card p-6 sm:p-7 rounded-2xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 hover:border-primaryBlue/35 hover:bg-white/[0.055] transition-all duration-500 hover:-translate-y-6 hover:scale-[1.02] hover:shadow-[0_30px_60px_-15px_rgba(240,89,31,0.4)] group"
+                  className="theme-card p-6 sm:p-7 rounded-2xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 hover:border-[#d94d19]/35 hover:bg-white/[0.055] transition-all duration-500 hover:-translate-y-6 hover:scale-[1.02] hover:shadow-[0_30px_60px_-15px_rgba(240,89,31,0.4)] group"
                 >
-                  <div className="text-4xl sm:text-5xl font-black text-primaryBlue text-3d-orange mb-4 leading-none group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-500">
+                  <div className="text-4xl sm:text-5xl font-black text-[#d94d19] text-3d-orange mb-4 leading-none group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-500">
                     {metric.value}
                   </div>
                   <h3 className="text-lg sm:text-xl font-black text-[#0f3d1a] tracking-tight mb-3">
@@ -592,7 +592,7 @@ export default function ForInstitutionsPage() {
             <div className="text-center mb-16 space-y-4">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#0f3d1a] tracking-tight text-3d">
                 For Institutions{" "}
-                <span className="text-primaryBlue text-3d-orange">plans</span>
+                <span className="text-[#d94d19] text-3d-orange">plans</span>
               </h2>
               <p className="text-sm sm:text-base text-[#1a6b2e] font-medium max-w-xl mx-auto leading-relaxed">
                 Connect your institution and provide premium digital tech skill
@@ -603,7 +603,7 @@ export default function ForInstitutionsPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {pricing.map((plan) => (
                 <div key={plan.level} className="relative group">
-                  <div className="pricing-card p-6 sm:p-8 rounded-[2.25rem] border border-[#1a6b2e]/20 flex flex-col items-center text-center space-y-5 bg-cardBg hover:bg-primaryBlue hover:border-primaryBlue hover:text-[#0f3d1a] transition-all duration-500 hover:-translate-y-6 hover:scale-[1.03] hover:shadow-[0_30px_60px_-15px_rgba(240,89,31,0.5)] relative overflow-hidden h-full">
+                  <div className="pricing-card p-6 sm:p-8 rounded-[2.25rem] border border-[#1a6b2e]/20 flex flex-col items-center text-center space-y-5 bg-cardBg hover:bg-[#d94d19] hover:border-[#d94d19] hover:text-[#0f3d1a] transition-all duration-500 hover:-translate-y-6 hover:scale-[1.03] hover:shadow-[0_30px_60px_-15px_rgba(240,89,31,0.5)] relative overflow-hidden h-full">
                     <div className="absolute top-0 right-0 w-20 h-20 bg-[#1a6b2e]/5 rounded-full blur-xl group-hover:bg-white/20 transition-all pointer-events-none" />
 
                     <h3 className="text-base sm:text-lg font-black text-[#0f3d1a] group-hover:text-[#0f3d1a] uppercase tracking-wider group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
@@ -612,7 +612,7 @@ export default function ForInstitutionsPage() {
 
                     <div className="flex flex-col items-center">
                       <div className="flex items-baseline justify-center">
-                        <span className="font-sans text-sm sm:text-base font-semibold text-primaryBlue group-hover:text-[#0f3d1a] transition-colors mr-1">
+                        <span className="font-sans text-sm sm:text-base font-semibold text-[#d94d19] group-hover:text-[#0f3d1a] transition-colors mr-1">
                           PKR
                         </span>
                         <span className="text-3xl sm:text-4xl font-black text-[#0f3d1a] group-hover:text-[#0f3d1a] transition-colors">
@@ -630,7 +630,7 @@ export default function ForInstitutionsPage() {
 
                     <Link
                       href="/contact?type=institution"
-                      className="w-full py-3 sm:py-3.5 bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 rounded-2xl text-[#0f3d1a] font-bold hover:bg-white hover:text-primaryBlue group-hover:bg-white group-hover:text-primaryBlue transition-all duration-300 text-center text-xs sm:text-sm hover:-translate-y-1 hover:scale-110 active:scale-95 active:translate-y-0 hover:shadow-[0_10px_20px_rgba(255,255,255,0.2)]"
+                      className="w-full py-3 sm:py-3.5 bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 rounded-2xl text-[#0f3d1a] font-bold hover:bg-white hover:text-[#d94d19] group-hover:bg-white group-hover:text-[#d94d19] transition-all duration-300 text-center text-xs sm:text-sm hover:-translate-y-1 hover:scale-110 active:scale-95 active:translate-y-0 hover:shadow-[0_10px_20px_rgba(255,255,255,0.2)]"
                     >
                       Get Started
                     </Link>
@@ -644,14 +644,14 @@ export default function ForInstitutionsPage() {
           <div className="text-center space-y-8">
             <h2 className="text-2xl sm:text-3xl font-black text-[#0f3d1a] text-3d">
               Ready to Partner with{" "}
-              <span className="text-primaryBlue text-3d-orange">
+              <span className="text-[#d94d19] text-3d-orange">
                 NextGen-LMS LMS?
               </span>
             </h2>
             <div className="flex justify-center">
               <Link
                 href="/contact?type=institution"
-                className="group inline-flex items-center space-x-2 px-6 py-3.5 sm:px-8 sm:py-4 bg-primaryBlue hover:bg-opacity-95 text-[#0f3d1a] font-black text-sm sm:text-base rounded-xl shadow-lg shadow-primaryBlue/20 transition-all duration-300 hover:-translate-y-1 hover:scale-110 active:scale-95 active:translate-y-0 hover:shadow-[0_15px_30px_-8px_rgba(240,89,31,0.4)]"
+                className="group inline-flex items-center space-x-2 px-6 py-3.5 sm:px-8 sm:py-4 bg-[#d94d19] hover:bg-opacity-95 text-[#0f3d1a] font-black text-sm sm:text-base rounded-xl shadow-lg shadow-[#d94d19]/20 transition-all duration-300 hover:-translate-y-1 hover:scale-110 active:scale-95 active:translate-y-0 hover:shadow-[0_15px_30px_-8px_rgba(240,89,31,0.4)]"
               >
                 <span>Request Institution Demo</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

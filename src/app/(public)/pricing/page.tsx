@@ -203,13 +203,13 @@ export default function PricingPage() {
                           title: "Flexible course access",
                           desc: "Choose the exact skill path you need, pay only for relevant modules, and learn at your own pace.",
                           icon: User,
-                          color: "from-blue-500/20 to-cyan-500/20",
+                          color: "from-[#d94d19]/20 to-cyan-500/20",
                         },
                         {
                           title: "Trainer-led review",
                           desc: "Get structured task assessments, practical feedback, and certified trainer support for each milestone.",
                           icon: Rocket,
-                          color: "from-sky-500/20 to-red-500/20",
+                          color: "from-[#d94d19]/20 to-red-500/20",
                         },
                         {
                           title: "Institution-ready scale",
@@ -847,7 +847,7 @@ export default function PricingPage() {
                               ${plan.barWidth}
                               ${
                                 plan.best
-                                  ? "bg-gradient-to-r from-primaryBlue to-sky-400"
+                                  ? "bg-gradient-to-r from-primaryBlue to-[#d94d19]"
                                   : "bg-primaryBlue/40"
                               }
                             `}

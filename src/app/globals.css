@@ -6,20 +6,20 @@
   --main-bg: #c8e6c9;
   --card-bg: rgba(184, 204, 149, 0.5);
   --card-bg-active: rgba(255, 255, 255, 0.95);
-  --primary-orange: #1a6b2e;
-  --primary-blue: #0f3d1a;
+  --primary-orange: #d94d19;
+  --primary-blue: #d94d19;
   --neon-red: #ef4444;
-  --secondary-blue-blur: rgba(26, 107, 46, 0.1);
-  --pure-white: #0f3d1a;
+  --secondary-blue-blur: rgba(217, 77, 25, 0.1);
+  --pure-white: #ffffff;
   --pure-black: #000000;
   --light-gray-hover: rgba(255, 255, 255, 0.1);
   --medium-gray-title: #0f3d1a;
   --body-gray-text: rgba(255, 255, 255, 0.85);
   --dark-gray-number: #ffffff;
-  --light-border: rgba(26, 107, 46, 0.15);
-  --medium-border: rgba(26, 107, 46, 0.3);
-  --orange-border-active: rgba(26, 107, 46, 0.6);
-  --blue-border-active: rgba(15, 61, 26, 0.6);
+  --light-border: rgba(217, 77, 25, 0.15);
+  --medium-border: rgba(217, 77, 25, 0.3);
+  --orange-border-active: rgba(217, 77, 25, 0.6);
+  --blue-border-active: rgba(217, 77, 25, 0.6);
 }
 
 * {

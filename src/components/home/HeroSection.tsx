@@ -62,7 +62,7 @@ const HERO_SLIDES = [
       </>
     ),
     desc: "NextGen-LMS connects certified students directly to global client contracts on our active freelance marketplace. Work, deliver, and get paid instantly.",
-    ctaText: "Join Now",
+    ctaText: "Join Free Now",
     ctaLink: "/login?mode=signup",
     secCtaText: "Pricing Plans",
     secCtaLink: "/pricing",

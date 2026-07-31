@@ -359,7 +359,7 @@ const CoursesPage = () => {
               </div>
               <Link
                 href="/courses"
-                className="text-sky-500 text-sm font-semibold hover:underline flex items-center gap-1 group transition-all duration-300 hover:gap-2"
+                className="text-[#d94d19] text-sm font-semibold hover:underline flex items-center gap-1 group transition-all duration-300 hover:gap-2"
               >
                 View all{" "}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
@@ -368,7 +368,7 @@ const CoursesPage = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
               {/* Main Featured Card - Larger and Clearer */}
-              <div className="lg:col-span-3 relative rounded-xl overflow-hidden bg-gray-900 group cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-sky-500/10 transition-all duration-500 border border-sky-500/30">
+              <div className="lg:col-span-3 relative rounded-xl overflow-hidden bg-gray-900 group cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-[#d94d19]/10 transition-all duration-500 border border-[#d94d19]/30">
                 {/* Image Container with fixed aspect ratio */}
                 <div className="relative w-full pt-[56.25%] overflow-hidden">
                   <img
@@ -381,17 +381,17 @@ const CoursesPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
 
                 {/* Badge */}
-                <div className="absolute top-5 left-5 px-3 py-1.5 rounded-lg bg-sky-500 text-[#0f3d1a] text-xs font-bold shadow-lg z-10">
+                <div className="absolute top-5 left-5 px-3 py-1.5 rounded-lg bg-[#d94d19] text-[#0f3d1a] text-xs font-bold shadow-lg z-10">
                   Bestseller
                 </div>
 
                 {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8 z-10">
                   <div className="space-y-2 sm:space-y-3">
-                    <span className="text-xs font-semibold text-sky-400 uppercase tracking-wider">
+                    <span className="text-xs font-semibold text-[#d94d19] uppercase tracking-wider">
                       {courses[0].level} • {courses[0].duration}
                     </span>
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#0f3d1a] leading-tight group-hover:text-sky-400 transition-colors duration-300 line-clamp-2">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#0f3d1a] leading-tight group-hover:text-[#d94d19] transition-colors duration-300 line-clamp-2">
                       {courses[0].title}
                     </h3>
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
@@ -408,7 +408,7 @@ const CoursesPage = () => {
                         • {courses[0].trainer_name}
                       </span>
                     </div>
-                    <button className="mt-2 px-4 sm:px-6 py-2 sm:py-2.5 bg-sky-500 hover:bg-orange-600 rounded-lg text-[#0f3d1a] font-semibold transition-all duration-300 shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:scale-105 active:scale-95 text-sm sm:text-base">
+                    <button className="mt-2 px-4 sm:px-6 py-2 sm:py-2.5 bg-[#d94d19] hover:bg-orange-600 rounded-lg text-[#0f3d1a] font-semibold transition-all duration-300 shadow-lg shadow-[#d94d19]/25 hover:shadow-[#d94d19]/40 hover:scale-105 active:scale-95 text-sm sm:text-base">
                       Enroll Now
                     </button>
                   </div>
@@ -418,7 +418,7 @@ const CoursesPage = () => {
               {/* Right side cards container */}
               <div className="lg:col-span-2 space-y-5">
                 {/* Course Card 1 - Clean Horizontal Design */}
-                <div className="flex flex-row bg-navy-900 rounded-xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl hover:shadow-sky-500/10 transition-all duration-300 hover:-translate-y-1 border border-sky-500/30">
+                <div className="flex flex-row bg-navy-900 rounded-xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl hover:shadow-[#d94d19]/10 transition-all duration-300 hover:-translate-y-1 border border-[#d94d19]/30">
                   <div className="w-2/5 relative overflow-hidden">
                     <div className="relative w-full pt-[100%]">
                       <img
@@ -429,10 +429,10 @@ const CoursesPage = () => {
                     </div>
                   </div>
                   <div className="w-3/5 p-3 sm:p-4 md:p-5 flex flex-col justify-center">
-                    <span className="text-[10px] font-bold text-sky-500 uppercase tracking-wider mb-1">
+                    <span className="text-[10px] font-bold text-[#d94d19] uppercase tracking-wider mb-1">
                       {courses[1].level}
                     </span>
-                    <h3 className="text-sm sm:text-base font-bold text-[#0f3d1a] mb-1 line-clamp-2 group-hover:text-sky-500 transition-colors">
+                    <h3 className="text-sm sm:text-base font-bold text-[#0f3d1a] mb-1 line-clamp-2 group-hover:text-[#d94d19] transition-colors">
                       {courses[1].title}
                     </h3>
                     <p className="text-xs text-[#1a6b2e] mb-2 truncate">
@@ -451,7 +451,7 @@ const CoursesPage = () => {
                 </div>
 
                 {/* Course Card 2 - Clean Horizontal Design */}
-                <div className="flex flex-row bg-navy-900 rounded-xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl hover:shadow-sky-500/10 transition-all duration-300 hover:-translate-y-1 border border-sky-500/30">
+                <div className="flex flex-row bg-navy-900 rounded-xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl hover:shadow-[#d94d19]/10 transition-all duration-300 hover:-translate-y-1 border border-[#d94d19]/30">
                   <div className="w-2/5 relative overflow-hidden">
                     <div className="relative w-full pt-[100%]">
                       <img
@@ -462,10 +462,10 @@ const CoursesPage = () => {
                     </div>
                   </div>
                   <div className="w-3/5 p-3 sm:p-4 md:p-5 flex flex-col justify-center">
-                    <span className="text-[10px] font-bold text-sky-500 uppercase tracking-wider mb-1">
+                    <span className="text-[10px] font-bold text-[#d94d19] uppercase tracking-wider mb-1">
                       {courses[2].level}
                     </span>
-                    <h3 className="text-sm sm:text-base font-bold text-[#0f3d1a] mb-1 line-clamp-2 group-hover:text-sky-500 transition-colors">
+                    <h3 className="text-sm sm:text-base font-bold text-[#0f3d1a] mb-1 line-clamp-2 group-hover:text-[#d94d19] transition-colors">
                       {courses[2].title}
                     </h3>
                     <p className="text-xs text-[#1a6b2e] mb-2 truncate">
@@ -583,7 +583,7 @@ const CoursesPage = () => {
                       <span className="text-[#0f3d1a] font-medium">58%</span>
                     </div>
                     <div className="h-2 bg-[#1a6b2e]/5 rounded-full overflow-hidden">
-                      <div className="h-full w-[58%] bg-gradient-to-r from-primaryBlue to-sky-400 rounded-full group-hover:w-[70%] transition-all duration-1000"></div>
+                      <div className="h-full w-[58%] bg-gradient-to-r from-primaryBlue to-[#d94d19] rounded-full group-hover:w-[70%] transition-all duration-1000"></div>
                     </div>
                   </div>
                   <div>
@@ -704,7 +704,7 @@ const CoursesPage = () => {
                   label: "Expert Courses",
                   icon: BookOpen,
                   trend: "+45",
-                  trendColor: "text-sky-500",
+                  trendColor: "text-[#d94d19]",
                 },
                 {
                   number: "75+",
@@ -725,12 +725,12 @@ const CoursesPage = () => {
                 return (
                   <div
                     key={stat.label}
-                    className="group relative p-6 rounded-2xl bg-navy-900 border border-sky-500/30 shadow-sm hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-300 hover:-translate-y-1"
+                    className="group relative p-6 rounded-2xl bg-navy-900 border border-[#d94d19]/30 shadow-sm hover:shadow-lg hover:shadow-[#d94d19]/5 transition-all duration-300 hover:-translate-y-1"
                   >
                     {/* Icon Section */}
                     <div className="flex items-start justify-between mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-sky-500/10 flex items-center justify-center group-hover:bg-sky-500 transition-colors duration-300">
-                        <IconComp className="w-6 h-6 text-sky-500 group-hover:text-[#0f3d1a] transition-colors duration-300" />
+                      <div className="w-12 h-12 rounded-xl bg-[#d94d19]/10 flex items-center justify-center group-hover:bg-[#d94d19] transition-colors duration-300">
+                        <IconComp className="w-6 h-6 text-[#d94d19] group-hover:text-[#0f3d1a] transition-colors duration-300" />
                       </div>
                       {/* Trend Indicator */}
                       <span
@@ -742,7 +742,7 @@ const CoursesPage = () => {
 
                     {/* Stats Numbers */}
                     <div>
-                      <div className="text-3xl sm:text-4xl font-bold text-[#0f3d1a] mb-1 group-hover:text-sky-500 transition-colors duration-300">
+                      <div className="text-3xl sm:text-4xl font-bold text-[#0f3d1a] mb-1 group-hover:text-[#d94d19] transition-colors duration-300">
                         {stat.number}
                       </div>
                       <p className="text-sm text-[#1a6b2e] font-medium">
@@ -752,7 +752,7 @@ const CoursesPage = () => {
 
                     {/* Subtle Progress Bar */}
                     <div className="mt-4 h-0.5 w-full bg-gray-700 rounded-full overflow-hidden">
-                      <div className="h-full w-0 bg-gradient-to-r from-sky-500 to-sky-400 rounded-full group-hover:w-full transition-all duration-700" />
+                      <div className="h-full w-0 bg-gradient-to-r from-[#d94d19] to-[#d94d19] rounded-full group-hover:w-full transition-all duration-700" />
                     </div>
                   </div>
                 );
@@ -761,23 +761,23 @@ const CoursesPage = () => {
           </div>
           {/* Instructor CTA - Glassmorphism & 3D */}
 
-          <div className="relative mb-16 rounded-2xl overflow-hidden bg-navy-900 border border-sky-500/30 shadow-lg hover:shadow-xl transition-all duration-500 group">
+          <div className="relative mb-16 rounded-2xl overflow-hidden bg-navy-900 border border-[#d94d19]/30 shadow-lg hover:shadow-xl transition-all duration-500 group">
             {/* Decorative elements - subtle and clean */}
-            <div className="absolute top-0 right-0 w-72 h-72 bg-sky-500/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-72 h-72 bg-sky-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-72 h-72 bg-[#d94d19]/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#d94d19]/5 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative z-10 grid md:grid-cols-2 gap-8 sm:gap-10 p-6 sm:p-8 md:p-12 items-center">
               {/* Left side - Content */}
               <div className="space-y-5 text-left">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100 dark:bg-sky-500/10 border border-orange-200 dark:border-sky-500/20 text-orange-600 dark:text-sky-400 text-xs font-bold uppercase tracking-wider">
-                  <Crown className="w-3.5 h-3.5 text-sky-500" />
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100 dark:bg-[#d94d19]/10 border border-orange-200 dark:border-[#d94d19]/20 text-orange-600 dark:text-[#d94d19] text-xs font-bold uppercase tracking-wider">
+                  <Crown className="w-3.5 h-3.5 text-[#d94d19]" />
                   Become an Instructor
                 </div>
 
                 {/* Heading */}
                 <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a] tracking-tight">
-                  Teach what you <span className="text-sky-500">love</span>
+                  Teach what you <span className="text-[#d94d19]">love</span>
                 </h2>
 
                 {/* Description */}
@@ -788,7 +788,7 @@ const CoursesPage = () => {
                 </p>
 
                 {/* CTA Button */}
-                <button className="group/btn px-6 py-3 bg-sky-500 hover:bg-orange-600 rounded-xl text-[#0f3d1a] font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-sky-500/25 flex items-center gap-2 w-fit">
+                <button className="group/btn px-6 py-3 bg-[#d94d19] hover:bg-orange-600 rounded-xl text-[#0f3d1a] font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-[#d94d19]/25 flex items-center gap-2 w-fit">
                   Start Teaching Today
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                 </button>
@@ -798,7 +798,7 @@ const CoursesPage = () => {
               <div className="relative flex flex-col items-center justify-center py-8">
                 {/* Main Stat Circle */}
                 <div className="relative mb-6">
-                  <div className="w-36 h-36 rounded-full bg-gradient-to-br from-sky-500 to-orange-600 flex items-center justify-center shadow-lg">
+                  <div className="w-36 h-36 rounded-full bg-gradient-to-br from-[#d94d19] to-orange-600 flex items-center justify-center shadow-lg">
                     <div className="text-center">
                       <div className="text-3xl font-bold text-[#0f3d1a]">5K+</div>
                       <div className="text-xs text-orange-100 mt-1">
@@ -808,19 +808,19 @@ const CoursesPage = () => {
                   </div>
 
                   {/* Orbiting elements - icons with navy blue background */}
-                  <div className="absolute -top-6 -right-6 w-14 h-14 rounded-xl bg-navy-900 shadow-md border border-sky-500/30 flex items-center justify-center">
-                    <Video className="w-6 h-6 text-sky-500" />
+                  <div className="absolute -top-6 -right-6 w-14 h-14 rounded-xl bg-navy-900 shadow-md border border-[#d94d19]/30 flex items-center justify-center">
+                    <Video className="w-6 h-6 text-[#d94d19]" />
                   </div>
-                  <div className="absolute -bottom-6 -left-6 w-14 h-14 rounded-xl bg-navy-900 shadow-md border border-sky-500/30 flex items-center justify-center">
-                    <Mic className="w-6 h-6 text-sky-500" />
+                  <div className="absolute -bottom-6 -left-6 w-14 h-14 rounded-xl bg-navy-900 shadow-md border border-[#d94d19]/30 flex items-center justify-center">
+                    <Mic className="w-6 h-6 text-[#d94d19]" />
                   </div>
-                  <div className="absolute top-1/2 -right-10 -translate-y-1/2 w-12 h-12 rounded-lg bg-navy-900 shadow-md border border-sky-500/30 flex items-center justify-center">
-                    <Palette className="w-5 h-5 text-sky-500" />
+                  <div className="absolute top-1/2 -right-10 -translate-y-1/2 w-12 h-12 rounded-lg bg-navy-900 shadow-md border border-[#d94d19]/30 flex items-center justify-center">
+                    <Palette className="w-5 h-5 text-[#d94d19]" />
                   </div>
                 </div>
 
                 {/* Stats Row */}
-                <div className="flex gap-6 mt-4 pt-4 border-t border-sky-500/20">
+                <div className="flex gap-6 mt-4 pt-4 border-t border-[#d94d19]/20">
                   <div className="text-center">
                     <div className="text-xl font-bold text-[#0f3d1a]">$3.2M+</div>
                     <div className="text-xs text-[#1a6b2e]">Earnings</div>

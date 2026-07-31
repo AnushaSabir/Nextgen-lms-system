@@ -119,7 +119,7 @@ export default function ForTrainersPage() {
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/25 via-[#020617]/55 to-[#020617] z-20" />
         <div className="absolute inset-0 bg-gradient-to-tr from-[#020617]/60 via-transparent to-[#5E6F58]/15 mix-blend-screen opacity-60 z-20" />
-        <div className="absolute top-0 right-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-primaryBlue/10 blur-[100px] sm:blur-[150px] rounded-full z-20" />
+        <div className="absolute top-0 right-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-[#d94d19]/10 blur-[100px] sm:blur-[150px] rounded-full z-20" />
       </div>
 
       {/* Play/Pause Button - Moves strictly UP */}
@@ -139,12 +139,12 @@ export default function ForTrainersPage() {
         <div className="container mx-auto max-w-6xl">
           {/* Header Info */}
           <div className="text-center mb-16 sm:mb-24 space-y-4 sm:space-y-6 max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primaryBlue/20 bg-primaryBlue/10 text-primaryBlue text-xs font-bold uppercase tracking-widest shadow-sm hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#d94d19]/20 bg-[#d94d19]/10 text-[#d94d19] text-xs font-bold uppercase tracking-widest shadow-sm hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
               <Sparkles className="w-3.5 h-3.5" /> Join Our Team
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0f3d1a] leading-tight tracking-tight text-3d">
               Teach on{" "}
-              <span className="text-primaryBlue text-3d-orange">
+              <span className="text-[#d94d19] text-3d-orange">
                 NextGen-LMS LMS
               </span>
             </h1>
@@ -161,7 +161,7 @@ export default function ForTrainersPage() {
               <div className="lg:col-span-7 space-y-6 sm:space-y-8">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#0f3d1a] leading-tight tracking-tight text-3d">
                   Who Can Become a{" "}
-                  <span className="text-primaryBlue text-3d-orange">
+                  <span className="text-[#d94d19] text-3d-orange">
                     Trainer?
                   </span>
                 </h2>
@@ -180,7 +180,7 @@ export default function ForTrainersPage() {
                       key={i}
                       className="flex items-start gap-3 sm:gap-4 group/list hover:-translate-y-1 transition-all duration-300"
                     >
-                      <div className="w-8 h-8 rounded-xl bg-primaryBlue/10 flex items-center justify-center text-primaryBlue border border-primaryBlue/20 flex-shrink-0 group-hover/list:scale-110 group-hover/list:rotate-6 group-hover/list:-translate-y-1 transition-all duration-300">
+                      <div className="w-8 h-8 rounded-xl bg-[#d94d19]/10 flex items-center justify-center text-[#d94d19] border border-[#d94d19]/20 flex-shrink-0 group-hover/list:scale-110 group-hover/list:rotate-6 group-hover/list:-translate-y-1 transition-all duration-300">
                         <CheckCircle2 className="w-4 h-4" />
                       </div>
                       <p className="text-sm sm:text-base text-[#1a6b2e] font-semibold leading-relaxed">
@@ -203,7 +203,7 @@ export default function ForTrainersPage() {
 
                   {/* Floating Card over Image */}
                   <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 p-3 sm:p-4 rounded-2xl bg-[#c8e6c9]/80 backdrop-blur-md border border-[#1a6b2e]/20 flex items-center gap-3 sm:gap-4 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(240,89,31,0.3)] transition-all duration-300 group/card">
-                    <div className="w-10 h-10 rounded-xl bg-primaryBlue/10 border border-primaryBlue/20 text-primaryBlue flex items-center justify-center flex-shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-[#d94d19]/10 border border-[#d94d19]/20 text-[#d94d19] flex items-center justify-center flex-shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-all duration-300">
                       <Video className="w-5 h-5" />
                     </div>
                     <div>
@@ -247,7 +247,7 @@ export default function ForTrainersPage() {
 
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] tracking-tight">
                   Trainer Registration <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5E6F58] to-sky-400">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5E6F58] to-[#d94d19]">
                     Requirements
                   </span>
                 </h2>
@@ -333,7 +333,7 @@ export default function ForTrainersPage() {
 
               {/* Bottom CTA */}
               <div className="text-center mt-12 pt-6">
-                <button className="group inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#5E6F58] to-sky-500 rounded-xl text-[#0f3d1a] font-bold text-sm uppercase tracking-wide transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#5E6F58]/30">
+                <button className="group inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#5E6F58] to-[#d94d19] rounded-xl text-[#0f3d1a] font-bold text-sm uppercase tracking-wide transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#5E6F58]/30">
                   <span>Apply Now</span>
                   <svg
                     className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
@@ -502,9 +502,9 @@ export default function ForTrainersPage() {
                       </div>
                       <div className="w-px h-4 bg-white/10" />
                       <div className="flex items-center gap-2 group/stat">
-                        <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center transition-all duration-300 group-hover/stat:scale-110 group-hover/stat:-translate-y-1">
+                        <div className="w-8 h-8 rounded-full bg-[#d94d19]/10 flex items-center justify-center transition-all duration-300 group-hover/stat:scale-110 group-hover/stat:-translate-y-1">
                           <svg
-                            className="w-4 h-4 text-blue-500"
+                            className="w-4 h-4 text-[#d94d19]"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -568,7 +568,7 @@ export default function ForTrainersPage() {
 
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] tracking-tight">
                   From expert to{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5E6F58] to-sky-400">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5E6F58] to-[#d94d19]">
                     published trainer
                   </span>
                 </h2>
@@ -609,7 +609,7 @@ export default function ForTrainersPage() {
                         <div className="absolute inset-0 rounded-full bg-[#5E6F58]/20 blur-xl group-hover:blur-2xl transition-all duration-500" />
 
                         {/* Main Circle - Clean without icon badge */}
-                        <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-[#5E6F58] to-sky-500 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500">
+                        <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-[#5E6F58] to-[#d94d19] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500">
                           <span className="text-2xl font-black text-[#0f3d1a] tracking-wider">
                             {item.step}
                           </span>
@@ -640,7 +640,7 @@ export default function ForTrainersPage() {
               </div>
               {/* Bottom CTA */}
               <div className="text-center mt-12 pt-8 border-t border-[#1a6b2e]/10">
-                <button className="group inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#5E6F58] to-sky-500 rounded-xl text-[#0f3d1a] font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#5E6F58]/25">
+                <button className="group inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#5E6F58] to-[#d94d19] rounded-xl text-[#0f3d1a] font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#5E6F58]/25">
                   <span>Start Your Journey</span>
                   <Rocket className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
                 </button>
@@ -662,15 +662,15 @@ export default function ForTrainersPage() {
 
       {/* Heading overlay on image */}
       <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-sky-500/20 backdrop-blur-sm border border-sky-500/30 mb-3">
-          <HelpCircle className="w-3.5 h-3.5 text-sky-400" />
-          <span className="text-sky-400 text-[10px] font-black uppercase tracking-widest">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#d94d19]/20 backdrop-blur-sm border border-[#d94d19]/30 mb-3">
+          <HelpCircle className="w-3.5 h-3.5 text-[#d94d19]" />
+          <span className="text-[#d94d19] text-[10px] font-black uppercase tracking-widest">
             Support Toolkit
           </span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a] mb-2">
           Tools that keep trainers{" "}
-          <span className="text-sky-400">consistent</span>
+          <span className="text-[#d94d19]">consistent</span>
         </h2>
         <p className="text-sm text-[#0f3d1a] font-medium leading-relaxed">
           Trainers get workflows for feedback, student questions,
@@ -687,7 +687,7 @@ export default function ForTrainersPage() {
     </div>
 
     {/* Bottom gradient accent */}
-    <div className="h-1 bg-gradient-to-r from-sky-500 via-sky-400 to-sky-500" />
+    <div className="h-1 bg-gradient-to-r from-[#d94d19] via-[#d94d19] to-[#d94d19]" />
   </div>
 
   {/* Right side - Tools Cards */}
@@ -718,9 +718,9 @@ export default function ForTrainersPage() {
       return (
         <div
           key={tool.title}
-          className="group p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#1e293b] to-[#0f172a] border border-gray-800 hover:border-sky-500/50 hover:shadow-lg hover:-translate-y-2 transition-all duration-300"
+          className="group p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#1e293b] to-[#0f172a] border border-gray-800 hover:border-[#d94d19]/50 hover:shadow-lg hover:-translate-y-2 transition-all duration-300"
         >
-          <div className="w-11 h-11 rounded-xl bg-sky-500/10 border border-sky-500/25 text-sky-500 flex items-center justify-center mb-4 group-hover:bg-sky-500 group-hover:text-[#0f3d1a] group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+          <div className="w-11 h-11 rounded-xl bg-[#d94d19]/10 border border-[#d94d19]/25 text-[#d94d19] flex items-center justify-center mb-4 group-hover:bg-[#d94d19] group-hover:text-[#0f3d1a] group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
             <Icon className="w-5 h-5" />
           </div>
           <h3 className="text-base sm:text-lg font-bold text-[#0f3d1a] tracking-tight mb-2">
@@ -759,7 +759,7 @@ export default function ForTrainersPage() {
 
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] tracking-tight mb-4">
                 Revenue{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5E6F58] to-sky-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5E6F58] to-[#d94d19]">
                   Model
                 </span>
               </h2>
@@ -920,7 +920,7 @@ export default function ForTrainersPage() {
 
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] tracking-tight mb-6">
                   Ready to Share Your <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5E6F58] to-sky-400">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5E6F58] to-[#d94d19]">
                     Knowledge?
                   </span>
                 </h2>
@@ -933,7 +933,7 @@ export default function ForTrainersPage() {
                 <div className="flex flex-wrap items-center justify-center gap-4">
                   <Link
                     href="/contact?type=trainer"
-                    className="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#5E6F58] to-sky-500 text-[#0f3d1a] font-bold text-sm rounded-xl shadow-lg shadow-[#5E6F58]/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#5E6F58]/40"
+                    className="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#5E6F58] to-[#d94d19] text-[#0f3d1a] font-bold text-sm rounded-xl shadow-lg shadow-[#5E6F58]/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#5E6F58]/40"
                   >
                     <span>Apply as Trainer</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
