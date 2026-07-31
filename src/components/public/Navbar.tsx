@@ -219,8 +219,8 @@ const Navbar = () => {
         ref={navRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled || mobileMenuOpen 
-            ? 'glass-nav py-2 lg:py-2.5' 
-            : 'bg-transparent py-3 lg:py-5'
+            ? 'glass-nav py-1.5 lg:py-2.5' 
+            : 'bg-transparent py-2 lg:py-5'
         }`}
       >
         <div className="absolute inset-0 pointer-events-none opacity-30">
@@ -240,12 +240,12 @@ const Navbar = () => {
             onMouseLeave={() => setHoveredLink(null)}
           >
             <div className="relative floating-animation flex-shrink-0 flex items-center">
-              <div className="relative w-16 sm:w-20 h-16 sm:h-20 flex items-center justify-center transition-all duration-300 transform group-hover:scale-110 -my-2">
+              <div className="relative w-12 sm:w-16 lg:w-20 h-12 sm:h-16 lg:h-20 flex items-center justify-center transition-all duration-300 transform group-hover:scale-110 -my-1 sm:-my-2">
                 <Image 
                   src="/logo.png" 
                   alt="NextGen Studio Logo" 
                   fill
-                  sizes="(max-width: 640px) 64px, 80px"
+                  sizes="(max-width: 640px) 48px, (max-width: 1024px) 64px, 80px"
                   className="object-contain filter drop-shadow-lg"
                   priority
                 />
@@ -254,11 +254,11 @@ const Navbar = () => {
             
             <div className="flex min-w-0 flex-col justify-center">
               <div className="relative overflow-hidden">
-                <span className="text-xl sm:text-2xl font-black tracking-tighter text-[#133937] leading-none transition-all duration-300 group-hover:scale-105 inline-block">
+                <span className="text-base sm:text-xl lg:text-2xl font-black tracking-tighter text-[#133937] leading-none transition-all duration-300 group-hover:scale-105 inline-block">
                   NEXTGEN
                 </span>
               </div>
-              <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.05em] sm:tracking-[0.08em] text-[#d94d19] mt-1 leading-none transition-all duration-300">
+              <span className="text-[7px] sm:text-[9px] lg:text-[11px] font-black uppercase tracking-[0.04em] sm:tracking-[0.05em] lg:tracking-[0.08em] text-[#d94d19] mt-0.5 sm:mt-1 leading-none transition-all duration-300">
                 Learning Management System
               </span>
             </div>

@@ -59,9 +59,9 @@ export default function LearningEcosystemSection() {
           <div className="lg:col-span-5 reveal-right" style={{ transitionDelay: '150ms' }}>
             <div className="relative rounded-[2rem] overflow-hidden shadow-2xl group hover:border-[#5E6F58]/20 transition-all duration-500 card-3d border border-white/[0.08]">
               <Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop&q=80" alt="Learning Ecosystem" fill className="absolute inset-0 w-full h-full object-cover opacity-[0.15] group-hover:opacity-[0.25] group-hover:scale-105 transition-all duration-700" sizes="(max-width: 1024px) 100vw, 50vw" />
-              <div className="absolute inset-0 bg-gradient-to-br from-[#020617]/95 to-[#020617]/90 z-10 group-hover:from-[#020617]/90 group-hover:to-[#020617]/85 transition-all duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0f3d1a]/95 to-[#0f3d1a]/90 z-10 group-hover:from-[#0f3d1a]/90 group-hover:to-[#133937]/85 transition-all duration-500" />
               
-              <div className="relative z-20 p-8 sm:p-10 space-y-6">
+              <div className="relative z-20 p-5 sm:p-8 lg:p-10 space-y-5 sm:space-y-6">
                 <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#5E6F58] via-sky-400 to-[#5E6F58]/50 z-30" />
 
                 <div className="flex items-center justify-between">

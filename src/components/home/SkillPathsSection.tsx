@@ -119,7 +119,7 @@ export default function SkillPathsSection() {
               <Link
                 key={idx}
                 href={`/courses?category=${cat.slug}`}
-                className="group relative flex items-center gap-3 sm:gap-5 p-4 sm:p-6 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.06] hover:border-[#5E6F58]/30 transition-all duration-500 ease-out min-w-[min(16rem,calc(100vw-2rem))] sm:min-w-[300px] lg:min-w-[320px] overflow-hidden shadow-[0_4px_20px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_20px_50px_rgba(240,89,31,0.15)] hover:-translate-y-2"
+                className="group relative flex items-center gap-3 sm:gap-5 p-3 sm:p-6 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.06] hover:border-[#5E6F58]/30 transition-all duration-500 ease-out min-w-[240px] sm:min-w-[300px] lg:min-w-[320px] overflow-hidden shadow-[0_4px_20px_rgba(26,107,46,0.1)] hover:shadow-[0_20px_50px_rgba(240,89,31,0.15)] hover:-translate-y-2"
                 style={{ transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)' }}
               >
                 {cat.image && (

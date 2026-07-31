@@ -98,7 +98,7 @@ export default function HeroSection() {
 
   return (
     <>
-      <section className="relative min-h-0 sm:min-h-[80vh] lg:min-h-screen flex items-start sm:items-center px-4 sm:px-6 pt-0 sm:pt-28 pb-4 sm:pb-20 overflow-hidden">
+      <section className="relative min-h-[85vh] sm:min-h-[80vh] lg:min-h-screen flex items-start sm:items-center px-4 sm:px-6 pt-20 sm:pt-28 pb-4 sm:pb-20 overflow-hidden">
         {/* ── Full-bleed Video — NO overlays, shows 100% original ── */}
         <div className="absolute inset-0 overflow-hidden z-0">
           {HERO_SLIDES.map((slide, idx) => (

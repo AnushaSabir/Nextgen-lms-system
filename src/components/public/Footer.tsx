@@ -201,7 +201,7 @@ const Footer = () => {
         {/* ── Bottom Bar ── */}
         <div className="border-t border-[#1a6b2e]/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <p className="text-[#7dab52] text-xs sm:text-sm order-2 sm:order-1">
-            &copy; {new Date().getFullYear()} NextGen-LMS LMS. All Rights Reserved.
+            &copy; {new Date().getFullYear()} NextGen LMS. All Rights Reserved.
           </p>
           <div className="order-1 sm:order-2 flex items-center gap-1.5 text-xs text-[#7dab52]">
             Made with <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" /> in Pakistan
