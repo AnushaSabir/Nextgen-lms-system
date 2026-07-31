@@ -18,24 +18,24 @@ export default function LearningEcosystemSection() {
             </div>
 
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#0f3d1a] leading-[1.1] tracking-tight text-3d">
-              Your Path to <br />
-              <span className="text-[#d94d19] text-3d-orange">Certified Success</span>
+              The Complete <br />
+              <span className="text-[#d94d19] text-3d-orange">Learning Process</span>
             </h2>
 
             <div className="space-y-5 text-base sm:text-lg text-[#1a6b2e] leading-relaxed max-w-2xl">
-              <p>Getting started with NextGen LMS is effortless. Our streamlined process takes you from complete beginner to certified professional in four simple steps — no confusion, no wasted time.</p>
-              <p>Each step is carefully designed to build your confidence, sharpen your skills, and prepare you for the real world — so by the time you earn your certificate, you're genuinely ready.</p>
+              <p>NextGen-LMS LMS is not just another online learning platform. It is a complete pipeline from learning to earning.</p>
+              <p>Once you complete your course and pass your assessments, you receive a <span className="text-[#0f3d1a] font-bold">NextGen-LMS LMS Certified badge</span> and can immediately create your profile and start getting paid on the NextGen-LMS freelance marketplace.</p>
               <div className="pt-2 pb-4 pl-4 border-l-4 border-[#5E6F58] bg-white/[0.02] rounded-r-lg">
-                <p className="text-[#0f3d1a] font-bold text-lg sm:text-xl italic">"Start learning today. Get certified. Build your future."</p>
+                <p className="text-[#0f3d1a] font-bold text-lg sm:text-xl italic">"No wasted time. No gap between learning and earning."</p>
               </div>
             </div>
 
             <div className="space-y-4 pt-2">
               {[
-                'Step 1: Create your free account in under 60 seconds.',
-                'Step 2: Browse and enrol in the course that matches your goals.',
-                'Step 3: Learn at your own pace with expert-led video lessons and live sessions.',
-                'Step 4: Pass your assessments, earn your verified certificate, and showcase your skills.',
+                'Step 1: Create your free account.',
+                'Step 2: Choose your desired course.',
+                'Step 3: Start learning with interactive lessons.',
+                'Step 4: Complete assessments and earn your certificate.',
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/10 hover:border-[#5E6F58]/30 transition-all duration-300 group/item cursor-default">
                   <div className="w-8 h-8 rounded-lg bg-[#5E6F58]/10 flex items-center justify-center shrink-0 border border-[#5E6F58]/20 group-hover/item:bg-[#5E6F58]/20 transition-colors">

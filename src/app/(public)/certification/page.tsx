@@ -1,9 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
+import CertificatePreview from '@/components/public/CertificatePreview';
 
 export default function CertificationPage() {
   const details = [
-    { title: 'Official Badge', desc: 'A verified NextGen-LMS LMS Certified Badge on your profile.', icon: '🏅' },
+    { title: 'Official Badge', desc: 'A verified NextGen LMS Certified Badge on your profile.', icon: '🏅' },
     { title: 'Your Full Name', desc: 'Displaying your professional name as registered.', icon: '📛' },
     { title: 'Skill Category', desc: 'The specific course name and skill category you mastered.', icon: '📚' },
     { title: 'Certification Date', desc: 'The exact date you completed all assessments.', icon: '📅' },
@@ -21,18 +22,27 @@ export default function CertificationPage() {
   return (
     <div className="pt-28 sm:pt-40 pb-16 sm:pb-20 px-4 sm:px-6">
       <div className="container mx-auto">
-        <div className="max-w-4xl mx-auto text-center mb-16 sm:mb-24 space-y-4">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-[#0f3d1a] leading-tight">The NextGen-LMS LMS Certificate</h1>
-          <p className="text-base sm:text-xl text-bodyGrayText leading-relaxed">Proof That You're Ready to Earn. Not just a PDF, but a marketplace-connected credential.</p>
+        <div className="max-w-5xl mx-auto text-center mb-16 sm:mb-24 space-y-8">
+          <div className="space-y-4">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-[#0f3d1a] leading-tight">NextGen LMS Certificate</h1>
+            <p className="text-base sm:text-xl text-bodyGrayText leading-relaxed">Proof That You're Ready to Earn. Not just a PDF, but a marketplace-connected credential.</p>
+          </div>
+          
+          <div className="w-full">
+            <CertificatePreview />
+            <p className="mt-8 text-lg sm:text-2xl font-bold text-[#d94d19] uppercase tracking-wide">
+              Jo course complete karega, usse milega ye certificate!
+            </p>
+          </div>
         </div>
 
         {/* What is it? */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-16 items-center mb-20 sm:mb-32">
            <div className="space-y-8">
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a]">What Is the NextGen-LMS LMS Certificate?</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a]">What Is the NextGen LMS Certificate?</h2>
               <div className="space-y-5 sm:space-y-6 text-sm sm:text-lg text-bodyGrayText leading-relaxed">
                  <p>
-                   The NextGen-LMS LMS Certificate is awarded to learners who successfully complete all course videos, pass every progressive assessment, and receive a passing recommendation from their trainer.
+                   The NextGen LMS Certificate is awarded to learners who successfully complete all course videos, pass every progressive assessment, and receive a passing recommendation from their trainer.
                  </p>
                  <p className="p-6 rounded-2xl glass-navbar border border-orangeBorderActive/20 text-[#0f3d1a] font-medium italic">
                    "This is not an automated certificate. It is earned through structured testing, trainer review, and demonstrated practical skill."
@@ -83,7 +93,7 @@ export default function CertificationPage() {
               <div className="space-y-6">
                  <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a]">Certificate on Your Marketplace Profile</h2>
                  <p className="text-bodyGrayText leading-relaxed">
-                   Once certified, your NextGen-LMS freelance profile will display the "NextGen-LMS LMS Certified" badge. Clients browsing the marketplace can see this badge — and studies consistently show that verified credentials significantly increase hiring rates.
+                   Once certified, your NextGen-LMS freelance profile will display the "NextGen LMS Certified" badge. Clients browsing the marketplace can see this badge — and studies consistently show that verified credentials significantly increase hiring rates.
                  </p>
               </div>
               <div className="space-y-4">
