@@ -17,10 +17,10 @@ export default function LmsStatsSection() {
               <LineChart className="w-3.5 h-3.5" /> Industry Insights
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] mb-3 tracking-tight">
-              The LMS Market Is <span className="text-orange-500">Booming</span>
+              NextGen LMS Is <span className="text-orange-500">Growing Fast</span>
             </h2>
             <p className="text-sm sm:text-base text-[#1a6b2e] max-w-2xl mx-auto font-medium leading-relaxed">
-              Data-driven reasons why institutions and enterprises are shifting to learning management systems.
+              Thousands of learners, educators and institutions trust NextGen LMS to power their growth every single day.
             </p>
           </div>
 
@@ -28,29 +28,29 @@ export default function LmsStatsSection() {
             {[
               {
                 val: '10,000+',
-                title: 'Students',
-                label: 'active learners from all over the world enhancing their skills.',
+                title: 'Active Students',
+                label: 'learners across the globe using NextGen LMS to build real, in-demand skills.',
                 icon: <Users className="w-5 h-5" />,
                 image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop&q=80'
               },
               {
                 val: '500+',
-                title: 'Courses',
-                label: 'comprehensive courses across various domains and industries.',
+                title: 'Expert-Led Courses',
+                label: 'industry-specific courses designed to take you from zero to job-ready, fast.',
                 icon: <BookOpen className="w-5 h-5" />,
                 image: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600&auto=format&fit=crop&q=80'
               },
               {
                 val: '100+',
-                title: 'Expert Instructors',
-                label: 'industry professionals bringing real-world experience to you.',
+                title: 'Verified Instructors',
+                label: 'industry professionals who bring real-world experience and proven expertise.',
                 icon: <Award className="w-5 h-5" />,
                 image: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600&auto=format&fit=crop&q=80'
               },
               {
                 val: '98%',
-                title: 'Student Satisfaction',
-                label: 'of our students recommend NextGen LMS to their peers.',
+                title: 'Satisfaction Rate',
+                label: 'of our graduates say NextGen LMS genuinely helped them advance their career.',
                 icon: <Star className="w-5 h-5" />,
                 image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80'
               },

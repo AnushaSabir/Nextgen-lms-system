@@ -2,9 +2,9 @@ import React from 'react';
 import { Star, Quote } from 'lucide-react';
 
 const TESTIMONIALS = [
-  { name: 'Sarah Khan', quote: 'NextGen LMS transformed the way I learn online. The platform is fast, interactive, and easy to use.', role: 'Student' },
-  { name: 'Ali Ahmed', quote: 'The AI learning tools helped me understand complex topics much faster.', role: 'Learner' },
-  { name: 'Fatima Noor', quote: 'I love the course quality and progress tracking features. Highly recommended.', role: 'Professional' },
+  { name: 'Sarah Khan', quote: 'I enrolled in the Web Development course and within 3 months I landed my first freelance client. NextGen LMS doesn\'t just teach you \u2014 it prepares you for the real world.', role: 'Freelance Web Developer' },
+  { name: 'Ali Ahmed', quote: 'The AI tools inside the platform are genuinely helpful. It felt like having a personal tutor available 24/7. I completed my Data Science course in half the expected time.', role: 'Data Science Student' },
+  { name: 'Fatima Noor', quote: 'As a teacher, I love how easy it is to create and manage courses. My students are more engaged than ever, and the progress tracking gives me full visibility into who needs extra support.', role: 'Online Course Instructor' },
 ];
 
 export default function ExploreCareersSection() {
@@ -15,14 +15,14 @@ export default function ExploreCareersSection() {
         {/* About Section */}
         <div className="text-center mb-16 sm:mb-24 reveal">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] tracking-tight mb-6 text-3d">
-            Learn Without <span className="text-[#d94d19] text-3d-orange">Limits</span>
+            Education Without <span className="text-[#d94d19] text-3d-orange">Boundaries</span>
           </h2>
           <div className="max-w-3xl mx-auto space-y-6 text-base sm:text-lg text-[#1a6b2e] font-medium leading-relaxed">
             <p>
-              NextGen LMS is a next-generation learning platform designed to simplify online education. Our platform combines modern technology, artificial intelligence, and an intuitive learning experience to help students achieve their goals while enabling educators to deliver engaging and effective courses.
+              NextGen LMS was built with one belief: that great education should be accessible to everyone, not just a privileged few. We've combined the best of modern technology, artificial intelligence, and expert instruction to create a platform where learning is engaging, effective, and genuinely enjoyable.
             </p>
             <p>
-              Whether you're learning a new skill, preparing for exams, or managing an educational institution, NextGen LMS provides all the tools you need in one place.
+              Whether you're a student taking your first steps, a professional upskilling for the future, or an institution looking to deliver world-class training — NextGen LMS gives you everything you need to succeed, all in one place.
             </p>
           </div>
         </div>

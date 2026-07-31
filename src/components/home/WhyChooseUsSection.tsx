@@ -8,10 +8,10 @@ export default function WhyChooseUsSection() {
       <div className="container mx-auto max-w-6xl">
         <div className="flex flex-col items-center text-center mb-16 reveal">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] tracking-tight mb-4 text-3d">
-            Why <span className="text-[#d94d19] text-3d-orange">Choose Us</span>
+            Why Students Choose <span className="text-[#d94d19] text-3d-orange">NextGen LMS?</span>
           </h2>
           <p className="text-base sm:text-lg text-[#1a6b2e] max-w-2xl mx-auto font-medium">
-            Everything you need to go from absolute beginner to certified professional, all in one ecosystem.
+            We don't just offer courses — we build careers. Here's what makes us different from every other platform.
           </p>
         </div>
 
@@ -20,62 +20,62 @@ export default function WhyChooseUsSection() {
             {
               title: 'AI-Powered Learning',
               badge: 'SMART ASSISTANCE',
-              desc: 'Personalized recommendations and smart learning assistance.',
+              desc: 'Our AI adapts to your pace and learning style — giving you personalized course recommendations, instant feedback, and step-by-step guidance exactly when you need it.',
               icon: <Cpu className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
               num: '01',
               delay: 0,
               image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&auto=format&fit=crop&q=90',
-              stat: 'Smart AI Tools'
+              stat: 'Personalized for You'
             },
             {
               title: 'Expert Instructors',
               badge: 'INDUSTRY PROS',
-              desc: 'Learn from experienced educators and industry professionals.',
+              desc: 'Every instructor on NextGen LMS is a verified industry professional — not just a teacher. Learn directly from people who have done the job and know what it actually takes.',
               icon: <Users className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
               num: '02',
               delay: 150,
               image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&auto=format&fit=crop&q=90',
-              stat: 'Top Rated Experts'
+              stat: '100+ Verified Experts'
             },
             {
               title: 'Interactive Courses',
-              badge: 'ENGAGING CONTENT',
-              desc: 'Engaging video lessons, quizzes, assignments, and projects.',
+              badge: 'HANDS-ON LEARNING',
+              desc: 'Forget boring lectures. Our courses are packed with HD video lessons, live projects, quizzes, assignments, and real-world challenges that build actual skills — not just theory.',
               icon: <MonitorPlay className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
               num: '03',
               delay: 300,
               image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&auto=format&fit=crop&q=90',
-              stat: 'Practical Projects'
+              stat: 'Learn by Doing'
             },
             {
               title: 'Track Your Progress',
               badge: 'DETAILED ANALYTICS',
-              desc: 'Monitor your learning journey with detailed analytics and reports.',
+              desc: 'Know exactly where you stand with real-time dashboards, completion tracking, quiz scores, and detailed reports — so you always stay on track and never lose momentum.',
               icon: <LineChart className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
               num: '04',
               delay: 450,
               image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=90',
-              stat: 'Real-time Tracking'
+              stat: 'Real-time Insights'
             },
             {
               title: 'Flexible Learning',
-              badge: 'STUDY ANYWHERE',
-              desc: 'Access your courses anytime, anywhere, on any device.',
+              badge: 'LEARN ANYWHERE',
+              desc: 'Life is unpredictable — your education shouldn\'t be. Access all your courses on any device, anytime, at your own pace. Pause, rewind, and replay as many times as you like.',
               icon: <Laptop className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
               num: '05',
               delay: 600,
               image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&auto=format&fit=crop&q=90',
-              stat: '24/7 Access'
+              stat: '24/7 Unlimited Access'
             },
             {
-              title: 'Certificates',
-              badge: 'GET CERTIFIED',
-              desc: 'Earn certificates after successfully completing your courses.',
+              title: 'Earn Certificates',
+              badge: 'VERIFIED CREDENTIALS',
+              desc: 'Complete a course and earn a verifiable certificate of completion — recognised by employers and institutions. Showcase your skills with confidence and stand out in the job market.',
               icon: <Award className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
               num: '06',
               delay: 750,
               image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&auto=format&fit=crop&q=90',
-              stat: 'Verified Badges'
+              stat: 'Industry-Recognised'
             },
           ].map((f) => (
             <div

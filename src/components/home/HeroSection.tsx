@@ -13,26 +13,26 @@ const AVATARS = [
 ];
 
 const HERO_STATS = [
-  { label: 'Learners', value: '50K+', icon: <Users className="w-4 h-4 sm:w-5 sm:h-5" /> },
-  { label: 'Courses', value: '1.2K+', icon: <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" /> },
-  { label: 'Satisfaction', value: '98%', icon: <Star className="w-4 h-4 sm:w-5 sm:h-5" /> },
-  { label: 'Active Users', value: '4K+', icon: <Zap className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { label: 'Active Learners', value: '10K+', icon: <Users className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { label: 'Expert Courses', value: '500+', icon: <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { label: 'Satisfaction Rate', value: '98%', icon: <Star className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { label: 'Certified Graduates', value: '5K+', icon: <Zap className="w-4 h-4 sm:w-5 sm:h-5" /> },
 ];
 
 const HERO_SLIDES = [
   {
-    badge: "AI-POWERED PLATFORM",
+    badge: "NEXT-GEN AI EDUCATION",
     highlight: "NextGen LMS",
     title: (
       <>
-        The Future of <br className="hidden sm:block" />
-        <span className="text-[#d94d19] drop-shadow-sm">Learning Starts Here.</span>
+        Learn Smarter. <br className="hidden sm:block" />
+        <span className="text-[#d94d19] drop-shadow-sm">Grow Without Limits.</span>
       </>
     ),
-    desc: "Empower your learning journey with NextGen LMS—an AI-powered Learning Management System built for students, educators, schools, universities, and training institutes. Learn smarter, teach better, and achieve more from anywhere.",
-    ctaText: "Get Started",
+    desc: "NextGen LMS is your all-in-one AI-powered education platform — built for students, educators, and institutions who refuse to settle for ordinary. Join thousands who are already learning smarter, growing faster, and achieving more.",
+    ctaText: "Start for Free",
     ctaLink: "/login?mode=signup",
-    secCtaText: "Explore Courses",
+    secCtaText: "Browse Courses",
     secCtaLink: "/courses",
     video: "/videos/main_hero/new_hero.mp4"
   }

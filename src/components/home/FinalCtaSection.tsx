@@ -19,11 +19,11 @@ export default function FinalCtaSection() {
 
           <div className="relative z-10 space-y-6 sm:space-y-8">
             <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-[#c8e6c9] leading-tight tracking-tight text-3d">
-              Ready to Transform Your<br />
-              <span className="text-[#d94d19] text-3d-orange">Learning?</span>
+              Ready to Build a Career<br />
+              <span className="text-[#d94d19] text-3d-orange">You're Proud Of?</span>
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-[#c8e6c9]/80 max-w-xl mx-auto font-medium leading-relaxed">
-              Join thousands of students and educators who are already building their future with NextGen LMS.
+              Join thousands of ambitious learners and passionate educators who chose NextGen LMS to unlock their full potential. Your journey starts with a single click.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-4">
