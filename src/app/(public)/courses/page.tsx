@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { coursesApi } from "@/services/api";
+import CertificatePreview from '@/components/public/CertificatePreview';
 import {
   Search,
   Star,
@@ -349,12 +350,12 @@ const CoursesPage = () => {
           <div className="mb-24">
             {/* Header Section - Cleaner Design */}
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
-              <div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a] tracking-tight">
-                  Top courses in Development
+              <div className="max-w-3xl">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0f3d1a] tracking-tight mb-2">
+                  Featured Courses <span className="text-[#d94d19]">&</span> Capabilities
                 </h2>
-                <p className="text-sm text-[#1a6b2e] mt-1">
-                  Most popular among our learners
+                <p className="text-sm sm:text-base text-[#1a6b2e] leading-relaxed">
+                  Discover our most popular courses designed with cutting-edge learning features. Every course includes AI-assisted learning, practical assignments, and interactive modules to help you master new skills effectively.
                 </p>
               </div>
               <Link
@@ -673,6 +674,54 @@ const CoursesPage = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Certificate Preview Section */}
+          <div className="mb-24 bg-white/50 backdrop-blur-sm border border-[#1a6b2e]/10 rounded-[3rem] p-8 sm:p-12 lg:p-16 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-primaryBlue/5 rounded-full blur-3xl pointer-events-none" />
+            
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <div className="space-y-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-[#d94d19] text-sm font-bold uppercase tracking-wider border border-orange-100">
+                  <Award className="w-4 h-4" />
+                  Official Certification
+                </div>
+                
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0f3d1a] leading-tight">
+                  Get Your <span className="text-[#d94d19]">Certificate</span> <br/>
+                  Upon Course Completion
+                </h2>
+                
+                <div className="space-y-4 text-base sm:text-lg text-[#1a6b2e] leading-relaxed">
+                  <p>
+                    Every course you successfully complete on NextGen LMS comes with a verified, industry-recognized certificate. 
+                  </p>
+                  <p>
+                    This is your proof of expertise. Add it to your resume, showcase it on your LinkedIn profile, and instantly stand out to top employers worldwide.
+                  </p>
+                  <ul className="space-y-3 mt-6">
+                    {['Verify your skills with employers', 'Instantly shareable on social media', 'Downloadable high-resolution format', 'Integrated with your freelance profile'].map((feature, i) => (
+                      <li key={i} className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-[#d94d19]" />
+                        <span className="font-medium">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="pt-4">
+                  <button className="px-8 py-4 bg-[#d94d19] text-white font-bold rounded-xl shadow-lg shadow-orange-500/25 hover:bg-orange-600 hover:-translate-y-1 transition-all duration-300">
+                    Explore Eligible Courses
+                  </button>
+                </div>
+              </div>
+              
+              <div className="w-full relative group">
+                <div className="absolute -inset-2 bg-gradient-to-r from-orange-400 to-primaryBlue rounded-3xl blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+                <CertificatePreview />
+              </div>
             </div>
           </div>
 
