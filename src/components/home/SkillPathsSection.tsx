@@ -117,13 +117,13 @@ export default function SkillPathsSection() {
         <div className="mx-auto max-w-4xl text-center lg:text-left space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#5E6F58]/20 bg-[#5E6F58]/5 text-[#d94d19] text-xs font-black uppercase tracking-widest backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-[#5E6F58] animate-pulse" />
-            Trending Disciplines
+            Core Capabilities
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0f3d1a] tracking-tight text-3d leading-tight">
-            Features
+            NextGen LMS <span className="text-[#d94d19] text-3d-orange">Features</span>
           </h2>
           <p className="mx-auto lg:mx-0 max-w-3xl text-sm sm:text-base text-[#1a6b2e] font-medium leading-relaxed sm:leading-7">
-            Everything You Need to Learn Smarter
+            A comprehensive suite of tools and features designed to make your learning experience engaging, efficient, and truly transformative. Everything you need to learn smarter is right here.
           </p>
         </div>
       </div>

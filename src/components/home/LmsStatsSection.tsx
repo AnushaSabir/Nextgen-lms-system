@@ -60,8 +60,8 @@ export default function LmsStatsSection() {
                 className="group relative rounded-3xl overflow-hidden border border-orange-500/30 hover:-translate-y-2 transition-all duration-500 flex flex-col h-full shadow-[0_12px_34px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_22px_55px_rgba(26, 107, 46, 0.1)]"
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <Image src={s.image} alt={s.title} fill className="absolute inset-0 w-full h-full object-cover opacity-[0.4] group-hover:opacity-[0.5] group-hover:scale-105 transition-all duration-700" sizes="(max-width: 768px) 100vw, 25vw" />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/95 to-navy-900/80 z-10 group-hover:via-navy-900/90 transition-all duration-500" />
+                <Image src={s.image} alt={s.title} fill className="absolute inset-0 w-full h-full object-cover opacity-[0.85] group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" sizes="(max-width: 768px) 100vw, 25vw" />
+                <div className="absolute inset-0 bg-gradient-to-t from-white via-white/90 to-white/75 z-10 group-hover:via-white/85 transition-all duration-500" />
                 
                 <div className="relative z-20 p-5 sm:p-6 flex flex-col h-full">
                   <div className="flex items-center justify-between gap-3 mb-4">
