@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Mail, Phone, Heart, ArrowRight, ChevronDown } from 'lucide-react';
+import { Mail, Phone, Heart, ArrowRight, ChevronDown, MapPin } from 'lucide-react';
 
 const Footer = () => {
   // State to manage accordion open/close on mobile
@@ -13,17 +13,17 @@ const Footer = () => {
   };
 
   const quickLinks = [
-    { name: 'How It Works', href: '/how-it-works' },
-    { name: 'For Learners', href: '/for-learners' },
-    { name: 'For Trainers', href: '/for-trainers' },
-    { name: 'For Institutions', href: '/for-institutions' },
+    { name: 'Home', href: '/' },
+    { name: 'Courses', href: '/courses' },
+    { name: 'Instructors', href: '/for-trainers' },
+    { name: 'Pricing', href: '/pricing' },
   ];
 
   const supportLinks = [
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'FAQ', href: '/faq' },
-    { name: 'Privacy Policy', href: '/privacy-policy' },
-    { name: 'Terms of Service', href: '/terms-of-service' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Terms & Conditions', href: '/terms' },
   ];
 
   const FacebookIcon = () => (
@@ -65,8 +65,7 @@ const Footer = () => {
               </h2>
             </Link>
             <p className="text-[#1a6b2e] text-sm leading-relaxed">
-              Pakistan&apos;s first skill-based learning platform directly connected to a live freelance marketplace.{' '}
-              <span className="text-[#0f3d1a] font-medium">Learn, get certified, and start earning instantly.</span>
+              NextGen LMS is an AI-powered Learning Management System dedicated to making quality education accessible, engaging, and effective for everyone.
             </p>
           </div>
 
@@ -172,27 +171,37 @@ const Footer = () => {
               </h4>
               
               <div className="space-y-5 relative z-10">
-                <a href="tel:+923411228760" className="flex items-start gap-4 group/call">
+                <a href="tel:03222461264" className="flex items-start gap-4 group/call">
                   <div className="w-11 h-11 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 flex items-center justify-center text-[#d94d19] group-hover/call:bg-[#5E6F58] group-hover/call:text-[#0f3d1a] group-hover/call:border-[#5E6F58] transition-all duration-300 shrink-0">
                     <Phone className="w-4 h-4" />
                   </div>
                   <div>
                     <p className="text-xs text-[#7dab52] mb-0.5 font-medium">Call Us Anytime</p>
-                    <p className="text-base text-[#0f3d1a] font-semibold group-hover/call:text-[#0f3d1a] transition-colors">+92 341 1228760</p>
+                    <p className="text-base text-[#0f3d1a] font-semibold group-hover/call:text-[#0f3d1a] transition-colors">03222461264</p>
                     <p className="text-[11px] text-gray-600 mt-0.5">Mon - Fri 9am - 6pm</p>
                   </div>
                 </a>
 
-                <a href="mailto:info@nextgen-lms.co" className="flex items-start gap-4 group/mail">
+                <a href="mailto:support@nextgenlearnos.com" className="flex items-start gap-4 group/mail">
                   <div className="w-11 h-11 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 flex items-center justify-center text-[#d94d19] group-hover/mail:bg-[#5E6F58] group-hover/mail:text-[#0f3d1a] group-hover/mail:border-[#5E6F58] transition-all duration-300 shrink-0">
                     <Mail className="w-4 h-4" />
                   </div>
                   <div>
                     <p className="text-xs text-[#7dab52] mb-0.5 font-medium">Email Us</p>
-                    <p className="text-base text-[#0f3d1a] font-semibold group-hover/mail:text-[#0f3d1a] transition-colors">info@nextgen-lms.co</p>
+                    <p className="text-base text-[#0f3d1a] font-semibold group-hover/mail:text-[#0f3d1a] transition-colors">support@nextgenlearnos.com</p>
                     <p className="text-[11px] text-gray-600 mt-0.5">We reply within 24hrs</p>
                   </div>
                 </a>
+
+                <div className="flex items-start gap-4 group/location">
+                  <div className="w-11 h-11 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 flex items-center justify-center text-[#d94d19] group-hover/location:bg-[#5E6F58] group-hover/location:text-[#0f3d1a] group-hover/location:border-[#5E6F58] transition-all duration-300 shrink-0">
+                    <MapPin className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-[#7dab52] mb-0.5 font-medium">Location</p>
+                    <p className="text-base text-[#0f3d1a] font-semibold group-hover/location:text-[#0f3d1a] transition-colors">Karachi, Pakistan</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -201,7 +210,7 @@ const Footer = () => {
         {/* ── Bottom Bar ── */}
         <div className="border-t border-[#1a6b2e]/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <p className="text-[#7dab52] text-xs sm:text-sm order-2 sm:order-1">
-            &copy; {new Date().getFullYear()} NextGen LMS. All Rights Reserved.
+            &copy; 2026 NextGen LMS. All Rights Reserved.
           </p>
           <div className="order-1 sm:order-2 flex items-center gap-1.5 text-xs text-[#7dab52]">
             Made with <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" /> in Pakistan

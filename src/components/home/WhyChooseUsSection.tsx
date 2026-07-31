@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { ShieldCheck, Laptop, DollarSign } from 'lucide-react';
+import { Cpu, Users, MonitorPlay, LineChart, Laptop, Award } from 'lucide-react';
 
 export default function WhyChooseUsSection() {
   return (
@@ -8,7 +8,7 @@ export default function WhyChooseUsSection() {
       <div className="container mx-auto max-w-6xl">
         <div className="flex flex-col items-center text-center mb-16 reveal">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] tracking-tight mb-4 text-3d">
-            Why Choose <span className="text-[#d94d19] text-3d-orange">NextGen LMS?</span>
+            Why <span className="text-[#d94d19] text-3d-orange">Choose Us</span>
           </h2>
           <p className="text-base sm:text-lg text-[#1a6b2e] max-w-2xl mx-auto font-medium">
             Everything you need to go from absolute beginner to certified professional, all in one ecosystem.
@@ -18,34 +18,64 @@ export default function WhyChooseUsSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {[
             {
-              title: 'Verified Experts',
-              badge: 'VETTED INSTRUCTORS',
-              desc: 'Learn directly from handpicked industry professionals and certified institutions. Our trainers must pass a rigorous verification process to teach.',
-              icon: <ShieldCheck className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
+              title: 'AI-Powered Learning',
+              badge: 'SMART ASSISTANCE',
+              desc: 'Personalized recommendations and smart learning assistance.',
+              icon: <Cpu className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
               num: '01',
               delay: 0,
               image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&auto=format&fit=crop&q=90',
-              stat: '500+ Expert Trainers'
+              stat: 'Smart AI Tools'
             },
             {
-              title: 'Study Anywhere',
-              badge: '100% FLEXIBLE',
-              desc: 'Access your courses anytime, on any device. Master high-demand digital skills at your own pace with our beautiful, responsive ecosystem.',
-              icon: <Laptop className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
+              title: 'Expert Instructors',
+              badge: 'INDUSTRY PROS',
+              desc: 'Learn from experienced educators and industry professionals.',
+              icon: <Users className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
               num: '02',
               delay: 150,
               image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&auto=format&fit=crop&q=90',
-              stat: '24/7 Unlimited Access'
+              stat: 'Top Rated Experts'
             },
             {
-              title: 'Start Earning',
-              badge: 'DIRECT CONTRACTS',
-              desc: 'Complete your path, claim your verified badge, and launch your freelance career. We connect certified learners directly with global contracts.',
-              icon: <DollarSign className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
+              title: 'Interactive Courses',
+              badge: 'ENGAGING CONTENT',
+              desc: 'Engaging video lessons, quizzes, assignments, and projects.',
+              icon: <MonitorPlay className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
               num: '03',
               delay: 300,
               image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&auto=format&fit=crop&q=90',
-              stat: '$50K+ Avg. Earnings'
+              stat: 'Practical Projects'
+            },
+            {
+              title: 'Track Your Progress',
+              badge: 'DETAILED ANALYTICS',
+              desc: 'Monitor your learning journey with detailed analytics and reports.',
+              icon: <LineChart className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
+              num: '04',
+              delay: 450,
+              image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=90',
+              stat: 'Real-time Tracking'
+            },
+            {
+              title: 'Flexible Learning',
+              badge: 'STUDY ANYWHERE',
+              desc: 'Access your courses anytime, anywhere, on any device.',
+              icon: <Laptop className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
+              num: '05',
+              delay: 600,
+              image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&auto=format&fit=crop&q=90',
+              stat: '24/7 Access'
+            },
+            {
+              title: 'Certificates',
+              badge: 'GET CERTIFIED',
+              desc: 'Earn certificates after successfully completing your courses.',
+              icon: <Award className="w-6 h-6 text-[#d94d19] transition-transform duration-500 group-hover:scale-110" />,
+              num: '06',
+              delay: 750,
+              image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&auto=format&fit=crop&q=90',
+              stat: 'Verified Badges'
             },
           ].map((f) => (
             <div

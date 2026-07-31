@@ -19,16 +19,16 @@ export default function FinalCtaSection() {
 
           <div className="relative z-10 space-y-6 sm:space-y-8">
             <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-[#c8e6c9] leading-tight tracking-tight text-3d">
-              Ready to Start Your<br />
-              <span className="text-[#d94d19] text-3d-orange">Earning Journey?</span>
+              Ready to Transform Your<br />
+              <span className="text-[#d94d19] text-3d-orange">Learning?</span>
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-[#c8e6c9]/80 max-w-xl mx-auto font-medium leading-relaxed">
-              Join thousands of learners who are already building their careers on Pakistan's first skill-to-earn platform.
+              Join thousands of students and educators who are already building their future with NextGen LMS.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-4">
               <Link href="/login?mode=signup" className="group w-full sm:w-auto px-5 py-2.5 sm:px-8 sm:py-4 bg-[#d94d19] text-white font-bold text-sm sm:text-base rounded-xl shadow-lg shadow-[rgba(240,89,31,0.3)] hover:bg-[#c24213] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2">
-                <span>Join Now for Free</span>
+                <span>Start Learning Today</span>
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link href="/courses" className="w-full sm:w-auto px-5 py-2.5 sm:px-8 sm:py-4 bg-white/10 text-white font-semibold text-sm sm:text-base rounded-xl border border-white/20 hover:bg-white/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center">

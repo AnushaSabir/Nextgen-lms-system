@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { LineChart, CheckCircle2, BarChart3, Building2, BookOpen, TrendingUp } from 'lucide-react';
+import { LineChart, CheckCircle2, Users, BookOpen, Award, Star } from 'lucide-react';
 
 export default function LmsStatsSection() {
   return (
@@ -27,31 +27,31 @@ export default function LmsStatsSection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-left items-stretch relative z-10">
             {[
               {
-                val: '$40B+',
-                title: 'Global LMS Market',
-                label: 'projected market value by 2029, signaling massive worldwide adoption.',
-                icon: <BarChart3 className="w-5 h-5" />,
+                val: '10,000+',
+                title: 'Students',
+                label: 'active learners from all over the world enhancing their skills.',
+                icon: <Users className="w-5 h-5" />,
                 image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop&q=80'
               },
               {
-                val: '70%+',
-                title: 'Corporate Adoption',
-                label: 'of organizations now rely on LMS platforms for employee training and skill development.',
-                icon: <Building2 className="w-5 h-5" />,
+                val: '500+',
+                title: 'Courses',
+                label: 'comprehensive courses across various domains and industries.',
+                icon: <BookOpen className="w-5 h-5" />,
                 image: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600&auto=format&fit=crop&q=80'
               },
               {
-                val: '60%',
-                title: 'E-Learning Retention',
-                label: 'more knowledge retained through LMS-based learning compared to traditional classrooms.',
-                icon: <BookOpen className="w-5 h-5" />,
+                val: '100+',
+                title: 'Expert Instructors',
+                label: 'industry professionals bringing real-world experience to you.',
+                icon: <Award className="w-5 h-5" />,
                 image: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600&auto=format&fit=crop&q=80'
               },
               {
-                val: '85%',
-                title: 'ROI Improvement',
-                label: 'of businesses see improved ROI within 12 months of implementing an LMS solution.',
-                icon: <TrendingUp className="w-5 h-5" />,
+                val: '98%',
+                title: 'Student Satisfaction',
+                label: 'of our students recommend NextGen LMS to their peers.',
+                icon: <Star className="w-5 h-5" />,
                 image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80'
               },
             ].map((s, i) => (

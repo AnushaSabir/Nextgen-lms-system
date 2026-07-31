@@ -19,7 +19,7 @@ export default function LearningEcosystemSection() {
 
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#0f3d1a] leading-[1.1] tracking-tight text-3d">
               The Complete <br />
-              <span className="text-[#d94d19] text-3d-orange">Learning Ecosystem</span>
+              <span className="text-[#d94d19] text-3d-orange">Learning Process</span>
             </h2>
 
             <div className="space-y-5 text-base sm:text-lg text-[#1a6b2e] leading-relaxed max-w-2xl">
@@ -32,9 +32,10 @@ export default function LearningEcosystemSection() {
 
             <div className="space-y-4 pt-2">
               {[
-                'Structured assessment after every video',
-                'Trainer-reviewed submissions — not auto-graded',
-                'Certificate directly linked to your freelancer profile',
+                'Step 1: Create your free account.',
+                'Step 2: Choose your desired course.',
+                'Step 3: Start learning with interactive lessons.',
+                'Step 4: Complete assessments and earn your certificate.',
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/10 hover:border-[#5E6F58]/30 transition-all duration-300 group/item cursor-default">
                   <div className="w-8 h-8 rounded-lg bg-[#5E6F58]/10 flex items-center justify-center shrink-0 border border-[#5E6F58]/20 group-hover/item:bg-[#5E6F58]/20 transition-colors">

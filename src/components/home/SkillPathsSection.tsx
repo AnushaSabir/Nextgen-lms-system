@@ -1,89 +1,109 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Layers, Megaphone, Video, Cpu, LineChart, Briefcase, ShoppingBag, Code, ChevronRight, ArrowRight } from 'lucide-react';
+import { Bot, MonitorPlay, Film, BookOpen, FileText, TrendingUp, Award, MessageSquare, Smartphone, Cloud, ChevronRight, ArrowRight } from 'lucide-react';
 
 const CATEGORIES = [
   {
-    title: 'UI/UX Design',
-    slug: 'ui-ux',
-    tag: 'Design',
-    description: 'Figma, Design Systems',
-    icon: <Layers className="w-5 h-5" />,
+    title: 'AI Learning Assistant',
+    slug: 'ai-learning-assistant',
+    tag: 'AI',
+    description: 'Smart guidance',
+    icon: <Bot className="w-5 h-5" />,
     glowColor: 'from-purple-500/10 to-pink-500/10',
     accentColor: 'text-purple-400 group-hover:text-purple-300',
     image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&auto=format&fit=crop&q=80'
   },
   {
-    title: 'Digital Marketing',
-    slug: 'marketing',
-    tag: 'Growth',
-    description: 'SEO, Ads & Socials',
-    icon: <Megaphone className="w-5 h-5" />,
+    title: 'Live Online Classes',
+    slug: 'live-classes',
+    tag: 'Live',
+    description: 'Real-time sessions',
+    icon: <MonitorPlay className="w-5 h-5" />,
     glowColor: 'from-amber-500/10 to-sky-500/10',
     accentColor: 'text-amber-400 group-hover:text-amber-300',
     image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=400&auto=format&fit=crop&q=80'
   },
   {
-    title: 'Video Edit & VFX',
-    slug: 'video-edit',
-    tag: 'Creative',
-    description: 'Premiere Pro, DaVinci',
-    icon: <Video className="w-5 h-5" />,
+    title: 'Recorded Video Lessons',
+    slug: 'recorded-lessons',
+    tag: 'Video',
+    description: 'Learn anytime',
+    icon: <Film className="w-5 h-5" />,
     glowColor: 'from-red-500/10 to-orange-600/10',
     accentColor: 'text-red-400 group-hover:text-red-300',
     image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=400&auto=format&fit=crop&q=80'
   },
   {
-    title: 'AI & Machine Learning',
-    slug: 'ai-ml',
-    tag: 'Future',
-    description: 'Python, Neural Networks',
-    icon: <Cpu className="w-5 h-5" />,
+    title: 'Course Management',
+    slug: 'course-management',
+    tag: 'Manage',
+    description: 'Organize courses',
+    icon: <BookOpen className="w-5 h-5" />,
     glowColor: 'from-cyan-500/10 to-blue-500/10',
     accentColor: 'text-cyan-400 group-hover:text-cyan-300',
     image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&auto=format&fit=crop&q=80'
   },
   {
-    title: 'Data Science & Stats',
-    slug: 'data-science',
-    tag: 'Analytics',
-    description: 'R, Big Data, SQL',
-    icon: <LineChart className="w-5 h-5" />,
+    title: 'Assignments & Quizzes',
+    slug: 'assignments-quizzes',
+    tag: 'Assess',
+    description: 'Test knowledge',
+    icon: <FileText className="w-5 h-5" />,
     glowColor: 'from-teal-500/10 to-emerald-500/10',
     accentColor: 'text-teal-400 group-hover:text-teal-300',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&auto=format&fit=crop&q=80'
   },
   {
-    title: 'Freelance Mastery',
-    slug: 'freelancing',
-    tag: 'Business',
-    description: 'Upwork, Client Contracts',
-    icon: <Briefcase className="w-5 h-5" />,
+    title: 'Student Progress Tracking',
+    slug: 'progress-tracking',
+    tag: 'Track',
+    description: 'Monitor growth',
+    icon: <TrendingUp className="w-5 h-5" />,
     glowColor: 'from-primaryBlue/10 to-sky-500/10',
     accentColor: 'text-primaryBlue group-hover:text-orange-300',
     image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&auto=format&fit=crop&q=80'
   },
   {
-    title: 'E-Commerce Retail',
-    slug: 'e-commerce',
-    tag: 'E-Store',
-    description: 'Shopify, Amazon FBA',
-    icon: <ShoppingBag className="w-5 h-5" />,
+    title: 'Certificates',
+    slug: 'certificates',
+    tag: 'Award',
+    description: 'Earn recognition',
+    icon: <Award className="w-5 h-5" />,
     glowColor: 'from-indigo-500/10 to-blue-600/10',
     accentColor: 'text-indigo-400 group-hover:text-indigo-300',
     image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&auto=format&fit=crop&q=80'
   },
   {
-    title: 'Web Development',
-    slug: 'web-dev',
-    tag: 'Development',
-    description: 'Next.js, Tailwind, APIs',
-    icon: <Code className="w-5 h-5" />,
+    title: 'Discussion Forums',
+    slug: 'discussion-forums',
+    tag: 'Community',
+    description: 'Engage with peers',
+    icon: <MessageSquare className="w-5 h-5" />,
     glowColor: 'from-blue-500/10 to-violet-500/10',
     accentColor: 'text-blue-400 group-hover:text-blue-300',
     image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&auto=format&fit=crop&q=80'
   },
+  {
+    title: 'Mobile-Friendly Design',
+    slug: 'mobile-friendly',
+    tag: 'Mobile',
+    description: 'Learn on the go',
+    icon: <Smartphone className="w-5 h-5" />,
+    glowColor: 'from-pink-500/10 to-rose-500/10',
+    accentColor: 'text-pink-400 group-hover:text-pink-300',
+    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&auto=format&fit=crop&q=80'
+  },
+  {
+    title: 'Secure Cloud Platform',
+    slug: 'secure-cloud',
+    tag: 'Secure',
+    description: 'Safe and reliable',
+    icon: <Cloud className="w-5 h-5" />,
+    glowColor: 'from-emerald-500/10 to-green-500/10',
+    accentColor: 'text-emerald-400 group-hover:text-emerald-300',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&auto=format&fit=crop&q=80'
+  }
 ];
 
 export default function SkillPathsSection() {
@@ -100,10 +120,10 @@ export default function SkillPathsSection() {
             Trending Disciplines
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0f3d1a] tracking-tight text-3d leading-tight">
-            Explore High-Income <span className="text-[#d94d19] text-3d-orange">Skill Floor Paths</span>
+            Features
           </h2>
           <p className="mx-auto lg:mx-0 max-w-3xl text-sm sm:text-base text-[#1a6b2e] font-medium leading-relaxed sm:leading-7">
-            Choose from <span className="text-[#0f3d1a] font-semibold">Pakistan's most sought-after categories</span>, designed to take you from <span className="text-[#d94d19] font-semibold">structured learning modules</span> directly to <span className="text-[#d94d19] font-semibold">verified freelance gig contracts</span>. Start your journey today.
+            Everything You Need to Learn Smarter
           </p>
         </div>
       </div>

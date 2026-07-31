@@ -9,41 +9,10 @@ const FAQ_CATEGORIES = [
     id: 'general',
     name: 'General FAQ',
     questions: [
-      { q: 'What is NextGen-LMS LMS?', a: 'NextGen-LMS LMS is Pakistan\'s first skill-to-earn platform. It provides high-quality practical training directly connected to a live freelance marketplace, allowing you to learn from verified experts, complete assessments, and start earning immediately.' },
-      { q: 'Is NextGen-LMS LMS free to join?', a: 'Yes, it is completely free to create an account on NextGen-LMS. You only pay for individual premium courses you choose to enroll in, or if you are part of a subscribed partner institution, your access is covered by your school, college, or university.' },
-      { q: 'Are the certificates verified?', a: 'Absolutely. Every certificate is backed by your actual test scores and trainer reviews, and automatically appears as a verified badge on your live NextGen-LMS freelance marketplace profile, making you instantly credible to global clients.' },
-      { q: 'How is NextGen-LMS different from other platforms?', a: 'Unlike other online platforms that just offer video lectures, NextGen-LMS LMS features a progressive module unlocking system, manual grading of practical assignments by expert trainers, and a direct pipeline to active client contracts on the freelance marketplace.' }
-    ]
-  },
-  {
-    id: 'learners',
-    name: 'For Learners FAQ',
-    questions: [
-      { q: 'Who can join NextGen-LMS LMS?', a: 'Anyone can join — school students, college students, university students, and individual self-taught learners. NextGen-LMS LMS is open to all who want to build high-paying digital skills.' },
-      { q: 'Do I need to pay to enroll in a course?', a: 'Individual learners pay per course. Institutional students (school, college, university) are enrolled by their institution under a subscription plan and do not need to pay individually.' },
-      { q: 'What happens if I fail a test?', a: 'If you fail, you must re-watch the video before attempting the test again. Your next attempt will feature a completely different set of questions — not the same test repeated.' },
-      { q: 'Can I skip a video and go to the next one?', a: 'No. NextGen-LMS LMS uses a progressive unlocking system. You must pass the assessment for each video before the next one becomes available.' },
-      { q: 'What do I get after completing a course?', a: 'You receive an official NextGen-LMS LMS Certificate and a verified badge on your marketplace profile. You can then immediately start freelancing on NextGen-LMS.' },
-    ]
-  },
-  {
-    id: 'trainers',
-    name: 'For Trainers FAQ',
-    questions: [
-      { q: 'Who can become a trainer?', a: 'Both individual professionals and training institutes can apply. You must submit your portfolio, experience, and reason for joining. The NextGen-LMS team will review your application.' },
-      { q: 'What video quality is required for my course?', a: 'All course videos must be HD quality, recorded using professional equipment (DSLR or iPhone), in a clean professional environment, with clear audio.' },
-      { q: 'How do I get paid?', a: 'Trainers receive 70% of all revenue generated from their courses. NextGen-LMS retains 30% for platform operations.' },
-      { q: 'Can I teach at more than one level?', a: 'Yes. If you are qualified to teach at multiple levels (school, college, university), you can create courses for each level.' },
-    ]
-  },
-  {
-    id: 'institutions',
-    name: 'For Institutions FAQ',
-    questions: [
-      { q: 'How does the institutional subscription work?', a: 'Your institution pays a monthly per-student fee based on your student level. NextGen-LMS provides a dedicated portal where you assign courses, manage students, and receive progress reports.' },
-      { q: 'Can I get a discount for a longer commitment?', a: 'Yes. NextGen-LMS offers significant discounts for 6-month (25% off) and 1-year (40% off) packages. These packages are available directly from your institutional dashboard.' },
-      { q: 'How are progress reports delivered?', a: 'Trainers generate reports directly in the system with one click. Reports are automatically branded with the NextGen-LMS logo and your institution\'s logo, then delivered to your portal inbox and email.' },
-      { q: 'Can parents see their child\'s progress?', a: 'Yes. The institution head can forward reports to parents after reviewing them.' },
+      { q: 'Is NextGen LMS suitable for beginners?', a: 'Yes. Our courses are designed for learners of all skill levels.' },
+      { q: 'Can I learn on mobile?', a: 'Absolutely. The platform works seamlessly across desktop, tablet, and mobile devices.' },
+      { q: 'Will I receive a certificate?', a: 'Yes. Certificates are awarded after successfully completing eligible courses.' },
+      { q: 'Can instructors create their own courses?', a: 'Yes. Educators can easily build, manage, and publish their courses.' }
     ]
   }
 ];

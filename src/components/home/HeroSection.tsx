@@ -21,51 +21,19 @@ const HERO_STATS = [
 
 const HERO_SLIDES = [
   {
-    badge: "LEARN FROM THE BEST",
-    highlight: "NextGen-LMS Platform",
+    badge: "AI-POWERED PLATFORM",
+    highlight: "NextGen LMS",
     title: (
       <>
-        Master High-Income <br className="hidden sm:block" />
-        <span className="text-[#d94d19] drop-shadow-sm">Digital Skills.</span>
+        The Future of <br className="hidden sm:block" />
+        <span className="text-[#d94d19] drop-shadow-sm">Learning Starts Here.</span>
       </>
     ),
-    desc: "Experience world-class courses taught by top industry experts. Master programming, AI, and design with structured assessments and real-world projects.",
-    ctaText: "Explore Courses",
-    ctaLink: "/courses",
-    secCtaText: "Partner Institutes",
-    secCtaLink: "/for-institutions",
-    video: "/videos/main_hero/new_hero.mp4"
-  },
-  {
-    badge: "GLOBAL STANDARDS",
-    highlight: "Get Verified & Certified",
-    title: (
-      <>
-        Earn Professional <br className="hidden sm:block" />
-        <span className="text-[#d94d19] drop-shadow-sm">Verified Badges.</span>
-      </>
-    ),
-    desc: "Every certificate you earn is verified by certified trainers and directly synced with your live freelance profile on NextGen-LMS, showing real proof of expertise.",
-    ctaText: "How It Works",
-    ctaLink: "/how-it-works",
-    secCtaText: "Apply as Trainer",
-    secCtaLink: "/for-trainers",
-    video: "/videos/main_hero/new_hero.mp4"
-  },
-  {
-    badge: "INSTANT INCOME FLOW",
-    highlight: "Bridge the Gap to success",
-    title: (
-      <>
-        Launch Your Tech <br className="hidden sm:block" />
-        <span className="text-[#d94d19] drop-shadow-sm">Freelance Career.</span>
-      </>
-    ),
-    desc: "NextGen-LMS connects certified students directly to global client contracts on our active freelance marketplace. Work, deliver, and get paid instantly.",
-    ctaText: "Join Free Now",
+    desc: "Empower your learning journey with NextGen LMS—an AI-powered Learning Management System built for students, educators, schools, universities, and training institutes. Learn smarter, teach better, and achieve more from anywhere.",
+    ctaText: "Get Started",
     ctaLink: "/login?mode=signup",
-    secCtaText: "Pricing Plans",
-    secCtaLink: "/pricing",
+    secCtaText: "Explore Courses",
+    secCtaLink: "/courses",
     video: "/videos/main_hero/new_hero.mp4"
   }
 ];
