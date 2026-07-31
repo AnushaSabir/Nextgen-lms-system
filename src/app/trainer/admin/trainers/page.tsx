@@ -1,11 +1,68 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import { ShieldCheck, UserCheck, UserX, FileText, Camera, Video } from 'lucide-react';
+import { usersApi } from '@/lib/api';
+import type { User } from '@/types/domain';
+import { PageHeader, Card, Badge, EmptyState, Loading, Button } from '@/components/trainer/ui';
+
+type TrainerRow = User & {
+  portfolio?: string | null;
+  teachingExperience?: string | null;
+  createdAt?: string | null;
+};
+
+function initials(name?: string) {
+  if (!name) return '?';
+  return (
+    name
+      .trim()
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((p) => p[0]?.toUpperCase() ?? '')
+      .join('') || '?'
+  );
+}
+
+const PROOFS = [
+  { icon: Video, title: 'Demo Lecture', detail: 'Review teaching style & HD video quality.' },
+  { icon: Camera, title: 'Equipment Proof', detail: 'Verify DSLR/iPhone camera setup.' },
+  { icon: Camera, title: 'Workspace Proof', detail: 'Verify professional environment.' },
+  { icon: FileText, title: 'CV & Portfolio', detail: 'Review professional background.' },
+];
 
 export default function TrainerApprovalPage() {
-  const pendingTrainers = [
-    { id: 1, name: 'Hassan Ali', expertise: 'Machine Learning', applied: '2 hours ago', status: 'Pending Review' },
-    { id: 2, name: 'Fatima Noor', expertise: 'UI/UX Design', applied: '1 day ago', status: 'Pending Review' },
-  ];
+  const [trainers, setTrainers] = useState<TrainerRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [processingId, setProcessingId] = useState<string | null>(null);
+
+  async function load() {
+    try {
+      // Admin-only endpoint — a non-admin viewer gets a 403, which we treat as an empty list.
+      const data = await usersApi.list('trainer');
+      setTrainers(Array.isArray(data) ? (data as TrainerRow[]) : []);
+    } catch {
+      setTrainers([]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  async function handleVerify(id: string, verified: boolean) {
+    setProcessingId(id);
+    try {
+      await usersApi.verify(id, verified);
+      await load();
+    } catch {
+      // Keep the UI responsive even if the request is rejected (e.g. 403).
+    } finally {
+      setProcessingId(null);
+    }
+  }
 
   return (
     <div className="p-8 max-w-7xl mx-auto animate-in fade-in duration-500">

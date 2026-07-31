@@ -1,34 +1,70 @@
 'use client';
 
-import React, { useState } from 'react';
-import { CreditCard, ArrowLeft, ArrowRight, Wallet, ShieldCheck, Banknote } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { ArrowLeft, Wallet, ShieldCheck, Banknote, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useToastStore } from '@/store/toast-store';
+import { trainerApi } from '@/lib/api';
+import { PageHeader, StatCard, Card, SectionHeader, Badge, EmptyState, Loading, Skeleton } from '@/components/trainer/ui';
+
+type WithdrawalMethod = { id: string; provider: string; accountTitle: string; accountNumber: string; isActive: boolean };
+type WithdrawalRequest = { id: string; amount: number; status: string; createdAt: string; method?: { provider: string; accountTitle: string } };
+
+const fmtPKR = (n: number) => `PKR ${Number(n || 0).toLocaleString('en-PK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+type Tone = 'success' | 'danger' | 'warn';
+const statusTone = (status: string): Tone => {
+  const s = (status || '').toLowerCase();
+  if (s === 'completed' || s === 'approved' || s === 'paid') return 'success';
+  if (s === 'rejected' || s === 'failed' || s === 'cancelled') return 'danger';
+  return 'warn';
+};
 
 export default function WithdrawalPage() {
   const router = useRouter();
   const { showToast } = useToastStore();
-  
+
   const [amount, setAmount] = useState('');
-  const [selectedMethodId, setSelectedMethodId] = useState('1');
+  const [selectedMethodId, setSelectedMethodId] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Mock available balance and methods
-  const availableBalance = 4250.00;
-  const methods = [
-    { id: '1', provider: 'easypaisa', accountTitle: 'John Doe', accountNumber: '03001234567', isActive: true },
-  ];
+  const [availableBalance, setAvailableBalance] = useState(0);
+  const [methods, setMethods] = useState<WithdrawalMethod[]>([]);
+  const [requests, setRequests] = useState<WithdrawalRequest[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleWithdrawal = (e: React.FormEvent) => {
+  const loadData = useCallback(async () => {
+    try {
+      const [w, m] = await Promise.all([
+        trainerApi.withdrawals().catch(() => ({ availableBalance: 0, requests: [] as WithdrawalRequest[] })),
+        trainerApi.withdrawalMethods().catch(() => [] as WithdrawalMethod[]),
+      ]);
+      setAvailableBalance(w?.availableBalance ?? 0);
+      setRequests(Array.isArray(w?.requests) ? w.requests : []);
+      const list = Array.isArray(m) ? m : [];
+      setMethods(list);
+      setSelectedMethodId((prev) => prev || (list[0]?.id ?? ''));
+    } catch {
+      showToast('Failed to load withdrawal data', 'error');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [showToast]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  const handleWithdrawal = async (e: React.FormEvent) => {
     e.preventDefault();
     const numAmount = parseFloat(amount);
-    
+
     if (isNaN(numAmount) || numAmount <= 0) {
       showToast('Please enter a valid amount', 'error');
       return;
     }
-    
+
     if (numAmount > availableBalance) {
       showToast('Amount exceeds available balance', 'error');
       return;
@@ -40,13 +76,17 @@ export default function WithdrawalPage() {
     }
 
     setIsSubmitting(true);
-    
-    // Simulate API Call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      showToast(`Withdrawal request for $${numAmount} submitted successfully!`, 'success');
+    try {
+      await trainerApi.requestWithdrawal({ methodId: selectedMethodId, amount: numAmount });
+      showToast(`Withdrawal request for ${fmtPKR(numAmount)} submitted successfully!`, 'success');
+      setAmount('');
+      await loadData();
       router.push('/trainer/earnings');
-    }, 1500);
+    } catch {
+      showToast('Failed to submit withdrawal request', 'error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -97,7 +137,7 @@ export default function WithdrawalPage() {
                 </div>
               </div>
 
-              {/* Method Selection */}
+              {/* Methods */}
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <label className="block text-sm font-bold text-[#1a6b2e] uppercase tracking-wider">Select Method</label>
@@ -106,11 +146,17 @@ export default function WithdrawalPage() {
                   </Link>
                 </div>
 
-                {methods.length === 0 ? (
-                  <div className="p-6 bg-red-500/10 border border-red-500/20 rounded-2xl text-center">
-                    <p className="text-red-400 mb-3">You haven't added any withdrawal methods.</p>
-                    <Link href="/trainer/profile" className="inline-block bg-red-500/20 text-red-300 px-4 py-2 rounded-xl font-bold hover:bg-red-500/30">
-                      Add a Method
+                {isLoading ? (
+                  <div className="space-y-3">
+                    {[0, 1].map((i) => (
+                      <Skeleton key={i} className="h-[68px] rounded-[16px]" />
+                    ))}
+                  </div>
+                ) : methods.length === 0 ? (
+                  <div className="rounded-[16px] border border-[var(--gt-danger)]/25 bg-[var(--gt-danger)]/10 p-5 text-center">
+                    <p className="mb-3 text-sm text-[var(--gt-danger)]">You haven&apos;t added any withdrawal methods.</p>
+                    <Link href="/trainer/profile" className="gt-btn gt-btn--ghost gt-btn--sm">
+                      <PlusCircle className="h-4 w-4" /> Add a Method
                     </Link>
                   </div>
                 ) : (
@@ -150,16 +196,35 @@ export default function WithdrawalPage() {
                 disabled={isSubmitting || methods.length === 0}
                 className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-orange-600 to-sky-500 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-[#0f3d1a] px-6 py-5 rounded-3xl font-black shadow-[0_10px_40px_-10px_rgba(240,89,31,0.5)] transition-all active:scale-95 text-lg"
               >
-                {isSubmitting ? (
-                  <span className="animate-pulse">Processing...</span>
-                ) : (
-                  <>
-                    <Banknote className="w-6 h-6" /> Submit Request
-                  </>
-                )}
+                {isSubmitting ? 'Processing…' : (<><Banknote className="h-4 w-4" /> Submit Request</>)}
               </button>
             </form>
-          </div>
+          </Card>
+
+          {/* Recent requests */}
+          <Card className="p-6">
+            <SectionHeader icon={Wallet} tone="info" title="Recent Requests" caption="Track the status of your payouts." />
+            {isLoading ? (
+              <Loading label="Loading requests…" />
+            ) : requests.length === 0 ? (
+              <EmptyState icon={Wallet} title="No withdrawal requests yet" detail="Your submitted payouts will appear here." />
+            ) : (
+              <div className="space-y-2.5">
+                {requests.map((r) => (
+                  <div key={r.id} className="gt-card flex items-center justify-between gap-4 p-3.5">
+                    <div className="min-w-0 flex-1">
+                      <p className="gt-num text-sm font-semibold text-[var(--gt-text)]">{fmtPKR(r.amount)}</p>
+                      <p className="truncate text-xs text-[var(--gt-text-3)]">
+                        {r.method ? <span className="capitalize">{r.method.provider} &bull; {r.method.accountTitle}</span> : 'Withdrawal'}
+                        {r.createdAt ? ` • ${new Date(r.createdAt).toLocaleDateString()}` : ''}
+                      </p>
+                    </div>
+                    <Badge tone={statusTone(r.status)} dot>{r.status}</Badge>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Card>
         </div>
 
         {/* Right Col - Info */}
@@ -186,9 +251,8 @@ export default function WithdrawalPage() {
                 No hidden fees. You get exactly what you earned.
               </li>
             </ul>
-          </div>
+          </Card>
         </div>
-
       </div>
     </div>
   );

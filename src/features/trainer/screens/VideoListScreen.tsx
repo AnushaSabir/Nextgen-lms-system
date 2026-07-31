@@ -3,8 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ChevronRight, Clock, ListChecks, PlayCircle, Upload } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { PageHeader } from '../components/TrainerShared';
+import { PageHeader, Card, EmptyState, Loading } from '@/components/trainer/ui';
 import { getCourse as apiGetCourse, getVideos as apiGetVideos } from '@/services/trainerApi';
 
 type Course = any;
@@ -68,10 +67,9 @@ export function VideoListScreen({ courseId, embedded = false }: { courseId: stri
               <Link href={`/trainer/courses/${courseId}/videos/${video.id}/summary-task`}><Button size="sm" variant="ghost" className="bg-gray-900/50 hover:bg-gray-700 hover:text-[#0f3d1a] border border-gray-700">Summary</Button></Link>
             </div>
           </div>
-        ))
-      )}
-    </div>
-  );
+        ))}
+      </div>
+    );
 
   if (embedded) return content;
 
@@ -83,14 +81,18 @@ export function VideoListScreen({ courseId, embedded = false }: { courseId: stri
         <span className="text-[#1a6b2e]">Curriculum Content</span>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
-        <PageHeader title="Curriculum Manager" caption={`Organize lessons and assessments for ${course?.title || 'this course'}.`} />
-        {videos.length > 0 && (
-          <Link href={`/trainer/courses/${courseId}/videos/upload`}>
-            <Button className="shadow-lg"><Upload className="mr-2 h-4 w-4" /> Add Lesson</Button>
-          </Link>
-        )}
-      </div>
+      <PageHeader
+        eyebrow="Trainer Workspace"
+        title="Curriculum Manager"
+        subtitle={`Organize lessons and assessments for ${course?.title || 'this course'}.`}
+        actions={
+          videos.length > 0 ? (
+            <Link href={`/trainer/courses/${courseId}/videos/upload`} className="gt-btn gt-btn--primary">
+              <Upload className="h-4 w-4" /> Add Lesson
+            </Link>
+          ) : undefined
+        }
+      />
 
       {content}
     </div>

@@ -21,8 +21,10 @@ const envApiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000/grap
 // GraphQL endpoint (Lighthouse) — used for auth mutations only
 const GRAPHQL_URL = envApiUrl.endsWith('/graphql') ? envApiUrl : `${envApiUrl}/graphql`;
 
-// REST endpoint — used for all trainer module and resource routes
-const REST_BASE_URL = envApiUrl.replace(/\/graphql\/?$/, '') + '/api';
+// REST endpoint — used for all trainer module and resource routes.
+// Strip a trailing /graphql or /api so we never double the /api segment
+// (env may be http://host/graphql or http://host/api).
+const REST_BASE_URL = envApiUrl.replace(/\/(graphql|api)\/?$/, '') + '/api';
 
 // ─── Shared interceptor factory ──────────────────────────────────────────────
 function attachInterceptors(instance: AxiosInstance) {
@@ -388,6 +390,136 @@ export const analyticsApi = {
 export const usersApi = {
   async list(role?: string) {
     const { data } = await restApi.get<User[]>('/users', { params: { role } });
+    return data;
+  },
+  async verify(id: string, verified = true) {
+    const { data } = await restApi.patch(`/users/${id}/verify`, { verified });
+    return data;
+  },
+};
+
+// ─── Trainer portal (analytics, students, earnings, notifications, withdrawal) ──
+export const trainerApi = {
+  async analytics() {
+    const { data } = await restApi.get('/trainer/analytics');
+    return data as {
+      totalCourses: number;
+      activeCourses: number;
+      totalStudents: number;
+      totalSubmissions: number;
+      pendingReviews: number;
+      passRate: number;
+      totalEarnings: number;
+    };
+  },
+  async students() {
+    const { data } = await restApi.get('/trainer/students');
+    return data as Array<{
+      id: string;
+      learnerId: string;
+      name: string;
+      email: string;
+      course: string;
+      courseId: string;
+      status: string;
+      progress: number;
+      totalVideos: number;
+      unlockedVideoPosition: number;
+    }>;
+  },
+  async earnings() {
+    const { data } = await restApi.get('/trainer/earnings');
+    return data as {
+      total: number;
+      cleared: number;
+      pending: number;
+      trainerSharePercent: number;
+      platformSharePercent: number;
+      perCourse: Array<{ course: string; students: number; gross: number; earned: number }>;
+    };
+  },
+  async earningsHistory() {
+    const { data } = await restApi.get('/trainer/earnings/history');
+    return data as Array<{
+      id: string;
+      course: string;
+      learner: string;
+      grossAmount: number;
+      trainerShare: number;
+      status: string;
+      date: string | null;
+    }>;
+  },
+  async notifications() {
+    const { data } = await restApi.get('/trainer/notifications');
+    return data as Array<{ id: string; title: string; body: string; read: boolean; createdAt: string }>;
+  },
+  async markNotificationRead(id: string) {
+    const { data } = await restApi.patch(`/trainer/notifications/${id}/read`);
+    return data;
+  },
+  async markAllNotificationsRead() {
+    const { data } = await restApi.post('/trainer/notifications/read-all');
+    return data;
+  },
+  async withdrawalMethods() {
+    const { data } = await restApi.get('/trainer/withdrawal/methods');
+    return data as Array<{ id: string; provider: string; accountTitle: string; accountNumber: string; isActive: boolean }>;
+  },
+  async addWithdrawalMethod(input: { provider: string; accountTitle: string; accountNumber: string }) {
+    const { data } = await restApi.post('/trainer/withdrawal/methods', input);
+    return data;
+  },
+  async withdrawals() {
+    const { data } = await restApi.get('/trainer/withdrawals');
+    return data as {
+      availableBalance: number;
+      requests: Array<{ id: string; amount: number; status: string; createdAt: string; method?: { provider: string; accountTitle: string } }>;
+    };
+  },
+  async requestWithdrawal(input: { methodId: string; amount: number }) {
+    const { data } = await restApi.post('/trainer/withdrawals', input);
+    return data;
+  },
+  // ── Chat ──
+  async chatThreads() {
+    const { data } = await restApi.get('/trainer/chat/threads');
+    return data as Array<{ userId: string; name: string; email: string; lastMessage: string; lastAt: string }>;
+  },
+  async chatMessages(userId: string) {
+    const { data } = await restApi.get(`/trainer/chat/${userId}/messages`);
+    return data as {
+      contact: { id: string; name: string; email: string } | null;
+      messages: Array<{ id: string; body: string; fromMe: boolean; createdAt: string }>;
+    };
+  },
+  async sendChat(userId: string, body: string) {
+    const { data } = await restApi.post(`/trainer/chat/${userId}/messages`, { body });
+    return data as { id: string; body: string; fromMe: boolean; createdAt: string };
+  },
+  // ── Assessment sets (retry / backup) ──
+  async assessmentSets(videoId: string) {
+    const { data } = await restApi.get(`/trainer/videos/${videoId}/assessment-sets`);
+    return data as Array<{
+      id: string;
+      title: string;
+      version: number;
+      active: boolean;
+      label: string;
+      counts: { mcq: number; quiz: number; summary: number };
+    }>;
+  },
+  async createAssessmentSet(videoId: string) {
+    const { data } = await restApi.post(`/trainer/videos/${videoId}/assessment-sets`);
+    return data;
+  },
+  // ── Student reports (create + list) ──
+  async reports() {
+    const { data } = await restApi.get('/trainer/reports');
+    return data as Array<{ id: string; learner: string; course: string; remarks: string; createdAt: string }>;
+  },
+  async createReport(input: { learnerId: string; courseId: string; remarks: string; institutionId?: string }) {
+    const { data } = await restApi.post('/trainer/reports', input);
     return data;
   },
 };

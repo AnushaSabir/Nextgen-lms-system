@@ -1,38 +1,37 @@
 'use client';
 
-import { FormEvent, useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/ui/Button';
-import { EmptyState } from '@/components/ui/EmptyState';
-import { Field, SelectInput, TextArea, TextInput } from '@/components/ui/Field';
-import { coursesApi, meetingsApi, submissionsApi } from '@/lib/api';
-import type { Course, LearningLevel, ReviewDecision } from '@/types/domain';
+import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/auth-store';
+import { coursesApi, submissionsApi, trainerApi } from '@/lib/api';
+import type { Course, ReviewDecision } from '@/types/domain';
 import {
   BookOpen,
+  Users,
+  AlertCircle,
+  Wallet,
   Plus,
-  Upload,
+  Video,
+  MessageSquare,
+  RotateCcw,
+  ArrowRight,
   CheckCircle2,
   XCircle,
-  AlertCircle,
-  Video,
-  Users,
-  Calendar,
-  MessageSquare,
-  BarChart3,
-  Play,
-  Send,
-  TrendingUp,
-  FileText,
-  GraduationCap,
-  ChevronRight,
   Sparkles,
-  LayoutDashboard,
-  User,
-  ExternalLink,
   ThumbsUp,
   ThumbsDown,
+  GraduationCap,
 } from 'lucide-react';
-import { useRouter, usePathname } from 'next/navigation';
-import { useAuthStore } from '@/store/auth-store';
+import {
+  PageHeader,
+  StatCard,
+  Card,
+  SectionHeader,
+  Badge,
+  EmptyState,
+  Loading,
+} from '@/components/trainer/ui';
 
 /* ─── Enhanced Theme with 3D Depth Properties ─── */
 const theme = {
@@ -206,205 +205,72 @@ function FormSection({
 
 export function TrainerDashboard() {
   const router = useRouter();
-  const pathname = usePathname();
-  const { user, logout } = useAuthStore();
+  const { user } = useAuthStore();
 
   const [courses, setCourses] = useState<Course[]>([]);
   const [submissions, setSubmissions] = useState<any[]>([]);
-
-  const [courseForm, setCourseForm] = useState({ title: '', description: '', level: 'university' as LearningLevel });
-  const [videoForm, setVideoForm] = useState({ courseId: '', title: '', position: 1, videoUrl: '', summary: '' });
-  const [meetingForm, setMeetingForm] = useState({
-    courseId: '',
-    startsAt: '',
-    provider: 'zoom' as 'zoom' | 'google_meet',
-    meetingUrl: '',
-    agenda: '',
-  });
-
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState<'success' | 'info'>('success');
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const hasLoadedRef = useRef(false);
-  const dashboardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes staggeredFadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px) scale(0.95) rotateX(2deg);
-          filter: blur(8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1) rotateX(0);
-          filter: blur(0);
-        }
-      }
-
-      @keyframes scaleIn {
-        from {
-          opacity: 0;
-          transform: scale(0.9) translateZ(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1) translateZ(0);
-        }
-      }
-
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      @keyframes slideInRight {
-        from { opacity: 0; transform: translateX(100px) scale(0.9); }
-        to { opacity: 1; transform: translateX(0) scale(1); }
-      }
-
-      @keyframes pulse-subtle {
-        0%, 100% { opacity: 0.6; }
-        50% { opacity: 1; }
-      }
-
-      @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-
-      .parallax-card {
-        transition: transform 0.1s ease-out, box-shadow 0.3s ease;
-        transform-style: preserve-3d;
-      }
-    `;
-    document.head.appendChild(style);
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!dashboardRef.current) return;
-      const cards = dashboardRef.current.querySelectorAll('.parallax-card');
-      cards.forEach((card) => {
-        const rect = (card as HTMLElement).getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -5;
-        const rotateY = ((x - centerX) / centerX) * 5;
-
-        (card as HTMLElement).style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px) scale3d(1.02, 1.02, 1.02)`;
-      });
-    };
-
-    const handleMouseLeave = () => {
-      if (!dashboardRef.current) return;
-      const cards = dashboardRef.current.querySelectorAll('.parallax-card');
-      cards.forEach((card) => {
-        (card as HTMLElement).style.transform = '';
-      });
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
+  const [analytics, setAnalytics] = useState<any>(null);
+  const [earnings, setEarnings] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [toast, setToast] = useState('');
+  const loaded = useRef(false);
 
   async function load() {
-    const [courseResult, submissionResult] = await Promise.allSettled([coursesApi.list(), submissionsApi.trainerList()]);
-    setCourses(courseResult.status === 'fulfilled' ? courseResult.value : []);
-    setSubmissions(submissionResult.status === 'fulfilled' ? submissionResult.value : []);
-    setIsLoading(false);
+    const [c, s, a, e] = await Promise.allSettled([
+      coursesApi.list(),
+      submissionsApi.trainerList(),
+      trainerApi.analytics(),
+      trainerApi.earnings(),
+    ]);
+    if (c.status === 'fulfilled') setCourses(c.value as Course[]);
+    if (s.status === 'fulfilled') setSubmissions(s.value);
+    if (a.status === 'fulfilled') setAnalytics(a.value);
+    if (e.status === 'fulfilled') setEarnings(e.value);
+    setLoading(false);
   }
 
   useEffect(() => {
-    if (hasLoadedRef.current) return;
-    hasLoadedRef.current = true;
-    const timer = setTimeout(() => {
-      load().catch((error: any) => {
-        setMessage(error.message);
-        setMessageType('info');
-        setIsLoading(false);
-      });
-    }, 0);
-    return () => clearTimeout(timer);
+    if (loaded.current) return;
+    loaded.current = true;
+    load();
   }, []);
 
   useEffect(() => {
-    if (!message) return;
-    const timer = setTimeout(() => setMessage(''), 5000);
-    return () => clearTimeout(timer);
-  }, [message]);
+    if (!toast) return;
+    const t = setTimeout(() => setToast(''), 3000);
+    return () => clearTimeout(t);
+  }, [toast]);
 
-  async function createCourse(event: FormEvent) {
-    event.preventDefault();
-    try {
-      const created = await coursesApi.create(courseForm);
-      setCourseForm({ title: '', description: '', level: 'university' });
-      setMessageType('success');
-      setMessage(`Course created: ${created.title}`);
-      await load();
-    } catch (error: any) {
-      setMessageType('info');
-      setMessage(error.message);
-    }
-  }
-
-  async function addVideo(event: FormEvent) {
-    event.preventDefault();
-    try {
-      await coursesApi.addVideo(videoForm.courseId, {
-        title: videoForm.title,
-        position: Number(videoForm.position),
-        videoUrl: videoForm.videoUrl,
-        summary: videoForm.summary,
-      });
-      setMessageType('success');
-      setMessage('Video added. Add MCQ, quiz, summary, and homework sets through the assessment builder payload.');
-      setVideoForm({ courseId: '', title: '', position: 1, videoUrl: '', summary: '' });
-      await load();
-    } catch (error: any) {
-      setMessageType('info');
-      setMessage(error.message);
-    }
-  }
-
-  async function reviewSubmission(id: string, decision: ReviewDecision) {
+  async function review(id: string, decision: ReviewDecision) {
     await submissionsApi.review(
       id,
       decision,
-      decision === 'fail' ? 'Rewatch the video and retry a different test set.' : 'Reviewed by trainer.'
+      decision === 'fail' ? 'Re-watch the lesson and retry with a different set.' : 'Reviewed by trainer.',
     );
-    setMessageType('success');
-    setMessage(`Submission marked as ${decision}.`);
+    setToast(`Submission marked as ${decision}.`);
     await load();
   }
 
-  async function createMeeting(event: FormEvent) {
-    event.preventDefault();
-    try {
-      await meetingsApi.create(meetingForm);
-      setMeetingForm({ courseId: '', startsAt: '', provider: 'zoom', meetingUrl: '', agenda: '' });
-      setMessageType('success');
-      setMessage('Meeting scheduled.');
-    } catch (error: any) {
-      setMessageType('info');
-      setMessage(error.message);
-    }
-  }
+  const pending = submissions.filter((s) => !s.reviewed);
+  const totalCourses = analytics?.totalCourses ?? courses.length;
+  const totalStudents = analytics?.totalStudents ?? 0;
+  const totalEarnings = earnings?.total ?? analytics?.totalEarnings ?? 0;
 
-  const pendingCount = submissions.filter((s) => !s.reviewed).length;
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <PageHeader eyebrow="Trainer Studio" title="Dashboard" subtitle="Loading your workspace…" />
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="gt-skeleton h-32 rounded-[20px]" />
+          ))}
+        </div>
+        <Card className="p-2">
+          <Loading label="Fetching courses and submissions…" />
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div ref={dashboardRef} className="relative">
@@ -463,13 +329,16 @@ export function TrainerDashboard() {
         </div>
       </header>
 
-      {/* QUICK STATS WITH 3D CARDS */}
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8" aria-label="Quick statistics">
-        <StatCard icon={BookOpen} themeKey="navy" label="Total Courses" value={courses.length} delay={0} />
-        <StatCard icon={MessageSquare} themeKey="orange" label="Submissions" value={submissions.length} delay={80} />
-        <StatCard icon={AlertCircle} themeKey="orange" label="Awaiting Review" value={pendingCount} delay={160} />
-        <StatCard icon={Users} themeKey="navy" label="Learners Active" value={24} delay={240} />
-      </section>
+      <PageHeader
+        eyebrow="Trainer Studio"
+        title={`Welcome back, ${user?.name?.split(' ')[0] || 'Trainer'}`}
+        subtitle="Here's what's happening across your courses, students, and earnings today."
+        actions={
+          <Link href="/trainer/create-course" className="gt-btn gt-btn--primary">
+            <Plus className="h-4 w-4" /> New Course
+          </Link>
+        }
+      />
 
       {/* CREATE COURSE + ADD VIDEO WITH 3D PARALLAX */}
       <section className="grid gap-6 lg:grid-cols-2 mb-8" aria-label="Course and video creation">
@@ -1003,12 +872,35 @@ export function TrainerDashboard() {
                     key={label}
                     className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-blue-500/8 border border-blue-500/15 backdrop-blur-sm shadow-[0_2px_8px_rgba(26, 107, 46, 0.1)] transition-all duration-300 hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-1 hover:scale-[1.02] hover:bg-blue-500/12 hover:border-blue-500/25 cursor-pointer transform-gpu"
                   >
-                    <ItemIcon className="w-3.5 h-3.5 text-blue-400/60 flex-shrink-0" />
-                    <span className="text-[12px] text-blue-300/70">{label}</span>
-                  </div>
-                ))}
-              </div>
+                    <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-[var(--gt-border-2)] bg-[var(--gt-surface-2)] text-[var(--gt-accent)]">
+                      <BookOpen className="h-5 w-5" />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-semibold text-[var(--gt-text)]">{course.title}</p>
+                      <p className="mt-0.5 text-xs capitalize text-[var(--gt-text-3)]">
+                        {course.level} · {(course as any).videoCount ?? course.videos?.length ?? 0} lessons
+                      </p>
+                    </div>
+                    <Badge tone={STATUS_TONE[status] ?? 'info'} dot>
+                      {String(status).replace('_', ' ')}
+                    </Badge>
+                  </Link>
+                );
+              })}
             </div>
+          ) : (
+            <EmptyState
+              icon={Sparkles}
+              title="No courses yet"
+              detail="Create your first course to start teaching on GrapeTask."
+              action={
+                <Link href="/trainer/create-course" className="gt-btn gt-btn--primary gt-btn--sm">
+                  <Plus className="h-4 w-4" /> Create course
+                </Link>
+              }
+            />
+          )}
+        </Card>
 
             <Button
               variant="ghost"
@@ -1030,4 +922,3 @@ export function TrainerDashboard() {
     </div>
   );
 }
-

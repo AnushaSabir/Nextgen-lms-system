@@ -1,12 +1,75 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import { Bell, CheckSquare, MessageSquare, PlusCircle } from 'lucide-react';
+import { trainerApi } from '@/lib/api';
+import { PageHeader, Card, EmptyState, Loading } from '@/components/trainer/ui';
+
+type Notification = {
+  id: string;
+  title: string;
+  body: string;
+  read: boolean;
+  createdAt: string;
+};
+
+function formatRelativeTime(iso: string): string {
+  const then = new Date(iso).getTime();
+  if (Number.isNaN(then)) return '';
+  const diff = Date.now() - then;
+  const sec = Math.round(diff / 1000);
+  const min = Math.round(sec / 60);
+  const hr = Math.round(min / 60);
+  const day = Math.round(hr / 24);
+  if (sec < 60) return 'Just now';
+  if (min < 60) return `${min} minute${min === 1 ? '' : 's'} ago`;
+  if (hr < 24) return `${hr} hour${hr === 1 ? '' : 's'} ago`;
+  if (day < 7) return `${day} day${day === 1 ? '' : 's'} ago`;
+  return new Date(iso).toLocaleDateString();
+}
+
+// Cycle icon styling per item to keep the existing visual variety.
+const ICONS = [PlusCircle, CheckSquare, MessageSquare];
 
 export default function NotificationsPage() {
-  const notifications = [
-    { id: 1, type: 'enroll', title: 'New Student Enrollment', desc: 'Sarah Khan enrolled in Advanced Web Dev.', time: '2 hours ago', icon: PlusCircle, color: 'text-green-400', bg: 'bg-green-500/10' },
-    { id: 2, type: 'submission', title: 'New Submission', desc: 'Ali Raza submitted React Portfolio.', time: '5 hours ago', icon: CheckSquare, color: 'text-blue-400', bg: 'bg-blue-500/10' },
-    { id: 3, type: 'message', title: 'New Message', desc: 'Zainab B. sent you a message.', time: '1 day ago', icon: MessageSquare, color: 'text-purple-400', bg: 'bg-purple-500/10' },
-  ];
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  async function load() {
+    setLoading(true);
+    try {
+      const data = await trainerApi.notifications();
+      setNotifications(Array.isArray(data) ? data : []);
+    } catch {
+      setNotifications([]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  async function handleMarkAll() {
+    try {
+      await trainerApi.markAllNotificationsRead();
+      await load();
+    } catch {
+      // ignore
+    }
+  }
+
+  async function handleMarkOne(id: string) {
+    try {
+      await trainerApi.markNotificationRead(id);
+      await load();
+    } catch {
+      // ignore
+    }
+  }
+
+  const unread = notifications.filter((n) => !n.read).length;
 
   return (
     <div className="p-8 max-w-4xl mx-auto animate-in fade-in duration-500">

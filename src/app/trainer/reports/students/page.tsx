@@ -1,13 +1,59 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import { BarChart3, TrendingUp, Users, Target } from 'lucide-react';
+import { trainerApi } from '@/lib/api';
+import {
+  PageHeader,
+  StatCard,
+  Card,
+  SectionHeader,
+  Badge,
+  EmptyState,
+  Loading,
+} from '@/components/trainer/ui';
+
+type Student = {
+  id: string;
+  name: string;
+  email: string;
+  course: string;
+  courseId: string;
+  status: string;
+  progress: number;
+  totalVideos: number;
+  unlockedVideoPosition: number;
+};
 
 export default function StudentReportsPage() {
-  const students = [
-    { id: 1, name: 'Sarah Khan', progress: 85, score: 'A', status: 'Excellent' },
-    { id: 2, name: 'Ali Raza', progress: 45, score: 'C', status: 'Needs Help' },
-    { id: 3, name: 'Zainab B.', progress: 100, score: 'A+', status: 'Graduated' },
-    { id: 4, name: 'Omar M.', progress: 15, score: 'F', status: 'At Risk' },
-  ];
+  const [students, setStudents] = useState<Student[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      setLoading(true);
+      try {
+        const data = await trainerApi.students();
+        if (active) setStudents(Array.isArray(data) ? data : []);
+      } catch {
+        if (active) setStudents([]);
+      } finally {
+        if (active) setLoading(false);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Derived KPIs from the real student array.
+  const totalStudents = students.length;
+  const avgCompletion = totalStudents
+    ? Math.round(students.reduce((sum, s) => sum + (s.progress || 0), 0) / totalStudents)
+    : 0;
+  const completedCount = students.filter((s) => (s.progress || 0) >= 100).length;
+  const atRiskCount = students.filter((s) => (s.progress || 0) < 30).length;
 
   return (
     <div className="p-8 max-w-7xl mx-auto animate-in fade-in duration-500">
@@ -57,11 +103,9 @@ export default function StudentReportsPage() {
                     <span className="text-xs text-[#1a6b2e]">Progress</span>
                     <span className="text-xs font-bold text-[#0f3d1a]">{student.progress}%</span>
                   </div>
-                  <div className="w-full h-2 bg-[#1e293b] rounded-full overflow-hidden">
-                    <div 
-                      className={`h-full rounded-full ${
-                        student.progress < 30 ? 'bg-red-500' : student.progress < 70 ? 'bg-yellow-500' : 'bg-green-500'
-                      }`}
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--gt-surface-2)]">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-[var(--gt-accent)] to-[var(--gt-accent-2)] transition-all"
                       style={{ width: `${student.progress}%` }}
                     />
                   </div>
@@ -73,8 +117,8 @@ export default function StudentReportsPage() {
               </div>
             ))}
           </div>
-        </div>
-      </div>
+        )}
+      </Card>
     </div>
   );
 }

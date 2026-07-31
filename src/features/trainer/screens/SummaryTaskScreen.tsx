@@ -3,10 +3,7 @@
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
 import { ChevronRight, FileText } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
-import { Field, TextArea, TextInput } from '@/components/ui/Field';
-import { PageHeader } from '../components/TrainerShared';
+import { PageHeader, Card, SectionHeader } from '@/components/trainer/ui';
 import { getVideos as apiGetVideos, addSummaryTask as apiAddSummaryTask, getSummaryTasks as apiGetSummaryTasks } from '@/services/trainerApi';
 import { useToastStore } from '@/store/toast-store';
 import { getErrorMessage } from '@/utils/errorParser';
@@ -63,15 +60,19 @@ export function SummaryTaskScreen({ courseId, videoId }: { courseId: string; vid
         <span className="text-[#1a6b2e]">Summary Task</span>
       </div>
 
-      <PageHeader title="Written Summary Task" caption={`Configure essay/summary requirements for: ${video?.title ?? 'Lesson'}`} />
+      <PageHeader
+        eyebrow="Trainer Workspace"
+        title="Written Summary Task"
+        subtitle={`Configure essay/summary requirements for: ${video?.title ?? 'Lesson'}`}
+      />
 
-      <Card className="border-gray-700/50 bg-gray-900/60 shadow-xl p-8">
+      <Card className="p-6">
+        <SectionHeader icon={FileText} title="Configure Summary Task" caption="Set the prompt, minimum length, and passing rubric." />
+
         <form className="space-y-6" onSubmit={handleSave}>
-          <Field label="Task Instructions & Prompt"><TextArea name="prompt" className="min-h-[120px]" placeholder="Summarize the key architectural decisions discussed in this lesson..." required /></Field>
-
-          <div className="grid gap-6 sm:grid-cols-[200px_1fr]">
-            <Field label="Minimum Words"><TextInput name="minimumWords" type="number" min={50} defaultValue={150} required /></Field>
-            <Field label="Passing Criteria / Rubric"><TextInput name="passingCriteria" placeholder="Must include mentions of React, state, and props..." required /></Field>
+          <div>
+            <label className="gt-label">Task Instructions & Prompt</label>
+            <textarea className="gt-input min-h-[120px]" name="prompt" placeholder="Summarize the key architectural decisions discussed in this lesson…" required />
           </div>
 
           <div className="pt-4 border-t border-gray-800">
