@@ -1,112 +1,12 @@
-'use client';
-
-import React, { useCallback, useEffect, useState } from 'react';
-import Link from 'next/link';
-import { RotateCcw, AlertCircle, CheckCircle2, Plus, Loader2 } from 'lucide-react';
-import { coursesApi, trainerApi } from '@/lib/api';
-import type { Course, VideoLesson } from '@/types/domain';
-import {
-  PageHeader,
-  Card,
-  SectionHeader,
-  Badge,
-  EmptyState,
-  Loading,
-} from '@/components/trainer/ui';
-
-type AssessmentSet = {
-  id: string;
-  title: string;
-  version: number;
-  active: boolean;
-  label: string;
-  counts: { mcq: number; quiz: number; summary: number };
-};
+import React from 'react';
+import { RotateCcw, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 export default function RetryQuestionsPage() {
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [selectedCourseId, setSelectedCourseId] = useState<string>('');
-  const [setsByVideo, setSetsByVideo] = useState<Record<string, AssessmentSet[]>>({});
-  const [loadingCourses, setLoadingCourses] = useState(true);
-  const [loadingSets, setLoadingSets] = useState(false);
-  const [creatingVideoId, setCreatingVideoId] = useState<string | null>(null);
-
-  // 1. Fetch the trainer's courses on mount; default to the first one.
-  useEffect(() => {
-    let active = true;
-    (async () => {
-      setLoadingCourses(true);
-      try {
-        const data = await coursesApi.list();
-        const list = Array.isArray(data) ? data : [];
-        if (!active) return;
-        setCourses(list);
-        setSelectedCourseId((prev) => prev || list[0]?.id || '');
-      } catch {
-        if (active) setCourses([]);
-      } finally {
-        if (active) setLoadingCourses(false);
-      }
-    })();
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  const selectedCourse = courses.find((c) => c.id === selectedCourseId);
-  const videos: VideoLesson[] = selectedCourse?.videos ?? [];
-
-  // Fetch (or refetch) the assessment sets for a single video.
-  const fetchSetsForVideo = useCallback(async (videoId: string) => {
-    try {
-      const sets = await trainerApi.assessmentSets(videoId);
-      setSetsByVideo((prev) => ({ ...prev, [videoId]: Array.isArray(sets) ? sets : [] }));
-    } catch {
-      setSetsByVideo((prev) => ({ ...prev, [videoId]: [] }));
-    }
-  }, []);
-
-  // 2. When the selected course changes, load sets for each of its videos.
-  useEffect(() => {
-    if (!selectedCourseId) return;
-    const course = courses.find((c) => c.id === selectedCourseId);
-    const courseVideos = course?.videos ?? [];
-    let active = true;
-    (async () => {
-      setLoadingSets(true);
-      try {
-        const results = await Promise.all(
-          courseVideos.map(async (v) => {
-            try {
-              const sets = await trainerApi.assessmentSets(v.id);
-              return [v.id, Array.isArray(sets) ? sets : []] as const;
-            } catch {
-              return [v.id, [] as AssessmentSet[]] as const;
-            }
-          }),
-        );
-        if (active) setSetsByVideo(Object.fromEntries(results));
-      } finally {
-        if (active) setLoadingSets(false);
-      }
-    })();
-    return () => {
-      active = false;
-    };
-  }, [selectedCourseId, courses]);
-
-  // 3. Create the next backup set for a video, then refetch just that video.
-  const createBackupSet = async (videoId: string) => {
-    setCreatingVideoId(videoId);
-    try {
-      await trainerApi.createAssessmentSet(videoId);
-      await fetchSetsForVideo(videoId);
-    } catch {
-      // Safe fallback — leave existing sets untouched on failure.
-    } finally {
-      setCreatingVideoId(null);
-    }
-  };
+  const retrySets = [
+    { id: 1, course: 'Advanced Web Dev', module: 'Video 2: React Hooks', failedStudents: 12, setsAvailable: 3 },
+    { id: 2, course: 'UI/UX Masterclass', module: 'Video 4: Color Theory', failedStudents: 5, setsAvailable: 1 },
+    { id: 3, course: 'Python Data Scraping', module: 'Video 1: Basics', failedStudents: 0, setsAvailable: 2 },
+  ];
 
   return (
     <div className="p-8 max-w-7xl mx-auto animate-in fade-in duration-500">
@@ -115,18 +15,14 @@ export default function RetryQuestionsPage() {
         <p className="text-[#1a6b2e]">Manage alternative assessment sets for students who fail initial attempts.</p>
       </div>
 
-      {/* Why multiple sets? */}
-      <Card className="p-5">
-        <div className="flex items-center gap-4">
-          <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-[rgba(251,191,36,0.28)] bg-[rgba(251,191,36,0.1)] text-[var(--gt-warn)]">
-            <AlertCircle className="h-5 w-5" />
-          </span>
+      <div className="bg-[#0f172a]/60 backdrop-blur-xl border border-[#1e293b] rounded-[32px] overflow-hidden shadow-2xl">
+        <div className="p-6 border-b border-[#1e293b] flex items-center gap-4 bg-gradient-to-r from-red-500/10 to-transparent">
+          <AlertCircle className="w-6 h-6 text-red-400" />
           <div>
             <h3 className="font-bold text-[#0f3d1a]">Why multiple sets?</h3>
             <p className="text-sm text-[#1a6b2e]">To prevent cheating, students who retry an assessment must receive a different set of questions.</p>
           </div>
         </div>
-      </Card>
 
         <div className="p-6">
           <div className="space-y-4">
@@ -157,81 +53,11 @@ export default function RetryQuestionsPage() {
                     Manage Sets
                   </button>
                 </div>
-
-                {/* Assessment sets */}
-                <div className="space-y-3 p-4">
-                  {sets === undefined ? (
-                    <div className="py-6 text-center text-sm font-medium text-[var(--gt-text-3)]">
-                      {loadingSets ? 'Loading assessment sets…' : ''}
-                    </div>
-                  ) : sets.length === 0 ? (
-                    <div className="py-6 text-center text-sm font-medium text-[var(--gt-text-3)]">
-                      No assessment sets yet. Create a backup set to get started.
-                    </div>
-                  ) : (
-                    sets.map((set) => (
-                      <div
-                        key={set.id}
-                        className="gt-card gt-card--hover flex flex-col gap-4 p-5 lg:flex-row lg:items-center lg:justify-between"
-                      >
-                        <div className="flex items-center gap-4">
-                          <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border border-[var(--gt-border-2)] bg-[var(--gt-surface-2)] text-[var(--gt-accent)]">
-                            <RotateCcw className="h-5 w-5" />
-                          </span>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <Badge tone="accent">{set.label}</Badge>
-                              {set.active && <CheckCircle2 className="h-4 w-4 text-[var(--gt-success)]" />}
-                            </div>
-                            <p className="mt-1 text-sm text-[var(--gt-text-3)]">
-                              {set.active ? 'Active' : 'Inactive'} · v{set.version}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-wrap items-center gap-6">
-                          <div className="text-center">
-                            <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[var(--gt-text-3)]">MCQs</p>
-                            <p className="gt-num text-lg font-extrabold text-[var(--gt-text)]">{set.counts?.mcq ?? 0}</p>
-                          </div>
-                          <div className="text-center">
-                            <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[var(--gt-text-3)]">Quizzes</p>
-                            <p className="gt-num text-lg font-extrabold text-[var(--gt-text)]">{set.counts?.quiz ?? 0}</p>
-                          </div>
-                          <div className="text-center">
-                            <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[var(--gt-text-3)]">Summaries</p>
-                            <p className="gt-num text-lg font-extrabold text-[var(--gt-text)]">{set.counts?.summary ?? 0}</p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Link
-                              href={`/trainer/courses/${selectedCourseId}/videos/${video.id}/mcqs`}
-                              className="gt-btn gt-btn--ghost gt-btn--sm"
-                            >
-                              MCQs
-                            </Link>
-                            <Link
-                              href={`/trainer/courses/${selectedCourseId}/videos/${video.id}/quiz`}
-                              className="gt-btn gt-btn--ghost gt-btn--sm"
-                            >
-                              Quiz
-                            </Link>
-                            <Link
-                              href={`/trainer/courses/${selectedCourseId}/videos/${video.id}/summary-task`}
-                              className="gt-btn gt-btn--ghost gt-btn--sm"
-                            >
-                              Summary
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </Card>
-            );
-          })}
+              </div>
+            ))}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

@@ -1,69 +1,14 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import { ArrowLeft, Download } from 'lucide-react';
+import React from 'react';
+import { ArrowLeft, Download, Filter } from 'lucide-react';
 import Link from 'next/link';
-import { trainerApi } from '@/lib/api';
-import { PageHeader, Card, Badge, Loading, EmptyState } from '@/components/trainer/ui';
-
-type HistoryRow = {
-  id: string;
-  course: string;
-  learner: string;
-  grossAmount: number;
-  trainerShare: number;
-  status: string;
-  date: string | null;
-};
 
 export default function RevenueHistoryPage() {
-  const [history, setHistory] = useState<HistoryRow[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let active = true;
-    (async () => {
-      try {
-        const res = await trainerApi.earningsHistory();
-        if (active) setHistory(res);
-      } catch {
-        if (active) setHistory([]);
-      } finally {
-        if (active) setLoading(false);
-      }
-    })();
-    return () => { active = false; };
-  }, []);
-
-  const formatDate = (d: string | null) => {
-    if (!d) return '—';
-    const parsed = new Date(d);
-    return isNaN(parsed.getTime()) ? d : parsed.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-  };
-
-  const isCleared = (status: string) => status === 'Cleared' || status === 'Completed';
-
-  function exportCsv() {
-    const header = ['Transaction ID', 'Course', 'Learner', 'Sale Price (PKR)', 'Your Share (PKR)', 'Status', 'Date'];
-    const rows = history.map((r) => [
-      r.id,
-      r.course,
-      r.learner,
-      String(r.grossAmount ?? 0),
-      String(r.trainerShare ?? 0),
-      r.status,
-      formatDate(r.date),
-    ]);
-    const csv = [header, ...rows]
-      .map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(','))
-      .join('\n');
-    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'grapetask-revenue-history.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-  }
+  const history = [
+    { id: 'TRX-1092', date: 'Oct 24, 2026', type: 'Course Sale', details: 'Advanced Web Dev (Sale Price: $50)', amount: '+$35.00', status: 'Cleared' },
+    { id: 'TRX-1091', date: 'Oct 23, 2026', type: 'Withdrawal', details: 'Bank Transfer to Meezan Bank', amount: '-$1,000.00', status: 'Completed' },
+    { id: 'TRX-1090', date: 'Oct 22, 2026', type: 'Course Sale', details: 'UI/UX Masterclass (Sale Price: $40)', amount: '+$28.00', status: 'Pending' },
+    { id: 'TRX-1089', date: 'Oct 20, 2026', type: 'Course Sale', details: 'Python Data Scraping (Sale Price: $30)', amount: '+$21.00', status: 'Cleared' },
+  ];
 
   return (
     <div className="p-8 max-w-7xl mx-auto animate-in fade-in duration-500">

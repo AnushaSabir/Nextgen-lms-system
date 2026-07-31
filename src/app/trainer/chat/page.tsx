@@ -1,131 +1,16 @@
-'use client';
-
-import React, { useEffect, useRef, useState } from 'react';
-import { Search, Send, MessageSquare } from 'lucide-react';
-import { trainerApi } from '@/lib/api';
-
-type Thread = { userId: string; name: string; email: string; lastMessage: string; lastAt: string };
-type ChatMessage = { id: string; body: string; fromMe: boolean; createdAt: string };
-type Conversation = { contact: { id: string; name: string; email: string } | null; messages: ChatMessage[] };
-
-function initials(name: string): string {
-  return (name || '')
-    .split(' ')
-    .filter(Boolean)
-    .map((n) => n[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
-}
-
-function formatClock(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return '';
-  return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-}
-
-function formatThreadTime(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return '';
-  const now = new Date();
-  if (d.toDateString() === now.toDateString()) {
-    return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-  }
-  const yesterday = new Date(now);
-  yesterday.setDate(now.getDate() - 1);
-  if (d.toDateString() === yesterday.toDateString()) return 'Yesterday';
-  if ((now.getTime() - d.getTime()) / 86400000 < 7) {
-    return d.toLocaleDateString([], { weekday: 'long' });
-  }
-  return d.toLocaleDateString();
-}
+import React from 'react';
+import { Search, Send, Paperclip, MoreVertical, Phone, Video } from 'lucide-react';
 
 export default function ChatPage() {
-  const [threads, setThreads] = useState<Thread[]>([]);
-  const [loadingThreads, setLoadingThreads] = useState(true);
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-  const [conversation, setConversation] = useState<Conversation | null>(null);
-  const [loadingMessages, setLoadingMessages] = useState(false);
-  const [input, setInput] = useState('');
-  const [sending, setSending] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
-
-  async function loadThreads(autoSelect = false) {
-    try {
-      const data = await trainerApi.chatThreads();
-      const list = Array.isArray(data) ? data : [];
-      setThreads(list);
-      if (autoSelect && list.length > 0) {
-        setSelectedUserId((prev) => prev ?? list[0].userId);
-      }
-    } catch {
-      setThreads([]);
-    } finally {
-      setLoadingThreads(false);
-    }
-  }
-
-  useEffect(() => {
-    loadThreads(true);
-  }, []);
-
-  useEffect(() => {
-    if (!selectedUserId) return;
-    let cancelled = false;
-    setLoadingMessages(true);
-    setConversation(null);
-    trainerApi
-      .chatMessages(selectedUserId)
-      .then((data) => {
-        if (cancelled) return;
-        setConversation({ contact: data?.contact ?? null, messages: Array.isArray(data?.messages) ? data.messages : [] });
-      })
-      .catch(() => {
-        if (!cancelled) setConversation({ contact: null, messages: [] });
-      })
-      .finally(() => {
-        if (!cancelled) setLoadingMessages(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [selectedUserId]);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ block: 'end' });
-  }, [conversation?.messages.length]);
-
-  async function handleSend() {
-    const text = input.trim();
-    if (!text || !selectedUserId || sending) return;
-    setSending(true);
-    try {
-      const msg = await trainerApi.sendChat(selectedUserId, text);
-      setConversation((prev) =>
-        prev ? { ...prev, messages: [...prev.messages, msg] } : { contact: null, messages: [msg] },
-      );
-      setInput('');
-      loadThreads(); // refresh lastMessage in the sidebar
-    } catch {
-      // keep the typed text so the trainer can retry
-    } finally {
-      setSending(false);
-    }
-  }
-
-  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  }
-
-  const selectedThread = threads.find((t) => t.userId === selectedUserId) ?? null;
-  const headerName = conversation?.contact?.name ?? selectedThread?.name ?? '';
+  const contacts = [
+    { id: 1, name: 'Sarah Khan', lastMessage: 'Thank you for the feedback!', time: '10:42 AM', active: true, unread: 0 },
+    { id: 2, name: 'Ali Raza', lastMessage: 'Can you explain the hooks?', time: 'Yesterday', active: false, unread: 2 },
+    { id: 3, name: 'Zainab B.', lastMessage: 'Assignment submitted.', time: 'Monday', active: false, unread: 0 },
+  ];
 
   return (
-    <div className="gt-rise flex h-[calc(100vh-8rem)] min-h-[520px] flex-col gap-5 md:flex-row">
-
+    <div className="h-full max-w-7xl mx-auto flex flex-col md:flex-row gap-6 p-4 sm:p-6 animate-in fade-in duration-500">
+      
       {/* Sidebar / Contacts */}
       <div className="w-full md:w-80 bg-white/[0.02] backdrop-blur-3xl border border-[#1a6b2e]/20 rounded-[40px] flex flex-col shadow-2xl overflow-hidden h-[85vh] transition-all duration-700 transform-style-3d hover:-translate-y-2 hover:scale-[1.01] hover:border-sky-500/30 hover:shadow-[0_20px_60px_rgba(240,89,31,0.2)]">
         <div className="p-6 border-b border-[#1e293b]">
@@ -200,6 +85,8 @@ export default function ChatPage() {
             <div className="bg-[#1e293b] p-4 rounded-2xl rounded-bl-sm text-sm text-[#1a6b2e]">
               Hello! I had a question about the assignment submission. Do I need to include the node_modules folder?
             </div>
+            <span className="text-[10px] text-[#64748b] mb-1">10:30 AM</span>
+          </div>
 
           <div className="flex items-end gap-3 max-w-[80%] ml-auto flex-row-reverse">
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 flex-shrink-0" />
@@ -235,7 +122,7 @@ export default function ChatPage() {
           </div>
         </div>
       </div>
-
+      
     </div>
   );
 }

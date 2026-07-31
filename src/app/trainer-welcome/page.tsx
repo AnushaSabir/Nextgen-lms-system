@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Bell, Mail, Menu, Play, Pause, CheckCircle2, Globe, TrendingUp, Users, DollarSign, Award } from 'lucide-react';
 import { useAuthStore } from '@/store/auth-store';

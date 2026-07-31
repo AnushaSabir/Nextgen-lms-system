@@ -1,9 +1,12 @@
 'use client';
 
-import { FormEvent, useState, type ReactNode } from 'react';
-import { Save, Send, BookOpen, CheckCircle2 } from 'lucide-react';
+import { FormEvent, useState, useRef, useEffect } from 'react';
+import { Save, Send, BookOpen, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { Card, CardTitle } from '@/components/ui/Card';
+import { Field, SelectInput, TextArea, TextInput } from '@/components/ui/Field';
 import type { LearningLevel } from '@/types/domain';
-import { PageHeader, Card, SectionHeader } from '@/components/trainer/ui';
+import { PageHeader, InfoList } from '../components/TrainerShared';
 import { trainerLevels, approvalStandards } from '../trainerModuleData';
 import { createCourse as apiCreateCourse } from '@/services/trainerApi';
 import { useToastStore } from '@/store/toast-store';
@@ -85,6 +88,7 @@ function SectionHeader({
 export function CreateCourseScreen() {
   const [level, setLevel] = useState<LearningLevel>('college');
   const [loading, setLoading] = useState(false);
+  const createRef = useRef<HTMLDivElement>(null);
   const { showToast } = useToastStore();
 
   // Inject keyframe animations
@@ -205,12 +209,7 @@ export function CreateCourseScreen() {
 
   async function handleCreate(e: FormEvent, submitForApproval = false) {
     e.preventDefault();
-    // "Submit for Approval" is a type=button, so e.target is the button — resolve the real form.
-    const form = ((e.currentTarget as HTMLElement).closest('form') ??
-      (e.target as HTMLElement).closest('form')) as HTMLFormElement | null;
-    if (!form) return;
-    // Run native validation for the non-submit (Approval) path too.
-    if (!form.reportValidity()) return;
+    const form = e.target as HTMLFormElement;
     const fd = new FormData(form);
 
     // Convert textarea strings to arrays for requirements and outcomes
@@ -250,7 +249,12 @@ export function CreateCourseScreen() {
         <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-400/5 rounded-full blur-3xl animate-[float3D_12s_ease-in-out_infinite_2s]" />
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1fr_350px]">
+      {/* PAGE HEADER */}
+      <div className="relative z-10">
+        <PageHeader title="Create New Course" caption="Design a comprehensive learning experience. Save as draft or submit for admin review." />
+      </div>
+
+      <div className="grid gap-8 xl:grid-cols-[1fr_350px] relative z-10">
         {/* Main Form Card */}
         <div
           className={`relative rounded-2xl ${glassEffect} p-6 sm:p-8 overflow-hidden ${card3DClass} parallax-card
@@ -263,72 +267,37 @@ export function CreateCourseScreen() {
           <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-blue-500/10 blur-3xl transition-all duration-700 group-hover:scale-110" />
           <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-sky-500/5 blur-3xl transition-all duration-700 group-hover:scale-110" />
 
-          <form className="space-y-8" onSubmit={(e) => handleCreate(e, false)} id="create-course-form">
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div className="sm:col-span-2">
-                <Field label="Course Title">
-                  <input name="title" placeholder="e.g. Advanced Frontend Foundations" required className="gt-input" />
-                </Field>
-              </div>
-              <Field label="Category">
-                <input name="category" placeholder="e.g. Web Development" required className="gt-input" />
-              </Field>
-              <Field label="Learning Level">
-                <select
-                  name="level"
-                  value={level}
-                  onChange={(e) => setLevel(e.target.value as LearningLevel)}
-                  className="gt-input cursor-pointer appearance-none"
-                >
-                  {trainerLevels.map((item) => (
-                    <option key={item.value} value={item.value}>{item.label}</option>
-                  ))}
-                </select>
-              </Field>
-              <Field label="Price (PKR)">
-                <input name="price" type="number" min={0} placeholder="12000" required className="gt-input" />
-              </Field>
-              <Field label="Cover Thumbnail">
-                <input
-                  name="thumbnail"
-                  type="file"
-                  accept="image/*"
-                  required
-                  className="gt-input file:mr-3 file:rounded-lg file:border-0 file:bg-[var(--gt-accent-soft)] file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-[var(--gt-accent)]"
-                />
-              </Field>
-            </div>
+          <div className="relative z-10">
+            <SectionHeader icon={BookOpen} themeKey="navy" title="Course Essentials" caption="Provide accurate details to ensure faster approval." />
 
-            <div className="gt-hairline space-y-6 pt-6">
-              <Field label="Course Description">
-                <textarea
-                  name="description"
-                  className="gt-input min-h-[120px]"
-                  placeholder="Detailed description of the course, target audience, and curriculum structure."
-                  required
-                />
-              </Field>
-
+            <form className="space-y-8" onSubmit={(e) => handleCreate(e, false)} id="create-course-form">
               <div className="grid gap-6 sm:grid-cols-2">
-                <Field label="Prerequisites & Requirements (One per line)">
-                  <textarea
-                    name="requirements_text"
-                    className="gt-input min-h-[120px]"
-                    placeholder="Basic HTML knowledge&#10;Computer with internet"
-                    required
-                  />
+                <div className="sm:col-span-2">
+                  <Field label="Course Title">
+                    <TextInput name="title" placeholder="e.g. Advanced Frontend Foundations" required className="text-lg py-3" />
+                  </Field>
+                </div>
+                <Field label="Category">
+                  <TextInput name="category" placeholder="e.g. Web Development" required />
                 </Field>
-                <Field label="Learning Outcomes (One per line)">
-                  <textarea
-                    name="outcomes_text"
-                    className="gt-input min-h-[120px]"
-                    placeholder="Build responsive websites&#10;Understand React hooks"
+                <Field label="Learning Level">
+                  <SelectInput name="level" value={level} onChange={(e) => setLevel(e.target.value as LearningLevel)}>
+                    {trainerLevels.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+                  </SelectInput>
+                </Field>
+                <Field label="Price (PKR)">
+                  <TextInput name="price" type="number" min={0} placeholder="12000" required />
+                </Field>
+                <Field label="Cover Thumbnail">
+                  <TextInput
+                    name="thumbnail"
+                    type="file"
+                    accept="image/*"
                     required
                     className="file:mr-4 file:rounded-full file:border-0 file:bg-sky-500/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-sky-400 hover:file:bg-sky-500/20 file:transition-all file:duration-300 file:hover:scale-105 file:hover:shadow-[0_4px_12px_rgba(249,115,22,0.3)]"
                   />
                 </Field>
               </div>
-            </div>
 
               <div className="border-t border-white/[0.06] pt-6 space-y-6">
                 <Field label="Course Description">
@@ -396,7 +365,11 @@ export function CreateCourseScreen() {
               <SectionHeader icon={CheckCircle2} themeKey="orange" title="Approval Checklist" caption="Review these standards before submitting." />
               <InfoList items={approvalStandards} />
             </div>
-          </Card>
+
+            {/* 3D border highlights */}
+            <div className="absolute top-0 left-0 w-full h-full rounded-2xl border border-white/[0.06] pointer-events-none" />
+            <div className="absolute top-0 left-0 w-full h-full rounded-2xl bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
+          </div>
         </div>
       </div>
     </div>

@@ -3,7 +3,10 @@
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
 import { ChevronRight, ListChecks } from 'lucide-react';
-import { PageHeader, Card, SectionHeader } from '@/components/trainer/ui';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { Field, TextArea, TextInput } from '@/components/ui/Field';
+import { PageHeader } from '../components/TrainerShared';
 import { getVideos as apiGetVideos, addQuiz as apiAddQuiz, getQuizzes as apiGetQuizzes } from '@/services/trainerApi';
 import { useToastStore } from '@/store/toast-store';
 import { getErrorMessage } from '@/utils/errorParser';
@@ -59,33 +62,20 @@ export function QuizManagementScreen({ courseId, videoId }: { courseId: string; 
         <span className="text-[#1a6b2e]">Short Quiz</span>
       </div>
 
-      <PageHeader
-        eyebrow="Trainer Workspace"
-        title="Quiz Questions"
-        subtitle={`Add conceptual questions for: ${video?.title ?? 'Lesson'}`}
-      />
+      <PageHeader title="Quiz Questions" caption={`Add conceptual questions for: ${video?.title ?? 'Lesson'}`} />
 
-      <Card className="p-6">
-        <SectionHeader icon={ListChecks} title="Create New Quiz" caption="Short answer questions with an expected answer key." />
-
+      <Card className="border-gray-700/50 bg-gray-900/60 shadow-xl p-8">
         <form className="space-y-6" onSubmit={handleAddQuiz}>
-          <div>
-            <label className="gt-label">Question Prompt</label>
-            <textarea className="gt-input" name="prompt" placeholder="Write a short answer question…" required />
-          </div>
-          <div>
-            <label className="gt-label">Expected Answer Key</label>
-            <textarea className="gt-input" name="correctAnswer" placeholder="Provide the key points expected in the answer…" required />
-          </div>
+          <Field label="Question Prompt"><TextArea name="prompt" placeholder="Write a short answer question..." required /></Field>
+          <Field label="Expected Answer Key"><TextArea name="correctAnswer" placeholder="Provide the key points expected in the answer..." required /></Field>
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-            <div className="w-full sm:w-32">
-              <label className="gt-label">Points</label>
-              <input className="gt-input" name="points" type="number" min={1} defaultValue={5} required />
+          <div className="flex items-end gap-6">
+            <div className="w-32">
+              <Field label="Points"><TextInput name="points" type="number" min={1} defaultValue={5} required /></Field>
             </div>
-            <button type="submit" disabled={loading} className="gt-btn gt-btn--primary">
-              <ListChecks className="h-4 w-4" />{loading ? 'Saving…' : 'Add Quiz Question'}
-            </button>
+            <Button type="submit" size="lg" disabled={loading}>
+              <ListChecks className="mr-2 h-4 w-4" />{loading ? 'Saving...' : 'Add Quiz Question'}
+            </Button>
           </div>
         </form>
       </Card>

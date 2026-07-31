@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import { Award, BookOpen, CheckCircle2, ChevronRight, GraduationCap, Send, Upload, Video as VideoIcon } from 'lucide-react';
-import { PageHeader, Card, SectionHeader, Badge, Loading, EmptyState } from '@/components/trainer/ui';
+import { Award, CheckCircle2, ChevronRight, GraduationCap, Send, Upload, Video as VideoIcon } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { Card, CardTitle } from '@/components/ui/Card';
+import { StatusBadge } from '../components/TrainerShared';
 import { getCourse as apiGetCourse } from '@/services/trainerApi';
-import { coursesApi } from '@/lib/api';
 
 const VideoListScreen = dynamic(
   () => import('./VideoListScreen').then((mod) => mod.VideoListScreen),
@@ -15,32 +16,9 @@ const VideoListScreen = dynamic(
 
 type Course = any;
 
-const STATUS_TONE: Record<string, 'success' | 'warn' | 'danger' | 'info'> = {
-  approved: 'success',
-  pending_review: 'warn',
-  draft: 'info',
-  rejected: 'danger',
-};
-
 export function CourseDetailsScreen({ courseId }: { courseId: string }) {
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-  const [notice, setNotice] = useState('');
-
-  async function submitForReview() {
-    setSubmitting(true);
-    try {
-      const updated = await coursesApi.submitReview(courseId);
-      setCourse((prev: Course) => ({ ...prev, status: updated?.status ?? 'pending_review' }));
-      setNotice('Course submitted for admin review.');
-    } catch {
-      setNotice('Could not submit for review. Please try again.');
-    } finally {
-      setSubmitting(false);
-      setTimeout(() => setNotice(''), 3000);
-    }
-  }
 
   useEffect(() => {
     let mounted = true;
@@ -96,9 +74,9 @@ export function CourseDetailsScreen({ courseId }: { courseId: string }) {
       </Card>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card className="p-6">
-          <SectionHeader icon={CheckCircle2} tone="info" title="Prerequisites" caption="What students need before starting" />
-          <ul className="space-y-3">
+        <Card className="border-gray-700/50 bg-gray-800/30">
+          <CardTitle title="Prerequisites" caption="What students need before starting" />
+          <ul className="mt-4 space-y-3">
             {(course.requirements ?? []).map((req: string, i: number) => (
               <li key={i} className="flex items-start gap-3 text-[#1a6b2e]">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#7dab52]" /> {req}
@@ -106,9 +84,9 @@ export function CourseDetailsScreen({ courseId }: { courseId: string }) {
             ))}
           </ul>
         </Card>
-        <Card className="p-6">
-          <SectionHeader icon={Award} tone="success" title="Learning Outcomes" caption="What students will achieve" />
-          <ul className="space-y-3">
+        <Card className="border-gray-700/50 bg-gray-800/30">
+          <CardTitle title="Learning Outcomes" caption="What students will achieve" />
+          <ul className="mt-4 space-y-3">
             {(course.learningOutcomes ?? course.outcomes ?? []).map((out: string, i: number) => (
               <li key={i} className="flex items-start gap-3 text-[#1a6b2e]">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" /> {out}
@@ -121,7 +99,7 @@ export function CourseDetailsScreen({ courseId }: { courseId: string }) {
       <div className="mt-12">
         <h2 className="text-xl font-bold text-[#0f3d1a] mb-6 flex items-center gap-2"><VideoIcon className="h-5 w-5 text-sky-400" /> Curriculum &amp; Lessons</h2>
         <VideoListScreen courseId={courseId} embedded />
-      </Card>
+      </div>
     </div>
   );
 }

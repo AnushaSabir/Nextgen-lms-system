@@ -1,88 +1,26 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { BarChart3, Users, Clock, Search, Activity, AlertCircle, Files } from 'lucide-react';
-import { PageHeader, StatCard, Card, SectionHeader, Badge, Loading } from '@/components/trainer/ui';
-import { trainerApi } from '@/lib/api';
-
-type Analytics = {
-  totalCourses: number;
-  activeCourses: number;
-  totalStudents: number;
-  totalSubmissions: number;
-  pendingReviews: number;
-  passRate: number;
-  totalEarnings: number;
-};
-
-type Student = {
-  id: string;
-  name: string;
-  email: string;
-  course: string;
-  courseId: string;
-  status: string;
-  progress: number;
-  totalVideos: number;
-  unlockedVideoPosition: number;
-};
-
-const STATUS_TONE: Record<string, 'success' | 'info' | 'danger'> = {
-  completed: 'success',
-  active: 'info',
-  suspended: 'danger',
-};
+import React, { useState } from 'react';
+import { BarChart3, Users, Clock, PlayCircle, Search, Filter, ArrowUpRight, ArrowDownRight, Activity } from 'lucide-react';
 
 export default function TrainerAnalyticsPage() {
   const [selectedCourse, setSelectedCourse] = useState('all');
-  const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [analytics, setAnalytics] = useState<Analytics>({
-    totalCourses: 0,
-    activeCourses: 0,
-    totalStudents: 0,
-    totalSubmissions: 0,
-    pendingReviews: 0,
-    passRate: 0,
-    totalEarnings: 0,
-  });
-  const [students, setStudents] = useState<Student[]>([]);
 
-  useEffect(() => {
-    let active = true;
-    (async () => {
-      try {
-        const [a, s] = await Promise.all([
-          trainerApi.analytics().catch(() => null),
-          trainerApi.students().catch(() => []),
-        ]);
-        if (!active) return;
-        if (a) setAnalytics(a);
-        setStudents(Array.isArray(s) ? s : []);
-      } catch {
-        if (!active) return;
-        setStudents([]);
-      } finally {
-        if (active) setLoading(false);
-      }
-    })();
-    return () => {
-      active = false;
-    };
-  }, []);
+  // Mock Data
+  const stats = [
+    { label: 'Total Students', value: '1,248', trend: '+12%', isUp: true, icon: Users, color: 'blue' },
+    { label: 'Avg. Completion', value: '68%', trend: '+5%', isUp: true, icon: Activity, color: 'green' },
+    { label: 'Drop-off Rate', value: '14%', trend: '-2%', isUp: true, icon: ArrowDownRight, color: 'orange' },
+    { label: 'Total Watch Time', value: '4,520h', trend: '+18%', isUp: true, icon: Clock, color: 'purple' },
+  ];
 
-  // Course options derived from real students
-  const courseOptions = Array.from(
-    new Map(students.map((s) => [s.courseId, s.course])).entries()
-  ).filter(([id]) => id);
-
-  const filteredStudents = students.filter((s) => {
-    const matchCourse = selectedCourse === 'all' || s.courseId === selectedCourse;
-    const q = search.trim().toLowerCase();
-    const matchSearch =
-      !q || s.name.toLowerCase().includes(q) || s.email.toLowerCase().includes(q);
-    return matchCourse && matchSearch;
-  });
+  const students = [
+    { id: 1, name: 'Ali Ahmed', course: 'Advanced Web Dev', progress: 100, status: 'Completed', lastActive: '2 hours ago' },
+    { id: 2, name: 'Sara Khan', course: 'UI/UX Masterclass', progress: 50, status: 'Active', lastActive: '1 day ago' },
+    { id: 3, name: 'Usman Tariq', course: 'Python Basics', progress: 25, status: 'Dropped Off', lastActive: '2 weeks ago' },
+    { id: 4, name: 'Ayesha Malik', course: 'Advanced Web Dev', progress: 10, status: 'Dropped Off', lastActive: '1 month ago' },
+    { id: 5, name: 'Bilal Raza', course: 'UI/UX Masterclass', progress: 85, status: 'Active', lastActive: '5 hours ago' },
+  ];
 
   return (
     <div className="p-6 md:p-12 w-full h-full relative overflow-y-auto hide-scrollbar z-10 animate-in fade-in zoom-in-95 duration-1000">
@@ -151,7 +89,7 @@ export default function TrainerAnalyticsPage() {
               </div>
             ))}
           </div>
-        </Card>
+        </div>
 
         <div className="bg-white/[0.02] backdrop-blur-2xl border border-[#1a6b2e]/20 rounded-[40px] p-8 shadow-2xl">
            <h3 className="text-xl font-black text-[#0f3d1a] mb-6">Drop-off Insights</h3>
@@ -180,8 +118,8 @@ export default function TrainerAnalyticsPage() {
           </div>
         </div>
 
-        <div className="gt-scroll overflow-x-auto">
-          <table className="gt-table">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-[#1a6b2e]/20">
                 <th className="py-4 px-4 text-sm font-bold text-[#1a6b2e] uppercase tracking-wider">Student Name</th>
@@ -209,10 +147,14 @@ export default function TrainerAnalyticsPage() {
                       <span className="text-xs font-bold text-[#1a6b2e]">{student.progress}%</span>
                     </div>
                   </td>
-                  <td>
-                    <Badge tone={STATUS_TONE[student.status] ?? 'info'} dot>
-                      {student.status ? student.status.charAt(0).toUpperCase() + student.status.slice(1) : '—'}
-                    </Badge>
+                  <td className="py-4 px-4">
+                    <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-bold ${
+                      student.status === 'Completed' ? 'bg-green-500/10 text-green-400' :
+                      student.status === 'Active' ? 'bg-blue-500/10 text-blue-400' :
+                      'bg-red-500/10 text-red-400'
+                    }`}>
+                      {student.status}
+                    </span>
                   </td>
                   <td className="py-4 px-4 text-sm text-[#7dab52]">{student.lastActive}</td>
                 </tr>
@@ -220,7 +162,8 @@ export default function TrainerAnalyticsPage() {
             </tbody>
           </table>
         </div>
-      </Card>
+      </div>
+      
     </div>
   );
 }

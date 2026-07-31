@@ -2,8 +2,11 @@
 
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
-import { ChevronRight, ListChecks, Plus } from 'lucide-react';
-import { PageHeader, Card, SectionHeader } from '@/components/trainer/ui';
+import { ChevronRight, Plus } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { Card, CardTitle } from '@/components/ui/Card';
+import { Field, SelectInput, TextArea, TextInput } from '@/components/ui/Field';
+import { PageHeader } from '../components/TrainerShared';
 import { getVideos as apiGetVideos, addMcq as apiAddMcq, getMcqs as apiGetMcqs } from '@/services/trainerApi';
 import { useToastStore } from '@/store/toast-store';
 import { getErrorMessage } from '@/utils/errorParser';
@@ -63,39 +66,32 @@ export function McqManagementScreen({ courseId, videoId }: { courseId: string; v
         <span className="text-[#1a6b2e]">MCQ Assessment</span>
       </div>
 
-      <PageHeader
-        eyebrow="Trainer Workspace"
-        title="Multiple Choice Questions"
-        subtitle={`Add automated assessments for: ${video?.title ?? 'Lesson'}`}
-      />
+      <PageHeader title="Multiple Choice Questions" caption={`Add automated assessments for: ${video?.title ?? 'Lesson'}`} />
 
-      <Card className="p-6">
-        <SectionHeader icon={ListChecks} title="Create New MCQ" caption="Questions are randomized for students." />
+      <Card className="border-gray-700/50 bg-gray-900/60 shadow-xl backdrop-blur-sm p-8">
+        <CardTitle title="Create New MCQ" caption="Questions are randomized for students." />
 
-        <form className="space-y-6" onSubmit={handleAdd}>
-          <div>
-            <label className="gt-label">Question Prompt</label>
-            <textarea className="gt-input" name="prompt" placeholder="What is the main advantage of using Flexbox?" required />
-          </div>
+        <form className="mt-6 space-y-6" onSubmit={handleAdd}>
+          <Field label="Question Prompt"><TextArea name="prompt" className="min-h-[100px]" placeholder="What is the main advantage of using Flexbox?" required /></Field>
 
-          <div className="grid gap-6 rounded-2xl border border-[var(--gt-border)] bg-[var(--gt-bg-soft)] p-5 sm:grid-cols-2">
+          <div className="grid gap-6 sm:grid-cols-2 rounded-xl border border-gray-800 bg-gray-900/50 p-6">
             {[1, 2, 3, 4].map((num) => (
-              <div key={num}>
-                <label className="gt-label">Option {num}</label>
+              <Field key={num} label={`Option ${num}`}>
                 <div className="relative">
                   <div className="absolute left-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-800 text-xs font-bold text-[#1a6b2e]">{num}</div>
                   <TextInput name={`opt${num}`} placeholder={`Enter answer option ${num}`} className="pl-12" required />
                 </div>
-              </div>
+              </Field>
             ))}
           </div>
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+          <div className="flex items-end gap-6">
             <div className="flex-1">
-              <label className="gt-label">Correct Answer</label>
-              <select className="gt-input" name="correct" defaultValue="1" required>
-                {[1, 2, 3, 4].map(num => <option key={num} value={num}>Option {num} is correct</option>)}
-              </select>
+              <Field label="Correct Answer">
+                <SelectInput name="correct" defaultValue="1" required className="py-3">
+                  {[1, 2, 3, 4].map(num => <option key={num} value={num}>Option {num} is correct</option>)}
+                </SelectInput>
+              </Field>
             </div>
             <Button type="submit" size="lg" disabled={loading} className="shadow-lg shadow-sky-500/20">
               <Plus className="mr-2 h-4 w-4" />{loading ? 'Saving...' : 'Add Question to Bank'}
@@ -105,14 +101,9 @@ export function McqManagementScreen({ courseId, videoId }: { courseId: string; v
       </Card>
 
       {mcqs.length > 0 && (
-        <Card className="p-6">
-          <SectionHeader
-            icon={ListChecks}
-            tone="success"
-            title="Existing MCQs"
-            caption={`There are ${mcqs.length} multiple choice questions for this lesson.`}
-          />
-          <div className="space-y-3">
+        <Card className="border-gray-700/50 bg-gray-900/60 shadow-xl backdrop-blur-sm p-8">
+          <CardTitle title="Existing MCQs" caption={`There are ${mcqs.length} multiple choice questions for this lesson.`} />
+          <div className="mt-6 space-y-4">
             {mcqs.map((mcq, idx) => (
               <div key={mcq.id} className="p-5 rounded-xl border border-gray-800 bg-gray-800/40">
                 <p className="font-semibold text-[#0f3d1a] mb-3 text-sm">Q{idx + 1}. {mcq.prompt}</p>

@@ -2,7 +2,10 @@
 
 import { FormEvent, useEffect, useState, useRef, ChangeEvent } from 'react';
 import { BadgeCheck, AlertCircle, UserRound, Save, Briefcase, Globe, Award, Zap, Camera, CreditCard, Plus, Trash2, CheckCircle2, Building2 } from 'lucide-react';
-import { PageHeader, Card, SectionHeader, Badge, Loading, Button } from '@/components/trainer/ui';
+import { Button } from '@/components/ui/Button';
+import { Card, CardTitle } from '@/components/ui/Card';
+import { Field, TextInput } from '@/components/ui/Field';
+import { PageHeader } from '../components/TrainerShared';
 import { trainerLevels } from '../trainerModuleData';
 import { getProfile, updateProfile } from '@/services/trainerApi';
 import { useToastStore } from '@/store/toast-store';
@@ -88,10 +91,11 @@ export function TrainerProfileScreen() {
   const [initLoading, setInitLoading] = useState(true);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const { showToast } = useToastStore();
   const { updateUser } = useAuthStore();
-
+  
   // Local state for withdrawal methods (Mocked for UI)
   const [withdrawalMethods, setWithdrawalMethods] = useState<any[]>([
     { id: '1', provider: 'easypaisa', accountTitle: 'John Doe', accountNumber: '03001234567', isActive: true },
@@ -273,7 +277,7 @@ export function TrainerProfileScreen() {
       setIsUploadingAvatar(true);
       const fd = new FormData();
       fd.append('avatar', file);
-
+      
       await updateProfile(fd);
       const updated = await getProfile();
       setProfile(updated.data ?? updated);
@@ -307,9 +311,9 @@ export function TrainerProfileScreen() {
       await updateProfile(fd);
       const updated = await getProfile();
       setProfile(updated.data ?? updated);
-      updateUser({
+      updateUser({ 
         name: (updated.data ?? updated).name,
-        avatar: (updated.data ?? updated).avatar
+        avatar: (updated.data ?? updated).avatar 
       });
       showToast('Profile updated successfully.', 'success');
     } catch (err) {
@@ -327,8 +331,8 @@ export function TrainerProfileScreen() {
         <div className="absolute inset-0 h-16 w-16 rounded-full border-4 border-blue-500/10 border-b-blue-500 animate-[spin_3s_linear_infinite]" />
         <div className="absolute inset-0 bg-gradient-to-r from-sky-500/20 to-blue-500/20 rounded-full blur-xl animate-pulse" />
       </div>
-    );
-  }
+    </div>
+  );
 
   return (
     <div ref={profileRef} className="space-y-8 pb-8 relative">
@@ -367,7 +371,7 @@ export function TrainerProfileScreen() {
               <div className="absolute inset-[3px] flex items-center justify-center rounded-full bg-gradient-to-br from-sky-500/20 to-orange-600/10 shadow-inner overflow-hidden">
                 {avatarPreview || profile?.avatar ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={avatarPreview || profile?.avatar || ''} alt="Avatar" className="h-full w-full object-cover" />
+                  <img src={avatarPreview || `http://localhost:8000${profile?.avatar}`} alt="Avatar" className="w-full h-full object-cover" />
                 ) : (
                   <UserRound className="h-12 w-12 text-sky-400 relative z-10 drop-shadow-lg" />
                 )}
@@ -380,8 +384,8 @@ export function TrainerProfileScreen() {
 
               {/* Upload spinner */}
               {isUploadingAvatar && (
-                <div className="absolute inset-0 z-20 flex items-center justify-center rounded-full bg-black/55">
-                  <span className="h-6 w-6 animate-spin rounded-full border-2 border-[var(--gt-border-2)] border-t-[var(--gt-accent)]" />
+                <div className="absolute inset-[3px] rounded-full bg-black/50 flex items-center justify-center z-20">
+                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 </div>
               )}
 
@@ -396,45 +400,37 @@ export function TrainerProfileScreen() {
             <h2 className="mt-6 text-3xl font-bold text-[#0f3d1a] bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">{profile?.name ?? '—'}</h2>
             <p className="mt-1 text-sm font-medium text-[#1a6b2e]">{profile?.role ?? 'Trainer'}</p>
 
-            <div className="mt-5 flex flex-wrap justify-center gap-2">
+            <div className="mt-6 flex justify-center">
               {profile?.verifiedBadge ? (
-                <Badge tone="success"><BadgeCheck className="h-3.5 w-3.5" /> Verified Educator</Badge>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold text-emerald-400 shadow-[0_4px_12px_rgba(16,185,129,0.3)] backdrop-blur-sm transition-all duration-300 hover:shadow-[0_8px_20px_rgba(16,185,129,0.4)] hover:scale-105">
+                  <BadgeCheck className="h-4 w-4" /> Verified Educator
+                </span>
               ) : (
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-gray-600/50 bg-gray-800/50 px-4 py-2 text-xs font-medium text-[#1a6b2e] backdrop-blur-sm transition-all duration-300 hover:border-sky-500/30 hover:text-orange-300 hover:shadow-[0_4px_12px_rgba(249,115,22,0.2)]">
                   <AlertCircle className="h-4 w-4" /> Unverified Profile
                 </span>
               )}
-              <Badge tone="info">
+              
+              {/* Trainer Type Badge */}
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-medium text-blue-400 backdrop-blur-sm shadow-[0_4px_12px_rgba(59,130,246,0.2)]">
                 {profile?.trainerType === 'institute' ? (
-                  <><Building2 className="h-3.5 w-3.5" /> Institute Trainer</>
+                  <span className="flex items-center gap-1.5"><Building2 className="h-4 w-4" /> Institute Trainer</span>
                 ) : (
-                  <><UserRound className="h-3.5 w-3.5" /> Individual Trainer</>
+                  <span className="flex items-center gap-1.5"><UserRound className="h-4 w-4" /> Individual Trainer</span>
                 )}
-              </Badge>
+              </span>
             </div>
-          </Card>
+          </div>
 
-          {/* Professional info card */}
-          <Card className="p-6">
-            <SectionHeader
-              icon={Briefcase}
-              tone="info"
-              title="Professional Info"
-              caption="Your teaching credentials and expertise."
-            />
-            <div className="space-y-3">
-              {[
-                { label: 'Portfolio', value: profile?.portfolio ?? 'Not provided', icon: Globe },
-                { label: 'Experience', value: profile?.teachingExperience ?? 'Not provided', icon: Award },
-              ].map(({ label, value, icon: Icon }) => (
-                <div key={label} className="rounded-xl border border-[var(--gt-border)] bg-[var(--gt-surface)] p-4">
-                  <div className="mb-2 flex items-center gap-2">
-                    <Icon className="h-3.5 w-3.5 text-[var(--gt-text-3)]" />
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--gt-text-3)]">{label}</p>
-                  </div>
-                  <p className="break-all text-sm font-medium text-[var(--gt-text)]">{value}</p>
-                </div>
-              ))}
+          {/* Professional Info Card */}
+          <div
+            className={`relative rounded-2xl ${glassEffect} overflow-hidden ${card3DClass} parallax-card
+              before:absolute before:top-0 before:left-8 before:right-8 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/[0.12] before:to-transparent
+              after:absolute after:bottom-0 after:left-8 after:right-8 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/[0.04] after:to-transparent
+              transform-gpu animate-[scaleIn_0.6s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0`}
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-blue-500/10 blur-3xl transition-all duration-700 group-hover:scale-110" />
 
             <div className="p-6 relative z-10">
               <SectionHeader icon={Briefcase} themeKey="navy" title="Professional Info" caption="Your teaching credentials and expertise" />
@@ -486,7 +482,7 @@ export function TrainerProfileScreen() {
                 </div>
               </div>
             </div>
-          </Card>
+          </div>
         </div>
 
         {/* Right Column */}
@@ -504,38 +500,35 @@ export function TrainerProfileScreen() {
           <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-sky-500/10 blur-3xl transition-all duration-700 group-hover:scale-110" />
           <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-blue-500/5 blur-3xl transition-all duration-700 group-hover:scale-110" />
 
-            <form className="space-y-5" onSubmit={handleSave}>
-              <div className="grid gap-5 sm:grid-cols-2">
-                <div>
-                  <label className="gt-label">Full Name</label>
-                  <input className="gt-input" name="name" defaultValue={profile?.name ?? ''} required />
-                </div>
-                <div>
-                  <label className="gt-label">Portfolio URL</label>
-                  <input className="gt-input" name="portfolio" type="url" defaultValue={profile?.portfolio ?? ''} />
-                </div>
+          <div className="relative z-10">
+            <SectionHeader icon={Save} themeKey="navy" title="Update Information" caption="Keep your details current to maintain platform trust." />
+
+            <form className="mt-6 space-y-6" onSubmit={handleSave}>
+              <div className="grid gap-6 sm:grid-cols-2">
+                <Field label="Full Name">
+                  <TextInput name="name" defaultValue={profile?.name ?? ''} required />
+                </Field>
+                <Field label="Portfolio URL">
+                  <TextInput name="portfolio" type="url" defaultValue={profile?.portfolio ?? ''} />
+                </Field>
               </div>
 
-              <div className="grid gap-5 sm:grid-cols-2">
-                <div>
-                  <label className="gt-label">Teaching Experience</label>
-                  <input className="gt-input" name="teachingExperience" defaultValue={profile?.teachingExperience ?? ''} />
-                </div>
-                <div>
-                  <label className="gt-label">Industry Experience</label>
-                  <input className="gt-input" name="industryExperience" defaultValue={profile?.industryExperience ?? ''} />
-                </div>
+              <div className="grid gap-6 sm:grid-cols-2">
+                <Field label="Teaching Experience">
+                  <TextInput name="teachingExperience" defaultValue={profile?.teachingExperience ?? ''} />
+                </Field>
+                <Field label="Industry Experience">
+                  <TextInput name="industryExperience" defaultValue={profile?.industryExperience ?? ''} />
+                </Field>
               </div>
 
-              <div>
-                <label className="gt-label">Trainer Skills (comma separated)</label>
-                <input className="gt-input" name="trainerSkills[]" defaultValue={(profile?.trainerSkills || []).join(', ')} />
-              </div>
+              <Field label="Trainer Skills (comma separated)">
+                <TextInput name="trainerSkills[]" defaultValue={(profile?.trainerSkills || []).join(', ')} />
+              </Field>
 
-              <div>
-                <label className="gt-label">Approved Teaching Levels</label>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {trainerLevels.map((level) => (
+              <Field label="Approved Teaching Levels">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {trainerLevels.map((level, index) => (
                     <label
                       key={level.value}
                       className="flex cursor-pointer items-start gap-3 rounded-xl border border-gray-700/50 bg-gray-800/40 p-4 backdrop-blur-sm transition-all duration-300 hover:border-sky-500/30 hover:bg-gray-800/60 hover:shadow-[0_4px_16px_rgba(249,115,22,0.2)] hover:-translate-y-1 transform-gpu group"
@@ -552,18 +545,16 @@ export function TrainerProfileScreen() {
                     </label>
                   ))}
                 </div>
-              </div>
+              </Field>
 
-              <div>
-                <label className="gt-label">Update CV (Optional)</label>
-                <input
-                  className="gt-input file:mr-4 file:rounded-lg file:border-0 file:bg-[var(--gt-accent-soft)] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[var(--gt-accent)]"
+              <Field label="Update CV (Optional)">
+                <TextInput
                   name="cv"
                   type="file"
                   accept=".pdf,.doc,.docx"
                   className="file:mr-4 file:rounded-full file:border-0 file:bg-sky-500/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-sky-400 hover:file:bg-sky-500/20 file:transition-all file:duration-300 file:hover:scale-105 file:hover:shadow-[0_4px_12px_rgba(249,115,22,0.3)]"
                 />
-              </div>
+              </Field>
 
               <div className="pt-4">
                 <Button
@@ -589,7 +580,8 @@ export function TrainerProfileScreen() {
                 </Button>
               </div>
             </form>
-          </Card>
+          </div>
+        </div>
 
         {/* Withdrawal Options Card */}
           <div
@@ -612,9 +604,8 @@ export function TrainerProfileScreen() {
                   >
                     <Plus className="w-4 h-4 mr-2" /> Add New
                   </Button>
-                ) : undefined
-              }
-            />
+                )}
+              </div>
 
               {showAddMethod && (
                 <form onSubmit={handleAddMethod} className="mb-8 p-5 bg-gray-800/40 border border-gray-700/50 rounded-xl space-y-4">
@@ -641,13 +632,11 @@ export function TrainerProfileScreen() {
                       />
                     </Field>
                   </div>
-                  <div>
-                    <label className="gt-label">Account Title</label>
-                    <input
-                      className="gt-input"
-                      placeholder="e.g. John Doe"
-                      value={newMethod.accountTitle}
-                      onChange={(e) => setNewMethod({ ...newMethod, accountTitle: e.target.value })}
+                  <Field label="Account Number / IBAN">
+                    <TextInput 
+                      placeholder="e.g. 03001234567 or PK00MEZN..."
+                      value={newMethod.accountNumber}
+                      onChange={(e) => setNewMethod({...newMethod, accountNumber: e.target.value})}
                       required
                     />
                   </Field>
@@ -655,23 +644,8 @@ export function TrainerProfileScreen() {
                     <Button variant="ghost" className="border border-gray-600" type="button" onClick={() => setShowAddMethod(false)}>Cancel</Button>
                     <Button type="submit" className="bg-orange-600 hover:bg-sky-500">Save Method</Button>
                   </div>
-                </div>
-                <div>
-                  <label className="gt-label">Account Number / IBAN</label>
-                  <input
-                    className="gt-input"
-                    placeholder="e.g. 03001234567 or PK00MEZN…"
-                    value={newMethod.accountNumber}
-                    onChange={(e) => setNewMethod({ ...newMethod, accountNumber: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="flex justify-end gap-3 pt-1">
-                  <Button variant="ghost" type="button" onClick={() => setShowAddMethod(false)}>Cancel</Button>
-                  <Button type="submit">Save Method</Button>
-                </div>
-              </form>
-            )}
+                </form>
+              )}
 
               <div className="space-y-3">
                 {withdrawalMethods.length === 0 ? (
@@ -703,23 +677,11 @@ export function TrainerProfileScreen() {
                         </button>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      {method.isActive ? (
-                        <Badge tone="accent"><CheckCircle2 className="h-3.5 w-3.5" /> Primary</Badge>
-                      ) : (
-                        <button onClick={() => setPrimaryMethod(method.id)} className="text-xs text-[var(--gt-text-2)] transition-colors hover:text-[var(--gt-text)]">
-                          Set Primary
-                        </button>
-                      )}
-                      <button aria-label="Remove withdrawal method" onClick={() => removeMethod(method.id)} className="text-[var(--gt-text-3)] transition-colors hover:text-[var(--gt-danger)]">
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-                ))
-              )}
+                  ))
+                )}
+              </div>
             </div>
-          </Card>
+          </div>
         </div>
       </div>
     </div>

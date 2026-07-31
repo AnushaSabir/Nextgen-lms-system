@@ -1,57 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { TrendingUp, Activity, CreditCard, Clock, BookOpen, Wallet, Download } from 'lucide-react';
+import React from 'react';
+import { DollarSign, TrendingUp, ArrowUpRight, ArrowDownRight, Wallet, Activity, CreditCard, Star, Download } from 'lucide-react';
 import Link from 'next/link';
-import { trainerApi } from '@/lib/api';
-import { PageHeader, StatCard, Card, SectionHeader, EmptyState, Loading } from '@/components/trainer/ui';
-
-type EarningsData = {
-  total: number;
-  cleared: number;
-  pending: number;
-  trainerSharePercent: number;
-  platformSharePercent: number;
-  perCourse: Array<{ course: string; students: number; gross: number; earned: number }>;
-};
 
 export default function EarningsDashboardPage() {
-  const [data, setData] = useState<EarningsData | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let active = true;
-    (async () => {
-      try {
-        const res = await trainerApi.earnings();
-        if (active) setData(res);
-      } catch {
-        if (active) setData({ total: 0, cleared: 0, pending: 0, trainerSharePercent: 70, platformSharePercent: 30, perCourse: [] });
-      } finally {
-        if (active) setLoading(false);
-      }
-    })();
-    return () => { active = false; };
-  }, []);
-
-  const total = data?.total ?? 0;
-  const cleared = data?.cleared ?? 0;
-  const pending = data?.pending ?? 0;
-  const perCourse = data?.perCourse ?? [];
-
-  const exportCsv = () => {
-    const header = 'Course,Students,Gross (PKR),Earned (PKR)';
-    const rows = perCourse.map((c) => `"${c.course}",${c.students},${c.gross},${c.earned}`);
-    const csv = [header, ...rows].join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'earnings-report.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <div className="p-6 md:p-12 w-full h-full relative overflow-y-auto hide-scrollbar z-10 animate-in fade-in zoom-in-95 duration-1000">
       
@@ -154,9 +107,6 @@ export default function EarningsDashboardPage() {
                     <h4 className="font-bold text-[#0f3d1a] text-lg">{course.name}</h4>
                     <p className="text-sm text-[#64748b]">{course.sales} new sales</p>
                   </div>
-                  <p className="gt-num flex-shrink-0 text-sm font-bold text-[var(--gt-success)]">
-                    +PKR {course.earned.toLocaleString()}
-                  </p>
                 </div>
                 <div className="text-right">
                   <h4 className="font-black text-[#0f3d1a] text-xl">+${course.rev.toFixed(2)}</h4>
@@ -236,31 +186,18 @@ export default function EarningsDashboardPage() {
           </div>
         </div>
 
-        {/* Transactions pointer */}
-        <Card className="p-6">
-          <SectionHeader
-            icon={CreditCard}
-            tone="info"
-            title="Recent Transactions"
-            caption="Every sale and payout, in detail."
-            actions={
-              <Link href="/trainer/earnings/history" className="gt-btn gt-btn--ghost gt-btn--sm">
-                View all
-              </Link>
-            }
-          />
-          <EmptyState
-            icon={CreditCard}
-            title="Full transaction log"
-            detail="Open your revenue history to see every course sale and withdrawal with dates and status."
-            action={
-              <Link href="/trainer/earnings/history" className="gt-btn gt-btn--primary gt-btn--sm">
-                View revenue history
-              </Link>
-            }
-          />
-        </Card>
       </div>
     </div>
+  );
+}
+
+function Clock(props: any) {
+  return (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+  );
+}
+function BookOpen(props: any) {
+  return (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
   );
 }

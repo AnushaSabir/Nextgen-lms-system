@@ -1,61 +1,11 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Layers, PlayCircle, FileCheck, CheckCircle2, XCircle } from 'lucide-react';
-import { coursesApi } from '@/lib/api';
-import type { Course } from '@/types/domain';
-import { PageHeader, Card, Badge, EmptyState, Loading, Button } from '@/components/trainer/ui';
-
-const STATUS_TONE: Record<string, 'success' | 'warn' | 'danger' | 'info'> = {
-  pending_review: 'warn',
-  approved: 'success',
-  rejected: 'danger',
-  draft: 'info',
-};
-
-const STATUS_LABELS: Record<string, string> = {
-  pending_review: 'Pending Review',
-  approved: 'Approved',
-  rejected: 'Rejected',
-  draft: 'Draft',
-};
 
 export default function CourseApprovalPage() {
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [processingId, setProcessingId] = useState<string | null>(null);
-
-  async function load() {
-    try {
-      // Admin-only endpoint — a non-admin viewer gets a 403, which we treat as an empty list.
-      const data = await coursesApi.adminList();
-      setCourses(Array.isArray(data) ? data : []);
-    } catch {
-      setCourses([]);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    load();
-  }, []);
-
-  async function handleReview(id: string, status: 'approved' | 'rejected') {
-    setProcessingId(id);
-    try {
-      await coursesApi.adminReview(
-        id,
-        status,
-        status === 'rejected' ? 'Does not meet standards' : undefined,
-      );
-      await load();
-    } catch {
-      // Keep the UI responsive even if the request is rejected (e.g. 403).
-    } finally {
-      setProcessingId(null);
-    }
-  }
+  const pendingCourses = [
+    { id: 101, title: 'Mastering React 18', trainer: 'Sarah Khan', level: 'University Level', videos: 24, assessments: 12 },
+    { id: 102, title: 'Figma for Beginners', trainer: 'Fatima Noor', level: 'School Level', videos: 15, assessments: 5 },
+  ];
 
   return (
     <div className="p-8 max-w-7xl mx-auto animate-in fade-in duration-500">

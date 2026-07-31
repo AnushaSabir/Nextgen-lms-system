@@ -3,11 +3,10 @@
 import { useEffect, useState } from 'react';
 import {
   CheckCircle2, Clock, FileText, Loader2, ThumbsDown, ThumbsUp,
-  TrendingUp, XCircle, AlertCircle, Files, Award,
+  TrendingUp, XCircle,
 } from 'lucide-react';
-import {
-  PageHeader, StatCard, Card, SectionHeader, Badge, EmptyState, Loading,
-} from '@/components/trainer/ui';
+import { Card, CardTitle } from '@/components/ui/Card';
+import { PageHeader } from '../components/TrainerShared';
 import { submissionsApi } from '@/lib/api';
 import { useToastStore } from '@/store/toast-store';
 import { getErrorMessage } from '@/utils/errorParser';
@@ -53,20 +52,7 @@ export function SubmissionsScreen() {
 
   async function load() {
     const data = await submissionsApi.trainerList();
-    // Normalize the backend shape ({ reviewed, reviewDecision, enrollment.learner, video }) → flat card shape.
-    const mapped: Submission[] = (data as any[]).map((s) => ({
-      id: s.id,
-      learnerName: s.enrollment?.learner?.name ?? 'Learner',
-      learnerEmail: '',
-      courseTitle: s.enrollment?.course?.title ?? 'Course',
-      videoTitle: s.video?.title ?? 'Homework',
-      fileUrl: s.fileUrl ?? undefined,
-      textAnswer: s.textAnswer ?? undefined,
-      decision: s.reviewed ? (s.reviewDecision ?? 'improve') : 'pending',
-      trainerRemarks: s.reviewRemarks ?? undefined,
-      submittedAt: s.createdAt,
-    }));
-    setSubmissions(mapped);
+    setSubmissions(data as unknown as Submission[]);
   }
 
   useEffect(() => {
@@ -102,11 +88,10 @@ export function SubmissionsScreen() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 pb-8">
       <PageHeader
-        eyebrow="Trainer Studio"
         title="Student Submissions"
-        subtitle="Review homework and written assignments from your enrolled learners."
+        caption="Review homework and written assignments from your enrolled learners."
       />
 
       {/* Stats row */}
@@ -136,15 +121,11 @@ export function SubmissionsScreen() {
         <>
           {/* Pending section */}
           {pending.length > 0 && (
-            <Card className="p-6">
-              <SectionHeader
-                icon={Clock}
-                tone="warn"
-                title="Pending Review"
-                caption="Grade homework as pass, fail, or improve."
-                actions={<Badge tone="warn" dot>{pending.length} pending</Badge>}
-              />
-              <div className="space-y-3">
+            <div>
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-amber-400 mb-4 flex items-center gap-2">
+                <Clock className="h-4 w-4" /> Pending Review ({pending.length})
+              </h2>
+              <div className="space-y-4">
                 {pending.map((sub) => (
                   <SubmissionCard
                     key={sub.id}
@@ -154,7 +135,7 @@ export function SubmissionsScreen() {
                   />
                 ))}
               </div>
-            </Card>
+            </div>
           )}
 
           {/* Reviewed section */}
@@ -173,7 +154,7 @@ export function SubmissionsScreen() {
                   />
                 ))}
               </div>
-            </Card>
+            </div>
           )}
         </>
       )}
@@ -194,12 +175,12 @@ function SubmissionCard({
   const isReviewing = reviewingId === sub.id;
 
   return (
-    <div className="gt-card p-5">
-      <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-start">
+    <Card className="border-gray-700/50 bg-gray-800/40 p-5 hover:bg-gray-800/70 transition-all">
+      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-5">
         {/* Info */}
-        <div className="min-w-0 flex-1">
-          <div className="mb-2 flex flex-wrap items-center gap-2">
-            <Badge tone={DECISION_TONE[sub.decision]} dot>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap mb-2">
+            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${DECISION_STYLES[sub.decision]}`}>
               {DECISION_LABELS[sub.decision]}
             </span>
             <span className="text-xs text-[#7dab52]">{formatDate(sub.submittedAt)}</span>
@@ -215,7 +196,7 @@ function SubmissionCard({
             <span className="flex items-center gap-1">
               <FileText className="h-3.5 w-3.5" /> {sub.courseTitle}
             </span>
-            <span className="text-[var(--gt-text-3)]">›</span>
+            <span className="text-gray-700">›</span>
             <span>{sub.videoTitle}</span>
           </div>
 
@@ -242,12 +223,11 @@ function SubmissionCard({
 
         {/* Action buttons */}
         {isPending && (
-          <div className="flex shrink-0 gap-2">
+          <div className="flex gap-2 shrink-0">
             <button
               onClick={() => onReview(sub.id, 'pass')}
               disabled={isReviewing}
-              className="gt-btn gt-btn--sm"
-              style={{ background: 'rgba(52,211,153,0.14)', color: 'var(--gt-success)', border: '1px solid rgba(52,211,153,0.3)' }}
+              className="flex items-center gap-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-sm font-semibold px-4 py-2.5 border border-emerald-500/20 transition-colors disabled:opacity-50"
             >
               {isReviewing ? <Loader2 className="h-4 w-4 animate-spin" /> : <ThumbsUp className="h-4 w-4" />}
               Pass
@@ -255,7 +235,7 @@ function SubmissionCard({
             <button
               onClick={() => onReview(sub.id, 'improve')}
               disabled={isReviewing}
-              className="gt-btn gt-btn--ghost gt-btn--sm"
+              className="flex items-center gap-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-sm font-semibold px-4 py-2.5 border border-amber-500/20 transition-colors disabled:opacity-50"
             >
               {isReviewing ? <Loader2 className="h-4 w-4 animate-spin" /> : <TrendingUp className="h-4 w-4" />}
               Improve
@@ -263,8 +243,7 @@ function SubmissionCard({
             <button
               onClick={() => onReview(sub.id, 'fail')}
               disabled={isReviewing}
-              className="gt-btn gt-btn--sm"
-              style={{ background: 'rgba(251,113,133,0.12)', color: 'var(--gt-danger)', border: '1px solid rgba(251,113,133,0.28)' }}
+              className="flex items-center gap-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 text-sm font-semibold px-4 py-2.5 border border-red-500/20 transition-colors disabled:opacity-50"
             >
               {isReviewing ? <Loader2 className="h-4 w-4 animate-spin" /> : <ThumbsDown className="h-4 w-4" />}
               Fail
@@ -272,18 +251,12 @@ function SubmissionCard({
           </div>
         )}
         {!isPending && (
-          <div className="shrink-0">
-            <Badge tone={DECISION_TONE[sub.decision]}>
-              {sub.decision === 'pass'
-                ? <CheckCircle2 className="h-4 w-4" />
-                : sub.decision === 'improve'
-                ? <TrendingUp className="h-4 w-4" />
-                : <XCircle className="h-4 w-4" />}
-              {DECISION_LABELS[sub.decision]}
-            </Badge>
+          <div className={`flex items-center gap-2 shrink-0 px-4 py-2.5 rounded-lg border ${DECISION_STYLES[sub.decision]}`}>
+            {sub.decision === 'pass' ? <CheckCircle2 className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
+            <span className="text-sm font-semibold">{DECISION_LABELS[sub.decision]}</span>
           </div>
         )}
       </div>
-    </div>
+    </Card>
   );
 }

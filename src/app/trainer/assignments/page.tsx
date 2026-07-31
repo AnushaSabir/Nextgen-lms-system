@@ -1,77 +1,12 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Plus, BookOpen, Clock, MoreVertical, ThumbsUp, ThumbsDown, TrendingUp } from 'lucide-react';
-import { PageHeader, Card, Badge, EmptyState, Loading } from '@/components/trainer/ui';
-import { submissionsApi } from '@/lib/api';
-import type { ReviewDecision } from '@/types/domain';
-
-type Submission = {
-  id: string;
-  textAnswer?: string;
-  fileUrl?: string;
-  reviewed: boolean;
-  reviewDecision?: ReviewDecision | null;
-  video?: { id: string; title: string } | null;
-  enrollment?: { learner?: { name?: string } | null; course?: { title?: string } | null } | null;
-  createdAt?: string;
-};
-
-const DECISION_TONE: Record<string, 'success' | 'danger' | 'warn' | 'info'> = {
-  pass: 'success',
-  fail: 'danger',
-  improve: 'info',
-};
-
-function formatRelativeTime(iso?: string): string {
-  if (!iso) return '';
-  const then = new Date(iso).getTime();
-  if (Number.isNaN(then)) return '';
-  const diff = Date.now() - then;
-  const sec = Math.round(diff / 1000);
-  const min = Math.round(sec / 60);
-  const hr = Math.round(min / 60);
-  const day = Math.round(hr / 24);
-  if (sec < 60) return 'Just now';
-  if (min < 60) return `${min}m ago`;
-  if (hr < 24) return `${hr}h ago`;
-  if (day < 7) return `${day}d ago`;
-  return new Date(iso).toLocaleDateString();
-}
+import React from 'react';
+import { Plus, BookOpen, Clock, MoreVertical, Edit2, Trash2 } from 'lucide-react';
 
 export default function PracticalAssignmentsPage() {
-  const [assignments, setAssignments] = useState<Submission[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [reviewingId, setReviewingId] = useState<string | null>(null);
-
-  async function load() {
-    setLoading(true);
-    try {
-      const data = await submissionsApi.trainerList();
-      setAssignments(Array.isArray(data) ? data : []);
-    } catch {
-      setAssignments([]);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    load();
-  }, []);
-
-  async function handleReview(id: string, decision: ReviewDecision) {
-    setReviewingId(id);
-    try {
-      await submissionsApi.review(id, decision);
-      await load();
-    } catch {
-      // Leave the list as-is on failure; user can retry.
-    } finally {
-      setReviewingId(null);
-    }
-  }
+  const assignments = [
+    { id: 1, title: 'Build a React Landing Page', course: 'Advanced Web Dev', due: '3 Days', status: 'Active' },
+    { id: 2, title: 'Design System Creation', course: 'UI/UX Masterclass', due: '5 Days', status: 'Draft' },
+    { id: 3, title: 'Python Data Scraping', course: 'Data Science 101', due: 'Ended', status: 'Completed' },
+  ];
 
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto animate-in fade-in duration-500">

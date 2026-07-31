@@ -4,116 +4,86 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuthStore } from '@/store/auth-store';
-import { submissionsApi, trainerApi } from '@/lib/api';
-import {
-  BookOpen,
-  RotateCcw,
-  CheckSquare,
-  MessageSquare,
-  Video,
-  FileBarChart,
-  Building2,
-  DollarSign,
-  History,
-  Bell,
-  ShieldCheck,
+import { submissionsApi } from '@/lib/api';
+import { 
+  BookOpen, 
+  RotateCcw, 
+  CheckSquare, 
+  MessageSquare, 
+  Video, 
+  FileBarChart, 
+  Building2, 
+  DollarSign, 
+  History, 
+  Bell, 
+  ShieldCheck, 
   Layers,
   LayoutDashboard,
   Menu,
   X,
   User,
   Plus,
-  Wallet,
-  ClipboardList,
+  FileText,
+  ListChecks,
+  Clock,
   Search,
   ChevronRight,
   LogOut,
-  BadgeCheck,
+  GraduationCap,
+  Activity
 } from 'lucide-react';
 
-type NavItem = { name: string; href: string; icon: typeof BookOpen; badge?: 'pending' };
-type NavGroup = { label: string; items: NavItem[] };
-
-const NAV: NavGroup[] = [
-  {
-    label: 'Overview',
-    items: [
-      { name: 'Dashboard', href: '/trainer/dashboard', icon: LayoutDashboard },
-      { name: 'Profile', href: '/trainer/profile', icon: User },
-    ],
-  },
-  {
-    label: 'Content',
-    items: [
-      { name: 'My Courses', href: '/trainer/courses', icon: BookOpen },
-      { name: 'Create Course', href: '/trainer/create-course', icon: Plus },
-      { name: 'Retry Sets', href: '/trainer/assessments/retry', icon: RotateCcw },
-    ],
-  },
-  {
-    label: 'Students',
-    items: [
-      { name: 'Submissions', href: '/trainer/submissions', icon: CheckSquare, badge: 'pending' },
-      { name: 'Assignments', href: '/trainer/assignments', icon: ClipboardList },
-      { name: 'Chat', href: '/trainer/chat', icon: MessageSquare },
-      { name: 'Live Q&A', href: '/trainer/meetings', icon: Video },
-      { name: 'Analytics', href: '/trainer/analytics', icon: FileBarChart },
-      { name: 'Student Reports', href: '/trainer/reports/students', icon: FileBarChart },
-      { name: 'Institution', href: '/trainer/reports/institution', icon: Building2 },
-    ],
-  },
-  {
-    label: 'Business',
-    items: [
-      { name: 'Earnings', href: '/trainer/earnings', icon: DollarSign },
-      { name: 'Revenue', href: '/trainer/earnings/history', icon: History },
-      { name: 'Withdrawals', href: '/trainer/withdrawal', icon: Wallet },
-      { name: 'Notifications', href: '/trainer/notifications', icon: Bell },
-    ],
-  },
-  {
-    label: 'Admin',
-    items: [
-      { name: 'Trainer Approvals', href: '/trainer/admin/trainers', icon: ShieldCheck },
-      { name: 'Course Approvals', href: '/trainer/admin/courses', icon: Layers },
-    ],
-  },
-];
-
-export default function TrainerDashboardLayout({ children }: { children: React.ReactNode }) {
+export default function TrainerDashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const { user, logout } = useAuthStore();
-
+  
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
-  const [unreadNotifs, setUnreadNotifs] = useState(0);
 
   useEffect(() => {
-    submissionsApi
-      .trainerList()
-      .then((subs: any[]) => setPendingCount(subs.filter((s) => !s.reviewed).length))
-      .catch(() => {});
-    trainerApi
-      .notifications()
-      .then((n) => setUnreadNotifs(n.filter((x) => !x.read).length))
+    submissionsApi.trainerList()
+      .then((subs: any[]) => {
+        setPendingCount(subs.filter((s) => !s.reviewed).length);
+      })
       .catch(() => {});
   }, []);
 
-  // Longest-match active route (so /trainer/earnings/history highlights only "Revenue", not "Earnings").
-  const activeHref = NAV.flatMap((g) => g.items)
-    .map((i) => i.href)
-    .filter((href) => pathname === href || pathname.startsWith(href + '/'))
-    .sort((a, b) => b.length - a.length)[0];
-  const isActive = (href: string) => href === activeHref;
+  const navItems = [
+    { name: 'Dashboard', href: '/trainer/dashboard', icon: LayoutDashboard },
+    { name: 'Profile', href: '/trainer/profile', icon: User },
+    { name: 'My Courses', href: '/trainer/courses', icon: BookOpen },
+    { name: 'Create Course', href: '/trainer/create-course', icon: Plus },
+    { name: 'Videos List', href: '/trainer/courses?focus=videos', icon: Video },
+    { name: 'MCQs Management', href: '/trainer/courses?focus=mcqs', icon: ListChecks },
+    { name: 'Summary Task', href: '/trainer/courses?focus=summary', icon: FileText },
+    { name: 'Assignments', href: '/trainer/assignments', icon: BookOpen },
+    { name: 'Retry Qs', href: '/trainer/assessments/retry', icon: RotateCcw },
+    { name: 'Submissions', href: '/trainer/submissions', icon: CheckSquare },
+    { name: 'Chat', href: '/trainer/chat', icon: MessageSquare },
+    { name: 'Live Q&A', href: '/trainer/meetings', icon: Video },
+    { name: 'Student Analytics', href: '/trainer/analytics', icon: Activity },
+    { name: 'Student Reports', href: '/trainer/reports/students', icon: FileBarChart },
+    { name: 'Institution', href: '/trainer/reports/institution', icon: Building2 },
+    { name: 'Earnings', href: '/trainer/earnings', icon: DollarSign },
+    { name: 'Revenue', href: '/trainer/earnings/history', icon: History },
+    { name: 'Notifications', href: '/trainer/notifications', icon: Bell },
+    { name: 'Trainer Approvals', href: '/trainer/admin/trainers', icon: ShieldCheck },
+    { name: 'Course Approvals', href: '/trainer/admin/courses', icon: Layers },
+  ];
 
-  // Breadcrumb: drop UUID-ish segments so course/video IDs don't spill into the header.
-  const isId = (s: string) => /^[0-9a-f]{8}-[0-9a-f-]{10,}$/i.test(s) || /^\d+$/.test(s);
-  const crumbs = pathname
-    .split('/')
-    .filter(Boolean)
-    .filter((p) => !isId(p))
-    .map((p) => p.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()));
+  // breadcrumb helper
+  const getBreadcrumbs = () => {
+    const parts = pathname.split('/').filter(Boolean);
+    return parts.map((part) => {
+      return part.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+    });
+  };
+  const breadcrumbs = getBreadcrumbs();
 
   return (
     <div className="flex h-screen bg-[#c8e6c9] text-[#0f3d1a] overflow-hidden font-sans p-4 gap-6">
@@ -229,12 +199,11 @@ export default function TrainerDashboardLayout({ children }: { children: React.R
             }}
             className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-[#7dab52] hover:text-red-400 hover:bg-red-500/5 border border-transparent hover:border-red-500/20 transition-all duration-200 group text-xs font-bold uppercase tracking-wider"
           >
-            <LogOut className="h-4 w-4" />
+            <LogOut className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            Logout
           </button>
         </div>
-      </div>
-    </aside>
-  );
+      </aside>
 
       {/* Main Content Area (Detached Layout with Sticky Top Header) */}
       <main className="flex-1 relative rounded-[32px] bg-[#c8e6c9] border border-[#1a6b2e]/10 shadow-2xl z-10 mt-16 md:mt-0 flex flex-col overflow-hidden h-full">
@@ -256,12 +225,12 @@ export default function TrainerDashboardLayout({ children }: { children: React.R
                   </span>
                 </React.Fragment>
               ))}
-            </nav>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            <div className="hidden items-center gap-2 rounded-xl border border-[var(--gt-border)] bg-[var(--gt-surface)] px-3 py-2 lg:flex">
-              <Search className="h-4 w-4 text-[var(--gt-text-3)]" />
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="hidden md:flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-800/40 border border-gray-800/60">
+              <Search className="w-4 h-4 text-gray-600" />
               <input
                 type="text"
                 placeholder="Search..."
@@ -280,8 +249,11 @@ export default function TrainerDashboardLayout({ children }: { children: React.R
             </button>
             <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#5E6F58]/20 to-sky-500/10 border border-[#5E6F58]/20 flex items-center justify-center flex-shrink-0 shadow-[0_4px_12px_-2px_rgba(240,89,31,0.2)] overflow-hidden">
               {user?.avatar ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={user.avatar} alt="" className="h-full w-full object-cover" />
+                <img 
+                  src={`http://localhost:8000${user.avatar}`} 
+                  alt="Avatar" 
+                  className="w-full h-full object-cover"
+                />
               ) : (
                 <span className="text-sky-400 font-extrabold text-sm">{user?.name?.[0]?.toUpperCase() || 'T'}</span>
               )}
@@ -289,7 +261,8 @@ export default function TrainerDashboardLayout({ children }: { children: React.R
           </div>
         </header>
 
-        <div key={pathname} className="gt-page gt-scroll mx-auto w-full max-w-[1400px] flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+        {/* Scrollable Page Content Container */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-6 space-y-6 w-full max-w-[1600px] mx-auto">
           {children}
         </div>
       </main>

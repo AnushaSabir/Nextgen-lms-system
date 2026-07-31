@@ -1,35 +1,9 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, CheckCircle2, XCircle, RefreshCcw, FileText, Download } from 'lucide-react';
-import { PageHeader, Card, SectionHeader, Badge, Loading, EmptyState } from '@/components/trainer/ui';
-import { submissionsApi } from '@/lib/api';
-import type { ReviewDecision } from '@/types/domain';
 
-type TrainerSubmission = {
-  id: string;
-  textAnswer?: string;
-  fileUrl?: string;
-  reviewed?: boolean;
-  reviewDecision?: ReviewDecision;
-  reviewRemarks?: string;
-  video?: { id: string; title: string };
-  enrollment?: {
-    learner?: { name?: string };
-    course?: { title?: string };
-  };
-  createdAt?: string;
-};
-
-const DECISION_TONE: Record<string, 'success' | 'danger' | 'warn'> = {
-  pass: 'success',
-  fail: 'danger',
-  improve: 'warn',
-};
-
-function BackLink() {
+export default async function SubmissionDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   return (
     <div className="p-8 max-w-5xl mx-auto animate-in fade-in zoom-in-95 duration-500">
       <Link href="/dashboard/trainer/submissions" className="inline-flex items-center gap-2 text-[#64748b] hover:text-[#0f3d1a] mb-8 transition-colors">
@@ -47,57 +21,9 @@ function BackLink() {
           </div>
         </div>
       </div>
-    );
-  }
 
-  if (!submission) {
-    return (
-      <div className="space-y-6">
-        <BackLink />
-        <Card className="p-6">
-          <EmptyState
-            icon={FileText}
-            title="Submission not found"
-            detail="This submission may have been removed or is no longer available."
-          />
-        </Card>
-      </div>
-    );
-  }
-
-  const learnerName = submission.enrollment?.learner?.name ?? 'Unknown Learner';
-  const courseTitle = submission.enrollment?.course?.title;
-  const videoTitle = submission.video?.title;
-  const submittedAt = submission.createdAt ? new Date(submission.createdAt).toLocaleString() : null;
-  const subtitleParts = [submittedAt ? `Submitted ${submittedAt}` : null, courseTitle, videoTitle].filter(Boolean);
-
-  const gradeOptions: { key: ReviewDecision; label: string; icon: typeof CheckCircle2; tone: string }[] = [
-    { key: 'pass', label: 'Pass', icon: CheckCircle2, tone: '#34d399' },
-    { key: 'improve', label: 'Improve (Resubmit)', icon: RefreshCcw, tone: '#fbbf24' },
-    { key: 'fail', label: 'Fail', icon: XCircle, tone: '#fb7185' },
-  ];
-
-  return (
-    <div className="space-y-6">
-      <BackLink />
-
-      <PageHeader
-        eyebrow="Submission Review"
-        title={learnerName}
-        subtitle={subtitleParts.join(' • ')}
-        actions={
-          submission.reviewed && submission.reviewDecision ? (
-            <Badge tone={DECISION_TONE[submission.reviewDecision]} dot>
-              {submission.reviewDecision}
-            </Badge>
-          ) : (
-            <Badge tone="info" dot>Awaiting grade</Badge>
-          )
-        }
-      />
-
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="space-y-6 lg:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="lg:col-span-2 space-y-6">
           {/* Submission Content */}
           <div className="bg-[#0f172a]/80 backdrop-blur-xl border border-[#1e293b] rounded-3xl p-8 shadow-2xl">
             <h2 className="text-xl font-bold text-[#0f3d1a] mb-6 flex items-center gap-2">
@@ -125,7 +51,7 @@ function BackLink() {
                 <a href="#" className="text-blue-400 hover:underline">https://sarah-portfolio.vercel.app</a>
               </div>
             </div>
-          </Card>
+          </div>
         </div>
 
         {/* Grading Panel */}
@@ -156,13 +82,13 @@ function BackLink() {
               <textarea 
                 className="w-full h-32 bg-[#0f172a] border border-[#1e293b] rounded-xl p-4 text-sm text-[#0f3d1a] placeholder:text-[#475569] focus:outline-none focus:border-[#5E6F58] transition-all resize-none"
                 placeholder="Write your feedback here..."
-              />
+              ></textarea>
             </div>
 
             <button className="w-full mt-6 bg-[#5E6F58] hover:bg-[#ea580c] text-[#0f3d1a] py-3 rounded-xl font-bold shadow-[0_0_20px_rgba(240,89,31,0.3)] transition-all active:scale-95">
               Submit Evaluation
             </button>
-          </Card>
+          </div>
         </div>
       </div>
     </div>
