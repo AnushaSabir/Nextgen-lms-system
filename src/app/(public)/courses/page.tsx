@@ -149,6 +149,7 @@ const MOCK_COURSES = [
 const CoursesPage = () => {
   const [courses, setCourses] = useState(MOCK_COURSES);
   const [loading, setLoading] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("all");
   const [filters, setFilters] = useState({
     level: "All",
     category: "All",
