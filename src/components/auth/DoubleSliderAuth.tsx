@@ -139,11 +139,11 @@ export default function DoubleSliderAuth() {
         <div className="form-container sign-up-container flex items-start sm:items-center justify-center p-0 sm:p-12">
           <form onSubmit={handleSignUpSubmit} className="flex flex-col items-center justify-center w-full sm:max-w-sm text-center sm:mt-0">
             {/* Mobile Title */}
-            <div className="sm:hidden w-full text-left mb-6">
-              <div className="flex items-center justify-start gap-2 mb-4">
-                <Image src="/logo.png" alt="NextGen LMS" width={140} height={35} className="object-contain" style={{filter: 'drop-shadow(2px 4px 6px rgba(0,0,0,0.4)) drop-shadow(-1px -2px 3px rgba(255,255,255,0.6))'}} />
+            <div className="sm:hidden w-full text-center mb-6">
+              <div className="flex items-center justify-center mb-4">
+                <Image src="/logo.png" alt="NextGen LMS" width={160} height={60} className="object-contain" style={{filter: 'drop-shadow(2px 4px 6px rgba(0,0,0,0.4)) drop-shadow(-1px -2px 3px rgba(255,255,255,0.6))'}} />
               </div>
-              <h1 className="text-3xl font-black text-[#0f3d1a] mb-2">Create account</h1>
+              <h1 className="text-2xl font-black text-[#0f3d1a] mb-1">Create Account</h1>
               <p className="text-sm text-[#1a6b2e]">Sign up to NextGen LMS — Your Skill-to-Success Platform</p>
             </div>
 
@@ -202,11 +202,11 @@ export default function DoubleSliderAuth() {
           <form onSubmit={handleSignInSubmit} className="flex flex-col items-center justify-center w-full sm:max-w-sm text-center sm:mt-0">
 
             {/* Mobile Title */}
-            <div className="sm:hidden w-full text-left mb-6">
-              <div className="flex items-center justify-start gap-2 mb-4">
-                <Image src="/logo.png" alt="NextGen LMS" width={140} height={35} className="object-contain drop-shadow-md" />
+            <div className="sm:hidden w-full text-center mb-6">
+              <div className="flex items-center justify-center mb-4">
+                <Image src="/logo.png" alt="NextGen LMS" width={160} height={60} className="object-contain" style={{filter: 'drop-shadow(2px 4px 6px rgba(0,0,0,0.4)) drop-shadow(-1px -2px 3px rgba(255,255,255,0.6))'}} />
               </div>
-              <h1 className="text-3xl font-black text-[#0f3d1a] mb-2">Welcome back</h1>
+              <h1 className="text-2xl font-black text-[#0f3d1a] mb-1">Welcome Back</h1>
               <p className="text-sm text-[#1a6b2e]">Sign in to NextGen LMS — Your Skill-to-Success Platform</p>
             </div>
 

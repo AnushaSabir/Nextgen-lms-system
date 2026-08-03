@@ -11,8 +11,8 @@ export const metadata = {
 export default function LoginPage() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center p-0 sm:p-4">
-      {/* Branding */}
-      <div className="absolute top-6 left-6 md:top-10 md:left-10 z-50">
+      {/* Branding - desktop only, mobile has logo inside form */}
+      <div className="hidden sm:block absolute top-6 left-6 md:top-10 md:left-10 z-50">
         <Link href="/">
           <Image src="/logo.png" alt="NextGen LMS" width={180} height={45} className="object-contain drop-shadow-md hover:scale-105 transition-transform" />
         </Link>
