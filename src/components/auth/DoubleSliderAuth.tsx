@@ -70,7 +70,7 @@ export default function DoubleSliderAuth() {
 
       localStorage.setItem('nextgen-lms_lms_token', token);
       localStorage.setItem('nextgen-lms_lms_user', JSON.stringify(user));
-      router.push(dashboardForRole(user.role));
+      router.push('/onboarding');
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error('Login failed', err);

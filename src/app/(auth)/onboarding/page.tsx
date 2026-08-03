@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function OnboardingPage() {
   return (
-    <div className="min-h-screen bg-[#c8e6c9] overflow-hidden">
+    <div className="min-h-screen bg-black overflow-hidden">
       <OnboardingFlow />
     </div>
   );
