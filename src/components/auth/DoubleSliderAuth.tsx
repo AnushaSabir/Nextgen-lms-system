@@ -111,10 +111,10 @@ export default function DoubleSliderAuth() {
 
         /* Mobile specific fixes - Premium Glass Card Overlap */
         @media (max-width: 768px) {
-          .auth-container { min-height: 100vh; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; background-color: #020617; }
+          .auth-container { min-height: 100vh; height: auto; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; background-color: #020617; justify-content: flex-start; align-items: center; }
           
           /* The Image Carousel Overlay takes up upper half */
-          .overlay-container { display: block; width: 100%; height: 420px; min-height: 420px; left: 0; top: 0; position: absolute; z-index: 1; transform: none !important; transition: none; overflow: hidden; }
+          .overlay-container { display: block; position: relative !important; width: 100%; height: 350px; min-height: 350px; left: auto; top: auto; z-index: 1; transform: none !important; transition: none; overflow: hidden; flex-shrink: 0; }
           .auth-container.right-panel-active .overlay-container { transform: none !important; }
           
           .overlay { width: 100%; height: 100%; top: 0; left: 0; transform: none !important; transition: none; background: transparent; }
@@ -123,13 +123,13 @@ export default function DoubleSliderAuth() {
           .overlay-panel { display: none !important; }
           
           /* The form overlaps the image beautifully as a glass card */
-          .form-container { width: calc(100% - 32px); height: auto; position: absolute; top: 340px; left: 16px !important; margin-bottom: 40px; padding: 40px 24px; transition: opacity 0.4s ease-in-out; background: rgba(2, 6, 23, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 32px; box-shadow: 0 -20px 40px rgba(26, 107, 46, 0.1); }
+          .form-container { position: relative !important; width: calc(100% - 32px); max-width: 500px; height: auto; top: auto; left: auto !important; margin: -60px auto 40px auto; padding: 40px 24px; transition: opacity 0.4s ease-in-out; background: rgba(2, 6, 23, 0.7); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 28px; box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.5); z-index: 5; }
           
-          .sign-in-container { opacity: 1; visibility: visible; z-index: 5; transform: none !important; }
-          .auth-container.right-panel-active .sign-in-container { opacity: 0; visibility: hidden; z-index: 1; transform: none !important; display: none; }
+          .sign-in-container { opacity: 1; visibility: visible; transform: none !important; display: block; }
+          .auth-container.right-panel-active .sign-in-container { opacity: 0; visibility: hidden; transform: none !important; display: none; }
           
-          .sign-up-container { opacity: 0; visibility: hidden; z-index: 1; transform: none !important; display: none; }
-          .auth-container.right-panel-active .sign-up-container { opacity: 1; visibility: visible; z-index: 5; animation: none; transform: none !important; display: flex; }
+          .sign-up-container { opacity: 0; visibility: hidden; transform: none !important; display: none; left: auto; width: 100%; }
+          .auth-container.right-panel-active .sign-up-container { opacity: 1; visibility: visible; animation: none; transform: none !important; display: block; left: auto; width: 100%; }
         }
       `}} />
 
