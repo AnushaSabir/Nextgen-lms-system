@@ -140,11 +140,8 @@ export default function DoubleSliderAuth() {
           <form onSubmit={handleSignUpSubmit} className="flex flex-col items-center justify-center w-full sm:max-w-sm text-center sm:mt-0">
             {/* Mobile Title */}
             <div className="sm:hidden w-full text-left mb-6">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-[#0f3d1a] flex items-center justify-center shadow-lg shadow-[#0f3d1a]/20">
-                  <span className="text-white font-bold text-sm">N</span>
-                </div>
-                <span className="text-xl font-black text-white">NextGen-LMS<span className="text-[#d94d19]">.</span></span>
+              <div className="flex items-center justify-start gap-2 mb-4">
+                <Image src="/logo.png" alt="NextGen LMS" width={140} height={35} className="object-contain drop-shadow-md" />
               </div>
               <h1 className="text-3xl font-black text-white mb-2">Create account</h1>
               <p className="text-sm text-emerald-300">Sign up to NextGen LMS — Your Skill-to-Success Platform</p>
@@ -206,11 +203,8 @@ export default function DoubleSliderAuth() {
 
             {/* Mobile Title */}
             <div className="sm:hidden w-full text-left mb-6">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-[#0f3d1a] flex items-center justify-center shadow-lg shadow-[#0f3d1a]/20">
-                  <span className="text-white font-bold text-sm">N</span>
-                </div>
-                <span className="text-xl font-black text-white">NextGen-LMS<span className="text-[#d94d19]">.</span></span>
+              <div className="flex items-center justify-start gap-2 mb-4">
+                <Image src="/logo.png" alt="NextGen LMS" width={140} height={35} className="object-contain drop-shadow-md" />
               </div>
               <h1 className="text-3xl font-black text-white mb-2">Welcome back</h1>
               <p className="text-sm text-emerald-300">Sign in to NextGen LMS — Your Skill-to-Success Platform</p>
@@ -286,8 +280,8 @@ export default function DoubleSliderAuth() {
             {/* Desktop Overlay Panels (for toggle buttons) */}
             <div className="overlay-panel overlay-left">
               <div className="hidden sm:flex flex-col items-center justify-center p-8 glass-card bg-black/40 backdrop-blur-xl rounded-3xl border border-[#1a6b2e]/20 shadow-2xl transform transition-transform hover:scale-105">
-                <div className="w-12 h-12 rounded-xl bg-[#0f3d1a] flex items-center justify-center mb-4 shadow-lg shadow-[#0f3d1a]/30">
-                  <span className="text-white font-bold text-xl">N</span>
+                <div className="mb-6 flex justify-center">
+                  <Image src="/logo.png" alt="NextGen LMS" width={160} height={40} className="object-contain drop-shadow-lg" />
                 </div>
                 <h3 className="text-xl font-black text-white mb-2">Already have an account?</h3>
                 <p className="text-sm text-white/70 mb-6 text-center max-w-[220px]">Sign in to access your NextGen-LMS dashboard and continue your journey.</p>
@@ -299,8 +293,8 @@ export default function DoubleSliderAuth() {
 
             <div className="overlay-panel overlay-right">
               <div className="hidden sm:flex flex-col items-center justify-center p-8 glass-card bg-black/40 backdrop-blur-xl rounded-3xl border border-[#1a6b2e]/20 shadow-2xl transform transition-transform hover:scale-105">
-                <div className="w-12 h-12 rounded-xl bg-[#0f3d1a] flex items-center justify-center mb-4 shadow-lg shadow-[#0f3d1a]/30">
-                  <span className="text-white font-bold text-xl">N</span>
+                <div className="mb-6 flex justify-center">
+                  <Image src="/logo.png" alt="NextGen LMS" width={160} height={40} className="object-contain drop-shadow-lg" />
                 </div>
                 <h3 className="text-xl font-black text-white mb-2">New to NextGen-LMS?</h3>
                 <p className="text-sm text-white/70 mb-6 text-center max-w-[220px]">Create an account to start learning, earning, and growing with us.</p>
