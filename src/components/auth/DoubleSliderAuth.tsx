@@ -85,7 +85,7 @@ export default function DoubleSliderAuth() {
       <style dangerouslySetInnerHTML={{
         __html: `
         .auth-container { position: relative; width: 100%; height: 100%; overflow: hidden; background-color: #000000; }
-        .form-container { position: absolute; top: 0; height: 100%; transition: all 0.6s ease-in-out; background-color: #000000; }
+        .form-container { position: absolute; top: 0; height: 100%; transition: all 0.6s ease-in-out; background-color: #c8e6c9; }
         .sign-in-container { left: 0; width: 50%; z-index: 2; opacity: 1; visibility: visible; }
         .auth-container.right-panel-active .sign-in-container { transform: translateX(100%); opacity: 0; visibility: hidden; transition: opacity 0.3s, transform 0.6s, visibility 0.6s; }
         
