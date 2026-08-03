@@ -254,7 +254,7 @@ const Navbar = () => {
             
             <div className="flex min-w-0 flex-col justify-center">
               <div className="relative overflow-hidden">
-                <span className="text-base sm:text-xl lg:text-2xl font-black tracking-tighter text-[#133937] leading-none transition-all duration-300 group-hover:scale-105 inline-block">
+                <span className="text-base sm:text-xl lg:text-2xl font-black tracking-tighter text-[#d94d19] leading-none transition-all duration-300 group-hover:scale-105 inline-block">
                   NEXTGEN
                 </span>
               </div>
@@ -329,7 +329,7 @@ const Navbar = () => {
               
               <Link
                 href="/login?mode=signup"
-                className="ripple-effect relative flex items-center space-x-2 px-5 xl:px-7 py-3 bg-gradient-to-r from-[#d94d19] to-[#c04315] text-white text-sm font-black rounded-xl transition-all duration-500 shadow-lg shadow-[#d94d19]/30 hover:shadow-[#d94d19]/50 transform hover:scale-105 active:scale-95 group overflow-hidden border border-[#d94d19]/50"
+                className="ripple-effect relative flex items-center space-x-2 px-5 xl:px-7 py-3 bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] text-white text-sm font-black rounded-xl transition-all duration-500 shadow-lg shadow-[#38bdf8]/30 hover:shadow-[#0ea5e9]/50 transform hover:scale-105 active:scale-95 group overflow-hidden border border-[#38bdf8]/50"
               >
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2),transparent_70%)]" />
