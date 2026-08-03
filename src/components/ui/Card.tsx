@@ -12,8 +12,8 @@ export function Card({ children, className = '', ...props }: HTMLAttributes<HTML
 export function CardTitle({ title, caption }: { title: string; caption?: string }) {
   return (
     <div className="mb-6">
-      <h2 className="text-lg font-semibold leading-snug text-white">{title}</h2>
-      {caption ? <p className="mt-1.5 text-sm leading-relaxed text-[#c8e6c9]">{caption}</p> : null}
+      <h2 className="text-lg font-semibold leading-snug text-[#0f3d1a]">{title}</h2>
+      {caption ? <p className="mt-1.5 text-sm leading-relaxed text-[#1a6b2e]">{caption}</p> : null}
     </div>
   );
 }

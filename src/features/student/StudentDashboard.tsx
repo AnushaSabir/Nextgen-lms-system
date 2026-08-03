@@ -123,7 +123,7 @@ export function StudentDashboard() {
 
       {/* Available Courses Section */}
       {!activeEnrollment && (
-        <Card id="courses" className="border-[#c8e6c9]/10">
+        <Card id="courses" className="border-[#1a6b2e]/10">
           <CardTitle 
             title="Browse Courses" 
             caption="Enroll in a course to start learning with progressive video unlocking." 
@@ -134,7 +134,7 @@ export function StudentDashboard() {
               {courses.map((course) => (
                 <div 
                   key={course.id} 
-                  className="group rounded-xl border border-[#c8e6c9]/10 bg-[#0f3d1a] shadow-lg shadow-black/20 hover:shadow-xl p-5 transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 hover:border-sky-500/50"
+                  className="group rounded-xl border border-[#1a6b2e]/10 bg-white shadow-sm hover:shadow-md hover:-translate-y-1 p-5 transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 hover:border-sky-500/50"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-sky-500/20 to-sky-500/5 flex items-center justify-center border border-sky-500/20">
@@ -145,17 +145,17 @@ export function StudentDashboard() {
                     </span>
                   </div>
                   
-                  <h3 className="font-semibold text-white text-lg mb-1 line-clamp-2">{course.title}</h3>
-                  <p className="text-sm text-[#c8e6c9] mb-3 line-clamp-2">{course.description}</p>
+                  <h3 className="font-semibold text-[#0f3d1a] text-lg mb-1 line-clamp-2">{course.title}</h3>
+                  <p className="text-sm text-[#1a6b2e] mb-3 line-clamp-2">{course.description}</p>
                   
-                  <div className="flex items-center gap-2 text-xs text-[#c8e6c9] mb-4">
+                  <div className="flex items-center gap-2 text-xs text-[#1a6b2e] mb-4">
                     <BookOpen className="w-3.5 h-3.5" />
                     {course.trainer?.name ?? 'Expert Trainer'}
                   </div>
                   
                   <Button 
                     onClick={() => enroll(course.id)}
-                    className="w-full bg-[#c8e6c9] hover:bg-white text-[#0f3d1a] font-bold transition-all duration-200"
+                    className="w-full bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] text-white hover:opacity-90 transition-opacity font-bold transition-all duration-200"
                   >
                     <Play className="w-4 h-4 mr-2" />
                     Enroll Now
@@ -177,36 +177,36 @@ export function StudentDashboard() {
         <>
           {/* Progress Overview */}
           <div className="grid gap-4 md:grid-cols-3">
-            <Card className="bg-gradient-to-br from-[#0f3d1a] to-[#1a6b2e] border-[#c8e6c9]/10">
+            <Card className="bg-gradient-to-br from-white to-gray-50 border-[#1a6b2e]/10">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-sm text-[#c8e6c9] mb-2">Current Course</p>
-                  <p className="text-lg font-semibold text-white">{progress.enrollment.course?.title ?? 'Active'}</p>
-                  <p className="text-xs text-[#c8e6c9] mt-2">{progress.enrollment.course?.level}</p>
+                  <p className="text-sm text-[#1a6b2e] mb-2">Current Course</p>
+                  <p className="text-lg font-semibold text-[#0f3d1a]">{progress.enrollment.course?.title ?? 'Active'}</p>
+                  <p className="text-xs text-[#1a6b2e] mt-2">{progress.enrollment.course?.level}</p>
                 </div>
                 <BookOpen className="w-8 h-8 text-sky-400/30" />
               </div>
             </Card>
             
-            <Card className="bg-gradient-to-br from-[#0f3d1a] to-[#1a6b2e] border-[#c8e6c9]/10">
+            <Card className="bg-gradient-to-br from-white to-gray-50 border-[#1a6b2e]/10">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-sm text-[#c8e6c9] mb-2">Trainer</p>
-                  <p className="text-lg font-semibold text-white">{progress.enrollment.course?.trainer?.name ?? 'Your Trainer'}</p>
+                  <p className="text-sm text-[#1a6b2e] mb-2">Trainer</p>
+                  <p className="text-lg font-semibold text-[#0f3d1a]">{progress.enrollment.course?.trainer?.name ?? 'Your Trainer'}</p>
                   <p className="text-xs text-emerald-400 mt-2">Connected</p>
                 </div>
                 <Users className="w-8 h-8 text-blue-400/30" />
               </div>
             </Card>
             
-            <Card className="bg-gradient-to-br from-[#0f3d1a] to-[#1a6b2e] border-[#c8e6c9]/10">
+            <Card className="bg-gradient-to-br from-white to-gray-50 border-[#1a6b2e]/10">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-sm text-[#c8e6c9] mb-2">Unlocked</p>
-                  <p className="text-lg font-semibold text-white">
+                  <p className="text-sm text-[#1a6b2e] mb-2">Unlocked</p>
+                  <p className="text-lg font-semibold text-[#0f3d1a]">
                     {progress.videos?.filter(v => !v.locked).length}/{progress.videos?.length}
                   </p>
-                  <p className="text-xs text-[#c8e6c9] mt-2">lessons</p>
+                  <p className="text-xs text-[#1a6b2e] mt-2">lessons</p>
                 </div>
                 <CheckCircle2 className="w-8 h-8 text-emerald-400/30" />
               </div>
@@ -214,13 +214,13 @@ export function StudentDashboard() {
           </div>
 
           {/* Video Lessons */}
-          <Card id="testing" className="border-[#c8e6c9]/10">
+          <Card id="testing" className="border-[#1a6b2e]/10">
             <div className="flex items-center justify-between mb-6">
               <CardTitle 
                 title="Video Lessons" 
                 caption="Complete each lesson and pass the test to unlock the next one." 
               />
-              <span className="text-sm text-[#c8e6c9]">
+              <span className="text-sm text-[#1a6b2e]">
                 {progress.videos?.length} lessons
               </span>
             </div>
@@ -232,8 +232,8 @@ export function StudentDashboard() {
                     key={video.id} 
                     className={`rounded-xl border transition-all duration-300 ${
                       video.locked
-                        ? 'border-[#c8e6c9]/10 bg-[#0f3d1a] shadow-lg shadow-black/20 hover:shadow-xl/50'
-                        : 'border-[#c8e6c9]/10 bg-[#0f3d1a] shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-lg hover:shadow-sky-500/5 hover:-translate-y-0.5'
+                        ? 'border-[#1a6b2e]/10 bg-white shadow-sm hover:shadow-md hover:-translate-y-1/50'
+                        : 'border-[#1a6b2e]/10 bg-white shadow-sm hover:shadow-md hover:-translate-y-1 hover:shadow-lg hover:shadow-sky-500/5 hover:-translate-y-0.5'
                     }`}
                   >
                     <div className="p-5">
@@ -241,7 +241,7 @@ export function StudentDashboard() {
                         {/* Status Icon */}
                         <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center border ${
                           video.locked
-                            ? 'bg-[#0f3d1a] shadow-lg shadow-black/20 hover:shadow-xl/50 border-[#c8e6c9]/10 text-[#7dab52]'
+                            ? 'bg-white shadow-sm hover:shadow-md hover:-translate-y-1/50 border-[#1a6b2e]/10 text-[#7dab52]'
                             : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
                         }`}>
                           {video.locked ? (
@@ -254,17 +254,17 @@ export function StudentDashboard() {
                         {/* Video Info */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-3 mb-1">
-                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#0f3d1a] shadow-lg shadow-black/20 hover:shadow-xl text-xs font-semibold text-[#c8e6c9]">
+                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white shadow-sm hover:shadow-md hover:-translate-y-1 text-xs font-semibold text-[#1a6b2e]">
                               {index + 1}
                             </span>
-                            <h3 className={`font-semibold ${video.locked ? 'text-[#c8e6c9]' : 'text-white'}`}>
+                            <h3 className={`font-semibold ${video.locked ? 'text-[#1a6b2e]' : 'text-[#0f3d1a]'}`}>
                               {video.title}
                             </h3>
                             {!video.locked && (
                               <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
                             )}
                           </div>
-                          <p className={`text-sm ${video.locked ? 'text-[#7dab52]' : 'text-[#c8e6c9]'}`}>
+                          <p className={`text-sm ${video.locked ? 'text-[#7dab52]' : 'text-[#1a6b2e]'}`}>
                             {video.locked ? 'Complete the previous lesson first' : video.summary || 'Lesson ready'}
                           </p>
                         </div>
@@ -276,7 +276,7 @@ export function StudentDashboard() {
                           <div className="flex flex-col sm:flex-row gap-3">
                             <Button 
                               onClick={() => window.open(video.videoUrl, '_blank')}
-                              className="flex-1 bg-[#c8e6c9] hover:bg-white text-[#0f3d1a] font-bold"
+                              className="flex-1 bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] text-white hover:opacity-90 transition-opacity font-bold"
                             >
                               <Play className="w-4 h-4 mr-2" />
                               Watch Video
@@ -292,8 +292,8 @@ export function StudentDashboard() {
                           </div>
 
                           {/* Homework */}
-                          <div className="pt-3 border-t border-[#c8e6c9]/10">
-                            <label className="block text-sm font-medium text-[#c8e6c9] mb-2">
+                          <div className="pt-3 border-t border-[#1a6b2e]/10">
+                            <label className="block text-sm font-medium text-[#1a6b2e] mb-2">
                               <FileText className="w-4 h-4 inline mr-2" />
                               Homework
                             </label>
@@ -306,7 +306,7 @@ export function StudentDashboard() {
                             <Button 
                               variant="ghost" 
                               onClick={() => submitHomework(video.id)}
-                              className="w-full border-[#c8e6c9]/10 hover:bg-[#0f3d1a] shadow-lg shadow-black/20 hover:shadow-xl text-[#c8e6c9]"
+                              className="w-full border-[#1a6b2e]/10 hover:bg-white shadow-sm hover:shadow-md hover:-translate-y-1 text-[#1a6b2e]"
                             >
                               Submit Homework
                             </Button>
@@ -327,7 +327,7 @@ export function StudentDashboard() {
 
           {/* Chat with Trainer */}
           <div className="grid gap-6 lg:grid-cols-2">
-            <Card id="chat" className="border-[#c8e6c9]/10">
+            <Card id="chat" className="border-[#1a6b2e]/10">
               <div className="flex items-center gap-2 mb-4">
                 <MessageSquare className="w-5 h-5 text-sky-400" />
                 <CardTitle title="Ask Trainer" caption="Get help with course content." />
@@ -342,7 +342,7 @@ export function StudentDashboard() {
                   />
                 </Field>
                 <Button 
-                  className="w-full bg-[#c8e6c9] hover:bg-white text-[#0f3d1a] font-bold"
+                  className="w-full bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] text-white hover:opacity-90 transition-opacity font-bold"
                   onClick={() => askTrainer(activeEnrollment?.course?.trainer?.id)}
                 >
                   <MessageSquare className="w-4 h-4 mr-2" />
@@ -351,12 +351,12 @@ export function StudentDashboard() {
               </div>
             </Card>
 
-            <Card className="border-[#c8e6c9]/10">
+            <Card className="border-[#1a6b2e]/10">
               <div className="flex items-center gap-2 mb-4">
                 <Users className="w-5 h-5 text-blue-400" />
-                <h3 className="font-semibold text-white">Community</h3>
+                <h3 className="font-semibold text-[#0f3d1a]">Community</h3>
               </div>
-              <p className="text-sm text-[#c8e6c9] mb-4">Join the NextGen-LMS community to connect with other learners and discuss course topics.</p>
+              <p className="text-sm text-[#1a6b2e] mb-4">Join the NextGen-LMS community to connect with other learners and discuss course topics.</p>
               <Button 
                 className="w-full"
                 variant="ghost"
@@ -372,7 +372,7 @@ export function StudentDashboard() {
 
       {/* Test Modal */}
       {test ? (
-        <Card id="test-modal" className="border-sky-500/30 bg-gradient-to-br from-[#0f3d1a] to-[#1a6b2e]">
+        <Card id="test-modal" className="border-sky-500/30 bg-gradient-to-br from-white to-gray-50">
           <div className="flex items-center gap-2 mb-6">
             <Zap className="w-5 h-5 text-sky-400" />
             <CardTitle 
@@ -382,12 +382,12 @@ export function StudentDashboard() {
           </div>
           <form className="space-y-6" onSubmit={submitTest}>
             {test.questions.map((questionItem, qIndex) => (
-              <div key={questionItem.id} className="pb-4 border-b border-[#c8e6c9]/10 last:pb-0 last:border-0">
+              <div key={questionItem.id} className="pb-4 border-b border-[#1a6b2e]/10 last:pb-0 last:border-0">
                 <div className="flex items-start gap-3 mb-3">
                   <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-500/20 text-xs font-semibold text-sky-400 flex-shrink-0">
                     {qIndex + 1}
                   </span>
-                  <label className="text-sm font-medium text-white">
+                  <label className="text-sm font-medium text-[#0f3d1a]">
                     {questionItem.prompt}
                   </label>
                 </div>
@@ -423,7 +423,7 @@ export function StudentDashboard() {
               </Button>
               <Button 
                 type="submit"
-                className="flex-1 bg-[#1a6b2e] hover:bg-[#0f3d1a] text-white"
+                className="flex-1 bg-[#1a6b2e] hover:bg-[#0f3d1a] text-[#0f3d1a]"
               >
                 <CheckCircle2 className="w-4 h-4 mr-2" />
                 Submit Test
@@ -434,7 +434,7 @@ export function StudentDashboard() {
       ) : null}
 
       {/* Certificates */}
-      <Card id="certificates" className="border-[#c8e6c9]/10">
+      <Card id="certificates" className="border-[#1a6b2e]/10">
         <div className="flex items-center gap-2 mb-6">
           <Trophy className="w-5 h-5 text-sky-400" />
           <CardTitle 
@@ -450,14 +450,14 @@ export function StudentDashboard() {
                 key={certificate.id} 
                 href={certificate.certificateUrl} 
                 download="nextgen-lms-certificate.pdf"
-                className="group rounded-xl border border-[#c8e6c9]/10 bg-gradient-to-br from-[#0f3d1a] to-[#1a6b2e] p-5 transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 hover:border-sky-500/50"
+                className="group rounded-xl border border-[#1a6b2e]/10 bg-gradient-to-br from-white to-gray-50 p-5 transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 hover:border-sky-500/50"
               >
                 <div className="flex items-start justify-between mb-3">
                   <Trophy className="w-6 h-6 text-sky-400" />
-                  <span className="text-xs text-[#c8e6c9]">PDF Download</span>
+                  <span className="text-xs text-[#1a6b2e]">PDF Download</span>
                 </div>
-                <h3 className="font-semibold text-white mb-1">{certificate.badge}</h3>
-                <p className="text-xs text-[#c8e6c9]">
+                <h3 className="font-semibold text-[#0f3d1a] mb-1">{certificate.badge}</h3>
+                <p className="text-xs text-[#1a6b2e]">
                   {new Date(certificate.certificationDate).toLocaleDateString()}
                 </p>
               </a>

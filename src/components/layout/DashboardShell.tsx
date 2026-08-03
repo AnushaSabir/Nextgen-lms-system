@@ -57,20 +57,20 @@ export function DashboardShell({ area, children }: { area: keyof typeof navByAre
   }, [logout, router]);
 
   return (
-    <div className="min-h-screen bg-mainBg text-[#0f3d1a]">
+    <div className="min-h-screen bg-mainBg text-white">
       <div className="flex min-h-screen">
         {/* Desktop Sidebar */}
-        <aside className="hidden w-64 lg:w-72 border-r border-lightBorder bg-cardBg md:block shrink-0">
-          <div className="border-b border-lightBorder p-4 lg:p-6">
-            <p className="text-base lg:text-lg font-semibold text-[#0f3d1a]">NextGen-LMS LMS</p>
-            <p className="mt-1 text-xs lg:text-sm text-[#1a6b2e]">{area} Portal</p>
+        <aside className="hidden w-64 lg:w-72 border-r border-[#c8e6c9]/20 bg-[#0f3d1a] md:block shrink-0">
+          <div className="border-b border-[#c8e6c9]/20 p-4 lg:p-6">
+            <p className="text-base lg:text-lg font-semibold text-white">NextGen-LMS LMS</p>
+            <p className="mt-1 text-xs lg:text-sm text-[#c8e6c9]">{area} Portal</p>
           </div>
           <nav className="space-y-1 p-3 lg:p-4">
             {navByArea[area].map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="block rounded-lg border border-lightBorder bg-cardBg px-3 lg:px-4 py-2.5 lg:py-3 text-sm text-mediumGrayTitle hover:border-orangeBorderActive hover:bg-cardBgActive hover:text-[#d94d19] active:scale-[0.98] active:bg-cardBgActive transition-all duration-100"
+                className="block rounded-lg border border-[#c8e6c9]/20 bg-[#0f3d1a] px-3 lg:px-4 py-2.5 lg:py-3 text-sm text-[#c8e6c9] hover:text-white hover:border-orangeBorderActive hover:bg-[#0f3d1a]Active hover:text-[#d94d19] active:scale-[0.98] active:bg-[#0f3d1a]Active transition-all duration-100"
               >
                 {item.label}
               </Link>
@@ -87,20 +87,20 @@ export function DashboardShell({ area, children }: { area: keyof typeof navByAre
               onClick={closeMobileNav}
             />
             <aside 
-              className="absolute left-0 top-0 bottom-0 w-72 bg-cardBg border-r border-lightBorder shadow-2xl"
+              className="absolute left-0 top-0 bottom-0 w-72 bg-[#0f3d1a] border-r border-[#c8e6c9]/20 shadow-2xl"
               style={{ animation: 'slideInLeft 0.2s ease-out' }}
             >
-              <div className="border-b border-lightBorder p-4 flex items-center justify-between">
+              <div className="border-b border-[#c8e6c9]/20 p-4 flex items-center justify-between">
                 <div>
-                  <p className="text-base font-semibold text-[#0f3d1a]">NextGen-LMS LMS</p>
-                  <p className="text-xs text-[#1a6b2e]">{area} Portal</p>
+                  <p className="text-base font-semibold text-white">NextGen-LMS LMS</p>
+                  <p className="text-xs text-[#c8e6c9]">{area} Portal</p>
                 </div>
                 <button 
                   onClick={closeMobileNav}
                   className="p-2 hover:bg-white/10 rounded-lg transition-colors duration-100"
                   aria-label="Close menu"
                 >
-                  <X className="w-5 h-5 text-[#0f3d1a]" />
+                  <X className="w-5 h-5 text-white" />
                 </button>
               </div>
               <nav className="space-y-1 p-3">
@@ -109,7 +109,7 @@ export function DashboardShell({ area, children }: { area: keyof typeof navByAre
                     key={item.href}
                     href={item.href}
                     onClick={closeMobileNav}
-                    className="block rounded-lg border border-lightBorder bg-cardBg px-3 py-2.5 text-sm text-mediumGrayTitle hover:border-orangeBorderActive hover:bg-cardBgActive hover:text-[#d94d19] active:scale-[0.98] active:bg-cardBgActive transition-all duration-100"
+                    className="block rounded-lg border border-[#c8e6c9]/20 bg-[#0f3d1a] px-3 py-2.5 text-sm text-[#c8e6c9] hover:text-white hover:border-orangeBorderActive hover:bg-[#0f3d1a]Active hover:text-[#d94d19] active:scale-[0.98] active:bg-[#0f3d1a]Active transition-all duration-100"
                   >
                     {item.label}
                   </Link>
@@ -120,7 +120,7 @@ export function DashboardShell({ area, children }: { area: keyof typeof navByAre
         )}
 
         <main className="min-w-0 flex-1">
-          <header className="sticky top-0 z-10 border-b border-lightBorder bg-cardBg">
+          <header className="sticky top-0 z-10 border-b border-[#c8e6c9]/20 bg-[#0f3d1a]">
             <div className="flex min-h-14 md:min-h-16 flex-wrap items-center justify-between gap-2 md:gap-3 px-3 md:px-6 py-2 md:py-3">
               <div className="flex items-center gap-3">
                 {/* Mobile Menu Button */}
@@ -129,7 +129,7 @@ export function DashboardShell({ area, children }: { area: keyof typeof navByAre
                   className="md:hidden p-2 -ml-1 hover:bg-white/10 active:bg-white/15 rounded-lg transition-colors duration-100"
                   aria-label="Open menu"
                 >
-                  <Menu className="w-5 h-5 text-[#0f3d1a]" />
+                  <Menu className="w-5 h-5 text-white" />
                 </button>
                 <div className="flex items-center gap-3">
                   {user?.avatar && (
@@ -140,8 +140,8 @@ export function DashboardShell({ area, children }: { area: keyof typeof navByAre
                     />
                   )}
                   <div>
-                    <p className="text-xs md:text-sm text-[#1a6b2e] truncate max-w-[150px] md:max-w-none">{user?.name || user?.email}</p>
-                    <h1 className="text-lg md:text-xl font-semibold text-[#0f3d1a]">{area} Dashboard</h1>
+                    <p className="text-xs md:text-sm text-[#c8e6c9] truncate max-w-[150px] md:max-w-none">{user?.name || user?.email}</p>
+                    <h1 className="text-lg md:text-xl font-semibold text-white">{area} Dashboard</h1>
                   </div>
                 </div>
               </div>
