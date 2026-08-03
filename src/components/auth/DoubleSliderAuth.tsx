@@ -141,17 +141,17 @@ export default function DoubleSliderAuth() {
             {/* Mobile Title */}
             <div className="sm:hidden w-full text-left mb-6">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#5E6F58] to-[#C6D6C0] flex items-center justify-center shadow-lg shadow-[#5E6F58]/20">
-                  <span className="text-[#0f3d1a] font-bold text-sm">G</span>
+                <div className="w-8 h-8 rounded-lg bg-[#0f3d1a] flex items-center justify-center shadow-lg shadow-[#0f3d1a]/20">
+                  <span className="text-white font-bold text-sm">N</span>
                 </div>
                 <span className="text-xl font-black text-[#0f3d1a]">NextGen-LMS<span className="text-[#d94d19]">.</span></span>
               </div>
               <h1 className="text-3xl font-black text-[#0f3d1a] mb-2">Create account</h1>
-              <p className="text-sm text-[#1a6b2e]">Sign up to NextGen-LMS — Pakistan's #1 freelance marketplace</p>
+              <p className="text-sm text-[#1a6b2e]">Sign up to NextGen LMS — Your Skill-to-Success Platform</p>
             </div>
 
             <h1 className="hidden sm:block text-2xl sm:text-3xl font-black text-[#0f3d1a] mb-1 sm:mb-2 tracking-tight">Create Account</h1>
-            <p className="hidden sm:block text-xs sm:text-sm text-[#1a6b2e] mb-4 sm:mb-8">Join Pakistan's #1 Skill-to-Earn platform</p>
+            <p className="hidden sm:block text-xs sm:text-sm text-[#1a6b2e] mb-4 sm:mb-8">Join Pakistan's premier learning platform</p>
 
             <div className="w-full space-y-3 sm:space-y-4">
               <div className="relative group text-left">
@@ -177,7 +177,7 @@ export default function DoubleSliderAuth() {
               </div>
             </div>
 
-            <button type="submit" className="w-full mt-6 sm:mt-6 py-3.5 sm:py-4 bg-gradient-to-r from-[#5E6F58] to-[#C6D6C0] text-[#0f3d1a] font-bold text-sm sm:text-base rounded-xl hover:shadow-[0_0_20px_rgba(240,89,31,0.4)] transition-all active:scale-95 flex items-center justify-center gap-2">
+            <button type="submit" className="w-full mt-6 sm:mt-6 py-3.5 sm:py-4 bg-[#0f3d1a] text-white font-bold text-sm sm:text-base rounded-xl hover:bg-[#1a6b2e] hover:shadow-[0_0_20px_rgba(15,61,26,0.4)] transition-all active:scale-95 flex items-center justify-center gap-2">
               Let's go <ArrowRight className="w-4 h-4" />
             </button>
 
@@ -207,13 +207,13 @@ export default function DoubleSliderAuth() {
             {/* Mobile Title */}
             <div className="sm:hidden w-full text-left mb-6">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#5E6F58] to-[#C6D6C0] flex items-center justify-center shadow-lg shadow-[#5E6F58]/20">
-                  <span className="text-[#0f3d1a] font-bold text-sm">G</span>
+                <div className="w-8 h-8 rounded-lg bg-[#0f3d1a] flex items-center justify-center shadow-lg shadow-[#0f3d1a]/20">
+                  <span className="text-white font-bold text-sm">N</span>
                 </div>
                 <span className="text-xl font-black text-[#0f3d1a]">NextGen-LMS<span className="text-[#d94d19]">.</span></span>
               </div>
               <h1 className="text-3xl font-black text-[#0f3d1a] mb-2">Welcome back</h1>
-              <p className="text-sm text-[#1a6b2e]">Sign in to NextGen-LMS — Pakistan's #1 freelance marketplace</p>
+              <p className="text-sm text-[#1a6b2e]">Sign in to NextGen LMS — Your Skill-to-Success Platform</p>
             </div>
 
             <h1 className="hidden sm:block text-2xl sm:text-3xl font-black text-[#0f3d1a] mb-1 sm:mb-2 tracking-tight">Sign In</h1>
@@ -240,7 +240,7 @@ export default function DoubleSliderAuth() {
               <Link href="#" className="text-sm sm:text-sm text-[#d94d19] font-semibold hover:text-[#C6D6C0] transition-colors">Forgot password?</Link>
             </div>
 
-            <button type="submit" className="w-full mt-2 sm:mt-6 py-3.5 sm:py-4 bg-gradient-to-r from-[#5E6F58] to-[#C6D6C0] text-[#0f3d1a] font-bold text-sm sm:text-base rounded-xl hover:shadow-[0_0_20px_rgba(240,89,31,0.4)] transition-all active:scale-95 flex items-center justify-center gap-2">
+            <button type="submit" className="w-full mt-2 sm:mt-6 py-3.5 sm:py-4 bg-[#0f3d1a] text-white font-bold text-sm sm:text-base rounded-xl hover:bg-[#1a6b2e] hover:shadow-[0_0_20px_rgba(15,61,26,0.4)] transition-all active:scale-95 flex items-center justify-center gap-2">
               Let's go <ArrowRight className="w-4 h-4" />
             </button>
 
@@ -281,25 +281,16 @@ export default function DoubleSliderAuth() {
               </div>
             ))}
 
-            {/* Slider Navigation Dots */}
-            <div className="absolute bottom-4 sm:bottom-8 left-0 right-0 flex justify-center gap-2 z-20">
-              {AUTH_SLIDES.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${currentSlide === idx ? 'w-6 sm:w-8 bg-[#5E6F58]' : 'w-1.5 sm:w-2 bg-white/40'}`}
-                />
-              ))}
-            </div>
+
 
             {/* Desktop Overlay Panels (for toggle buttons) */}
             <div className="overlay-panel overlay-left">
               <div className="hidden sm:flex flex-col items-center justify-center p-8 glass-card bg-black/40 backdrop-blur-xl rounded-3xl border border-[#1a6b2e]/20 shadow-2xl transform transition-transform hover:scale-105">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#5E6F58] to-[#C6D6C0] flex items-center justify-center mb-4 shadow-lg shadow-[#5E6F58]/30">
-                  <span className="text-[#0f3d1a] font-bold text-xl">G</span>
+                <div className="w-12 h-12 rounded-xl bg-[#0f3d1a] flex items-center justify-center mb-4 shadow-lg shadow-[#0f3d1a]/30">
+                  <span className="text-white font-bold text-xl">N</span>
                 </div>
-                <h3 className="text-xl font-black text-[#0f3d1a] mb-2">Already have an account?</h3>
-                <p className="text-sm text-[#0f3d1a]/70 mb-6 text-center max-w-[220px]">Sign in to access your NextGen-LMS dashboard and continue your journey.</p>
+                <h3 className="text-xl font-black text-white mb-2">Already have an account?</h3>
+                <p className="text-sm text-white/70 mb-6 text-center max-w-[220px]">Sign in to access your NextGen-LMS dashboard and continue your journey.</p>
                 <button onClick={togglePanel} className="w-full py-3 bg-white text-[#020617] font-bold rounded-xl hover:bg-gray-100 transition-colors shadow-lg active:scale-95">
                   Sign In to Account
                 </button>
@@ -308,12 +299,12 @@ export default function DoubleSliderAuth() {
 
             <div className="overlay-panel overlay-right">
               <div className="hidden sm:flex flex-col items-center justify-center p-8 glass-card bg-black/40 backdrop-blur-xl rounded-3xl border border-[#1a6b2e]/20 shadow-2xl transform transition-transform hover:scale-105">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#5E6F58] to-[#C6D6C0] flex items-center justify-center mb-4 shadow-lg shadow-[#5E6F58]/30">
-                  <span className="text-[#0f3d1a] font-bold text-xl">G</span>
+                <div className="w-12 h-12 rounded-xl bg-[#0f3d1a] flex items-center justify-center mb-4 shadow-lg shadow-[#0f3d1a]/30">
+                  <span className="text-white font-bold text-xl">N</span>
                 </div>
-                <h3 className="text-xl font-black text-[#0f3d1a] mb-2">New to NextGen-LMS?</h3>
-                <p className="text-sm text-[#0f3d1a]/70 mb-6 text-center max-w-[220px]">Create an account to start learning, earning, and growing with us.</p>
-                <button onClick={togglePanel} className="w-full py-3 bg-[#5E6F58] text-[#0f3d1a] font-bold rounded-xl hover:bg-[#d94d19] transition-colors shadow-lg shadow-[#5E6F58]/20 active:scale-95">
+                <h3 className="text-xl font-black text-white mb-2">New to NextGen-LMS?</h3>
+                <p className="text-sm text-white/70 mb-6 text-center max-w-[220px]">Create an account to start learning, earning, and growing with us.</p>
+                <button onClick={togglePanel} className="w-full py-3 bg-[#d94d19] text-white font-bold rounded-xl hover:bg-[#c34516] transition-colors shadow-lg active:scale-95">
                   Create an Account
                 </button>
               </div>
