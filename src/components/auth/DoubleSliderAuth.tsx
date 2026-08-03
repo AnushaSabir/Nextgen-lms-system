@@ -109,21 +109,17 @@ export default function DoubleSliderAuth() {
         .overlay-right { right: 0; transform: translateX(0); }
         .auth-container.right-panel-active .overlay-right { transform: translateX(20%); }
 
-        /* Mobile specific fixes - Premium Glass Card Overlap */
+        /* Mobile specific fixes - Form only, no image */
         @media (max-width: 768px) {
-          .auth-container { min-height: 100vh; height: auto; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; background-color: #000000; justify-content: flex-start; align-items: center; }
+          .auth-container { min-height: 100vh; height: auto; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; background-color: #000000; justify-content: center; align-items: center; padding: 24px 0; }
           
-          /* The Image Carousel Overlay takes up upper half */
-          .overlay-container { display: block; position: relative !important; width: 100%; height: 280px; min-height: 280px; left: auto; top: auto; z-index: 1; transform: none !important; transition: none; overflow: hidden; flex-shrink: 0; }
-          .auth-container.right-panel-active .overlay-container { transform: none !important; }
-          
-          .overlay { width: 100%; height: 100%; top: 0; left: 0; transform: none !important; transition: none; background: transparent; }
-          .auth-container.right-panel-active .overlay { transform: none !important; }
+          /* Hide image section completely on mobile */
+          .overlay-container { display: none !important; }
           
           .overlay-panel { display: none !important; }
           
-          /* The form overlaps the image beautifully as a glass card */
-          .form-container { position: relative !important; width: calc(100% - 32px); max-width: 500px; height: auto; top: auto; left: auto !important; margin: 0 auto 40px auto; padding: 32px 24px; transition: opacity 0.4s ease-in-out; background: #c8e6c9; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(26, 107, 46, 0.3); border-radius: 28px; box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.5); z-index: 5; }
+          /* Full-page form card on mobile */
+          .form-container { position: relative !important; width: calc(100% - 32px); max-width: 440px; height: auto; top: auto; left: auto !important; margin: 0 auto; padding: 36px 24px; transition: opacity 0.4s ease-in-out; background: #c8e6c9; border: 1px solid rgba(26, 107, 46, 0.3); border-radius: 28px; box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6); z-index: 5; }
           
           .sign-in-container { opacity: 1; visibility: visible; transform: none !important; display: block; }
           .auth-container.right-panel-active .sign-in-container { opacity: 0; visibility: hidden; transform: none !important; display: none; }
