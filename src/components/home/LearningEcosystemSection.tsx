@@ -23,10 +23,10 @@ export default function LearningEcosystemSection() {
             </h2>
 
             <div className="space-y-5 text-base sm:text-lg text-[#1a6b2e] leading-relaxed max-w-2xl">
-              <p>NextGen-LMS LMS is not just another online learning platform. It is a complete pipeline from learning to earning.</p>
-              <p>Once you complete your course and pass your assessments, you receive a <span className="text-[#0f3d1a] font-bold">NextGen-LMS LMS Certified badge</span> and can immediately create your profile and start getting paid on the NextGen-LMS freelance marketplace.</p>
+              <p>NextGen LMS is a complete, structured learning platform built for students, educators, and professionals who want to grow their skills the right way.</p>
+              <p>Once you complete your course and pass your assessments, you receive an official <span className="text-[#0f3d1a] font-bold">NextGen LMS Certificate</span> along with a <span className="text-[#0f3d1a] font-bold">Verified Badge</span> — proof that your skills are real and recognized.</p>
               <div className="pt-2 pb-4 pl-4 border-l-4 border-[#5E6F58] bg-white/[0.02] rounded-r-lg">
-                <p className="text-[#0f3d1a] font-bold text-lg sm:text-xl italic">"No wasted time. No gap between learning and earning."</p>
+                <p className="text-[#0f3d1a] font-bold text-lg sm:text-xl italic">"Learn smart. Get certified. Stand out."</p>
               </div>
             </div>
 
@@ -96,18 +96,18 @@ export default function LearningEcosystemSection() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-sm font-black text-white">Freelancer Profile Sync</span>
-                        <span className="text-[10px] text-[#0f3d1a] font-black uppercase">Active</span>
+                        <span className="text-sm font-black text-white">Skill Verified & Certified</span>
+                        <span className="text-[10px] text-emerald-400 font-black uppercase">✓ Done</span>
                       </div>
                       <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden border border-white/10">
-                        <div className="bg-gradient-to-r from-[#60a5fa] to-[#d94d19] h-2 rounded-full w-full transition-all duration-1000" />
+                        <div className="bg-gradient-to-r from-[#5E6F58] to-[#0f3d1a] h-2 rounded-full w-full transition-all duration-1000" />
                       </div>
                     </div>
                   </div>
                   
                   <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/[0.02] border border-dashed border-[#1a6b2e]/20">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-[11px] text-[#1a6b2e] font-medium">Ready to receive paid tasks</span>
+                    <span className="text-[11px] text-[#1a6b2e] font-medium">Certificate ready to download & share</span>
                   </div>
                 </div>
 
