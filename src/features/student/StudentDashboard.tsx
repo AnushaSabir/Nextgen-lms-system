@@ -81,7 +81,7 @@ export function StudentDashboard() {
   }
 
   return (
-    <div className="space-y-8 p-6 bg-black rounded-3xl border border-[#1a6b2e]/30 shadow-2xl">
+    <div className="space-y-8">
       {/* Success/Error Messages */}
       {message && (
         <div className={`rounded-xl border p-4 flex items-start gap-3 transition-all duration-300 ${
@@ -106,8 +106,8 @@ export function StudentDashboard() {
       {activeEnrollment ? (
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">My Learning Journey</h1>
-            <p className="text-sm text-[#c8e6c9] mt-1">Complete structured courses with video lessons and assessments</p>
+            <h1 className="text-2xl font-bold text-[#0f3d1a] tracking-tight">My Learning Journey</h1>
+            <p className="text-sm text-[#1a6b2e] mt-1">Complete structured courses with video lessons and assessments</p>
           </div>
           <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-sky-500/10 border border-sky-500/20">
             <Zap className="w-5 h-5 text-sky-400" />
@@ -116,8 +116,8 @@ export function StudentDashboard() {
         </div>
       ) : (
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Available Courses</h1>
-          <p className="text-sm text-[#c8e6c9] mt-1">Choose a course and start your learning journey</p>
+          <h1 className="text-2xl font-bold text-[#0f3d1a] tracking-tight">Available Courses</h1>
+          <p className="text-sm text-[#1a6b2e] mt-1">Choose a course and start your learning journey</p>
         </div>
       )}
 
@@ -134,7 +134,7 @@ export function StudentDashboard() {
               {courses.map((course) => (
                 <div 
                   key={course.id} 
-                  className="group rounded-xl border border-[#1a6b2e]/30 bg-[#c8e6c9] p-5 transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 hover:border-sky-500/50"
+                  className="group rounded-xl border border-[#1a6b2e]/30 bg-white shadow-sm hover:shadow-md p-5 transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 hover:border-sky-500/50"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-sky-500/20 to-sky-500/5 flex items-center justify-center border border-sky-500/20">
@@ -177,7 +177,7 @@ export function StudentDashboard() {
         <>
           {/* Progress Overview */}
           <div className="grid gap-4 md:grid-cols-3">
-            <Card className="bg-gradient-to-br from-[#c8e6c9] to-[#c8e6c9]/80 border-[#1a6b2e]/30">
+            <Card className="bg-gradient-to-br from-white to-white/90 border-[#1a6b2e]/30">
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm text-[#1a6b2e] mb-2">Current Course</p>
@@ -188,7 +188,7 @@ export function StudentDashboard() {
               </div>
             </Card>
             
-            <Card className="bg-gradient-to-br from-[#c8e6c9] to-[#c8e6c9]/80 border-[#1a6b2e]/30">
+            <Card className="bg-gradient-to-br from-white to-white/90 border-[#1a6b2e]/30">
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm text-[#1a6b2e] mb-2">Trainer</p>
@@ -199,7 +199,7 @@ export function StudentDashboard() {
               </div>
             </Card>
             
-            <Card className="bg-gradient-to-br from-[#c8e6c9] to-[#c8e6c9]/80 border-[#1a6b2e]/30">
+            <Card className="bg-gradient-to-br from-white to-white/90 border-[#1a6b2e]/30">
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm text-[#1a6b2e] mb-2">Unlocked</p>
@@ -232,8 +232,8 @@ export function StudentDashboard() {
                     key={video.id} 
                     className={`rounded-xl border transition-all duration-300 ${
                       video.locked
-                        ? 'border-[#1a6b2e]/30 bg-[#c8e6c9]/50'
-                        : 'border-[#1a6b2e]/30 bg-[#c8e6c9] hover:shadow-lg hover:shadow-sky-500/5 hover:-translate-y-0.5'
+                        ? 'border-[#1a6b2e]/30 bg-white shadow-sm hover:shadow-md/50'
+                        : 'border-[#1a6b2e]/30 bg-white shadow-sm hover:shadow-md hover:shadow-lg hover:shadow-sky-500/5 hover:-translate-y-0.5'
                     }`}
                   >
                     <div className="p-5">
@@ -241,7 +241,7 @@ export function StudentDashboard() {
                         {/* Status Icon */}
                         <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center border ${
                           video.locked
-                            ? 'bg-[#c8e6c9]/50 border-[#1a6b2e]/40 text-[#7dab52]'
+                            ? 'bg-white shadow-sm hover:shadow-md/50 border-[#1a6b2e]/40 text-[#7dab52]'
                             : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
                         }`}>
                           {video.locked ? (
@@ -254,7 +254,7 @@ export function StudentDashboard() {
                         {/* Video Info */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-3 mb-1">
-                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#c8e6c9] text-xs font-semibold text-[#1a6b2e]">
+                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white shadow-sm hover:shadow-md text-xs font-semibold text-[#1a6b2e]">
                               {index + 1}
                             </span>
                             <h3 className={`font-semibold ${video.locked ? 'text-[#1a6b2e]' : 'text-[#0f3d1a]'}`}>
@@ -306,7 +306,7 @@ export function StudentDashboard() {
                             <Button 
                               variant="ghost" 
                               onClick={() => submitHomework(video.id)}
-                              className="w-full border-[#1a6b2e]/30 hover:bg-[#c8e6c9] text-[#1a6b2e]"
+                              className="w-full border-[#1a6b2e]/30 hover:bg-white shadow-sm hover:shadow-md text-[#1a6b2e]"
                             >
                               Submit Homework
                             </Button>
@@ -372,7 +372,7 @@ export function StudentDashboard() {
 
       {/* Test Modal */}
       {test ? (
-        <Card id="test-modal" className="border-sky-500/30 bg-gradient-to-br from-[#c8e6c9] to-[#c8e6c9]/80">
+        <Card id="test-modal" className="border-sky-500/30 bg-gradient-to-br from-white to-white/90">
           <div className="flex items-center gap-2 mb-6">
             <Zap className="w-5 h-5 text-sky-400" />
             <CardTitle 
@@ -450,7 +450,7 @@ export function StudentDashboard() {
                 key={certificate.id} 
                 href={certificate.certificateUrl} 
                 download="nextgen-lms-certificate.pdf"
-                className="group rounded-xl border border-[#1a6b2e]/30 bg-gradient-to-br from-[#c8e6c9] to-[#c8e6c9]/80 p-5 transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 hover:border-sky-500/50"
+                className="group rounded-xl border border-[#1a6b2e]/30 bg-gradient-to-br from-white to-white/90 p-5 transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-1 hover:border-sky-500/50"
               >
                 <div className="flex items-start justify-between mb-3">
                   <Trophy className="w-6 h-6 text-sky-400" />
