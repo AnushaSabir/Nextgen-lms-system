@@ -12,31 +12,22 @@ import { getErrorMessage } from '@/utils/errorParser';
 
 const AUTH_SLIDES = [
   {
-    image: '/images/auth/slide1.png',
-    badge1: 'Active Courses',
-    badge1Desc: 'High-Demand Skills',
-    badge2: 'Live Sessions',
-    badge2Desc: 'Interactive Learning',
-    title: 'Master Digital Skills',
-    desc: 'Learn Smarter. Grow Faster with NextGen-LMS LMS. Turn your knowledge into expertise.'
+    image: '/images/auth_login_bg.jpg',
+    badge1: 'Welcome Back',
+    badge1Desc: 'Continue your journey',
+    badge2: 'Skill Path',
+    badge2Desc: 'Resume Learning',
+    title: 'Welcome Back to NextGen LMS',
+    desc: 'Log in to continue building your skills, tracking your progress, and getting closer to your goals.'
   },
   {
-    image: '/images/auth/slide2.png',
-    badge1: 'Verified Badges',
-    badge1Desc: 'Global Recognition',
-    badge2: 'Expert Trainers',
-    badge2Desc: 'Learn from the Best',
-    title: 'Get Certified',
-    desc: 'Earn certificates that prove your expertise and unlock high-paying global opportunities.'
-  },
-  {
-    image: '/images/auth/slide3.jpg',
-    badge1: 'Practical Tasks',
-    badge1Desc: 'Hands-on Projects',
-    badge2: 'Freelance Ready',
-    badge2Desc: 'Direct Client Contracts',
-    title: 'Skill to Earn',
-    desc: 'Connect directly with global clients and launch your successful freelance career with NextGen-LMS.'
+    image: '/images/auth_register_bg.jpg',
+    badge1: 'Join Us',
+    badge1Desc: 'Start your journey',
+    badge2: 'Get Certified',
+    badge2Desc: 'Unlock potential',
+    title: 'Join the NextGen Community',
+    desc: 'Sign up today and get access to expert-led courses, practical tasks, and a direct path to success.'
   }
 ];
 
@@ -47,20 +38,12 @@ export default function DoubleSliderAuth() {
   const { showToast } = useToastStore();
 
   const [isSignUp, setIsSignUp] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     if (mode === 'signup') {
       setIsSignUp(true);
     }
   }, [mode]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % AUTH_SLIDES.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, []);
 
   const togglePanel = () => setIsSignUp(!isSignUp);
 
@@ -284,9 +267,9 @@ export default function DoubleSliderAuth() {
         <div className="overlay-container">
           <div className="overlay relative">
 
-            {/* Auto-Scrolling Images */}
+            {/* Static Images Based on Auth State */}
             {AUTH_SLIDES.map((slide, index) => (
-              <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
+              <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${(isSignUp ? 1 : 0) === index ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
                 <Image src={slide.image} alt={slide.title} fill className="object-cover" priority={index === 0} />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#020617]/20 to-[#020617] sm:to-[#020617]/60" />
 
