@@ -308,7 +308,7 @@ const CoursesPage = () => {
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
               <div className="max-w-3xl">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0f3d1a] tracking-tight mb-2">
-                  Featured Courses <span className="text-[#d94d19]">&</span> Capabilities
+                  Featured Courses <span className="text-[#0f3d1a]">&</span> Capabilities
                 </h2>
                 <p className="text-sm sm:text-base text-[#1a6b2e] leading-relaxed">
                   Discover our most popular courses designed with cutting-edge learning features. Every course includes AI-assisted learning, practical assignments, and interactive modules to help you master new skills effectively.
@@ -316,7 +316,7 @@ const CoursesPage = () => {
               </div>
               <Link
                 href="/courses"
-                className="text-[#d94d19] text-sm font-semibold hover:underline flex items-center gap-1 group transition-all duration-300 hover:gap-2"
+                className="text-[#0f3d1a] text-sm font-semibold hover:underline flex items-center gap-1 group transition-all duration-300 hover:gap-2"
               >
                 View all{" "}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
@@ -345,10 +345,10 @@ const CoursesPage = () => {
                 {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8 z-10">
                   <div className="space-y-2 sm:space-y-3">
-                    <span className="text-xs font-semibold text-[#d94d19] uppercase tracking-wider">
+                    <span className="text-xs font-semibold text-[#0f3d1a] uppercase tracking-wider">
                       {courses[0].level} • {courses[0].duration}
                     </span>
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#0f3d1a] leading-tight group-hover:text-[#d94d19] transition-colors duration-300 line-clamp-2">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#0f3d1a] leading-tight group-hover:text-[#0f3d1a] transition-colors duration-300 line-clamp-2">
                       {courses[0].title}
                     </h3>
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
@@ -386,10 +386,10 @@ const CoursesPage = () => {
                     </div>
                   </div>
                   <div className="w-3/5 p-3 sm:p-4 md:p-5 flex flex-col justify-center">
-                    <span className="text-[10px] font-bold text-[#d94d19] uppercase tracking-wider mb-1">
+                    <span className="text-[10px] font-bold text-[#0f3d1a] uppercase tracking-wider mb-1">
                       {courses[1].level}
                     </span>
-                    <h3 className="text-sm sm:text-base font-bold text-white mb-1 line-clamp-2 group-hover:text-[#d94d19] transition-colors">
+                    <h3 className="text-sm sm:text-base font-bold text-white mb-1 line-clamp-2 group-hover:text-[#0f3d1a] transition-colors">
                       {courses[1].title}
                     </h3>
                     <p className="text-xs text-white/80 mb-2 truncate">
@@ -419,10 +419,10 @@ const CoursesPage = () => {
                     </div>
                   </div>
                   <div className="w-3/5 p-3 sm:p-4 md:p-5 flex flex-col justify-center">
-                    <span className="text-[10px] font-bold text-[#d94d19] uppercase tracking-wider mb-1">
+                    <span className="text-[10px] font-bold text-[#0f3d1a] uppercase tracking-wider mb-1">
                       {courses[2].level}
                     </span>
-                    <h3 className="text-sm sm:text-base font-bold text-white mb-1 line-clamp-2 group-hover:text-[#d94d19] transition-colors">
+                    <h3 className="text-sm sm:text-base font-bold text-white mb-1 line-clamp-2 group-hover:text-[#0f3d1a] transition-colors">
                       {courses[2].title}
                     </h3>
                     <p className="text-xs text-white/80 mb-2 truncate">
@@ -640,13 +640,13 @@ const CoursesPage = () => {
             
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div className="space-y-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-[#d94d19] text-sm font-bold uppercase tracking-wider border border-orange-100">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 text-[#0f3d1a] text-sm font-bold uppercase tracking-wider border border-orange-100">
                   <Award className="w-4 h-4" />
                   Official Certification
                 </div>
                 
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0f3d1a] leading-tight">
-                  Get Your <span className="text-[#d94d19]">Certificate</span> <br/>
+                  Get Your <span className="text-[#0f3d1a]">Certificate</span> <br/>
                   Upon Course Completion
                 </h2>
                 
@@ -660,7 +660,7 @@ const CoursesPage = () => {
                   <ul className="space-y-3 mt-6">
                     {['Verify your skills with employers', 'Instantly shareable on social media', 'Downloadable high-resolution format', 'Integrated with your freelance profile'].map((feature, i) => (
                       <li key={i} className="flex items-center gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-[#d94d19]" />
+                        <CheckCircle2 className="w-5 h-5 text-[#0f3d1a]" />
                         <span className="font-medium">{feature}</span>
                       </li>
                     ))}
@@ -709,7 +709,7 @@ const CoursesPage = () => {
                   label: "Expert Courses",
                   icon: BookOpen,
                   trend: "+45",
-                  trendColor: "text-[#d94d19]",
+                  trendColor: "text-[#0f3d1a]",
                 },
                 {
                   number: "75+",
@@ -735,7 +735,7 @@ const CoursesPage = () => {
                     {/* Icon Section */}
                     <div className="flex items-start justify-between mb-4">
                       <div className="w-12 h-12 rounded-xl bg-[#d94d19]/10 flex items-center justify-center group-hover:bg-[#d94d19] transition-colors duration-300">
-                        <IconComp className="w-6 h-6 text-[#d94d19] group-hover:text-[#0f3d1a] transition-colors duration-300" />
+                        <IconComp className="w-6 h-6 text-[#0f3d1a] group-hover:text-[#0f3d1a] transition-colors duration-300" />
                       </div>
                       {/* Trend Indicator */}
                       <span
@@ -747,7 +747,7 @@ const CoursesPage = () => {
 
                     {/* Stats Numbers */}
                     <div>
-                      <div className="text-3xl sm:text-4xl font-bold text-white mb-1 group-hover:text-[#d94d19] transition-colors duration-300">
+                      <div className="text-3xl sm:text-4xl font-bold text-white mb-1 group-hover:text-[#0f3d1a] transition-colors duration-300">
                         {stat.number}
                       </div>
                       <p className="text-sm text-white/80 font-medium">
@@ -775,14 +775,14 @@ const CoursesPage = () => {
               {/* Left side - Content */}
               <div className="space-y-5 text-left">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100 dark:bg-[#d94d19]/10 border border-orange-200 dark:border-[#d94d19]/20 text-orange-600 dark:text-[#d94d19] text-xs font-bold uppercase tracking-wider">
-                  <Crown className="w-3.5 h-3.5 text-[#d94d19]" />
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100 dark:bg-[#d94d19]/10 border border-orange-200 dark:border-[#d94d19]/20 text-orange-600 dark:text-[#0f3d1a] text-xs font-bold uppercase tracking-wider">
+                  <Crown className="w-3.5 h-3.5 text-[#0f3d1a]" />
                   Become an Instructor
                 </div>
 
                 {/* Heading */}
                 <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                  Teach what you <span className="text-[#d94d19]">love</span>
+                  Teach what you <span className="text-[#0f3d1a]">love</span>
                 </h2>
 
                 {/* Description */}
@@ -814,13 +814,13 @@ const CoursesPage = () => {
 
                   {/* Orbiting elements - icons with navy blue background */}
                   <div className="absolute -top-6 -right-6 w-14 h-14 rounded-xl bg-navy-900 shadow-md border border-[#d94d19]/30 flex items-center justify-center">
-                    <Video className="w-6 h-6 text-[#d94d19]" />
+                    <Video className="w-6 h-6 text-[#0f3d1a]" />
                   </div>
                   <div className="absolute -bottom-6 -left-6 w-14 h-14 rounded-xl bg-navy-900 shadow-md border border-[#d94d19]/30 flex items-center justify-center">
-                    <Mic className="w-6 h-6 text-[#d94d19]" />
+                    <Mic className="w-6 h-6 text-[#0f3d1a]" />
                   </div>
                   <div className="absolute top-1/2 -right-10 -translate-y-1/2 w-12 h-12 rounded-lg bg-navy-900 shadow-md border border-[#d94d19]/30 flex items-center justify-center">
-                    <Palette className="w-5 h-5 text-[#d94d19]" />
+                    <Palette className="w-5 h-5 text-[#0f3d1a]" />
                   </div>
                 </div>
 

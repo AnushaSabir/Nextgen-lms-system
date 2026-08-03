@@ -139,12 +139,12 @@ export default function ForTrainersPage() {
         <div className="container mx-auto max-w-6xl">
           {/* Header Info */}
           <div className="text-center mb-16 sm:mb-24 space-y-4 sm:space-y-6 max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#d94d19]/20 bg-[#d94d19]/10 text-[#d94d19] text-xs font-bold uppercase tracking-widest shadow-sm hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#d94d19]/20 bg-[#d94d19]/10 text-[#0f3d1a] text-xs font-bold uppercase tracking-widest shadow-sm hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-default">
               <Sparkles className="w-3.5 h-3.5" /> Join Our Team
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0f3d1a] leading-tight tracking-tight text-3d">
               Teach on{" "}
-              <span className="text-[#d94d19] text-3d-orange">
+              <span className="text-[#0f3d1a] text-3d-orange">
                 NextGen-LMS LMS
               </span>
             </h1>
@@ -161,7 +161,7 @@ export default function ForTrainersPage() {
               <div className="lg:col-span-7 space-y-6 sm:space-y-8">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#0f3d1a] leading-tight tracking-tight text-3d">
                   Who Can Become a{" "}
-                  <span className="text-[#d94d19] text-3d-orange">
+                  <span className="text-[#0f3d1a] text-3d-orange">
                     Trainer?
                   </span>
                 </h2>
@@ -180,7 +180,7 @@ export default function ForTrainersPage() {
                       key={i}
                       className="flex items-start gap-3 sm:gap-4 group/list hover:-translate-y-1 transition-all duration-300"
                     >
-                      <div className="w-8 h-8 rounded-xl bg-[#d94d19]/10 flex items-center justify-center text-[#d94d19] border border-[#d94d19]/20 flex-shrink-0 group-hover/list:scale-110 group-hover/list:rotate-6 group-hover/list:-translate-y-1 transition-all duration-300">
+                      <div className="w-8 h-8 rounded-xl bg-[#d94d19]/10 flex items-center justify-center text-[#0f3d1a] border border-[#d94d19]/20 flex-shrink-0 group-hover/list:scale-110 group-hover/list:rotate-6 group-hover/list:-translate-y-1 transition-all duration-300">
                         <CheckCircle2 className="w-4 h-4" />
                       </div>
                       <p className="text-sm sm:text-base text-[#1a6b2e] font-semibold leading-relaxed">
@@ -203,7 +203,7 @@ export default function ForTrainersPage() {
 
                   {/* Floating Card over Image */}
                   <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 p-3 sm:p-4 rounded-2xl bg-[#c8e6c9]/80 backdrop-blur-md border border-[#1a6b2e]/20 flex items-center gap-3 sm:gap-4 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(240,89,31,0.3)] transition-all duration-300 group/card">
-                    <div className="w-10 h-10 rounded-xl bg-[#d94d19]/10 border border-[#d94d19]/20 text-[#d94d19] flex items-center justify-center flex-shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-[#d94d19]/10 border border-[#d94d19]/20 text-[#0f3d1a] flex items-center justify-center flex-shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-all duration-300">
                       <Video className="w-5 h-5" />
                     </div>
                     <div>
@@ -240,7 +240,7 @@ export default function ForTrainersPage() {
               <div className="text-center mb-14">
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#5E6F58]/10 border border-[#5E6F58]/20 mb-6 hover:scale-105 transition-transform duration-300">
                   <div className="w-1.5 h-1.5 rounded-full bg-[#5E6F58] animate-pulse" />
-                  <span className="text-[10px] font-black text-[#d94d19] uppercase tracking-widest">
+                  <span className="text-[10px] font-black text-[#0f3d1a] uppercase tracking-widest">
                     Become a Trainer
                   </span>
                 </div>
@@ -304,14 +304,14 @@ export default function ForTrainersPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-3xl font-black text-[#0f3d1a]/5 group-hover:text-[#d94d19]/20 transition-all duration-300">
+                        <div className="text-3xl font-black text-[#0f3d1a]/5 group-hover:text-[#0f3d1a]/20 transition-all duration-300">
                           {String(idx + 1).padStart(2, "0")}
                         </div>
                       </div>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-lg font-bold text-[#0f3d1a] mb-2 group-hover:text-[#d94d19] transition-colors duration-300">
+                    <h3 className="text-lg font-bold text-[#0f3d1a] mb-2 group-hover:text-[#0f3d1a] transition-colors duration-300">
                       {req.title}
                     </h3>
 
@@ -323,7 +323,7 @@ export default function ForTrainersPage() {
                     {/* Metric Badge */}
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.02] border border-[#1a6b2e]/10 group-hover:border-[#5E6F58]/30 transition-all duration-300">
                       <div className="w-1.5 h-1.5 rounded-full bg-[#5E6F58] group-hover:scale-150 transition-all duration-300" />
-                      <span className="text-[10px] font-bold text-[#d94d19] uppercase tracking-wider">
+                      <span className="text-[10px] font-bold text-[#0f3d1a] uppercase tracking-wider">
                         {req.metric}
                       </span>
                     </div>
@@ -364,7 +364,7 @@ export default function ForTrainersPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-[#020617] via-[#0a0f1a] to-[#020617]" />
 
               {/* Left decorative large number */}
-              <div className="absolute top-10 left-10 text-8xl font-black text-[#d94d19]/5 select-none">
+              <div className="absolute top-10 left-10 text-8xl font-black text-[#0f3d1a]/5 select-none">
                 QS
               </div>
 
@@ -388,14 +388,14 @@ export default function ForTrainersPage() {
                           />
                         </svg>
                       </div>
-                      <span className="text-xs font-bold text-[#d94d19] uppercase tracking-wider">
+                      <span className="text-xs font-bold text-[#0f3d1a] uppercase tracking-wider">
                         Quality Assurance
                       </span>
                     </div>
 
                     <h2 className="text-3xl sm:text-4xl font-black text-[#0f3d1a] leading-tight text-3d">
                       Course Creation <br />
-                      <span className="text-[#d94d19] text-3d-orange">
+                      <span className="text-[#0f3d1a] text-3d-orange">
                         Standards
                       </span>
                     </h2>
@@ -419,7 +419,7 @@ export default function ForTrainersPage() {
                           {/* Step Number Line */}
                           <div className="flex items-center gap-3 mb-6">
                             <div className="w-px h-8 bg-gradient-to-b from-[#5E6F58] to-transparent transition-all duration-300 group-hover:h-10" />
-                            <span className="text-xs font-mono font-bold text-[#d94d19]/60 transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-0.5">
+                            <span className="text-xs font-mono font-bold text-[#0f3d1a]/60 transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-0.5">
                               STEP {String(idx + 1).padStart(2, "0")}
                             </span>
                           </div>
@@ -429,7 +429,7 @@ export default function ForTrainersPage() {
                             <div className="relative">
                               <div className="absolute inset-0 rounded-xl bg-[#5E6F58]/20 blur-lg opacity-0 group-hover:opacity-100 transition-all duration-500" />
                               <div className="relative w-12 h-12 rounded-xl bg-[#5E6F58]/10 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:-rotate-6 group-hover:-translate-y-1">
-                                <Icon className="w-5 h-5 text-[#d94d19] transition-all duration-300" />
+                                <Icon className="w-5 h-5 text-[#0f3d1a] transition-all duration-300" />
                               </div>
                             </div>
                           </div>
@@ -446,11 +446,11 @@ export default function ForTrainersPage() {
 
                           {/* Learn More Link - Only appears on hover */}
                           <div className="mt-5 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-2">
-                            <span className="text-xs text-[#d94d19] font-medium">
+                            <span className="text-xs text-[#0f3d1a] font-medium">
                               Learn more
                             </span>
                             <svg
-                              className="w-3 h-3 text-[#d94d19] transition-transform duration-300 group-hover:translate-x-1"
+                              className="w-3 h-3 text-[#0f3d1a] transition-transform duration-300 group-hover:translate-x-1"
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -504,7 +504,7 @@ export default function ForTrainersPage() {
                       <div className="flex items-center gap-2 group/stat">
                         <div className="w-8 h-8 rounded-full bg-[#d94d19]/10 flex items-center justify-center transition-all duration-300 group-hover/stat:scale-110 group-hover/stat:-translate-y-1">
                           <svg
-                            className="w-4 h-4 text-[#d94d19]"
+                            className="w-4 h-4 text-[#0f3d1a]"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -560,8 +560,8 @@ export default function ForTrainersPage() {
               {/* Header Section */}
               <div className="text-center mb-16 space-y-5 relative z-10">
                 <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#5E6F58]/10 border border-[#5E6F58]/20 hover:scale-105 hover:-translate-y-1 transition-all duration-300 cursor-default">
-                  <Rocket className="w-4 h-4 text-[#d94d19]" />
-                  <span className="text-xs font-black text-[#d94d19] uppercase tracking-widest">
+                  <Rocket className="w-4 h-4 text-[#0f3d1a]" />
+                  <span className="text-xs font-black text-[#0f3d1a] uppercase tracking-widest">
                     Launch Roadmap
                   </span>
                 </div>
@@ -619,7 +619,7 @@ export default function ForTrainersPage() {
 
                     {/* Content */}
                     <div className="text-center">
-                      <h3 className="text-xl font-bold text-[#0f3d1a] mb-3 group-hover:text-[#d94d19] transition-colors duration-300">
+                      <h3 className="text-xl font-bold text-[#0f3d1a] mb-3 group-hover:text-[#0f3d1a] transition-colors duration-300">
                         {item.title}
                       </h3>
                       <p className="text-sm text-[#1a6b2e] group-hover:text-[#1a6b2e] leading-relaxed transition-colors duration-300">
@@ -630,7 +630,7 @@ export default function ForTrainersPage() {
                     {/* Progress arrow indicator */}
                     {idx < 2 && (
                       <div className="hidden md:block absolute -right-4 top-10 w-8 h-8">
-                        <div className="text-2xl text-[#d94d19]/30 group-hover:text-[#d94d19]/50 transition-all duration-300 group-hover:translate-x-1">
+                        <div className="text-2xl text-[#0f3d1a]/30 group-hover:text-[#0f3d1a]/50 transition-all duration-300 group-hover:translate-x-1">
                           →
                         </div>
                       </div>
@@ -663,14 +663,14 @@ export default function ForTrainersPage() {
       {/* Heading overlay on image */}
       <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#d94d19]/20 backdrop-blur-sm border border-[#d94d19]/30 mb-3">
-          <HelpCircle className="w-3.5 h-3.5 text-[#d94d19]" />
-          <span className="text-[#d94d19] text-[10px] font-black uppercase tracking-widest">
+          <HelpCircle className="w-3.5 h-3.5 text-[#0f3d1a]" />
+          <span className="text-[#0f3d1a] text-[10px] font-black uppercase tracking-widest">
             Support Toolkit
           </span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Tools that keep trainers{" "}
-          <span className="text-[#d94d19]">consistent</span>
+          <span className="text-[#0f3d1a]">consistent</span>
         </h2>
         <p className="text-sm text-white/80 font-medium leading-relaxed">
           Trainers get workflows for feedback, student questions,
@@ -720,7 +720,7 @@ export default function ForTrainersPage() {
           key={tool.title}
           className="group p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#1e293b] to-[#0f172a] border border-gray-800 hover:border-[#d94d19]/50 hover:shadow-lg hover:-translate-y-2 transition-all duration-300"
         >
-          <div className="w-11 h-11 rounded-xl bg-[#d94d19]/10 border border-[#d94d19]/25 text-[#d94d19] flex items-center justify-center mb-4 group-hover:bg-[#d94d19] group-hover:text-[#0f3d1a] group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+          <div className="w-11 h-11 rounded-xl bg-[#d94d19]/10 border border-[#d94d19]/25 text-[#0f3d1a] flex items-center justify-center mb-4 group-hover:bg-[#d94d19] group-hover:text-[#0f3d1a] group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
             <Icon className="w-5 h-5" />
           </div>
           <h3 className="text-base sm:text-lg font-bold text-white tracking-tight mb-2">
@@ -752,7 +752,7 @@ export default function ForTrainersPage() {
               {/* Header Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#5E6F58]/10 border border-[#5E6F58]/20 mb-6 hover:scale-105 transition-transform duration-300">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#5E6F58] animate-pulse" />
-                <span className="text-[10px] font-black text-[#d94d19] uppercase tracking-widest">
+                <span className="text-[10px] font-black text-[#0f3d1a] uppercase tracking-widest">
                   Fair Compensation
                 </span>
               </div>
@@ -815,7 +815,7 @@ export default function ForTrainersPage() {
                         </linearGradient>
                       </defs>
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <span className="text-4xl font-black text-[#d94d19] group-hover:scale-110 transition-transform duration-500">
+                        <span className="text-4xl font-black text-[#0f3d1a] group-hover:scale-110 transition-transform duration-500">
                           70%
                         </span>
                         <span className="text-[10px] text-[#0f3d1a]/50">Split</span>
@@ -823,7 +823,7 @@ export default function ForTrainersPage() {
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-[#0f3d1a] mb-2 group-hover:text-[#d94d19] transition-colors duration-300">
+                  <h3 className="text-xl font-bold text-[#0f3d1a] mb-2 group-hover:text-[#0f3d1a] transition-colors duration-300">
                     Trainer Split
                   </h3>
                   <p className="text-sm text-[#1a6b2e] leading-relaxed">
@@ -835,7 +835,7 @@ export default function ForTrainersPage() {
                   <div className="mt-6 pt-4 border-t border-[#5E6F58]/20">
                     <div className="flex items-center justify-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-[#5E6F58] animate-pulse" />
-                      <span className="text-[10px] font-bold text-[#d94d19] uppercase">
+                      <span className="text-[10px] font-bold text-[#0f3d1a] uppercase">
                         Highest in Industry
                       </span>
                     </div>
@@ -912,8 +912,8 @@ export default function ForTrainersPage() {
               <div className="relative">
                 {/* Small badge */}
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#5E6F58]/10 border border-[#5E6F58]/20 mb-6">
-                  <Rocket className="w-3.5 h-3.5 text-[#d94d19]" />
-                  <span className="text-[10px] font-black text-[#d94d19] uppercase tracking-widest">
+                  <Rocket className="w-3.5 h-3.5 text-[#0f3d1a]" />
+                  <span className="text-[10px] font-black text-[#0f3d1a] uppercase tracking-widest">
                     Limited Slots Available
                   </span>
                 </div>
@@ -970,7 +970,7 @@ export default function ForTrainersPage() {
                           key={i}
                           className="w-8 h-8 rounded-full bg-[#5E6F58]/20 border-2 border-[#020617] flex items-center justify-center"
                         >
-                          <span className="text-[10px] font-bold text-[#d94d19]">
+                          <span className="text-[10px] font-bold text-[#0f3d1a]">
                             T{i}
                           </span>
                         </div>

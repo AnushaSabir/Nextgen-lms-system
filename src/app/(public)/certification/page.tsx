@@ -30,7 +30,7 @@ export default function CertificationPage() {
           
           <div className="w-full">
             <CertificatePreview />
-            <p className="mt-8 text-lg sm:text-2xl font-bold text-[#d94d19] uppercase tracking-wide">
+            <p className="mt-8 text-lg sm:text-2xl font-bold text-[#0f3d1a] uppercase tracking-wide">
               Jo course complete karega, usse milega ye certificate!
             </p>
           </div>

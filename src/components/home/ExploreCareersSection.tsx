@@ -15,7 +15,7 @@ export default function ExploreCareersSection() {
         {/* About Section */}
         <div className="text-center mb-16 sm:mb-24 reveal">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] tracking-tight mb-6 text-3d">
-            Learn Without <span className="text-[#d94d19] text-3d-orange">Limits</span>
+            Learn Without <span className="text-[#0f3d1a] text-3d-orange">Limits</span>
           </h2>
           <div className="max-w-3xl mx-auto space-y-6 text-base sm:text-lg text-[#1a6b2e] font-medium leading-relaxed">
             <p>
@@ -37,9 +37,9 @@ export default function ExploreCareersSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {TESTIMONIALS.map((t, i) => (
             <div key={i} className="bg-white/40 border border-[#1a6b2e]/10 rounded-3xl p-8 relative hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-[#1a6b2e]/5">
-              <Quote className="w-10 h-10 text-[#d94d19]/20 absolute top-6 right-6" />
+              <Quote className="w-10 h-10 text-[#0f3d1a]/20 absolute top-6 right-6" />
               <div className="flex gap-1 mb-6">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 text-[#d94d19] fill-[#d94d19]" />)}
+                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 text-[#0f3d1a] fill-[#d94d19]" />)}
               </div>
               <p className="text-[#1a6b2e] font-medium mb-8 leading-relaxed italic">"{t.quote}"</p>
               <div className="flex items-center gap-4">

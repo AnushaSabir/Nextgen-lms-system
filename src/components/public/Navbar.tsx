@@ -258,7 +258,7 @@ const Navbar = () => {
                   NEXTGEN
                 </span>
               </div>
-              <span className="text-[7px] sm:text-[9px] lg:text-[11px] font-black uppercase tracking-[0.04em] sm:tracking-[0.05em] lg:tracking-[0.08em] text-[#d94d19] mt-0.5 sm:mt-1 leading-none transition-all duration-300">
+              <span className="text-[7px] sm:text-[9px] lg:text-[11px] font-black uppercase tracking-[0.04em] sm:tracking-[0.05em] lg:tracking-[0.08em] text-[#0f3d1a] mt-0.5 sm:mt-1 leading-none transition-all duration-300">
                 Learning Management System
               </span>
             </div>
@@ -286,7 +286,7 @@ const Navbar = () => {
                     {Icon && (
                       <Icon className={`w-3.5 h-3.5 transition-all duration-300 ${
                         isHovered ? 'scale-110 rotate-12' : ''
-                      } ${isActive ? 'text-[#d94d19]' : 'text-[#7dab52] group-hover:text-[#d94d19]'}`} 
+                      } ${isActive ? 'text-[#0f3d1a]' : 'text-[#7dab52] group-hover:text-[#0f3d1a]'}`} 
                       />
                     )}
                     <span>{link.name}</span>
@@ -347,7 +347,7 @@ const Navbar = () => {
           </div>
 
           <button 
-            className="lg:hidden relative p-2.5 -mr-2 text-[#1a6b2e] hover:text-[#d94d19] transition-all duration-300 rounded-xl hover:bg-[#1a6b2e]/5 active:bg-white/10 group ripple-effect magnetic-button"
+            className="lg:hidden relative p-2.5 -mr-2 text-[#1a6b2e] hover:text-[#0f3d1a] transition-all duration-300 rounded-xl hover:bg-[#1a6b2e]/5 active:bg-white/10 group ripple-effect magnetic-button"
             onClick={toggleMobileMenu}
             aria-label="Toggle menu"
           >
@@ -410,7 +410,7 @@ const Navbar = () => {
                   </div>
                   <div>
                     <p className="text-lg font-black text-[#133937] leading-none">NEXTGEN</p>
-                    <p className="text-[9px] font-black tracking-wider uppercase text-[#d94d19] mt-1 leading-none">Learning Management System</p>
+                    <p className="text-[9px] font-black tracking-wider uppercase text-[#0f3d1a] mt-1 leading-none">Learning Management System</p>
                   </div>
                 </div>
               </div>
@@ -426,7 +426,7 @@ const Navbar = () => {
                     onClick={closeMobileMenu}
                     className={`mobile-menu-item group relative flex items-center justify-between py-3.5 px-5 rounded-2xl transition-all duration-300 ${
                       isActive 
-                        ? 'text-[#d94d19] bg-[#5E6F58]/10 border border-[#5E6F58]/20 font-bold' 
+                        ? 'text-[#0f3d1a] bg-[#5E6F58]/10 border border-[#5E6F58]/20 font-bold' 
                         : 'text-[#1a6b2e] hover:text-[#0f3d1a] hover:bg-[#c8e6c9] font-medium'
                     }`}
                     style={{
@@ -440,7 +440,7 @@ const Navbar = () => {
                           isActive ? 'bg-[#5E6F58]/20' : 'bg-[#95A68D] group-hover:bg-[#5E6F58]/10'
                         }`}>
                           <Icon className={`w-4 h-4 transition-all duration-300 ${
-                            isActive ? 'text-[#d94d19]' : 'text-[#7dab52] group-hover:text-[#d94d19] group-hover:scale-110'
+                            isActive ? 'text-[#0f3d1a]' : 'text-[#7dab52] group-hover:text-[#0f3d1a] group-hover:scale-110'
                           }`} />
                         </div>
                       )}
@@ -449,7 +449,7 @@ const Navbar = () => {
                     
                     <div className="flex items-center space-x-2">
                       <ChevronRight className={`w-4 h-4 transition-all duration-300 ${
-                        isActive ? 'text-[#d94d19] translate-x-1' : 'text-[#7dab52] group-hover:text-[#d94d19] group-hover:translate-x-2'
+                        isActive ? 'text-[#0f3d1a] translate-x-1' : 'text-[#7dab52] group-hover:text-[#0f3d1a] group-hover:translate-x-2'
                       }`} />
                     </div>
                   </Link>
@@ -469,7 +469,7 @@ const Navbar = () => {
                   className="w-full flex items-center justify-center space-x-3 px-6 py-3.5 bg-[#c8e6c9] hover:bg-[#95A68D] border border-[#1a6b2e]/20 hover:border-[#5E6F58]/30 text-[#0f3d1a] font-bold text-sm rounded-2xl transition-all duration-300 active:scale-[0.98] group relative overflow-hidden"
                   style={{ animation: 'fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both' }}
                 >
-                  <LogIn className="w-4 h-4 transition-all duration-300 group-hover:-translate-x-1 group-hover:text-[#d94d19]" />
+                  <LogIn className="w-4 h-4 transition-all duration-300 group-hover:-translate-x-1 group-hover:text-[#0f3d1a]" />
                   <span>Login to Account</span>
                 </Link>
                 

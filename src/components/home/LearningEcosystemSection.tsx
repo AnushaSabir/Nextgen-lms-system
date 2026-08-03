@@ -14,12 +14,12 @@ export default function LearningEcosystemSection() {
           <div className="lg:col-span-7 space-y-8 sm:space-y-10 reveal-left">
             <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#5E6F58]/10 border border-[#5E6F58]/20">
               <div className="w-1.5 h-1.5 rounded-full bg-[#5E6F58] animate-pulse" />
-              <span className="text-xs font-bold text-[#d94d19] uppercase tracking-widest">Zero Gap Education</span>
+              <span className="text-xs font-bold text-[#0f3d1a] uppercase tracking-widest">Zero Gap Education</span>
             </div>
 
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#0f3d1a] leading-[1.1] tracking-tight text-3d">
               The Complete <br />
-              <span className="text-[#d94d19] text-3d-orange">Learning Process</span>
+              <span className="text-[#0f3d1a] text-3d-orange">Learning Process</span>
             </h2>
 
             <div className="space-y-5 text-base sm:text-lg text-[#1a6b2e] leading-relaxed max-w-2xl">
@@ -39,7 +39,7 @@ export default function LearningEcosystemSection() {
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/10 hover:border-[#5E6F58]/30 transition-all duration-300 group/item cursor-default">
                   <div className="w-8 h-8 rounded-lg bg-[#5E6F58]/10 flex items-center justify-center shrink-0 border border-[#5E6F58]/20 group-hover/item:bg-[#5E6F58]/20 transition-colors">
-                    <CheckCircle2 className="w-4 h-4 text-[#d94d19]" />
+                    <CheckCircle2 className="w-4 h-4 text-[#0f3d1a]" />
                   </div>
                   <span className="text-[#1a6b2e] font-semibold text-base">{item}</span>
                 </div>
@@ -78,11 +78,11 @@ export default function LearningEcosystemSection() {
                   <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#d94d19]/20 blur-3xl rounded-full pointer-events-none" />
                   <div className="relative z-10">
                     <div className="w-20 h-20 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-5 border-4 border-[#d94d19]/30 shadow-[0_0_30px_rgba(240,89,31,0.2)] animate-float-slow backdrop-blur-sm">
-                      <Award className="w-10 h-10 text-[#d94d19]" />
+                      <Award className="w-10 h-10 text-[#0f3d1a]" />
                     </div>
                     <h4 className="text-white font-black text-xl tracking-tight">Certificate of Completion</h4>
                     <p className="text-[#60a5fa] text-sm mt-1 font-bold">Full Stack Development</p>
-                    <div className="mt-5 inline-flex items-center gap-2 bg-[#d94d19]/15 text-[#d94d19] text-xs font-black px-4 py-1.5 rounded-full border border-[#d94d19]/40 uppercase tracking-wider shadow-md backdrop-blur-md">
+                    <div className="mt-5 inline-flex items-center gap-2 bg-[#d94d19]/15 text-[#0f3d1a] text-xs font-black px-4 py-1.5 rounded-full border border-[#d94d19]/40 uppercase tracking-wider shadow-md backdrop-blur-md">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       Verified Credential
                     </div>
@@ -92,12 +92,12 @@ export default function LearningEcosystemSection() {
                 <div className="space-y-3">
                   <div className="flex items-center gap-4 p-4 rounded-xl bg-[#0f3d1a] border border-[#1a6b2e]/30 hover:border-[#d94d19]/50 transition-colors cursor-default group/card shadow-xl">
                     <div className="w-12 h-12 rounded-xl bg-[#d94d19]/10 flex items-center justify-center shrink-0 border border-[#d94d19]/30 backdrop-blur-sm">
-                      <Globe className="w-6 h-6 text-[#d94d19]" />
+                      <Globe className="w-6 h-6 text-[#0f3d1a]" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1.5">
                         <span className="text-sm font-black text-white">Freelancer Profile Sync</span>
-                        <span className="text-[10px] text-[#d94d19] font-black uppercase">Active</span>
+                        <span className="text-[10px] text-[#0f3d1a] font-black uppercase">Active</span>
                       </div>
                       <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden border border-white/10">
                         <div className="bg-gradient-to-r from-[#60a5fa] to-[#d94d19] h-2 rounded-full w-full transition-all duration-1000" />

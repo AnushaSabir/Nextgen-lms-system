@@ -61,7 +61,7 @@ const Footer = () => {
                 <span className="text-[#0f3d1a] font-black text-xl">N</span>
               </div>
               <h2 className="text-2xl font-bold text-[#0f3d1a] tracking-tight">
-                NEXT<span className="text-[#d94d19]">GEN</span>
+                NEXT<span className="text-[#0f3d1a]">GEN</span>
               </h2>
             </Link>
             <p className="text-[#1a6b2e] text-sm leading-relaxed">
@@ -118,7 +118,7 @@ const Footer = () => {
                       href={link.href}
                       className="group flex items-center gap-2 text-[#1a6b2e] hover:text-[#0f3d1a] transition-colors duration-200 text-sm"
                     >
-                      <ArrowRight className="w-3.5 h-3.5 text-[#d94d19] opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#0f3d1a] opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
                       <span className="group-hover:translate-x-1 transition-transform duration-200">{link.name}</span>
                     </Link>
                   </li>
@@ -150,7 +150,7 @@ const Footer = () => {
                       href={link.href}
                       className="group flex items-center gap-2 text-[#1a6b2e] hover:text-[#0f3d1a] transition-colors duration-200 text-sm"
                     >
-                      <ArrowRight className="w-3.5 h-3.5 text-[#d94d19] opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#0f3d1a] opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
                       <span className="group-hover:translate-x-1 transition-transform duration-200">{link.name}</span>
                     </Link>
                   </li>
@@ -172,7 +172,7 @@ const Footer = () => {
               
               <div className="space-y-5 relative z-10">
                 <a href="tel:03222461264" className="flex items-start gap-4 group/call">
-                  <div className="w-11 h-11 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 flex items-center justify-center text-[#d94d19] group-hover/call:bg-[#5E6F58] group-hover/call:text-[#0f3d1a] group-hover/call:border-[#5E6F58] transition-all duration-300 shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 flex items-center justify-center text-[#0f3d1a] group-hover/call:bg-[#5E6F58] group-hover/call:text-[#0f3d1a] group-hover/call:border-[#5E6F58] transition-all duration-300 shrink-0">
                     <Phone className="w-4 h-4" />
                   </div>
                   <div>
@@ -183,7 +183,7 @@ const Footer = () => {
                 </a>
 
                 <a href="mailto:support@nextgenlearnos.com" className="flex items-start gap-4 group/mail">
-                  <div className="w-11 h-11 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 flex items-center justify-center text-[#d94d19] group-hover/mail:bg-[#5E6F58] group-hover/mail:text-[#0f3d1a] group-hover/mail:border-[#5E6F58] transition-all duration-300 shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 flex items-center justify-center text-[#0f3d1a] group-hover/mail:bg-[#5E6F58] group-hover/mail:text-[#0f3d1a] group-hover/mail:border-[#5E6F58] transition-all duration-300 shrink-0">
                     <Mail className="w-4 h-4" />
                   </div>
                   <div>
@@ -194,7 +194,7 @@ const Footer = () => {
                 </a>
 
                 <div className="flex items-start gap-4 group/location">
-                  <div className="w-11 h-11 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 flex items-center justify-center text-[#d94d19] group-hover/location:bg-[#5E6F58] group-hover/location:text-[#0f3d1a] group-hover/location:border-[#5E6F58] transition-all duration-300 shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 flex items-center justify-center text-[#0f3d1a] group-hover/location:bg-[#5E6F58] group-hover/location:text-[#0f3d1a] group-hover/location:border-[#5E6F58] transition-all duration-300 shrink-0">
                     <MapPin className="w-4 h-4" />
                   </div>
                   <div>

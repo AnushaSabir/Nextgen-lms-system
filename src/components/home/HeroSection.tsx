@@ -26,7 +26,7 @@ const HERO_SLIDES = [
     title: (
       <>
         The Future of <br className="hidden sm:block" />
-        <span className="text-[#d94d19] drop-shadow-sm">Learning Starts Here.</span>
+        <span className="text-[#0f3d1a] drop-shadow-sm">Learning Starts Here.</span>
       </>
     ),
     desc: "Empower your learning journey with NextGen LMS—an AI-powered Learning Management System built for students, educators, schools, universities, and training institutes. Learn smarter, teach better, and achieve more from anywhere.",

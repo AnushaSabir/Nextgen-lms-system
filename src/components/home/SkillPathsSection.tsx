@@ -115,12 +115,12 @@ export default function SkillPathsSection() {
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16 relative z-20">
         <div className="mx-auto max-w-4xl text-center lg:text-left space-y-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#5E6F58]/20 bg-[#5E6F58]/5 text-[#d94d19] text-xs font-black uppercase tracking-widest backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#5E6F58]/20 bg-[#5E6F58]/5 text-[#0f3d1a] text-xs font-black uppercase tracking-widest backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-[#5E6F58] animate-pulse" />
             Core Capabilities
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0f3d1a] tracking-tight text-3d leading-tight">
-            NextGen LMS <span className="text-[#d94d19] text-3d-orange">Features</span>
+            NextGen LMS <span className="text-[#0f3d1a] text-3d-orange">Features</span>
           </h2>
           <p className="mx-auto lg:mx-0 max-w-3xl text-sm sm:text-base text-[#1a6b2e] font-medium leading-relaxed sm:leading-7">
             A comprehensive suite of tools and features designed to make your learning experience engaging, efficient, and truly transformative. Everything you need to learn smarter is right here.
@@ -158,10 +158,10 @@ export default function SkillPathsSection() {
                 </div>
 
                 <div className="relative z-20 flex flex-col flex-1 text-left min-w-0">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-[#d94d19] group-hover:text-white transition-colors duration-300">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#0f3d1a] group-hover:text-white transition-colors duration-300">
                     {cat.tag}
                   </span>
-                  <h3 className="text-sm sm:text-base font-extrabold text-white group-hover:text-[#d94d19] transition-colors duration-300 mt-1 line-clamp-2">
+                  <h3 className="text-sm sm:text-base font-extrabold text-white group-hover:text-[#0f3d1a] transition-colors duration-300 mt-1 line-clamp-2">
                     {cat.title}
                   </h3>
                   <span className="text-xs sm:text-sm text-white/70 group-hover:text-white/90 transition-colors duration-300 font-medium mt-1.5 line-clamp-1">
@@ -169,7 +169,7 @@ export default function SkillPathsSection() {
                   </span>
                 </div>
 
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-[#d94d19] z-20">
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-[#0f3d1a] z-20">
                   <ChevronRight className="w-5 h-5" />
                 </div>
                 

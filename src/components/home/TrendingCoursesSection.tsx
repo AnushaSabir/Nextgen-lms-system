@@ -34,7 +34,7 @@ export default function TrendingCoursesSection() {
               <div className="aspect-video relative overflow-hidden rounded-t-[2rem]">
                 <Image src={course.thumbnail} alt={course.title} fill className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" sizes="(max-width: 768px) 100vw, 25vw" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500" />
-                <div className="absolute top-3 left-3 px-3 py-1 rounded-full glass-card text-[9px] font-black text-[#d94d19] uppercase border border-[rgba(240,89,31,0.2)] z-10 backdrop-blur-md">{course.level}</div>
+                <div className="absolute top-3 left-3 px-3 py-1 rounded-full glass-card text-[9px] font-black text-[#0f3d1a] uppercase border border-[rgba(240,89,31,0.2)] z-10 backdrop-blur-md">{course.level}</div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all bg-black/30 backdrop-blur-[2px] z-20">
                   <div className="px-5 py-2.5 bg-[#5E6F58] text-[#0f3d1a] text-xs font-black rounded-full shadow-lg shadow-primaryBlue/30 transform scale-90 group-hover:scale-100 transition-transform duration-300">View Course</div>
                 </div>
@@ -46,11 +46,11 @@ export default function TrendingCoursesSection() {
               </div>
               <div className="p-5 sm:p-6 space-y-2 text-left flex flex-col h-full justify-between">
                 <div>
-                  <h4 className="text-base sm:text-lg font-black text-[#0f3d1a] group-hover:text-[#d94d19] transition-colors line-clamp-1 tracking-tight leading-snug">{course.title}</h4>
+                  <h4 className="text-base sm:text-lg font-black text-[#0f3d1a] group-hover:text-[#0f3d1a] transition-colors line-clamp-1 tracking-tight leading-snug">{course.title}</h4>
                   <p className="text-sm text-[#1a6b2e]/80 line-clamp-2 mt-1">{course.description}</p>
                 </div>
                 <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:items-center text-xs text-[#1a6b2e] font-medium pt-3 border-t border-[#1a6b2e]/10 mt-auto">
-                  <span className="flex items-center gap-1.5"><course.Icon className="w-3.5 h-3.5 text-[#d94d19]" />{course.level}</span>
+                  <span className="flex items-center gap-1.5"><course.Icon className="w-3.5 h-3.5 text-[#0f3d1a]" />{course.level}</span>
                   <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-primaryBlue/50" />{course.students} Learners</span>
                 </div>
               </div>
@@ -59,7 +59,7 @@ export default function TrendingCoursesSection() {
         </div>
 
         <div className="text-center mt-10 reveal">
-          <Link href="/courses" className="inline-flex items-center gap-1.5 text-[#d94d19] font-black hover:underline underline-offset-8 text-sm sm:text-base">
+          <Link href="/courses" className="inline-flex items-center gap-1.5 text-[#0f3d1a] font-black hover:underline underline-offset-8 text-sm sm:text-base">
             <span>Explore all courses</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
