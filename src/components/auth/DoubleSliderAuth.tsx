@@ -79,13 +79,13 @@ export default function DoubleSliderAuth() {
   };
 
   return (
-    <div className="relative w-full max-w-5xl min-h-[100dvh] sm:min-h-[650px] sm:h-[650px] bg-[#c8e6c9] sm:bg-white/[0.02] border-0 sm:border border-[#1a6b2e]/20 rounded-none sm:rounded-[2.5rem] sm:shadow-2xl sm:backdrop-blur-2xl overflow-hidden flex flex-col sm:flex-row">
+    <div className="relative w-full max-w-5xl min-h-[100dvh] sm:min-h-[650px] sm:h-[650px] bg-black sm:bg-black border-0 sm:border border-[#1a6b2e]/30 rounded-none sm:rounded-[2.5rem] sm:shadow-2xl overflow-hidden flex flex-col sm:flex-row">
 
       {/* ─── CSS FOR THE SLIDER ANIMATION ─── */}
       <style dangerouslySetInnerHTML={{
         __html: `
-        .auth-container { position: relative; width: 100%; height: 100%; overflow: hidden; background-color: #c8e6c9; }
-        .form-container { position: absolute; top: 0; height: 100%; transition: all 0.6s ease-in-out; background-color: #c8e6c9; }
+        .auth-container { position: relative; width: 100%; height: 100%; overflow: hidden; background-color: #000000; }
+        .form-container { position: absolute; top: 0; height: 100%; transition: all 0.6s ease-in-out; background-color: #000000; }
         .sign-in-container { left: 0; width: 50%; z-index: 2; opacity: 1; visibility: visible; }
         .auth-container.right-panel-active .sign-in-container { transform: translateX(100%); opacity: 0; visibility: hidden; transition: opacity 0.3s, transform 0.6s, visibility 0.6s; }
         
@@ -111,7 +111,7 @@ export default function DoubleSliderAuth() {
 
         /* Mobile specific fixes - Premium Glass Card Overlap */
         @media (max-width: 768px) {
-          .auth-container { min-height: 100vh; height: auto; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; background-color: #c8e6c9; justify-content: flex-start; align-items: center; }
+          .auth-container { min-height: 100vh; height: auto; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; background-color: #000000; justify-content: flex-start; align-items: center; }
           
           /* The Image Carousel Overlay takes up upper half */
           .overlay-container { display: block; position: relative !important; width: 100%; height: 350px; min-height: 350px; left: auto; top: auto; z-index: 1; transform: none !important; transition: none; overflow: hidden; flex-shrink: 0; }
@@ -123,7 +123,7 @@ export default function DoubleSliderAuth() {
           .overlay-panel { display: none !important; }
           
           /* The form overlaps the image beautifully as a glass card */
-          .form-container { position: relative !important; width: calc(100% - 32px); max-width: 500px; height: auto; top: auto; left: auto !important; margin: -60px auto 40px auto; padding: 40px 24px; transition: opacity 0.4s ease-in-out; background: #c8e6c9; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 28px; box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.5); z-index: 5; }
+          .form-container { position: relative !important; width: calc(100% - 32px); max-width: 500px; height: auto; top: auto; left: auto !important; margin: -60px auto 40px auto; padding: 40px 24px; transition: opacity 0.4s ease-in-out; background: #c8e6c9; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(26, 107, 46, 0.3); border-radius: 28px; box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.5); z-index: 5; }
           
           .sign-in-container { opacity: 1; visibility: visible; transform: none !important; display: block; }
           .auth-container.right-panel-active .sign-in-container { opacity: 0; visibility: hidden; transform: none !important; display: none; }
@@ -141,7 +141,7 @@ export default function DoubleSliderAuth() {
             {/* Mobile Title */}
             <div className="sm:hidden w-full text-left mb-6">
               <div className="flex items-center justify-start gap-2 mb-4">
-                <Image src="/logo.png" alt="NextGen LMS" width={140} height={35} className="object-contain drop-shadow-md" />
+                <Image src="/logo.png" alt="NextGen LMS" width={140} height={35} className="object-contain" style={{filter: 'drop-shadow(2px 4px 6px rgba(0,0,0,0.4)) drop-shadow(-1px -2px 3px rgba(255,255,255,0.6))'}} />
               </div>
               <h1 className="text-3xl font-black text-[#0f3d1a] mb-2">Create account</h1>
               <p className="text-sm text-[#1a6b2e]">Sign up to NextGen LMS — Your Skill-to-Success Platform</p>
@@ -279,26 +279,26 @@ export default function DoubleSliderAuth() {
 
             {/* Desktop Overlay Panels (for toggle buttons) */}
             <div className="overlay-panel overlay-left">
-              <div className="hidden sm:flex flex-col items-center justify-center p-8 glass-card bg-[#c8e6c9] backdrop-blur-xl rounded-3xl border border-[#1a6b2e]/20 shadow-2xl transform transition-transform hover:scale-105">
+              <div className="hidden sm:flex flex-col items-center justify-center p-8 bg-[#c8e6c9] rounded-3xl border border-[#1a6b2e]/30 shadow-2xl transform transition-transform hover:scale-105">
                 <div className="mb-6 flex justify-center">
-                  <Image src="/logo.png" alt="NextGen LMS" width={160} height={40} className="object-contain drop-shadow-lg" />
+                  <Image src="/logo.png" alt="NextGen LMS" width={160} height={40} className="object-contain" style={{filter: 'drop-shadow(2px 4px 6px rgba(0,0,0,0.4)) drop-shadow(-1px -2px 3px rgba(255,255,255,0.6))'}} />
                 </div>
                 <h3 className="text-xl font-black text-[#0f3d1a] mb-2">Already have an account?</h3>
                 <p className="text-sm text-[#1a6b2e] mb-6 text-center max-w-[220px]">Sign in to access your NextGen-LMS dashboard and continue your journey.</p>
-                <button onClick={togglePanel} className="w-full py-3 bg-[#0f3d1a] text-white font-bold rounded-xl hover:bg-gray-100 transition-colors shadow-lg active:scale-95">
+                <button onClick={togglePanel} className="w-full py-3 bg-[#0f3d1a] text-white font-bold rounded-xl hover:bg-[#1a6b2e] transition-colors shadow-lg active:scale-95">
                   Sign In to Account
                 </button>
               </div>
             </div>
 
             <div className="overlay-panel overlay-right">
-              <div className="hidden sm:flex flex-col items-center justify-center p-8 glass-card bg-[#c8e6c9] backdrop-blur-xl rounded-3xl border border-[#1a6b2e]/20 shadow-2xl transform transition-transform hover:scale-105">
+              <div className="hidden sm:flex flex-col items-center justify-center p-8 bg-[#c8e6c9] rounded-3xl border border-[#1a6b2e]/30 shadow-2xl transform transition-transform hover:scale-105">
                 <div className="mb-6 flex justify-center">
-                  <Image src="/logo.png" alt="NextGen LMS" width={160} height={40} className="object-contain drop-shadow-lg" />
+                  <Image src="/logo.png" alt="NextGen LMS" width={160} height={40} className="object-contain" style={{filter: 'drop-shadow(2px 4px 6px rgba(0,0,0,0.4)) drop-shadow(-1px -2px 3px rgba(255,255,255,0.6))'}} />
                 </div>
                 <h3 className="text-xl font-black text-[#0f3d1a] mb-2">New to NextGen-LMS?</h3>
                 <p className="text-sm text-[#1a6b2e] mb-6 text-center max-w-[220px]">Create an account to start learning, earning, and growing with us.</p>
-                <button onClick={togglePanel} className="w-full py-3 bg-[#d94d19] text-[#0f3d1a] font-bold rounded-xl hover:bg-[#c34516] transition-colors shadow-lg active:scale-95">
+                <button onClick={togglePanel} className="w-full py-3 bg-[#d94d19] text-white font-bold rounded-xl hover:bg-[#c34516] transition-colors shadow-lg active:scale-95">
                   Create an Account
                 </button>
               </div>
