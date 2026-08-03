@@ -298,7 +298,7 @@ export default function DoubleSliderAuth() {
                 </div>
                 <h3 className="text-xl font-black text-[#0f3d1a] mb-2">New to NextGen-LMS?</h3>
                 <p className="text-sm text-[#1a6b2e] mb-6 text-center max-w-[220px]">Create an account to start learning, earning, and growing with us.</p>
-                <button onClick={togglePanel} className="w-full py-3 bg-[#d94d19] text-white font-bold rounded-xl hover:bg-[#c34516] transition-colors shadow-lg active:scale-95">
+                <button onClick={togglePanel} className="w-full py-3 bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] text-white font-bold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-[#38bdf8]/30 active:scale-95">
                   Create an Account
                 </button>
               </div>
