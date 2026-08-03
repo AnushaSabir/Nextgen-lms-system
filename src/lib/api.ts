@@ -46,6 +46,43 @@ function attachInterceptors(instance: AxiosInstance) {
       return response;
     },
     (error: AxiosError<{ message?: string | string[] }>) => {
+
+      // --- MOCK FALLBACK FOR OFFLINE / VERCEL DEMO ---
+      if (error.message === 'Network Error' || error.code === 'ERR_NETWORK') {
+        const url = error.config?.url || '';
+        const reqData = error.config?.data || '';
+        
+        console.warn('Network Error caught. Using mock fallback for:', url);
+        
+        if (url.includes('graphql') || (error.config?.baseURL && error.config.baseURL.includes('graphql'))) {
+          if (reqData.includes('Login')) {
+            return Promise.resolve({
+              data: {
+                data: {
+                  login: { access_token: 'mock-token', user: { id: '1', name: 'Demo User', email: 'demo@example.com', role: 'learner' } }
+                }
+              }
+            });
+          }
+          if (reqData.includes('Register')) {
+            return Promise.resolve({
+              data: {
+                data: {
+                  register: { access_token: 'mock-token', user: { id: '1', name: 'Demo User', email: 'demo@example.com', role: 'learner' } }
+                }
+              }
+            });
+          }
+        }
+        
+        // Mock REST returns
+        if (error.config?.method === 'get') {
+          return Promise.resolve({ data: [] });
+        }
+        return Promise.resolve({ data: {} });
+      }
+      // ------------------------------------------------
+
       if (typeof window !== 'undefined' && error.response?.status === 401) {
         // Clear local session on 401. Do not force a navigation here —
         // leave routing decisions to the client-side auth guard to avoid
