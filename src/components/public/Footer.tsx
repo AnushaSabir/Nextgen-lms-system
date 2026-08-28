@@ -58,17 +58,17 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-12 border-b border-[#50BED9]/10 pb-10">
           <div className="max-w-md">
             <Link href="/" className="inline-flex items-center group mb-4">
-              <div className="relative h-14 w-52 flex items-center transition-transform duration-300 group-hover:scale-105">
+              <div className="relative h-14 w-60 flex items-center transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src="/logo.png"
-                  alt="NEXTGEN Studio"
+                  alt="NextGen Learning Management System"
                   fill
-                  sizes="210px"
+                  sizes="240px"
                   className="object-contain object-left filter drop-shadow-md"
                 />
               </div>
             </Link>
-            <p className="text-[#50BED9] text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed font-normal">
               NextGen LMS is an AI-powered Learning Management System dedicated to making quality education accessible, engaging, and effective for everyone.
             </p>
           </div>
@@ -120,9 +120,9 @@ const Footer = () => {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="group flex items-center gap-2 text-[#50BED9] hover:text-white transition-colors duration-200 text-sm"
+                      className="group flex items-center gap-2 text-[#D0D3D6] hover:text-white transition-colors duration-200 text-sm font-medium"
                     >
-                      <ArrowRight className="w-3.5 h-3.5 text-white opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#50BED9] opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
                       <span className="group-hover:translate-x-1 transition-transform duration-200">{link.name}</span>
                     </Link>
                   </li>
@@ -152,9 +152,9 @@ const Footer = () => {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="group flex items-center gap-2 text-[#50BED9] hover:text-white transition-colors duration-200 text-sm"
+                      className="group flex items-center gap-2 text-[#D0D3D6] hover:text-white transition-colors duration-200 text-sm font-medium"
                     >
-                      <ArrowRight className="w-3.5 h-3.5 text-white opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#50BED9] opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
                       <span className="group-hover:translate-x-1 transition-transform duration-200">{link.name}</span>
                     </Link>
                   </li>

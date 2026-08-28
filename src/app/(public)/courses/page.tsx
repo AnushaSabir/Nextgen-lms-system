@@ -474,16 +474,16 @@ export default function CoursesPage() {
             {/* Video Player or Header Preview */}
             <div className="space-y-3">
               {selectedCourseModal.hasVideoIntro ? (
-                <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-[#151515] border border-[#50BED9]/30 shadow-lg">
+                <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-black border border-[#50BED9]/30 shadow-lg flex items-center justify-center">
                   <video
                     autoPlay
                     controls
                     playsInline
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain bg-black"
                   >
                     <source src="/videos/python_intro.mp4" type="video/mp4" />
-                    <source src="/videos/python.mp4" type="video/mp4" />
                     <source src="/videos/python_intro.mp4.mp4" type="video/mp4" />
+                    <source src="/videos/python.mp4" type="video/mp4" />
                     <source src="/videos/main_hero/new_hero.mp4.mp4" type="video/mp4" />
                   </video>
                 </div>

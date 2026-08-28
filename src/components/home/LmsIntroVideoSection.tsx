@@ -120,7 +120,7 @@ export default function LmsIntroVideoSection() {
               muted={isMuted}
               playsInline
               preload="auto"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain bg-black"
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
             >
