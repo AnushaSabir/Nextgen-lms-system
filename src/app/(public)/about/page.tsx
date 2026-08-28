@@ -1,139 +1,161 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import { 
-  GraduationCap, 
-  Briefcase, 
-  Users2, 
-  Trophy, 
-  ArrowRight, 
-  Target, 
-  Rocket, 
-  Globe2 
+import {
+  GraduationCap,
+  Briefcase,
+  Users2,
+  Trophy,
+  ArrowRight,
+  Target,
+  Rocket,
+  Globe2,
+  Sparkles,
+  ShieldCheck,
+  Zap,
+  Bot,
+  Layers,
 } from 'lucide-react';
 
 export default function AboutPage() {
-  const leadership = [
-    { name: 'Badshah Irfan Raput', role: 'Founder & CEO', quote: 'My vision is to establish Pakistan as a hub for global tech giants, with NextGen-LMS being a flagship company.' },
-    { name: 'Muhammad Ikram', role: 'Co-Founder', quote: 'Our goal is to empower young individuals nationwide by providing opportunities to unlock their potential.' },
-    { name: 'Abdul Qavi Memon', role: 'Chief Technology Officer', quote: 'Leading NextGen-LMS\'s technical vision to build a world-class platform that is secure, scalable, and innovative.' },
+  const pillars = [
+    {
+      title: 'AI-Native Learning Design',
+      desc: 'Adaptive learning engines that assess each student’s knowledge gaps in real-time, tailoring assignments and video recommendations dynamically.',
+      icon: <Bot className="w-8 h-8 text-[#50BED9]" />,
+    },
+    {
+      title: 'Real-World Sandbox Engineering',
+      desc: 'Learn through production codebases, real architectural problems, and practical capstones reviewed by principal industry engineers.',
+      icon: <Layers className="w-8 h-8 text-[#33C6B6]" />,
+    },
+    {
+      title: 'Institutional Grade Security',
+      desc: 'Enterprise-ready infrastructure featuring SOC2 compliant data integrity, role-based controls, and cryptographically verified credentials.',
+      icon: <ShieldCheck className="w-8 h-8 text-[#159BD7]" />,
+    },
+    {
+      title: 'Global Career Acceleration',
+      desc: 'A direct bridge between ambitious learners and top global technology companies seeking verified high-impact talent.',
+      icon: <Rocket className="w-8 h-8 text-[#50BED9]" />,
+    },
   ];
 
-  const ecosystem = [
-    { title: 'NextGen-LMS LMS', desc: 'Learn, get assessed, and earn your certificate', icon: <GraduationCap className="w-10 h-10" /> },
-    { title: 'NextGen-LMS Marketplace', desc: 'Find work, manage projects, and get paid', icon: <Briefcase className="w-10 h-10" /> },
-    { title: 'Business Developers', desc: 'Connect clients and experts without technical skills', icon: <Users2 className="w-10 h-10" /> },
-    { title: 'Reward System', desc: 'Bonuses, life insurance, and medical support', icon: <Trophy className="w-10 h-10" /> },
+  const milestones = [
+    { num: '50k+', label: 'Active Global Learners' },
+    { num: '500+', label: 'Curated Tech Pathways' },
+    { num: '120+', label: 'University & Enterprise Partners' },
+    { num: '94.8%', label: 'Verified Career Placement Rate' },
   ];
 
   return (
-    <div className="pt-28 sm:pt-40 pb-16 sm:pb-20 px-4 sm:px-6">
-      <div className="container mx-auto">
-        <div className="max-w-4xl mx-auto text-center mb-16 sm:mb-24 space-y-4 sm:space-y-6">
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-[#0f3d1a] leading-tight tracking-tight">
-            Built in <span className="text-primaryBlue">Pakistan.</span> <br />
-            Built for the <span className="bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent">World.</span>
+    <div className="min-h-screen bg-[#323232] text-white pt-24 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8">
+      {/* Background Ambience */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-gradient-to-b from-[#50BED9]/[0.08] via-[#159BD7]/[0.04] to-transparent rounded-full blur-[140px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10 space-y-20">
+        
+        {/* Header */}
+        <div className="text-center max-w-4xl mx-auto space-y-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#50BED9]/30 bg-[#151515] text-[#50BED9] text-xs font-black uppercase tracking-widest shadow-md">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>About NextGen LMS</span>
+          </div>
+
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-[1.12]">
+            Architecting the Future of <br />
+            <span className="bg-gradient-to-r from-[#50BED9] via-[#159BD7] to-[#33C6B6] bg-clip-text text-transparent">
+              Intelligent Learning
+            </span>
           </h1>
-          <p className="text-base sm:text-xl md:text-2xl text-bodyGrayText font-medium max-w-2xl mx-auto leading-relaxed">A movement to empower the next generation of digital professionals.</p>
+
+          <p className="text-base sm:text-lg md:text-xl text-[#D0D3D6] max-w-2xl mx-auto font-medium leading-relaxed">
+            NextGen LMS was created with a clear mission: to replace outdated, passive online video playlists with an interactive, AI-driven education ecosystem that prepares individuals for real high-impact tech careers.
+          </p>
         </div>
 
-        {/* Story */}
-        <div className="max-w-4xl mx-auto space-y-8 sm:space-y-12 mb-20 sm:mb-32">
-           <h2 className="text-3xl font-bold text-[#0f3d1a] text-center">Our Story</h2>
-           <div className="space-y-6 sm:space-y-8 text-base sm:text-lg text-bodyGrayText leading-relaxed">
-              <p>
-                NextGen-LMS started with one mission: to create real income opportunities for Pakistani freelancers. As Pakistan's first dedicated freelance marketplace, we built a platform where Experts, Clients, and Business Developers could connect and create value together.
-              </p>
-              <div className="p-5 sm:p-8 rounded-2xl sm:rounded-[2rem] bg-cardBg border border-orangeBorderActive/20 text-[#0f3d1a] font-medium italic relative">
-                 <div className="absolute -top-4 -left-4 text-6xl text-primaryBlue/20 opacity-50">"</div>
-                 But we noticed a gap. Thousands of young people in Pakistan — students in schools, colleges, and universities — were left out.
+        {/* Numbers Strip */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          {milestones.map((m, idx) => (
+            <div key={idx} className="bg-[#101010] border border-[#353638] rounded-3xl p-6 text-center space-y-1 shadow-xl">
+              <div className="text-3xl sm:text-5xl font-black bg-gradient-to-r from-[#50BED9] to-[#33C6B6] bg-clip-text text-transparent">
+                {m.num}
               </div>
-              <p>
-                So we built NextGen-LMS LMS. A learning system directly connected to a live marketplace. Not just an education platform — a complete pipeline from skill to income.
-              </p>
-           </div>
+              <p className="text-xs sm:text-sm text-[#D0D3D6] font-semibold">{m.label}</p>
+            </div>
+          ))}
         </div>
 
-        {/* Vision & Mission */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-20 sm:mb-32">
-           <div className="theme-card p-6 sm:p-10 lg:p-12 rounded-2xl sm:rounded-[3rem] space-y-5 sm:space-y-6 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 orange-gradient rounded-full blur-3xl opacity-10" />
-              <h3 className="text-2xl font-bold text-[#0f3d1a] uppercase tracking-widest">Our Vision</h3>
-              <p className="text-bodyGrayText leading-relaxed">
-                To make Pakistan a global technology hub by creating a generation of skilled, certified, and financially independent freelancers who compete at the highest level on the world stage.
-              </p>
-              <p className="text-primaryBlue font-bold italic">
-                We will not stop until we have brought a revolution in the freelance world.
-              </p>
-           </div>
-           <div className="theme-card p-6 sm:p-10 lg:p-12 rounded-2xl sm:rounded-[3rem] space-y-5 sm:space-y-6 relative overflow-hidden">
-              <div className="absolute bottom-0 left-0 w-32 h-32 orange-gradient rounded-full blur-3xl opacity-10" />
-              <h3 className="text-2xl font-bold text-[#0f3d1a] uppercase tracking-widest">Our Mission</h3>
-              <p className="text-bodyGrayText leading-relaxed">
-                To provide every individual in Pakistan access to professional skill training, a verified certification, and a direct path to earning in dollars.
-              </p>
-              <div className="pt-4 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
-                 <span className="text-2xl sm:text-3xl font-bold text-[#0f3d1a]">10 Million</span>
-                 <span className="text-sm text-darkGrayNumber font-bold uppercase">Freelance Jobs by 2030</span>
+        {/* Vision & Mission Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-[#101010] border border-[#353638] hover:border-[#50BED9]/40 rounded-3xl p-8 sm:p-12 space-y-4 shadow-xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#353638] text-[#50BED9] text-xs font-black uppercase">
+              <Target className="w-4 h-4" /> Our Vision
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-black text-white">Democratizing World-Class Tech Mastery</h3>
+            <p className="text-sm text-[#D0D3D6] leading-relaxed">
+              We envision a world where any motivated individual, regardless of geography or financial background, can access the same cutting-edge AI curricula, elite mentorship, and career opportunities as graduates of top global research universities.
+            </p>
+          </div>
+
+          <div className="bg-[#101010] border border-[#353638] hover:border-[#33C6B6]/40 rounded-3xl p-8 sm:p-12 space-y-4 shadow-xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#353638] text-[#33C6B6] text-xs font-black uppercase">
+              <Rocket className="w-4 h-4" /> Our Mission
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-black text-white">Applied, Verified, Outcome-Driven Education</h3>
+            <p className="text-sm text-[#D0D3D6] leading-relaxed">
+              To build software that empowers educators to teach more effectively with AI-assisted grading, enables institutions to manage student success seamlessly, and gives learners verified proof of their technical capabilities.
+            </p>
+          </div>
+        </div>
+
+        {/* 4 Pillars */}
+        <div className="space-y-10">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <h2 className="text-2xl sm:text-4xl font-black text-white">Our Core Innovations</h2>
+            <p className="text-sm text-[#D0D3D6]">The foundational principles that set NextGen LMS apart from traditional learning platforms.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {pillars.map((p, idx) => (
+              <div key={idx} className="bg-[#101010] border border-[#353638] rounded-3xl p-8 space-y-4 shadow-xl flex items-start gap-5">
+                <div className="p-3 rounded-2xl bg-[#151515] border border-[#353638] shrink-0 shadow-md">
+                  {p.icon}
+                </div>
+                <div className="space-y-2">
+                  <h4 className="text-xl font-bold text-white">{p.title}</h4>
+                  <p className="text-xs sm:text-sm text-[#D0D3D6] leading-relaxed">{p.desc}</p>
+                </div>
               </div>
-           </div>
+            ))}
+          </div>
         </div>
 
-        {/* Ecosystem */}
-        <div className="mb-20 sm:mb-32">
-           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] mb-10 sm:mb-20 text-center tracking-tight">The NextGen-LMS Ecosystem</h2>
-           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8 lg:gap-10">
-              {ecosystem.map((item) => (
-                <div key={item.title} className="theme-card p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-[3rem] text-center space-y-4 sm:space-y-6 flex flex-col items-center">
-                   <div className="p-4 rounded-2xl bg-primaryBlue/10 text-primaryBlue group-hover:bg-primaryBlue group-hover:text-[#0f3d1a] transition-all">
-                      {item.icon}
-                   </div>
-                   <h4 className="text-xl font-bold text-[#0f3d1a] group-hover:text-primaryBlue transition-colors">{item.title}</h4>
-                   <p className="text-sm sm:text-base lg:text-lg text-bodyGrayText leading-relaxed">{item.desc}</p>
-                </div>
-              ))}
-           </div>
+        {/* Call to action */}
+        <div className="bg-[#101010] border border-[#50BED9]/30 rounded-[2.5rem] p-10 sm:p-16 text-center space-y-6 shadow-2xl">
+          <h2 className="text-3xl sm:text-5xl font-black text-white">Be Part of the NextGen Movement</h2>
+          <p className="text-sm sm:text-base text-[#D0D3D6] max-w-xl mx-auto">
+            Whether you want to learn, teach, or deploy NextGen across your university campus, we welcome you to our global community.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <Link
+              href="/courses"
+              className="w-full sm:w-auto px-8 py-4 bg-[#50BED9] hover:bg-[#159BD7] text-[#101010] hover:text-white font-black text-base rounded-2xl shadow-xl transition-all"
+            >
+              Explore Course Catalog
+            </Link>
+            <Link
+              href="/contact"
+              className="w-full sm:w-auto px-8 py-4 bg-[#151515] border border-[#353638] text-white font-bold text-base rounded-2xl hover:bg-[#353638] transition-all"
+            >
+              Contact Our Team
+            </Link>
+          </div>
         </div>
 
-        {/* Leadership */}
-        <div className="mb-20 sm:mb-32">
-           <h2 className="text-3xl font-bold text-[#0f3d1a] mb-10 sm:mb-16 text-center">Leadership</h2>
-           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
-              {leadership.map((leader) => (
-                <div key={leader.name} className="theme-card p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-[2.5rem] space-y-5 sm:space-y-6 text-center group">
-                   <div className="w-24 h-24 orange-gradient rounded-full mx-auto flex items-center justify-center text-3xl text-[#0f3d1a] shadow-xl group-hover:scale-110 transition-transform">
-                      {leader.name.charAt(0)}
-                   </div>
-                   <div>
-                      <h4 className="text-xl font-bold text-[#0f3d1a]">{leader.name}</h4>
-                      <p className="text-primaryBlue text-sm font-semibold uppercase tracking-widest">{leader.role}</p>
-                   </div>
-                   <p className="text-sm text-bodyGrayText italic leading-relaxed">
-                     "{leader.quote}"
-                   </p>
-                </div>
-              ))}
-           </div>
-        </div>
-
-        {/* Community */}
-        <div className="p-6 sm:p-12 md:p-20 rounded-[2.5rem] sm:rounded-[3rem] bg-[#c8e6c9] border border-lightBorder relative overflow-hidden text-center space-y-8">
-           <div className="absolute top-0 right-0 w-64 h-64 secondary-glow opacity-10" />
-           <h2 className="text-3xl font-bold text-[#0f3d1a] uppercase tracking-widest">Our Community</h2>
-           <p className="text-sm sm:text-lg text-bodyGrayText max-w-3xl mx-auto leading-relaxed">
-             NextGen-LMS already has city heads in Karachi, Faisalabad, Hyderabad, Bahawalnagar, Khairpur Mir's, Pakpattan Sharif, Pial Kalan, Dina, and Fortabass — with more joining every month.
-           </p>
-           <div className="text-2xl font-bold text-[#0f3d1a] italic">"We are not just a platform. We are a movement."</div>
-        </div>
-
-        <div className="text-center mt-16 sm:mt-32">
-          <Link
-            href="/register"
-            className="group inline-flex w-full sm:w-auto items-center justify-center gap-3 px-6 sm:px-12 lg:px-16 py-4 sm:py-6 bg-primaryBlue hover:bg-opacity-90 text-[#0f3d1a] font-black text-base sm:text-xl rounded-2xl sm:rounded-[2rem] shadow-2xl shadow-primaryBlue/30 transition-all hover:scale-105 active:scale-95"
-          >
-            <span>Join the Movement</span>
-            <ArrowRight className="w-7 h-7 group-hover:translate-x-2 transition-transform" />
-          </Link>
-        </div>
       </div>
     </div>
   );

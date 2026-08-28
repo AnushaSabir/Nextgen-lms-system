@@ -1,120 +1,214 @@
-import React from 'react';
-import { Mail, Phone, MapPin, Send, MessageSquare } from 'lucide-react';
+'use client';
+
+import React, { useState } from 'react';
+import { Mail, Phone, MapPin, Send, MessageSquare, Sparkles, CheckCircle2, Clock, ShieldCheck } from 'lucide-react';
 
 export default function ContactPage() {
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    role: 'Student',
+    message: '',
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
   return (
-    <div className="pt-28 sm:pt-40 pb-16 sm:pb-20 px-4 sm:px-6 min-h-screen relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute top-0 inset-x-0 h-[600px] pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1557200134-90327ee9fafa?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center opacity-30" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/50 via-[#020617]/80 to-[#020617]" />
-        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-primaryBlue/20 blur-[150px] rounded-full" />
+    <div className="min-h-screen bg-[#323232] text-white pt-24 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8">
+      {/* Background Ambience */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-gradient-to-b from-[#50BED9]/[0.08] via-[#159BD7]/[0.04] to-transparent rounded-full blur-[140px]" />
       </div>
 
-      <div className="container mx-auto relative z-10">
-        <div className="text-center mb-14 sm:mb-20 space-y-4 sm:space-y-6 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primaryBlue/20 bg-primaryBlue/10 text-primaryBlue text-xs font-bold uppercase tracking-widest shadow-sm">
-            <MessageSquare className="w-3.5 h-3.5" /> Get in Touch
+      <div className="max-w-7xl mx-auto relative z-10 space-y-16">
+        
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto space-y-5">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#50BED9]/30 bg-[#151515] text-[#50BED9] text-xs font-black uppercase tracking-widest shadow-md">
+            <MessageSquare className="w-3.5 h-3.5" />
+            <span>Connect with NextGen Studio</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0f3d1a] leading-tight tracking-tight text-3d">
-            Let's Talk About <span className="text-primaryBlue text-3d-orange">Your Future.</span>
+
+          <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-[1.15]">
+            Let's Talk About <br />
+            <span className="bg-gradient-to-r from-[#50BED9] via-[#159BD7] to-[#33C6B6] bg-clip-text text-transparent">
+              Your Learning Future
+            </span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-[#1a6b2e] font-medium leading-relaxed">
-            Whether you want to partner with us, request a demo, or simply ask a question, our team is ready to help.
+
+          <p className="text-base sm:text-lg text-[#D0D3D6] max-w-2xl mx-auto font-medium leading-relaxed">
+            Have questions about courses, institutional pilots, or instructor partnerships? Our advisory team is here to assist you.
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        {/* Contact Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           
-          {/* Left Side: Contact Info */}
-          <div className="space-y-8 sm:space-y-12">
-            <div className="space-y-4 sm:space-y-6">
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#0f3d1a]">Contact Information</h2>
-              <p className="text-[#1a6b2e] leading-relaxed">
-                Fill out the form and our team will get back to you within 24 hours. We are dedicated to providing the best support for our learners and partners.
+          {/* Left Column: Direct Info */}
+          <div className="lg:col-span-5 space-y-8">
+            <div className="bg-[#101010] border border-[#353638] rounded-3xl p-8 space-y-6 shadow-xl">
+              <h3 className="text-2xl font-black text-white">Direct Communication</h3>
+              <p className="text-sm text-[#D0D3D6] leading-relaxed">
+                We typically respond to student inquiries within 2 hours, and institutional proposals within 24 business hours.
               </p>
+
+              <div className="space-y-6 pt-2">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-[#151515] border border-[#353638] text-[#50BED9] flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">Email Addresses</h4>
+                    <p className="text-xs text-[#50BED9] font-medium mt-0.5">support@nextgen-lms.com</p>
+                    <p className="text-xs text-[#D0D3D6]/70 mt-0.5">enterprise@nextgen-lms.com</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-[#151515] border border-[#353638] text-[#33C6B6] flex items-center justify-center shrink-0">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">Direct Advisory Line</h4>
+                    <p className="text-xs text-white font-semibold mt-0.5">+1 (800) 592-NEXTGEN</p>
+                    <p className="text-xs text-[#D0D3D6]/70 mt-0.5">Mon – Fri, 9:00 AM – 6:00 PM EST</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-[#151515] border border-[#353638] text-[#159BD7] flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">Global Headquarters</h4>
+                    <p className="text-xs text-[#D0D3D6] mt-0.5">Innovation Way, Silicon Oasis</p>
+                    <p className="text-xs text-[#D0D3D6]/70">Digital Hub, Building 4</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-6 sm:space-y-8">
-              <div className="flex items-start gap-4 sm:gap-6">
-                <div className="w-14 h-14 rounded-2xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-6 h-6 text-primaryBlue" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-[#0f3d1a] font-bold mb-1">Email Us</h4>
-                  <p className="text-[#1a6b2e]">support@nextgen-lms.com</p>
-                  <p className="text-[#1a6b2e]">partnerships@nextgen-lms.com</p>
-                </div>
+            {/* Quick Guarantees */}
+            <div className="p-6 rounded-2xl bg-[#151515] border border-[#353638] space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold text-white">
+                <ShieldCheck className="w-4 h-4 text-[#33C6B6]" />
+                <span>Strict Data Privacy & NDA Compliant</span>
               </div>
-              
-              <div className="flex items-start gap-4 sm:gap-6">
-                <div className="w-14 h-14 rounded-2xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-primaryBlue" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-[#0f3d1a] font-bold mb-1">Call Us</h4>
-                  <p className="text-[#1a6b2e]">+92 300 1234567</p>
-                  <p className="text-sm text-darkGrayNumber mt-1">Mon-Fri from 9am to 6pm (PKT)</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 sm:gap-6">
-                <div className="w-14 h-14 rounded-2xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-primaryBlue" />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-[#0f3d1a] font-bold mb-1">Headquarters</h4>
-                  <p className="text-[#1a6b2e]">123 Tech Avenue, Block 4</p>
-                  <p className="text-[#1a6b2e]">Lahore, Pakistan</p>
-                </div>
-              </div>
+              <p className="text-[11px] text-[#D0D3D6]/70 leading-relaxed">
+                Your submitted contact details and institutional data are fully encrypted and never shared with third parties.
+              </p>
             </div>
           </div>
 
-          {/* Right Side: Contact Form */}
-          <div className="theme-card card-3d p-6 sm:p-10 md:p-12 rounded-[2rem] sm:rounded-[3rem] border-[#1a6b2e]/20 shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primaryBlue/10 blur-[100px] rounded-full pointer-events-none" />
-            
-            <form className="relative z-10 space-y-5 sm:space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-[#0f3d1a] uppercase tracking-wider">First Name</label>
-                  <input type="text" placeholder="John" className="w-full min-w-0 bg-[#c8e6c9] border border-[#1a6b2e]/20 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3.5 sm:py-4 text-[#0f3d1a] focus:outline-none focus:border-primaryBlue transition-colors" />
+          {/* Right Column: Contact Form */}
+          <div className="lg:col-span-7 bg-[#101010] border border-[#50BED9]/30 rounded-3xl p-8 sm:p-12 shadow-2xl">
+            {submitted ? (
+              <div className="text-center py-16 space-y-4">
+                <div className="w-16 h-16 bg-[#50BED9]/20 border border-[#50BED9] rounded-2xl flex items-center justify-center mx-auto text-[#50BED9]">
+                  <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-[#0f3d1a] uppercase tracking-wider">Last Name</label>
-                  <input type="text" placeholder="Doe" className="w-full min-w-0 bg-[#c8e6c9] border border-[#1a6b2e]/20 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3.5 sm:py-4 text-[#0f3d1a] focus:outline-none focus:border-primaryBlue transition-colors" />
+                <h3 className="text-2xl font-black text-white">Message Received!</h3>
+                <p className="text-sm text-[#D0D3D6] max-w-md mx-auto">
+                  Thank you for reaching out. An advisory lead from NextGen Studio will review your message and respond shortly.
+                </p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="px-6 py-2.5 rounded-xl bg-[#353638] text-white text-xs font-bold hover:bg-[#50BED9] hover:text-[#101010] transition-colors"
+                >
+                  Send Another Message
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="space-y-1">
+                  <h3 className="text-2xl font-black text-white">Send Us a Message</h3>
+                  <p className="text-xs text-[#D0D3D6]">Fill out the form below and we will get back to you promptly.</p>
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-[#0f3d1a] uppercase tracking-wider">Email Address</label>
-                <input type="email" placeholder="john@company.com" className="w-full min-w-0 bg-[#c8e6c9] border border-[#1a6b2e]/20 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3.5 sm:py-4 text-[#0f3d1a] focus:outline-none focus:border-primaryBlue transition-colors" />
-              </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#D0D3D6]">Your Name</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. John Doe"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full bg-[#151515] border border-[#353638] focus:border-[#50BED9] rounded-xl px-4 py-3 text-sm text-white placeholder-[#D0D3D6]/40 focus:outline-none"
+                    />
+                  </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-[#0f3d1a] uppercase tracking-wider">Subject / Inquiry Type</label>
-                <select className="w-full min-w-0 bg-[#c8e6c9] border border-[#1a6b2e]/20 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3.5 sm:py-4 text-[#0f3d1a] focus:outline-none focus:border-primaryBlue transition-colors appearance-none">
-                  <option>General Inquiry</option>
-                  <option>Partner with Us (Institutions)</option>
-                  <option>Request a Demo</option>
-                  <option>Support & Billing</option>
-                </select>
-              </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#D0D3D6]">Email Address</label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="john@example.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full bg-[#151515] border border-[#353638] focus:border-[#50BED9] rounded-xl px-4 py-3 text-sm text-white placeholder-[#D0D3D6]/40 focus:outline-none"
+                    />
+                  </div>
+                </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-[#0f3d1a] uppercase tracking-wider">Message</label>
-                <textarea rows={5} placeholder="Tell us how we can help you..." className="w-full min-w-0 bg-[#c8e6c9] border border-[#1a6b2e]/20 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3.5 sm:py-4 text-[#0f3d1a] focus:outline-none focus:border-primaryBlue transition-colors resize-none"></textarea>
-              </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#D0D3D6]">I am a...</label>
+                    <select
+                      value={formData.role}
+                      onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                      className="w-full bg-[#151515] border border-[#353638] focus:border-[#50BED9] rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
+                    >
+                      <option value="Student">Student / Independent Learner</option>
+                      <option value="University">University / College Dean</option>
+                      <option value="Enterprise">Enterprise Team Leader</option>
+                      <option value="Other">General Inquiry</option>
+                    </select>
+                  </div>
 
-              <button type="button" className="w-full inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 bg-gradient-to-r from-primaryBlue to-[#C6D6C0] text-[#0f3d1a] font-black text-sm sm:text-base rounded-xl shadow-lg shadow-primaryBlue/20 transition-all hover:-translate-y-0.5 hover:scale-[1.01] active:scale-95">
-                <span>Send Message</span>
-                <Send className="w-4 h-4" />
-              </button>
-            </form>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#D0D3D6]">Subject</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Institutional Pilot Inquiry"
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      className="w-full bg-[#151515] border border-[#353638] focus:border-[#50BED9] rounded-xl px-4 py-3 text-sm text-white placeholder-[#D0D3D6]/40 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#D0D3D6]">Message Details</label>
+                  <textarea
+                    rows={4}
+                    required
+                    placeholder="Tell us about your learning goals or organization's requirements..."
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full bg-[#151515] border border-[#353638] focus:border-[#50BED9] rounded-xl p-4 text-sm text-white placeholder-[#D0D3D6]/40 focus:outline-none resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-4 rounded-xl bg-[#50BED9] hover:bg-[#159BD7] text-[#101010] hover:text-white font-black text-sm transition-all shadow-lg hover:scale-[1.01] flex items-center justify-center gap-2"
+                >
+                  <span>Send Message</span>
+                  <Send className="w-4 h-4" />
+                </button>
+              </form>
+            )}
           </div>
 
         </div>
+
       </div>
     </div>
   );

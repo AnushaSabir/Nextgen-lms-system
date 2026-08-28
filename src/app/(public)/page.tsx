@@ -6,6 +6,7 @@ import HeroSection from '@/components/home/HeroSection';
 import ScrollReveal from '@/components/home/ScrollReveal';
 
 // Below the fold - lazy load for performance
+const LmsIntroVideoSection = dynamic(() => import('@/components/home/LmsIntroVideoSection'), { ssr: true });
 const SkillPathsSection = dynamic(() => import('@/components/home/SkillPathsSection'), { ssr: true });
 const WhyChooseUsSection = dynamic(() => import('@/components/home/WhyChooseUsSection'), { ssr: true });
 const LearningEcosystemSection = dynamic(() => import('@/components/home/LearningEcosystemSection'), { ssr: true });
@@ -16,16 +17,18 @@ const FaqSection = dynamic(() => import('@/components/home/FaqSection'), { ssr: 
 const FinalCtaSection = dynamic(() => import('@/components/home/FinalCtaSection'), { ssr: true });
 
 export const metadata = {
-  title: 'NextGen-LMS LMS | Pakistan\'s #1 Skill-to-Earn Platform',
-  description: 'Learn high-income digital skills and launch your freelance career directly from NextGen-LMS LMS.',
+  title: 'NextGen LMS | AI-Powered Learning Management System',
+  description: 'Master high-impact software, AI, and design skills with NextGen LMS.',
 };
 
 export default function HomePage() {
   return (
-    <div className="overflow-hidden bg-[#c8e6c9] text-[#0f3d1a]">
+    <div className="overflow-hidden bg-[#323232] text-white">
       <ScrollReveal />
       
       <HeroSection />
+
+      <LmsIntroVideoSection />
       
       <SkillPathsSection />
       

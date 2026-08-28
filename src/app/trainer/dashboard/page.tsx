@@ -1,13 +1,8 @@
-import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
-import { TrainerDashboard } from '@/features/trainer/TrainerDashboard';
-import { TrainerLayout } from '@/features/trainer/TrainerLayout';
-
-export default function TrainerDashboardPage() {
-  return (
-    <ProtectedRoute>
-      <TrainerLayout>
-        <TrainerDashboard />
-      </TrainerLayout>
-    </ProtectedRoute>
-  );
+'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+export default function Redirect() {
+  const router = useRouter();
+  useEffect(() => { router.replace('/'); }, [router]);
+  return null;
 }

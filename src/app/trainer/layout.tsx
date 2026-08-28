@@ -120,7 +120,7 @@ export default function TrainerDashboardLayout({
       )}
 
       {/* Floating Detached Sidebar (Pinterest Style: pin.it/5HKP49RwL) */}
-      <aside className={`w-72 bg-[#0f172a]/60 backdrop-blur-3xl border border-[#1a6b2e]/20 rounded-[32px] flex flex-col relative z-50 shadow-[0_0_50px_rgba(26, 107, 46, 0.1)] overflow-hidden transition-all duration-300 ${isMobileMenuOpen ? 'fixed inset-y-4 left-4 right-auto translate-x-0' : 'hidden md:flex translate-x-0'}`}>
+      <aside className={`w-72 bg-[#323232]/60 backdrop-blur-3xl border border-[#1a6b2e]/20 rounded-[32px] flex flex-col relative z-50 shadow-[0_0_50px_rgba(26, 107, 46, 0.1)] overflow-hidden transition-all duration-300 ${isMobileMenuOpen ? 'fixed inset-y-4 left-4 right-auto translate-x-0' : 'hidden md:flex translate-x-0'}`}>
         
         {/* Mobile Close Button */}
         <button 
@@ -183,7 +183,7 @@ export default function TrainerDashboardLayout({
                   </div>
                 </div>
               )}
-              <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#0f172a]" />
+              <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#323232]" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-black text-[#0f3d1a] truncate leading-snug">{user?.name || 'Trainer'}</p>

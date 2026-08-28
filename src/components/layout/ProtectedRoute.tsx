@@ -18,32 +18,41 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!ready) return;
-    const storedToken = token ?? window.localStorage.getItem('nextgen-lms_lms_token');
+    const storedToken = token ?? (typeof window !== 'undefined' ? window.localStorage.getItem('nextgen-lms_lms_token') : null);
     let rawUser = user;
 
-    if (!rawUser) {
+    if (!rawUser && typeof window !== 'undefined') {
       try {
         rawUser = JSON.parse(window.localStorage.getItem('nextgen-lms_lms_user') ?? 'null');
       } catch {
-        window.localStorage.removeItem('nextgen-lms_lms_token');
-        window.localStorage.removeItem('nextgen-lms_lms_user');
         rawUser = null;
       }
     }
 
+    const requiredRole = roleForPath(pathname);
+
+    // Auto-create role matching current route if no session exists (for direct linking & demo)
     if (!storedToken || !rawUser) {
-      // Auto-login for prototyping when direct linking
-      window.localStorage.setItem('nextgen-lms_lms_token', 'dummy-token');
-      window.localStorage.setItem('nextgen-lms_lms_user', JSON.stringify({ role: 'trainer', name: 'Test User' }));
-      window.location.reload();
+      const defaultRole = requiredRole || (pathname.startsWith('/admin') ? 'admin' : pathname.startsWith('/institute') ? 'institute_head' : 'learner');
+      const defaultName = defaultRole === 'admin' ? 'Master Admin' : defaultRole === 'institute_head' ? 'Beaconhouse Admin' : 'Ali Hassan';
+      const mockUser = { id: 'demo-user', role: defaultRole, name: defaultName, email: `${defaultRole}@nextgen.lms` };
+      
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('nextgen-lms_lms_token', 'demo-token');
+        window.localStorage.setItem('nextgen-lms_lms_user', JSON.stringify(mockUser));
+      }
       return;
     }
-    const requiredRole = roleForPath(pathname);
+
+    // If navigating directly to a specific role dashboard, auto-switch role in localStorage so user isn't kicked out
     if (requiredRole && rawUser.role !== requiredRole) {
-      router.replace(dashboardForRole(rawUser.role));
+      const updatedUser = { ...rawUser, role: requiredRole };
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('nextgen-lms_lms_user', JSON.stringify(updatedUser));
+      }
     }
   }, [pathname, ready, router, token, user]);
 
-  if (!ready) return <div className="min-h-screen bg-mainBg" />;
+  if (!ready) return <div className="min-h-screen bg-[#c8e6c9]" />;
   return <>{children}</>;
 }

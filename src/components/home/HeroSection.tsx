@@ -26,7 +26,7 @@ const HERO_SLIDES = [
     title: (
       <>
         The Future of <br className="hidden sm:block" />
-        <span className="text-[#0f3d1a] drop-shadow-sm">Learning Starts Here.</span>
+        <span className="text-white drop-shadow-sm">Learning Starts Here.</span>
       </>
     ),
     desc: "Empower your learning journey with NextGen LMS—an AI-powered Learning Management System built for students, educators, schools, universities, and training institutes. Learn smarter, teach better, and achieve more from anywhere.",
@@ -100,7 +100,7 @@ export default function HeroSection() {
         {/* Play/Pause Button */}
         <button
           onClick={togglePlayPause}
-          className="absolute bottom-4 right-3 sm:bottom-10 sm:right-8 z-40 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-white/20 hover:bg-white/30 border border-white/40 backdrop-blur-md flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+          className="absolute bottom-4 right-3 sm:bottom-10 sm:right-8 z-40 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-[#101010]/20 border border-white/10 hover:bg-[#101010]/30 border border-white/10 border border-white/40 backdrop-blur-md flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
           aria-label={isPlaying ? "Pause video" : "Play video"}
         >
           {isPlaying ? <Pause className="w-3.5 h-3.5 sm:w-5 sm:h-5" /> : <Play className="w-3.5 h-3.5 sm:w-5 sm:h-5 ml-0.5 sm:ml-1" />}
@@ -112,8 +112,8 @@ export default function HeroSection() {
             <div className="lg:col-span-7 space-y-2.5 sm:space-y-8 text-left max-w-2xl py-4 sm:py-0">
 
               {/* Badge */}
-              <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border border-white/40 bg-white/20 backdrop-blur-md text-xs sm:text-sm font-semibold text-white shadow-lg animate-fade-in">
-                <span className="flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#1a6b2e] shadow-inner">
+              <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-4 sm:py-2 rounded-full border border-white/40 bg-[#101010]/20 border border-white/10 backdrop-blur-md text-xs sm:text-sm font-semibold text-white shadow-lg animate-fade-in">
+                <span className="flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#50BED9] shadow-inner">
                   <Award className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
                 </span>
                 <span className="uppercase tracking-widest text-[9px] sm:text-[10px] font-black text-white sm:mr-1 drop-shadow">
@@ -135,13 +135,13 @@ export default function HeroSection() {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row items-start gap-2 sm:gap-4 pt-0.5 sm:pt-2">
                 <Link href={HERO_SLIDES[activeSlide].ctaLink}
-                  className="group w-auto min-w-[180px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-1.5 sm:px-6 sm:py-2.5 bg-[#1a6b2e] hover:bg-[#0f3d1a] text-white font-black text-[11px] sm:text-sm rounded-lg sm:rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:scale-105 active:scale-95 text-center">
+                  className="group w-auto min-w-[180px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-1.5 sm:px-6 sm:py-2.5 bg-[#50BED9] hover:bg-[#50BED9] text-white font-black text-[11px] sm:text-sm rounded-lg sm:rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:scale-105 active:scale-95 text-center">
                   <span>{HERO_SLIDES[activeSlide].ctaText}</span>
                   <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
 
                 <Link href={HERO_SLIDES[activeSlide].secCtaLink}
-                  className="w-auto min-w-[180px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-1.5 sm:px-6 sm:py-2.5 rounded-lg sm:rounded-xl border border-white/50 bg-white/10 text-white font-semibold text-[11px] sm:text-sm backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:scale-105 hover:bg-white/20 active:scale-95 text-center">
+                  className="w-auto min-w-[180px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-1.5 sm:px-6 sm:py-2.5 rounded-lg sm:rounded-xl border border-white/50 bg-[#101010]/10 border border-white/10 text-white font-semibold text-[11px] sm:text-sm backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:scale-105 hover:bg-[#101010]/20 border border-white/10 active:scale-95 text-center">
                   <span>{HERO_SLIDES[activeSlide].secCtaText}</span>
                 </Link>
               </div>
@@ -161,7 +161,7 @@ export default function HeroSection() {
                   ))}
                 </div>
                 <div>
-                  <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-[#1a6b2e] text-[#1a6b2e]" />)}</div>
+                  <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-violet-400 text-[#50BED9] text-[#50BED9]" />)}</div>
                   <p className="text-[10px] sm:text-xs text-white/70 mt-0.5 font-semibold leading-snug">50,000+ learners trust NextGen-LMS</p>
                 </div>
               </div>
@@ -172,32 +172,32 @@ export default function HeroSection() {
               <div className="absolute w-[380px] h-[380px] rounded-full border border-white/20 animate-spin-slow" />
               <div className="absolute w-[280px] h-[280px] rounded-full border border-white/10" style={{ animation: 'spin-slow 15s linear infinite reverse' }} />
 
-              <div className="relative z-10 w-28 h-28 bg-[#1a6b2e]/90 backdrop-blur-xl rounded-3xl flex flex-col items-center justify-center border border-white/30 shadow-xl animate-float-slow hover:rotate-6 transition-transform">
+              <div className="relative z-10 w-28 h-28 bg-[#50BED9]/90 backdrop-blur-xl rounded-3xl flex flex-col items-center justify-center border border-white/30 shadow-xl animate-float-slow hover:rotate-6 transition-transform">
                 <Award className="w-8 h-8 text-white mb-1" />
                 <span className="text-white font-black text-[9px] tracking-widest drop-shadow-sm">CERTIFIED</span>
               </div>
 
               <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-20">
-                <div className="bg-white/80 backdrop-blur-md w-48 p-4 rounded-xl shadow-lg border border-white/50 transition-all hover:scale-105">
+                <div className="bg-[#101010]/80 border border-white/10 backdrop-blur-md w-48 p-4 rounded-xl shadow-lg border border-white/50 transition-all hover:scale-105">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-[#1a6b2e]/20 rounded-lg flex items-center justify-center text-[#0f3d1a]">
+                    <div className="w-8 h-8 bg-[#50BED9]/20 rounded-lg flex items-center justify-center text-white">
                       <TrendingUp className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-[#0f3d1a] font-black text-base leading-none">87%</div>
-                      <div className="text-[#1a6b2e] font-bold text-[10px] mt-0.5">Success Rate</div>
+                      <div className="text-white font-black text-base leading-none">87%</div>
+                      <div className="text-[#50BED9] font-bold text-[10px] mt-0.5">Success Rate</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white/80 backdrop-blur-md w-48 p-4 rounded-xl shadow-lg border border-white/50 transition-all hover:scale-105">
+                <div className="bg-[#101010]/80 border border-white/10 backdrop-blur-md w-48 p-4 rounded-xl shadow-lg border border-white/50 transition-all hover:scale-105">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-[#a8c97a]/20 rounded-lg flex items-center justify-center text-[#0f3d1a]">
+                    <div className="w-8 h-8 bg-[#50BED9]/20 rounded-lg flex items-center justify-center text-white">
                       <Users className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-[#0f3d1a] font-black text-base leading-none">50K+</div>
-                      <div className="text-[#1a6b2e] font-bold text-[10px] mt-0.5">Active Learners</div>
+                      <div className="text-white font-black text-base leading-none">50K+</div>
+                      <div className="text-[#50BED9] font-bold text-[10px] mt-0.5">Active Learners</div>
                     </div>
                   </div>
                 </div>
@@ -212,8 +212,8 @@ export default function HeroSection() {
                 key={idx}
                 onClick={() => setActiveSlide(idx)}
                 className={`h-2 sm:h-2.5 rounded-full transition-all duration-500 ${activeSlide === idx
-                  ? 'w-8 sm:w-10 bg-[#1a6b2e] shadow-md'
-                  : 'w-2 sm:w-2.5 bg-white/40 hover:bg-white/70'
+                  ? 'w-8 sm:w-10 bg-[#50BED9] shadow-md'
+                  : 'w-2 sm:w-2.5 bg-[#101010]/40 border border-white/10 hover:bg-[#101010]/70 border border-white/10'
                   }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
@@ -221,10 +221,10 @@ export default function HeroSection() {
           </div>
 
           {/* Desktop Stats Bar */}
-          <div className="hidden md:grid mt-24 grid-cols-4 gap-6 p-8 rounded-3xl bg-white/20 backdrop-blur-md border border-white/30">
+          <div className="hidden md:grid mt-24 grid-cols-4 gap-6 p-8 rounded-3xl bg-[#101010]/20 border border-white/10 backdrop-blur-md border border-white/30">
             {HERO_STATS.map((stat, i) => (
               <div key={i} className="text-center reveal" style={{ transitionDelay: `${i * 100}ms` }}>
-                <div className="flex justify-center mb-1.5 text-[#1a6b2e] drop-shadow">{stat.icon}</div>
+                <div className="flex justify-center mb-1.5 text-[#50BED9] drop-shadow">{stat.icon}</div>
                 <div className="text-3xl font-black text-white mb-0.5 drop-shadow-md">{stat.value}</div>
                 <div className="text-[10px] text-white/70 uppercase tracking-wider font-extrabold">{stat.label}</div>
               </div>
@@ -234,13 +234,13 @@ export default function HeroSection() {
       </section>
 
       {/* Mobile Stats */}
-      <section className="block md:hidden px-4 pb-8 bg-[#c8e6c9] relative z-30">
-        <div className="grid grid-cols-2 gap-3 p-5 rounded-[2rem] bg-white shadow-md border border-[#1a6b2e]/20">
+      <section className="block md:hidden px-4 pb-8 bg-[#070b1a] relative z-30">
+        <div className="grid grid-cols-2 gap-3 p-5 rounded-[2rem] bg-[#101010]/80 border border-white/10 text-white shadow-md border border-white/10">
           {HERO_STATS.map((stat, i) => (
-            <div key={i} className="bg-[#c8e6c9] border border-[#1a6b2e]/20 p-5 rounded-2xl text-center py-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-md">
-              <div className="flex justify-center mb-3 text-[#1a6b2e]">{stat.icon}</div>
-              <div className="text-xl font-black text-[#0f3d1a] leading-tight">{stat.value}</div>
-              <div className="text-[9px] text-[#1a6b2e] uppercase tracking-wider font-extrabold mt-1">{stat.label}</div>
+            <div key={i} className="bg-[#070b1a] border border-white/10 p-5 rounded-2xl text-center py-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-md">
+              <div className="flex justify-center mb-3 text-[#50BED9]">{stat.icon}</div>
+              <div className="text-xl font-black text-white leading-tight">{stat.value}</div>
+              <div className="text-[9px] text-[#50BED9] uppercase tracking-wider font-extrabold mt-1">{stat.label}</div>
             </div>
           ))}
         </div>

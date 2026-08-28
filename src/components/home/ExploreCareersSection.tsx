@@ -9,15 +9,15 @@ const TESTIMONIALS = [
 
 export default function ExploreCareersSection() {
   return (
-    <section className="py-16 sm:py-24 px-4 sm:px-6 bg-[#c8e6c9] relative overflow-hidden">
+    <section className="py-16 sm:py-24 px-4 sm:px-6 bg-[#070b1a] relative overflow-hidden">
       <div className="container mx-auto max-w-6xl relative z-10">
         
         {/* About Section */}
         <div className="text-center mb-16 sm:mb-24 reveal">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] tracking-tight mb-6 text-3d">
-            Learn Without <span className="text-[#0f3d1a] text-3d-orange">Limits</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-6 text-3d">
+            Learn Without <span className="text-white text-3d-orange">Limits</span>
           </h2>
-          <div className="max-w-3xl mx-auto space-y-6 text-base sm:text-lg text-[#1a6b2e] font-medium leading-relaxed">
+          <div className="max-w-3xl mx-auto space-y-6 text-base sm:text-lg text-[#50BED9] font-medium leading-relaxed">
             <p>
               NextGen LMS is a next-generation learning platform designed to simplify online education. Our platform combines modern technology, artificial intelligence, and an intuitive learning experience to help students achieve their goals while enabling educators to deliver engaging and effective courses.
             </p>
@@ -29,26 +29,26 @@ export default function ExploreCareersSection() {
 
         {/* Testimonials */}
         <div className="text-center mb-12 sm:mb-16 reveal">
-          <h3 className="text-2xl sm:text-3xl font-black text-[#0f3d1a] tracking-tight text-3d">
+          <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight text-3d">
             What Our Students Say
           </h3>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {TESTIMONIALS.map((t, i) => (
-            <div key={i} className="bg-white/40 border border-[#1a6b2e]/10 rounded-3xl p-8 relative hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-[#1a6b2e]/5">
-              <Quote className="w-10 h-10 text-[#0f3d1a]/20 absolute top-6 right-6" />
+            <div key={i} className="bg-[#101010]/40 border border-white/10 border border-white/10 rounded-3xl p-8 relative hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-[#50BED9]/5">
+              <Quote className="w-10 h-10 text-white/20 absolute top-6 right-6" />
               <div className="flex gap-1 mb-6">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 text-[#0f3d1a] fill-[#d94d19]" />)}
+                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 text-white fill-violet-400 text-[#50BED9]" />)}
               </div>
-              <p className="text-[#1a6b2e] font-medium mb-8 leading-relaxed italic">"{t.quote}"</p>
+              <p className="text-[#50BED9] font-medium mb-8 leading-relaxed italic">"{t.quote}"</p>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#1a6b2e]/10 flex items-center justify-center font-bold text-[#1a6b2e]">
+                <div className="w-12 h-12 rounded-full bg-[#50BED9]/10 flex items-center justify-center font-bold text-[#50BED9]">
                   {t.name.charAt(0)}
                 </div>
                 <div>
-                  <h4 className="font-bold text-[#0f3d1a]">{t.name}</h4>
-                  <span className="text-sm text-[#1a6b2e]/80">{t.role}</span>
+                  <h4 className="font-bold text-white">{t.name}</h4>
+                  <span className="text-sm text-[#50BED9]/80">{t.role}</span>
                 </div>
               </div>
             </div>

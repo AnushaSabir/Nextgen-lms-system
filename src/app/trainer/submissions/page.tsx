@@ -1,15 +1,8 @@
-import { TrainerLayout } from '@/features/trainer/TrainerLayout';
-import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
-import { SubmissionsScreen } from '@/features/trainer/screens/SubmissionsScreen';
-
-export default function SubmissionsPage() {
-  return (
-    <ProtectedRoute>
-      <TrainerLayout>
-        <div className="p-6 lg:p-8">
-          <SubmissionsScreen />
-        </div>
-      </TrainerLayout>
-    </ProtectedRoute>
-  );
+'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+export default function Redirect() {
+  const router = useRouter();
+  useEffect(() => { router.replace('/'); }, [router]);
+  return null;
 }

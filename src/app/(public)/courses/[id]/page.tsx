@@ -3,17 +3,69 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
-  ArrowLeft, Star, Users, CheckCircle2, Clock,
-  PlayCircle, FileText, Award, Smartphone, Globe, Shield
+  ArrowLeft,
+  Star,
+  Users,
+  CheckCircle2,
+  Clock,
+  PlayCircle,
+  FileText,
+  Award,
+  Smartphone,
+  Globe,
+  ShieldCheck,
+  Zap,
+  BookOpen,
+  Sparkles,
+  ChevronRight,
 } from 'lucide-react';
 import { coursesApi } from '@/services/api';
 
-const TRENDING_FALLBACKS = [
-  { id: 1, title: 'Advanced Web Development', level: 'University', trainer: 'Ikram Tech', students: '2.4k', thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&auto=format&fit=crop&q=80', description: 'Master modern web development from frontend to backend. Includes React, Node.js, and advanced styling.' },
-  { id: 2, title: 'Graphic Design Mastery', level: 'College', trainer: 'Qavi Arts', students: '1.8k', thumbnail: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&auto=format&fit=crop&q=80', description: 'Learn the principles of design, color theory, and master industry-standard tools like Photoshop and Illustrator.' },
-  { id: 3, title: 'Digital Marketing Pro', level: 'Individual', trainer: 'Market Experts', students: '3.1k', thumbnail: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200&auto=format&fit=crop&q=80', description: 'Comprehensive digital marketing course covering SEO, SEM, social media strategies, and content marketing.' },
-  { id: 4, title: 'AI for Beginners', level: 'School', trainer: 'Future Academy', students: '900', thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&auto=format&fit=crop&q=80', description: 'An introduction to Artificial Intelligence and Machine Learning concepts tailored for beginners.' },
+const COURSES_DATA = [
+  {
+    id: 1,
+    title: 'Next.js 15 & React 19 Full-Stack Enterprise Mastery',
+    category: 'Development',
+    level: 'Intermediate',
+    trainer: 'Engr. Sarah Tariq',
+    students: '3.4k',
+    rating: 4.9,
+    reviews: 840,
+    duration: '48 Hours',
+    lectures: 142,
+    thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&auto=format&fit=crop&q=80',
+    description: 'Master modern full-stack development with Server Actions, Next.js 15 App Router, React 19, TypeScript, PostgreSQL, and Tailwind CSS. Includes production deployment and CI/CD pipelines.',
+  },
+  {
+    id: 2,
+    title: 'Applied Generative AI & Large Language Models (LLMs)',
+    category: 'AI & Data',
+    level: 'Advanced',
+    trainer: 'Dr. Kirill Eremenko',
+    students: '4.8k',
+    rating: 4.9,
+    reviews: 1250,
+    duration: '56 Hours',
+    lectures: 168,
+    thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&auto=format&fit=crop&q=80',
+    description: 'Learn to design, fine-tune, and deploy modern generative AI applications, vector databases, RAG systems, and multi-agent workflows using LangChain and open-source models.',
+  },
+  {
+    id: 3,
+    title: 'UI/UX Design Systems & High-Fidelity Prototyping',
+    category: 'Design',
+    level: 'All Levels',
+    trainer: 'Alex Chen',
+    students: '2.1k',
+    rating: 4.8,
+    reviews: 620,
+    duration: '36 Hours',
+    lectures: 94,
+    thumbnail: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?w=1200&auto=format&fit=crop&q=80',
+    description: 'Comprehensive UI/UX course covering advanced Figma auto-layout, atomic design systems, interactive component prototyping, and user testing methodologies.',
+  },
 ];
 
 export default function CourseDetailsPage() {
@@ -25,24 +77,17 @@ export default function CourseDetailsPage() {
   useEffect(() => {
     const fetchCourse = async () => {
       setLoading(true);
+      const courseId = typeof params.id === 'string' ? params.id : Array.isArray(params.id) ? params.id[0] : '1';
       try {
-        // Try fetching from API first if we have a real backend
-        const courseId = typeof params.id === 'string' ? params.id : Array.isArray(params.id) ? params.id[0] : '';
         const data = await coursesApi.getById(courseId);
-        setCourse(data);
-      } catch (err) {
-        // Fallback to local trending data for demo purposes
-        const courseId = typeof params.id === 'string' ? params.id : Array.isArray(params.id) ? params.id[0] : '';
-        const fallback = TRENDING_FALLBACKS.find(c => c.id.toString() === courseId);
-        if (fallback) {
-          setCourse({
-            ...fallback,
-            rating: 4.8,
-            modules: 12,
-            duration: '8 weeks',
-            price: '200 PKR'
-          });
+        if (data) setCourse(data);
+        else {
+          const fallback = COURSES_DATA.find((c) => c.id.toString() === courseId) || COURSES_DATA[0];
+          setCourse(fallback);
         }
+      } catch (err) {
+        const fallback = COURSES_DATA.find((c) => c.id.toString() === courseId) || COURSES_DATA[0];
+        setCourse(fallback);
       }
       setLoading(false);
     };
@@ -54,19 +99,21 @@ export default function CourseDetailsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center pt-24">
-        <div className="w-12 h-12 border-4 border-primaryBlue border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-[#323232] flex items-center justify-center pt-24">
+        <div className="w-12 h-12 border-4 border-[#50BED9] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!course) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center pt-24 px-4 space-y-6 text-center">
-        <div className="text-6xl mb-4">🔍</div>
-        <h1 className="text-3xl sm:text-4xl font-black text-[#0f3d1a]">Course Not Found</h1>
-        <p className="text-bodyGrayText text-base sm:text-lg max-w-md text-center leading-relaxed">We couldn't find the course you were looking for. It may have been removed or the link is broken.</p>
-        <button onClick={() => router.push('/courses')} className="px-8 py-4 bg-primaryBlue text-[#0f3d1a] font-bold rounded-2xl hover:scale-105 transition-transform shadow-lg shadow-primaryBlue/20">
+      <div className="min-h-screen bg-[#323232] text-white flex flex-col items-center justify-center pt-24 px-4 space-y-6 text-center">
+        <h1 className="text-3xl sm:text-4xl font-black text-white">Course Not Found</h1>
+        <p className="text-[#D0D3D6] text-base max-w-md">We could not find the course you were looking for.</p>
+        <button
+          onClick={() => router.push('/courses')}
+          className="px-8 py-4 bg-[#50BED9] text-[#101010] font-black rounded-2xl hover:bg-[#159BD7] hover:text-white transition-all shadow-lg"
+        >
           Browse All Courses
         </button>
       </div>
@@ -74,172 +121,127 @@ export default function CourseDetailsPage() {
   }
 
   return (
-    <div className="pt-24 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 min-h-screen">
-      <div className="container mx-auto max-w-7xl">
-
+    <div className="min-h-screen bg-[#323232] text-white pt-24 sm:pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-8">
+        
         {/* Back Button */}
         <button
           onClick={() => router.back()}
-          className="group flex items-center gap-2 text-bodyGrayText hover:text-[#0f3d1a] transition-colors font-bold mb-8"
+          className="group flex items-center gap-2 text-[#D0D3D6] hover:text-[#50BED9] transition-colors font-bold text-sm"
         >
-          <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-          Back to courses
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          <span>Back to all courses</span>
         </button>
 
-        {/* Hero Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mb-12 sm:mb-16">
-          <div className="lg:col-span-2 space-y-6 sm:space-y-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-orangeBorderActive bg-primaryBlue/10 text-xs font-black text-primaryBlue uppercase tracking-widest">
-              {course.level} Level
+        {/* Main Hero Overview Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          
+          {/* Left Column: Details */}
+          <div className="lg:col-span-2 space-y-6">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#50BED9]/20 text-[#50BED9] border border-[#50BED9]/40">
+                {course.level || 'All Levels'}
+              </span>
+              <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-[#151515] border border-[#353638] text-[#D0D3D6]">
+                {course.category || 'Professional Track'}
+              </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0f3d1a] leading-tight tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight tracking-tight">
               {course.title}
             </h1>
 
-            <p className="text-base sm:text-lg text-bodyGrayText leading-relaxed max-w-2xl">
-              {course.description || "Master the essential skills needed for a successful career. This comprehensive course takes you from fundamentals to advanced techniques, with hands-on projects and expert guidance."}
+            <p className="text-base sm:text-lg text-[#D0D3D6] leading-relaxed">
+              {course.description}
             </p>
 
-            <div className="flex flex-wrap items-center gap-6 text-sm font-bold text-mediumGrayTitle">
-              <div className="flex items-center gap-2">
-                <Star className="w-5 h-5 text-primaryBlue fill-primaryBlue" />
-                <span className="text-[#0f3d1a]">{course.rating || '4.8'}</span>
-                <span>(340 reviews)</span>
+            <div className="flex flex-wrap items-center gap-6 text-sm font-semibold text-[#D0D3D6] pt-2 border-y border-[#353638] py-4">
+              <div className="flex items-center gap-1.5 text-amber-400 font-bold">
+                <Star className="w-4 h-4 fill-current" />
+                <span className="text-white">{course.rating || 4.9}</span>
+                <span className="text-[#D0D3D6]/60">({course.reviews || 840} reviews)</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-primaryBlue" />
-                <span className="text-[#0f3d1a]">{course.students || '1.2k'}</span>
-                <span>Enrolled</span>
+              <div className="flex items-center gap-1.5">
+                <Users className="w-4 h-4 text-[#50BED9]" />
+                <span>{course.students || '2.4k'} Enrolled Students</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Globe className="w-5 h-5 text-primaryBlue" />
-                <span className="text-[#0f3d1a]">English, Urdu</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 pt-2 sm:pt-4">
-              <div className="w-12 h-12 rounded-full orange-gradient p-[2px]">
-                <div className="w-full h-full rounded-full bg-mainBg flex items-center justify-center overflow-hidden">
-                  <div className="text-lg font-black text-primaryBlue">{course.trainer?.charAt(0) || 'V'}</div>
-                </div>
-              </div>
-              <div>
-                <div className="text-xs font-bold text-darkGrayNumber uppercase tracking-widest">Created by</div>
-                <div className="text-base font-black text-[#0f3d1a] flex items-center gap-1.5">
-                  {course.trainer || 'Verified Trainer'}
-                  <CheckCircle2 className="w-4 h-4 text-primaryBlue" />
-                </div>
+              <div className="flex items-center gap-1.5">
+                <Clock className="w-4 h-4 text-[#33C6B6]" />
+                <span>{course.duration || '40 Hours'} Content</span>
               </div>
             </div>
-          </div>
-
-          {/* Floating Sidebar Card */}
-          <div className="lg:col-span-1">
-            <div className="theme-card card-3d p-5 sm:p-6 rounded-2xl sm:rounded-[2.5rem] lg:sticky lg:top-32">
-              <div className="aspect-video bg-[rgba(255,255,255,0.04)] rounded-2xl relative overflow-hidden mb-6 group cursor-pointer">
-                {course.thumbnail ? (
-                  <img src={course.thumbnail} alt={course.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center opacity-30">
-                    <PlayCircle className="w-16 h-16 text-[#0f3d1a]" />
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform shadow-2xl">
-                    <PlayCircle className="w-8 h-8 text-[#0f3d1a] ml-1" />
-                  </div>
-                </div>
-                <div className="absolute bottom-3 left-0 w-full text-center text-xs font-bold text-[#0f3d1a] tracking-widest">
-                  Preview Course
-                </div>
-              </div>
-
-              <div className="space-y-6">
-                <div className="text-4xl font-black text-[#0f3d1a]">
-                  {course.price || 'Free'}
-                </div>
-
-                <button className="w-full py-4 sm:py-5 bg-primaryBlue text-[#0f3d1a] font-black text-base sm:text-lg rounded-2xl shadow-xl shadow-[rgba(240,89,31,0.25)] hover:bg-[#d94d19] hover:scale-105 active:scale-95 transition-all">
-                  Enroll Now
-                </button>
-                <button className="w-full py-4 bg-[rgba(255,255,255,0.03)] text-[#0f3d1a] font-bold text-sm rounded-2xl border border-[rgba(255,255,255,0.08)] hover:bg-[rgba(255,255,255,0.08)] transition-all">
-                  Add to Wishlist
-                </button>
-
-                <div className="pt-6 border-t border-[rgba(255,255,255,0.06)] space-y-4">
-                  <div className="text-sm font-bold text-[#0f3d1a] mb-2">This course includes:</div>
-                  {[
-                    { icon: <PlayCircle className="w-4 h-4" />, text: `${course.duration || '24 hours'} on-demand video` },
-                    { icon: <FileText className="w-4 h-4" />, text: `${course.modules || '15'} downloadable resources` },
-                    { icon: <Smartphone className="w-4 h-4" />, text: 'Access on mobile and TV' },
-                    { icon: <Shield className="w-4 h-4" />, text: 'Full lifetime access' },
-                    { icon: <Award className="w-4 h-4" />, text: 'NextGen-LMS LMS Certificate of completion' },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 text-sm text-bodyGrayText font-medium">
-                      <span className="text-primaryBlue">{item.icon}</span>
-                      {item.text}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Course Details Sections */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-          <div className="lg:col-span-2 space-y-8 sm:space-y-12">
 
             {/* What you'll learn */}
-            <div className="p-5 sm:p-10 rounded-2xl sm:rounded-[2.5rem] bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)]">
-              <h2 className="text-xl sm:text-2xl font-black text-[#0f3d1a] mb-6 sm:mb-8">What you'll learn</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-[#101010] border border-[#353638] rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
+              <h3 className="text-xl font-black text-white flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-[#50BED9]" /> What You Will Master
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 {[
-                  'Master the core concepts from scratch to advanced level',
-                  'Build real-world projects to add to your portfolio',
-                  'Learn industry best practices and standards',
-                  'Prepare for professional certification and interviews',
-                  'Gain practical experience with hands-on assignments',
-                  'Understand how to deploy and scale your solutions'
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-primaryBlue shrink-0 mt-0.5" />
-                    <span className="text-bodyGrayText text-sm font-medium leading-relaxed">{item}</span>
+                  'Architect enterprise-grade scalable applications',
+                  'Write clean, typed, modular, and maintainable code',
+                  'Implement robust automated tests and CI/CD pipelines',
+                  'Deploy production workloads to cloud environments',
+                  'Earn a verified credential recognized by top recruiters',
+                  'Access lifetime course updates and mentor Q&A',
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#D0D3D6] font-medium">
+                    <CheckCircle2 className="w-4 h-4 text-[#33C6B6] shrink-0 mt-0.5" />
+                    <span>{item}</span>
                   </div>
                 ))}
               </div>
             </div>
-
-            {/* Course Content Placeholder */}
-            <div>
-              <h2 className="text-2xl font-black text-[#0f3d1a] mb-6">Course Content</h2>
-              <div className="space-y-4">
-                {[
-                  { title: 'Introduction & Fundamentals', lectures: 5, time: '45 mins' },
-                  { title: 'Core Concepts & Theory', lectures: 8, time: '1 hr 20 mins' },
-                  { title: 'Practical Implementation', lectures: 12, time: '2 hrs 15 mins' },
-                  { title: 'Advanced Techniques', lectures: 7, time: '1 hr 40 mins' },
-                  { title: 'Final Project & Certification', lectures: 3, time: '50 mins' },
-                ].map((module, i) => (
-                  <div key={i} className="p-4 sm:p-6 rounded-2xl glass-card border border-[rgba(255,255,255,0.05)] hover:border-[rgba(240,89,31,0.2)] transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer group">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-[rgba(240,89,31,0.1)] flex items-center justify-center text-primaryBlue font-black text-sm group-hover:bg-primaryBlue group-hover:text-[#0f3d1a] transition-colors">
-                        {i + 1}
-                      </div>
-                      <div className="font-bold text-[#0f3d1a] text-base sm:text-lg leading-snug">{module.title}</div>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-sm text-bodyGrayText font-medium">
-                      <span className="flex items-center gap-1.5"><FileText className="w-4 h-4" /> {module.lectures} lectures</span>
-                      <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> {module.time}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
           </div>
+
+          {/* Right Column: Enrollment Card */}
+          <div className="space-y-6">
+            <div className="bg-[#101010] border border-[#50BED9]/30 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl sticky top-28">
+              <div className="relative h-48 w-full rounded-2xl overflow-hidden bg-[#151515]">
+                <Image
+                  src={course.thumbnail}
+                  alt={course.title}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-2xl bg-[#50BED9] text-[#101010] flex items-center justify-center shadow-xl">
+                    <PlayCircle className="w-7 h-7 fill-current" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <Link
+                  href={`/login?mode=signup&course=${course.id}`}
+                  className="w-full py-4 rounded-2xl bg-[#50BED9] hover:bg-[#159BD7] text-[#101010] hover:text-white font-black text-base text-center shadow-[0_8px_25px_rgba(80,190,217,0.35)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
+                >
+                  <span>Enroll in Course</span>
+                  <ChevronRight className="w-5 h-5" />
+                </Link>
+                <p className="text-center text-[11px] text-[#D0D3D6]/70 font-semibold">
+                  30-Day Full Access Guarantee · Instant Activation
+                </p>
+              </div>
+
+              <div className="space-y-3 pt-4 border-t border-[#353638]">
+                <h4 className="text-xs font-black uppercase tracking-wider text-white">This Course Includes:</h4>
+                {[
+                  { icon: <PlayCircle className="w-4 h-4 text-[#50BED9]" />, text: 'On-demand high-definition video lectures' },
+                  { icon: <FileText className="w-4 h-4 text-[#33C6B6]" />, text: 'Downloadable exercises & source code' },
+                  { icon: <Award className="w-4 h-4 text-[#159BD7]" />, text: 'Verified Certificate of Completion' },
+                  { icon: <Smartphone className="w-4 h-4 text-[#50BED9]" />, text: 'Access on Mobile, Tablet, and Desktop' },
+                  { icon: <Globe className="w-4 h-4 text-[#33C6B6]" />, text: 'Full lifetime access & community discord' },
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-[#D0D3D6]">
+                    {item.icon}
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>

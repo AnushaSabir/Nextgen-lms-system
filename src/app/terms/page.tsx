@@ -48,7 +48,7 @@ export default function TermsAndConditionsPage() {
       <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#5E6F58] opacity-[0.05] rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-20%] right-[-10%] w-[40%] h-[40%] bg-blue-600 opacity-[0.03] rounded-full blur-[120px] pointer-events-none" />
       
-      <div className="w-full max-w-2xl bg-[#0f172a]/80 backdrop-blur-xl border border-[#1e293b] rounded-[40px] p-8 sm:p-12 shadow-2xl relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
+      <div className="w-full max-w-2xl bg-[#323232]/80 backdrop-blur-xl border border-[#1e293b] rounded-[40px] p-8 sm:p-12 shadow-2xl relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
         <h1 className="text-3xl font-black text-[#0f3d1a] mb-2 leading-tight">Final Requirements</h1>
         <p className="text-[#1a6b2e] text-lg mb-8">Review terms and provide your environment proofs.</p>
 
@@ -70,22 +70,22 @@ export default function TermsAndConditionsPage() {
             
             <div 
               onClick={() => equipmentInputRef.current?.click()}
-              className={`cursor-pointer p-4 rounded-2xl border-2 border-dashed flex items-center justify-between transition-colors ${equipmentFile ? 'bg-[#5E6F58]/10 border-[#5E6F58]' : 'bg-[#0f172a] border-[#1e293b] hover:border-[#334155]'}`}
+              className={`cursor-pointer p-4 rounded-2xl border-2 border-dashed flex items-center justify-between transition-colors ${equipmentFile ? 'bg-[#5E6F58]/10 border-[#5E6F58]' : 'bg-[#323232] border-[#1e293b] hover:border-[#334155]'}`}
             >
               <div className="flex items-center gap-4">
                 <div className={`p-3 rounded-xl ${equipmentFile ? 'bg-[#5E6F58]' : 'bg-[#1e293b]'}`}>
-                  <Camera className={`w-6 h-6 ${equipmentFile ? 'text-[#0f3d1a]' : 'text-[#64748b]'}`} />
+                  <Camera className={`w-6 h-6 ${equipmentFile ? 'text-[#0f3d1a]' : 'text-[#D0D3D6]'}`} />
                 </div>
                 <div>
                   <h4 className={`font-bold ${equipmentFile ? 'text-[#0f3d1a]' : 'text-[#1a6b2e]'}`}>
                     {equipmentFile ? 'Equipment Photo Uploaded' : 'Upload Equipment Photo'}
                   </h4>
-                  <p className="text-xs text-[#64748b] flex items-center gap-1">
+                  <p className="text-xs text-[#D0D3D6] flex items-center gap-1">
                     {equipmentFile ? <><FileImage className="w-3 h-3" /> {equipmentFile.name}</> : 'JPG, PNG (Max 5MB)'}
                   </p>
                 </div>
               </div>
-              {equipmentFile ? <CheckCircle2 className="text-[#d94d19] w-6 h-6" /> : <Upload className="text-[#64748b] w-5 h-5" />}
+              {equipmentFile ? <CheckCircle2 className="text-[#d94d19] w-6 h-6" /> : <Upload className="text-[#D0D3D6] w-5 h-5" />}
             </div>
           </div>
 
@@ -106,22 +106,22 @@ export default function TermsAndConditionsPage() {
             
             <div 
               onClick={() => workspaceInputRef.current?.click()}
-              className={`cursor-pointer p-4 rounded-2xl border-2 border-dashed flex items-center justify-between transition-colors ${workspaceFile ? 'bg-[#5E6F58]/10 border-[#5E6F58]' : 'bg-[#0f172a] border-[#1e293b] hover:border-[#334155]'}`}
+              className={`cursor-pointer p-4 rounded-2xl border-2 border-dashed flex items-center justify-between transition-colors ${workspaceFile ? 'bg-[#5E6F58]/10 border-[#5E6F58]' : 'bg-[#323232] border-[#1e293b] hover:border-[#334155]'}`}
             >
               <div className="flex items-center gap-4">
                 <div className={`p-3 rounded-xl ${workspaceFile ? 'bg-[#5E6F58]' : 'bg-[#1e293b]'}`}>
-                  <Building className={`w-6 h-6 ${workspaceFile ? 'text-[#0f3d1a]' : 'text-[#64748b]'}`} />
+                  <Building className={`w-6 h-6 ${workspaceFile ? 'text-[#0f3d1a]' : 'text-[#D0D3D6]'}`} />
                 </div>
                 <div>
                   <h4 className={`font-bold ${workspaceFile ? 'text-[#0f3d1a]' : 'text-[#1a6b2e]'}`}>
                     {workspaceFile ? 'Workspace Photo Uploaded' : 'Upload Workspace Photo'}
                   </h4>
-                  <p className="text-xs text-[#64748b] flex items-center gap-1">
+                  <p className="text-xs text-[#D0D3D6] flex items-center gap-1">
                     {workspaceFile ? <><FileImage className="w-3 h-3" /> {workspaceFile.name}</> : 'JPG, PNG (Max 5MB)'}
                   </p>
                 </div>
               </div>
-              {workspaceFile ? <CheckCircle2 className="text-[#d94d19] w-6 h-6" /> : <Upload className="text-[#64748b] w-5 h-5" />}
+              {workspaceFile ? <CheckCircle2 className="text-[#d94d19] w-6 h-6" /> : <Upload className="text-[#D0D3D6] w-5 h-5" />}
             </div>
           </div>
 
@@ -142,22 +142,22 @@ export default function TermsAndConditionsPage() {
             
             <div 
               onClick={() => videoInputRef.current?.click()}
-              className={`cursor-pointer p-4 rounded-2xl border-2 border-dashed flex items-center justify-between transition-colors ${videoFile ? 'bg-[#5E6F58]/10 border-[#5E6F58]' : 'bg-[#0f172a] border-[#1e293b] hover:border-[#334155]'}`}
+              className={`cursor-pointer p-4 rounded-2xl border-2 border-dashed flex items-center justify-between transition-colors ${videoFile ? 'bg-[#5E6F58]/10 border-[#5E6F58]' : 'bg-[#323232] border-[#1e293b] hover:border-[#334155]'}`}
             >
               <div className="flex items-center gap-4">
                 <div className={`p-3 rounded-xl ${videoFile ? 'bg-[#5E6F58]' : 'bg-[#1e293b]'}`}>
-                  <Camera className={`w-6 h-6 ${videoFile ? 'text-[#0f3d1a]' : 'text-[#64748b]'}`} />
+                  <Camera className={`w-6 h-6 ${videoFile ? 'text-[#0f3d1a]' : 'text-[#D0D3D6]'}`} />
                 </div>
                 <div>
                   <h4 className={`font-bold ${videoFile ? 'text-[#0f3d1a]' : 'text-[#1a6b2e]'}`}>
                     {videoFile ? 'Video Uploaded' : 'Upload Setup Video'}
                   </h4>
-                  <p className="text-xs text-[#64748b] flex items-center gap-1">
+                  <p className="text-xs text-[#D0D3D6] flex items-center gap-1">
                     {videoFile ? <><FileImage className="w-3 h-3" /> {videoFile.name}</> : 'MP4, WebM (Max 50MB)'}
                   </p>
                 </div>
               </div>
-              {videoFile ? <CheckCircle2 className="text-[#d94d19] w-6 h-6" /> : <Upload className="text-[#64748b] w-5 h-5" />}
+              {videoFile ? <CheckCircle2 className="text-[#d94d19] w-6 h-6" /> : <Upload className="text-[#D0D3D6] w-5 h-5" />}
             </div>
           </div>
         </div>
@@ -181,7 +181,7 @@ export default function TermsAndConditionsPage() {
             setAcceptedTerms(!acceptedTerms);
           }}
         >
-          <div className={`mt-1 w-6 h-6 rounded-md flex items-center justify-center border-2 transition-colors flex-shrink-0 ${acceptedTerms ? 'bg-[#5E6F58] border-[#5E6F58]' : 'bg-[#0f172a] border-[#334155] group-hover:border-[#5E6F58]'}`}>
+          <div className={`mt-1 w-6 h-6 rounded-md flex items-center justify-center border-2 transition-colors flex-shrink-0 ${acceptedTerms ? 'bg-[#5E6F58] border-[#5E6F58]' : 'bg-[#323232] border-[#334155] group-hover:border-[#5E6F58]'}`}>
             {acceptedTerms && <Check className="w-4 h-4 text-[#0f3d1a]" />}
           </div>
           <p className="text-[#1a6b2e] text-sm leading-relaxed select-none">
@@ -192,7 +192,7 @@ export default function TermsAndConditionsPage() {
         <button 
           onClick={handleFinish}
           disabled={!acceptedTerms || !equipmentFile || !workspaceFile}
-          className="w-full flex items-center justify-center gap-2 bg-[#5E6F58] hover:bg-[#ea580c] disabled:opacity-50 disabled:bg-[#1e293b] disabled:text-[#64748b] text-[#0f3d1a] px-8 py-4 rounded-full font-black text-lg transition-all active:scale-95 shadow-[0_10px_20px_-10px_rgba(240,89,31,0.5)]"
+          className="w-full flex items-center justify-center gap-2 bg-[#5E6F58] hover:bg-[#ea580c] disabled:opacity-50 disabled:bg-[#1e293b] disabled:text-[#D0D3D6] text-[#0f3d1a] px-8 py-4 rounded-full font-black text-lg transition-all active:scale-95 shadow-[0_10px_20px_-10px_rgba(240,89,31,0.5)]"
         >
           Submit Application & Go to Dashboard <ChevronRight className="w-5 h-5" />
         </button>

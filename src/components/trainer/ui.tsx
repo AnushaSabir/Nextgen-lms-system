@@ -79,7 +79,7 @@ const toneColor: Record<Tone, string> = {
   success: '#34d399',
   warn: '#fbbf24',
   danger: '#fb7185',
-  info: '#38bdf8',
+  info: '#50BED9',
 };
 
 export function StatCard({

@@ -56,10 +56,19 @@ function attachInterceptors(instance: AxiosInstance) {
         
         if (url.includes('graphql') || (error.config?.baseURL && error.config.baseURL.includes('graphql'))) {
           if (reqData.includes('Login')) {
+            let role = 'learner';
+            let name = 'Ali Hassan';
+            if (reqData.toLowerCase().includes('admin')) {
+              role = 'admin';
+              name = 'Master Admin';
+            } else if (reqData.toLowerCase().includes('school') || reqData.toLowerCase().includes('institute')) {
+              role = 'institute_head';
+              name = 'Beaconhouse Admin';
+            }
             return Promise.resolve({
               data: {
                 data: {
-                  login: { access_token: 'mock-token', user: { id: '1', name: 'Demo User', email: 'demo@example.com', role: 'learner' } }
+                  login: { access_token: 'mock-token', user: { id: '1', name, email: 'demo@nextgen.lms', role } }
                 }
               }
             });
@@ -68,7 +77,7 @@ function attachInterceptors(instance: AxiosInstance) {
             return Promise.resolve({
               data: {
                 data: {
-                  register: { access_token: 'mock-token', user: { id: '1', name: 'Demo User', email: 'demo@example.com', role: 'learner' } }
+                  register: { access_token: 'mock-token', user: { id: '1', name: 'Demo User', email: 'demo@nextgen.lms', role: 'learner' } }
                 }
               }
             });

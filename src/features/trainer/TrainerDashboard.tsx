@@ -1,1033 +1,695 @@
 'use client';
 
-import { FormEvent, useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/ui/Button';
-import { EmptyState } from '@/components/ui/EmptyState';
-import { Field, SelectInput, TextArea, TextInput } from '@/components/ui/Field';
-import { coursesApi, meetingsApi, submissionsApi } from '@/lib/api';
-import type { Course, LearningLevel, ReviewDecision } from '@/types/domain';
+import { useEffect, useState } from 'react';
 import {
-  BookOpen,
-  Plus,
-  Upload,
-  CheckCircle2,
-  XCircle,
-  AlertCircle,
-  Video,
-  Users,
-  Calendar,
-  MessageSquare,
-  BarChart3,
-  Play,
-  Send,
-  TrendingUp,
-  FileText,
-  GraduationCap,
-  ChevronRight,
-  Sparkles,
-  LayoutDashboard,
-  User,
-  ExternalLink,
-  ThumbsUp,
-  ThumbsDown,
+  BookOpen, FileText, Calendar, Users, BarChart3,
+  Upload, CheckCircle2, Clock, Star, TrendingUp,
+  DollarSign, Award, MessageSquare, Video, Plus, Send, X, Eye,
+  Sparkles, Bell, Edit3, Download, Search, AlertCircle, Activity,
 } from 'lucide-react';
-import { useRouter, usePathname } from 'next/navigation';
-import { useAuthStore } from '@/store/auth-store';
 
-/* ─── Enhanced Theme with 3D Depth Properties ─── */
-const theme = {
-  navy: {
-    bg: 'bg-blue-500/10',
-    border: 'border-blue-500/20',
-    text: 'text-blue-400',
-    gradient: 'from-blue-600/15 via-blue-500/10 to-blue-600/5',
-    glow: 'shadow-blue-500/10',
-    solid: 'bg-blue-600',
-    solidHover: 'hover:bg-blue-500',
-    subtle: 'bg-blue-500/5',
-    subtleBorder: 'border-blue-500/10',
-    subtleText: 'text-blue-400/60',
-    depth: 'shadow-[0_8px_32px_-8px_rgba(59,130,246,0.2),0_4px_16px_-4px_rgba(59,130,246,0.1)]',
-    glow3D: 'shadow-[0_0_40px_-8px_rgba(59,130,246,0.3),0_0_80px_-16px_rgba(59,130,246,0.15)]',
-    reflection: 'bg-gradient-to-br from-blue-400/5 via-transparent to-blue-600/10',
-  },
-  orange: {
-    bg: 'bg-sky-500/10',
-    border: 'border-sky-500/20',
-    text: 'text-sky-400',
-    gradient: 'from-orange-600/15 via-sky-500/10 to-orange-600/5',
-    glow: 'shadow-sky-500/10',
-    solid: 'bg-orange-600',
-    solidHover: 'hover:bg-sky-500',
-    subtle: 'bg-sky-500/5',
-    subtleBorder: 'border-sky-500/10',
-    subtleText: 'text-sky-400/60',
-    depth: 'shadow-[0_8px_32px_-8px_rgba(249,115,22,0.2),0_4px_16px_-4px_rgba(249,115,22,0.1)]',
-    glow3D: 'shadow-[0_0_40px_-8px_rgba(249,115,22,0.3),0_0_80px_-16px_rgba(249,115,22,0.15)]',
-    reflection: 'bg-gradient-to-br from-sky-400/5 via-transparent to-orange-600/10',
-  },
-} as const;
+type TabType = 'overview' | 'courses' | 'submissions' | 'meetings' | 'students' | 'earnings';
 
-type ThemeKey = keyof typeof theme;
+const TRAINER = {
+  name: 'Engr. Sarah Tariq',
+  specialization: 'Full Stack & AI Engineering',
+  rating: 4.9,
+  totalStudents: 342,
+  activeCourses: 6,
+  completedCourses: 12,
+  totalRevenue: 185400,
+  monthRevenue: 24800,
+  avatar: 'S',
+};
 
-const card3DClass =
-  'transition-all duration-500 ease-out transform-gpu perspective-1000 hover:rotate-y-1 hover:rotate-x-0.5 hover:shadow-[0_20px_60px_-12px_rgba(26, 107, 46, 0.1),0_10px_40px_-8px_rgba(26, 107, 46, 0.1)] hover:-translate-y-2 hover:scale-[1.02]';
-const glassEffect =
-  'backdrop-blur-xl bg-gradient-to-br from-gray-800/40 to-gray-900/60 border border-white/[0.08] shadow-[0_8px_32px_-8px_rgba(26, 107, 46, 0.1)]';
+const MY_COURSES = [
+  { id: 1, title: 'Next.js 15 & React 19 Mastery', category: 'Web Dev', students: 128, progress: 78, revenue: 48200, rating: 4.9, status: 'active', thumbnail: 'WD', lectures: 42, duration: '38h', lastUpdated: '2 days ago' },
+  { id: 2, title: 'AI & Machine Learning Fundamentals', category: 'AI & Data', students: 96, progress: 65, revenue: 36800, rating: 4.8, status: 'active', thumbnail: 'AI', lectures: 35, duration: '28h', lastUpdated: '5 days ago' },
+  { id: 3, title: 'Cloud Architecture & DevOps CI/CD', category: 'Cloud', students: 74, progress: 50, revenue: 28100, rating: 4.7, status: 'active', thumbnail: 'CL', lectures: 28, duration: '22h', lastUpdated: '1 week ago' },
+  { id: 4, title: 'UI/UX Design System Masterclass', category: 'Design', students: 44, progress: 30, revenue: 16800, rating: 4.6, status: 'draft', thumbnail: 'UX', lectures: 18, duration: '14h', lastUpdated: '3 days ago' },
+];
 
-function SectionHeader({
-  icon: Icon,
-  themeKey,
-  title,
-  caption,
-  badge,
-}: {
-  icon: React.ElementType;
-  themeKey: ThemeKey;
-  title: string;
-  caption: string;
-  badge?: React.ReactNode;
-}) {
-  const t = theme[themeKey];
-  return (
-    <div className="flex items-start sm:items-center justify-between gap-4 mb-7 group">
-      <div className="flex items-center gap-3.5">
-        <div
-          className={`w-12 h-12 rounded-2xl ${t.bg} border ${t.border} flex items-center justify-center flex-shrink-0 ${t.depth} ${t.reflection} transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_8px_32px_-8px_rgba(26, 107, 46, 0.1),0_0_20px_-4px_rgba(59,130,246,0.2)] relative overflow-hidden`}
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent rounded-2xl" />
-          <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-white/[0.02] to-transparent rounded-2xl" />
-          <Icon
-            className={`w-5 h-5 ${t.text} relative z-10 drop-shadow-lg transition-transform duration-500 group-hover:scale-110`}
-          />
-        </div>
-        <div>
-          <h2 className="text-[17px] font-semibold text-[#0f3d1a] leading-snug tracking-[-0.01em] relative">
-            {title}
-            <div className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-to-r from-blue-400/0 via-blue-400/50 to-blue-400/0 group-hover:w-full transition-all duration-700 ease-out" />
-          </h2>
-          <p className="text-[13px] text-[#7dab52] mt-1 leading-relaxed font-normal">{caption}</p>
-        </div>
-      </div>
-      {badge && <div className="animate-[fadeIn_0.5s_ease-out_forwards]">{badge}</div>}
-    </div>
-  );
-}
+const INITIAL_SUBMISSIONS = [
+  { id: 1, student: 'Ali Hassan', course: 'Next.js 15 Mastery', task: 'Final Portfolio Project', submitted: '2 hrs ago', status: 'pending', score: null as number | null, avatar: 'A' },
+  { id: 2, student: 'Sara Khan', course: 'AI & ML Fundamentals', task: 'Neural Network Assignment', submitted: '5 hrs ago', status: 'pending', score: null as number | null, avatar: 'S' },
+  { id: 3, student: 'Usman Malik', course: 'Next.js 15 Mastery', task: 'API Integration Task', submitted: '1 day ago', status: 'graded', score: 92 as number | null, avatar: 'U' },
+  { id: 4, student: 'Fatima Zahra', course: 'Cloud & DevOps', task: 'Docker Deployment Lab', submitted: '1 day ago', status: 'graded', score: 88 as number | null, avatar: 'F' },
+  { id: 5, student: 'Bilal Ahmed', course: 'AI & ML Fundamentals', task: 'Data Preprocessing Quiz', submitted: '2 days ago', status: 'graded', score: 76 as number | null, avatar: 'B' },
+  { id: 6, student: 'Zara Noor', course: 'UI/UX Design', task: 'Wireframe Design Task', submitted: '3 days ago', status: 'revision', score: 65 as number | null, avatar: 'Z' },
+];
 
-function StatCard({
-  icon: Icon,
-  themeKey,
-  label,
-  value,
-  delay,
-}: {
-  icon: React.ElementType;
-  themeKey: ThemeKey;
-  label: string;
-  value: string | number;
-  delay: number;
-}) {
-  const t = theme[themeKey];
-  return (
-    <div
-      className={`relative overflow-hidden rounded-2xl border ${t.border} bg-gradient-to-br ${t.gradient} p-6 cursor-default ${t.depth} ${t.reflection} ${card3DClass} transform-gpu animate-[staggeredFadeIn_0.6s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0 before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-tl before:from-white/[0.04] before:to-transparent before:opacity-0 before:transition-opacity before:duration-500 hover:before:opacity-100`}
-      style={{ animationDelay: `${delay}ms`, transformStyle: 'preserve-3d' }}
-    >
-      <div
-        className={`absolute -right-8 -top-8 w-32 h-32 rounded-full ${t.bg} opacity-30 transition-all duration-700 group-hover:opacity-50 blur-3xl group-hover:scale-150`}
-      />
-      <div
-        className={`absolute -left-4 -bottom-4 w-24 h-24 rounded-full ${t.bg} opacity-20 transition-all duration-700 group-hover:opacity-40 blur-2xl group-hover:scale-125`}
-      />
-      <div className="absolute top-1/2 left-1/2 w-40 h-40 rounded-full bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 blur-3xl -translate-x-1/2 -translate-y-1/2 transition-all duration-700" />
+const MEETINGS = [
+  { id: 1, title: '1-on-1 Mentorship — Ali Hassan', student: 'Ali Hassan', date: 'Today', time: '3:00 PM', duration: '45 min', type: 'video', status: 'upcoming', avatar: 'A' },
+  { id: 2, title: 'Next.js Doubt Clearing Session', student: 'Group (8 students)', date: 'Today', time: '6:00 PM', duration: '90 min', type: 'group', status: 'upcoming', avatar: 'G' },
+  { id: 3, title: 'AI Project Review — Sara Khan', student: 'Sara Khan', date: 'Tomorrow', time: '11:00 AM', duration: '30 min', type: 'video', status: 'scheduled', avatar: 'S' },
+  { id: 4, title: 'Cloud Architecture Workshop', student: 'Group (12 students)', date: 'Aug 22', time: '4:00 PM', duration: '120 min', type: 'group', status: 'scheduled', avatar: 'G' },
+  { id: 5, title: '1-on-1 Mentorship — Zara Noor', student: 'Zara Noor', date: 'Aug 23', time: '2:00 PM', duration: '45 min', type: 'video', status: 'scheduled', avatar: 'Z' },
+];
 
-      <div className="relative flex items-start justify-between">
-        <div className="relative z-10">
-          <p className="text-[11px] font-medium text-[#7dab52] uppercase tracking-wider mb-3">{label}</p>
-          <div className="relative">
-            <p className="text-[32px] font-bold text-[#0f3d1a] tracking-tight leading-none tabular-nums bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent">
-              {value}
-            </p>
-            <div className="absolute -bottom-2 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-          </div>
-        </div>
-        <div
-          className={`w-12 h-12 rounded-2xl ${t.bg} border ${t.border} flex items-center justify-center flex-shrink-0 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-[0_4px_16px_-2px_rgba(26, 107, 46, 0.1)] group-hover:shadow-[0_8px_24px_-4px_rgba(26, 107, 46, 0.1)] relative overflow-hidden`}
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent rounded-2xl" />
-          <Icon className={`w-5 h-5 ${t.text} relative z-10 transition-transform duration-500 group-hover:scale-110`} />
-        </div>
-      </div>
+const STUDENTS = [
+  { id: 1, name: 'Ali Hassan', course: 'Next.js 15 Mastery', progress: 82, score: 91, status: 'excellent', avatar: 'A', lastActive: '2 hrs ago' },
+  { id: 2, name: 'Sara Khan', course: 'AI & ML Fundamentals', progress: 68, score: 84, status: 'good', avatar: 'S', lastActive: '1 day ago' },
+  { id: 3, name: 'Usman Malik', course: 'Next.js 15 Mastery', progress: 55, score: 76, status: 'average', avatar: 'U', lastActive: '3 hrs ago' },
+  { id: 4, name: 'Fatima Zahra', course: 'Cloud & DevOps', progress: 90, score: 96, status: 'excellent', avatar: 'F', lastActive: '30 min ago' },
+  { id: 5, name: 'Bilal Ahmed', course: 'AI & ML Fundamentals', progress: 40, score: 62, status: 'needs-help', avatar: 'B', lastActive: '2 days ago' },
+  { id: 6, name: 'Zara Noor', course: 'UI/UX Design', progress: 35, score: 58, status: 'needs-help', avatar: 'Z', lastActive: '5 hrs ago' },
+];
 
-      <div className="absolute top-0 left-2 right-2 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-    </div>
-  );
-}
-
-function FormSection({
-  id,
-  icon: Icon,
-  themeKey,
-  title,
-  caption,
-  children,
-}: {
-  id?: string;
-  icon: React.ElementType;
-  themeKey: ThemeKey;
-  title: string;
-  caption: string;
-  children: React.ReactNode;
-}) {
-  const t = theme[themeKey];
-  return (
-    <div
-      id={id}
-      className={`relative rounded-2xl ${glassEffect} p-6 sm:p-7 overflow-hidden ${card3DClass} before:absolute before:top-0 before:left-8 before:right-8 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/[0.12] before:to-transparent after:absolute after:bottom-0 after:left-8 after:right-8 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/[0.04] after:to-transparent transform-gpu animate-[scaleIn_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0`}
-      style={{ transformStyle: 'preserve-3d' }}
-    >
-      <div
-        className={`absolute -top-20 -right-20 w-60 h-60 rounded-full ${t.bg} opacity-20 blur-3xl transition-all duration-700 group-hover:opacity-30 group-hover:scale-110`}
-      />
-      <div
-        className={`absolute -bottom-20 -left-20 w-60 h-60 rounded-full ${t.bg} opacity-10 blur-3xl transition-all duration-700 group-hover:opacity-20 group-hover:scale-110`}
-      />
-
-      <SectionHeader icon={Icon} themeKey={themeKey} title={title} caption={caption} />
-      <div className="relative z-10">{children}</div>
-
-      <div className="absolute top-0 left-0 w-full h-full rounded-2xl border border-white/[0.06] pointer-events-none" />
-      <div className="absolute top-0 left-0 w-full h-full rounded-2xl bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
-    </div>
-  );
-}
+const EARNINGS_MONTHLY = [
+  { month: 'Mar', amount: 12400 }, { month: 'Apr', amount: 15800 },
+  { month: 'May', amount: 18200 }, { month: 'Jun', amount: 16900 },
+  { month: 'Jul', amount: 21500 }, { month: 'Aug', amount: 24800 },
+];
 
 export function TrainerDashboard() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const { user, logout } = useAuthStore();
-
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [submissions, setSubmissions] = useState<any[]>([]);
-
-  const [courseForm, setCourseForm] = useState({ title: '', description: '', level: 'university' as LearningLevel });
-  const [videoForm, setVideoForm] = useState({ courseId: '', title: '', position: 1, videoUrl: '', summary: '' });
-  const [meetingForm, setMeetingForm] = useState({
-    courseId: '',
-    startsAt: '',
-    provider: 'zoom' as 'zoom' | 'google_meet',
-    meetingUrl: '',
-    agenda: '',
-  });
-
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState<'success' | 'info'>('success');
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const hasLoadedRef = useRef(false);
-  const dashboardRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState<TabType>('overview');
+  const [selectedSubmission, setSelectedSubmission] = useState<typeof INITIAL_SUBMISSIONS[0] | null>(null);
+  const [gradeInput, setGradeInput] = useState('');
+  const [feedbackInput, setFeedbackInput] = useState('');
+  const [createCourseOpen, setCreateCourseOpen] = useState(false);
+  const [announcementOpen, setAnnouncementOpen] = useState(false);
+  const [announcementText, setAnnouncementText] = useState('');
+  const [searchStudents, setSearchStudents] = useState('');
+  const [submissions, setSubmissions] = useState(INITIAL_SUBMISSIONS);
 
   useEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes staggeredFadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px) scale(0.95) rotateX(2deg);
-          filter: blur(8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1) rotateX(0);
-          filter: blur(0);
-        }
-      }
-
-      @keyframes scaleIn {
-        from {
-          opacity: 0;
-          transform: scale(0.9) translateZ(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1) translateZ(0);
-        }
-      }
-
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      @keyframes slideInRight {
-        from { opacity: 0; transform: translateX(100px) scale(0.9); }
-        to { opacity: 1; transform: translateX(0) scale(1); }
-      }
-
-      @keyframes pulse-subtle {
-        0%, 100% { opacity: 0.6; }
-        50% { opacity: 1; }
-      }
-
-      @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-
-      .parallax-card {
-        transition: transform 0.1s ease-out, box-shadow 0.3s ease;
-        transform-style: preserve-3d;
-      }
-    `;
-    document.head.appendChild(style);
+    const onHash = () => {
+      const h = window.location.hash;
+      if (h === '#courses') setActiveTab('courses');
+      else if (h === '#submissions') setActiveTab('submissions');
+      else if (h === '#meetings') setActiveTab('meetings');
+      else if (h === '#students') setActiveTab('students');
+      else if (h === '#earnings') setActiveTab('earnings');
+      else setActiveTab('overview');
+    };
+    onHash();
+    window.addEventListener('hashchange', onHash);
+    window.addEventListener('popstate', onHash);
     return () => {
-      document.head.removeChild(style);
+      window.removeEventListener('hashchange', onHash);
+      window.removeEventListener('popstate', onHash);
     };
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!dashboardRef.current) return;
-      const cards = dashboardRef.current.querySelectorAll('.parallax-card');
-      cards.forEach((card) => {
-        const rect = (card as HTMLElement).getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -5;
-        const rotateY = ((x - centerX) / centerX) * 5;
+  const handleGrade = () => {
+    if (!selectedSubmission || !gradeInput) return;
+    setSubmissions(prev => prev.map(s =>
+      s.id === selectedSubmission.id ? { ...s, status: 'graded', score: parseInt(gradeInput) } : s
+    ));
+    setSelectedSubmission(null);
+    setGradeInput('');
+    setFeedbackInput('');
+  };
 
-        (card as HTMLElement).style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px) scale3d(1.02, 1.02, 1.02)`;
-      });
-    };
+  const maxEarning = Math.max(...EARNINGS_MONTHLY.map(e => e.amount));
+  const filteredStudents = STUDENTS.filter(s =>
+    s.name.toLowerCase().includes(searchStudents.toLowerCase()) ||
+    s.course.toLowerCase().includes(searchStudents.toLowerCase())
+  );
 
-    const handleMouseLeave = () => {
-      if (!dashboardRef.current) return;
-      const cards = dashboardRef.current.querySelectorAll('.parallax-card');
-      cards.forEach((card) => {
-        (card as HTMLElement).style.transform = '';
-      });
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
-
-  async function load() {
-    const [courseResult, submissionResult] = await Promise.allSettled([coursesApi.list(), submissionsApi.trainerList()]);
-    setCourses(courseResult.status === 'fulfilled' ? courseResult.value : []);
-    setSubmissions(submissionResult.status === 'fulfilled' ? submissionResult.value : []);
-    setIsLoading(false);
-  }
-
-  useEffect(() => {
-    if (hasLoadedRef.current) return;
-    hasLoadedRef.current = true;
-    const timer = setTimeout(() => {
-      load().catch((error: any) => {
-        setMessage(error.message);
-        setMessageType('info');
-        setIsLoading(false);
-      });
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    if (!message) return;
-    const timer = setTimeout(() => setMessage(''), 5000);
-    return () => clearTimeout(timer);
-  }, [message]);
-
-  async function createCourse(event: FormEvent) {
-    event.preventDefault();
-    try {
-      const created = await coursesApi.create(courseForm);
-      setCourseForm({ title: '', description: '', level: 'university' });
-      setMessageType('success');
-      setMessage(`Course created: ${created.title}`);
-      await load();
-    } catch (error: any) {
-      setMessageType('info');
-      setMessage(error.message);
-    }
-  }
-
-  async function addVideo(event: FormEvent) {
-    event.preventDefault();
-    try {
-      await coursesApi.addVideo(videoForm.courseId, {
-        title: videoForm.title,
-        position: Number(videoForm.position),
-        videoUrl: videoForm.videoUrl,
-        summary: videoForm.summary,
-      });
-      setMessageType('success');
-      setMessage('Video added. Add MCQ, quiz, summary, and homework sets through the assessment builder payload.');
-      setVideoForm({ courseId: '', title: '', position: 1, videoUrl: '', summary: '' });
-      await load();
-    } catch (error: any) {
-      setMessageType('info');
-      setMessage(error.message);
-    }
-  }
-
-  async function reviewSubmission(id: string, decision: ReviewDecision) {
-    await submissionsApi.review(
-      id,
-      decision,
-      decision === 'fail' ? 'Rewatch the video and retry a different test set.' : 'Reviewed by trainer.'
-    );
-    setMessageType('success');
-    setMessage(`Submission marked as ${decision}.`);
-    await load();
-  }
-
-  async function createMeeting(event: FormEvent) {
-    event.preventDefault();
-    try {
-      await meetingsApi.create(meetingForm);
-      setMeetingForm({ courseId: '', startsAt: '', provider: 'zoom', meetingUrl: '', agenda: '' });
-      setMessageType('success');
-      setMessage('Meeting scheduled.');
-    } catch (error: any) {
-      setMessageType('info');
-      setMessage(error.message);
-    }
-  }
-
-  const pendingCount = submissions.filter((s) => !s.reviewed).length;
+  const pendingCount = submissions.filter(s => s.status === 'pending').length;
+  const gradedCount = submissions.filter(s => s.status === 'graded').length;
+  const revisionCount = submissions.filter(s => s.status === 'revision').length;
 
   return (
-    <div ref={dashboardRef} className="relative">
-      {/* 3D BACKGROUND PARTICLES */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl animate-[float3D_8s_ease-in-out_infinite]" />
-        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl animate-[float3D_10s_ease-in-out_infinite_1s]" />
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-400/5 rounded-full blur-3xl animate-[float3D_12s_ease-in-out_infinite_2s]" />
-      </div>
+    <div className="space-y-6">
 
-      {message && (
-        <div
-          className={`fixed top-20 right-6 z-50 max-w-sm w-full rounded-2xl border p-5 flex items-start gap-3 backdrop-blur-2xl transition-all duration-500 animate-[slideInRight_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards] shadow-[0_20px_60px_-12px_rgba(26, 107, 46, 0.1),0_8px_24px_-8px_rgba(26, 107, 46, 0.1)] ${messageType === 'success' ? 'border-blue-500/25 bg-gray-900/95' : 'border-sky-500/25 bg-gray-900/95'
-            } transform-gpu hover:scale-105 hover:rotate-y-1`}
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          <div
-            className={`absolute inset-0 rounded-2xl ${messageType === 'success' ? 'bg-blue-500/5' : 'bg-sky-500/5'} blur-xl`}
-          />
-          <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-          <CheckCircle2
-            className={`w-5 h-5 flex-shrink-0 mt-0.5 relative z-10 ${messageType === 'success' ? 'text-blue-400' : 'text-sky-400'}`}
-          />
-          <p
-            className={`text-sm flex-1 leading-relaxed relative z-10 ${messageType === 'success' ? 'text-blue-200' : 'text-orange-200'
-              }`}
-          >
-            {message}
-          </p>
-          <button
-            onClick={() => setMessage('')}
-            className="text-[#7dab52] hover:text-[#1a6b2e] transition-colors flex-shrink-0 mt-0.5 active:scale-90 relative z-10 hover:rotate-90 transition-transform duration-300"
-            aria-label="Dismiss"
-          >
-            <XCircle className="w-4 h-4" />
-          </button>
-        </div>
-      )}
- 
-      <header className="animate-[fadeIn_0.7s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0 mb-8">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div
-              className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-[#5E6F58]/20 to-sky-500/10 border border-[#5E6F58]/20 flex items-center justify-center flex-shrink-0 shadow-[0_8px_32px_-8px_rgba(240,89,31,0.3),0_4px_16px_-4px_rgba(240,89,31,0.2)] transition-all duration-500 group hover:shadow-[0_12px_40px_-8px_rgba(240,89,31,0.4),0_0_20px_-4px_rgba(240,89,31,0.3)] hover:scale-110 hover:rotate-6"
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent rounded-2xl" />
-              <GraduationCap className="w-7 h-7 text-[#d94d19] relative z-10 group-hover:scale-110 transition-transform duration-500 drop-shadow-lg" />
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-blue-500 border-2 border-[#020617] shadow-[0_0_12px_rgba(59,130,246,0.6)] animate-[pulse-subtle_2s_ease-in-out_infinite]" />
+      {/* ===== OVERVIEW ===== */}
+      {activeTab === 'overview' && (
+        <>
+          {/* Hero Banner */}
+          <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0f3d1a] via-[#1a6b2e] to-[#2d6a4f] p-6 lg:p-8 shadow-xl">
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-4 right-4 w-40 h-40 rounded-full bg-white blur-3xl" />
+              <div className="absolute bottom-4 left-8 w-24 h-24 rounded-full bg-[#c8e6c9] blur-2xl" />
             </div>
-            <div>
-              <h1 className="text-2xl font-black text-[#0f3d1a] tracking-tight">Trainer Dashboard</h1>
-              <p className="text-xs text-[#1a6b2e] mt-1.5">Welcome back, {user?.name || 'Trainer'}! Here is your current overview.</p>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* QUICK STATS WITH 3D CARDS */}
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8" aria-label="Quick statistics">
-        <StatCard icon={BookOpen} themeKey="navy" label="Total Courses" value={courses.length} delay={0} />
-        <StatCard icon={MessageSquare} themeKey="orange" label="Submissions" value={submissions.length} delay={80} />
-        <StatCard icon={AlertCircle} themeKey="orange" label="Awaiting Review" value={pendingCount} delay={160} />
-        <StatCard icon={Users} themeKey="navy" label="Learners Active" value={24} delay={240} />
-      </section>
-
-      {/* CREATE COURSE + ADD VIDEO WITH 3D PARALLAX */}
-      <section className="grid gap-6 lg:grid-cols-2 mb-8" aria-label="Course and video creation">
-        <FormSection
-          id="create-course"
-          icon={Plus}
-          themeKey="navy"
-          title="Create New Course"
-          caption="Define course details and learning level for admin approval."
-        >
-          <form className="space-y-5" onSubmit={createCourse}>
-            <Field label="Course Title">
-              <TextInput
-                value={courseForm.title}
-                onChange={(e) => setCourseForm({ ...courseForm, title: e.target.value })}
-                placeholder="Enter course title"
-                required
-              />
-            </Field>
-            <Field label="Learning Level">
-              <SelectInput
-                value={courseForm.level}
-                onChange={(e) => setCourseForm({ ...courseForm, level: e.target.value as LearningLevel })}
-              >
-                <option value="school">School</option>
-                <option value="college">College</option>
-                <option value="university">University</option>
-                <option value="individual">Individual</option>
-              </SelectInput>
-            </Field>
-            <Field label="Description">
-              <TextArea
-                value={courseForm.description}
-                onChange={(e) => setCourseForm({ ...courseForm, description: e.target.value })}
-                placeholder="Describe your course, learning objectives, and target audience..."
-                required
-              />
-            </Field>
-            <Button
-              type="submit"
-              className="w-full bg-gradient-to-r from-orange-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-[#0f3d1a] rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <span className="relative z-10 flex items-center justify-center">
-                <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-500" />
-                Create Course
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-              <div className="absolute inset-0 rounded-xl border border-white/[0.08]" />
-            </Button>
-          </form>
-        </FormSection>
-
-        <FormSection
-          id="upload-video"
-          icon={Upload}
-          themeKey="orange"
-          title="Add Video Lesson"
-          caption="Attach video URLs and content summaries for learners."
-        >
-          <form className="space-y-5" onSubmit={addVideo}>
-            <Field label="Select Course">
-              <SelectInput
-                value={videoForm.courseId}
-                onChange={(e) => setVideoForm({ ...videoForm, courseId: e.target.value })}
-                required
-              >
-                <option value="" disabled={courses.length > 0}>
-                  Choose a course...
-                </option>
-                {courses.length === 0 ? (
-                  <option value="" disabled>
-                    No active courses available
-                  </option>
-                ) : (
-                  courses.map((course) => (
-                    <option key={course.id} value={course.id}>
-                      {course.title}
-                    </option>
-                  ))
-                )}
-              </SelectInput>
-            </Field>
-            <Field label="Video Title">
-              <TextInput
-                value={videoForm.title}
-                onChange={(e) => setVideoForm({ ...videoForm, title: e.target.value })}
-                placeholder="Lesson topic"
-                required
-              />
-            </Field>
-            <div className="grid grid-cols-2 gap-4">
-              <Field label="Position #">
-                <TextInput
-                  type="number"
-                  min={1}
-                  value={videoForm.position}
-                  onChange={(e) => setVideoForm({ ...videoForm, position: Number(e.target.value) })}
-                  required
-                />
-              </Field>
-              <Field label="Duration">
-                <TextInput type="text" placeholder="e.g., 45 min" />
-              </Field>
-            </div>
-            <Field label="Video URL">
-              <TextInput
-                value={videoForm.videoUrl}
-                onChange={(e) => setVideoForm({ ...videoForm, videoUrl: e.target.value })}
-                placeholder="YouTube or video platform URL"
-                required
-              />
-            </Field>
-            <Field label="Summary">
-              <TextArea
-                value={videoForm.summary}
-                onChange={(e) => setVideoForm({ ...videoForm, summary: e.target.value })}
-                placeholder="Key points and learning objectives for this lesson..."
-              />
-            </Field>
-            <Button
-              type="submit"
-              className="w-full bg-gradient-to-r from-orange-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-[#0f3d1a] rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <span className="relative z-10 flex items-center justify-center">
-                <Upload className="w-5 h-5 mr-2 group-hover:-translate-y-0.5 transition-transform duration-500" />
-                Add Video
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-              <div className="absolute inset-0 rounded-xl border border-white/[0.08]" />
-            </Button>
-          </form>
-        </FormSection>
-      </section>
-
-      {/* MY COURSES WITH 3D CARDS AND PARALLAX EFFECT */}
-      <section
-        id="my-courses"
-        className={`relative rounded-2xl ${glassEffect} p-6 sm:p-7 overflow-hidden mb-8 ${card3DClass} parallax-card before:absolute before:top-0 before:left-8 before:right-8 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/[0.12] before:to-transparent after:absolute after:bottom-0 after:left-8 after:right-8 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/[0.04] after:to-transparent transform-gpu animate-[scaleIn_0.6s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0`}
-        style={{ transformStyle: 'preserve-3d' }}
-      >
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-blue-500/10 blur-3xl transition-all duration-700 group-hover:scale-110" />
-        <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-blue-400/5 blur-3xl transition-all duration-700 group-hover:scale-110" />
-
-        <SectionHeader
-          icon={BookOpen}
-          themeKey="navy"
-          title="My Courses"
-          caption="Manage courses awaiting or submitted for admin approval."
-          badge={
-            <span className="text-xs text-[#7dab52] font-medium bg-gray-800/60 px-3 py-1.5 rounded-lg border border-gray-700/50 backdrop-blur-xl shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)]">
-              {courses.length} course{courses.length !== 1 ? 's' : ''}
-            </span>
-          }
-        />
-
-        {courses.length > 0 ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {courses.map((course, index) => {
-              const status = (course as any).status || 'draft';
-              const statusStyles: Record<string, { bg: string; text: string; border: string; dot: string; icon: any }> = {
-                approved: {
-                  bg: 'bg-blue-500/12',
-                  text: 'text-blue-300',
-                  border: 'border-blue-500/25',
-                  dot: 'bg-blue-400',
-                  icon: CheckCircle2,
-                },
-                rejected: {
-                  bg: 'bg-sky-500/12',
-                  text: 'text-orange-300',
-                  border: 'border-sky-500/25',
-                  dot: 'bg-sky-400',
-                  icon: XCircle,
-                },
-                draft: {
-                  bg: 'bg-sky-500/8',
-                  text: 'text-sky-400/70',
-                  border: 'border-sky-500/15',
-                  dot: 'bg-sky-400/60',
-                  icon: AlertCircle,
-                },
-              };
-              const s = statusStyles[status] || statusStyles.draft;
-
-              return (
-                <div
-                  key={course.id}
-                  className={`group/card rounded-xl border border-gray-800 bg-gradient-to-br from-gray-900/60 to-gray-900/40 backdrop-blur-sm overflow-hidden transition-all duration-500 ease-out parallax-card shadow-[0_4px_16px_rgba(26, 107, 46, 0.1),0_2px_8px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_20px_60px_-12px_rgba(26, 107, 46, 0.1),0_10px_40px_-8px_rgba(26, 107, 46, 0.1)] hover:-translate-y-3 hover:scale-[1.03] hover:rotate-y-1 transform-gpu animate-[staggeredFadeIn_0.6s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0`}
-                  style={{ animationDelay: `${index * 100}ms`, transformStyle: 'preserve-3d' }}
-                >
-                  <div className="relative h-28 bg-gradient-to-br from-blue-600/10 via-gray-800/80 to-gray-900/80 overflow-hidden">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.08),transparent_70%)] group-hover/card:opacity-90 transition-opacity duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-tl from-blue-500/5 to-transparent" />
-
-                    <div className="absolute top-4 left-4 grid grid-cols-4 gap-1.5 opacity-20">
-                      {Array.from({ length: 12 }).map((_, i) => (
-                        <div
-                          key={i}
-                          className="w-1 h-1 rounded-full bg-blue-400 group-hover/card:animate-pulse"
-                          style={{ animationDelay: `${i * 50}ms` }}
-                        />
-                      ))}
-                    </div>
-
-                    <div className="absolute top-3 right-3 z-10">
-                      <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-semibold uppercase tracking-wider ${s.bg} ${s.text} border ${s.border} backdrop-blur-md shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] transition-all duration-300 group-hover/card:shadow-[0_8px_20px_rgba(26, 107, 46, 0.1)] group-hover/card:-translate-y-0.5`}
-                      >
-                        <span
-                          className={`w-1.5 h-1.5 rounded-full ${s.dot} ${status === 'draft' ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''} shadow-[0_0_6px_rgba(59,130,246,0.5)]`}
-                        />
-                        {status}
-                      </span>
-                    </div>
-
-                    <div className="absolute bottom-3 left-3">
-                      <div className="w-12 h-12 rounded-2xl bg-gray-900/60 border border-gray-700/30 flex items-center justify-center backdrop-blur-sm shadow-[0_4px_16px_-2px_rgba(26, 107, 46, 0.1)] group-hover/card:border-blue-500/30 group-hover/card:shadow-[0_8px_24px_-4px_rgba(26, 107, 46, 0.1)] transition-all duration-500 group-hover/card:scale-110 group-hover/card:rotate-6">
-                        <BookOpen className="w-5 h-5 text-blue-400 group-hover/card:scale-110 transition-transform duration-500" />
-                      </div>
-                    </div>
-
-                    <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/[0.04] to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+            <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-12 h-12 rounded-2xl bg-[#c8e6c9]/20 border border-[#c8e6c9]/30 flex items-center justify-center">
+                    <span className="text-[#c8e6c9] font-black text-xl">{TRAINER.avatar}</span>
                   </div>
-
-                  <div className="p-5 relative">
-                    <h3 className="font-semibold text-[#0f3d1a] text-[15px] mb-1.5 line-clamp-2 leading-snug group-hover/card:text-blue-300 transition-colors duration-500">
-                      {course.title}
-                    </h3>
-                    <div className="flex items-center gap-1.5 mb-3">
-                      <GraduationCap className="w-3.5 h-3.5 text-gray-600" />
-                      <p className="text-[12px] text-[#7dab52] capitalize">{course.level}</p>
-                      <span className="w-1 h-1 rounded-full bg-gradient-to-r from-blue-400 to-sky-400 mx-0.5" />
-                      <Video className="w-3.5 h-3.5 text-gray-600" />
-                      <span className="text-[12px] text-[#7dab52]">Lessons</span>
-                    </div>
-                    <p className="text-[13px] text-[#7dab52] mb-5 line-clamp-2 leading-relaxed">{course.description}</p>
-
-                    <div className="flex flex-col gap-2">
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="ghost"
-                          className="flex-1 text-[12px] h-10 rounded-lg border border-gray-700/50 hover:border-blue-500/40 hover:bg-blue-500/8 hover:text-blue-300 transition-all duration-500 group/btn backdrop-blur-sm shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-0.5 active:scale-[0.98]"
-                          onClick={() => router.push(`/trainer/courses/${course.id}`)}
-                        >
-                          <BookOpen className="w-3.5 h-3.5 mr-1.5" />
-                          Overview
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          className="flex-1 text-[12px] h-10 rounded-lg border border-gray-700/50 hover:border-sky-500/40 hover:bg-sky-500/8 hover:text-orange-300 transition-all duration-500 group/btn backdrop-blur-sm shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_8px_20px_-4px_rgba(234,88,12,0.3)] hover:-translate-y-0.5 active:scale-[0.98]"
-                          onClick={() => router.push(`/trainer/courses/${course.id}/videos`)}
-                        >
-                          <Video className="w-3.5 h-3.5 mr-1.5" />
-                          Videos
-                        </Button>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        className="w-full text-[12px] h-10 rounded-lg border border-gray-700/50 hover:border-blue-500/40 hover:bg-blue-500/8 hover:text-blue-300 transition-all duration-500 group/btn backdrop-blur-sm shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-0.5 active:scale-[0.98]"
-                        onClick={() => coursesApi.submitReview(course.id).then(load)}
-                      >
-                        <Send className="w-3.5 h-3.5 mr-1.5 group-hover/btn:-translate-y-0.5 transition-transform duration-500" />
-                        {status === 'approved' ? 'Submit Update' : 'Submit for Review'}
-                      </Button>
-                    </div>
+                  <div>
+                    <p className="text-[#c8e6c9]/70 text-xs font-bold uppercase tracking-widest">Welcome back,</p>
+                    <h2 className="text-white font-black text-xl">{TRAINER.name}</h2>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        ) : (
-          <EmptyState title="No courses yet" detail="Create your first course to start teaching on NextGen-LMS." />
-        )}
-      </section>
-
-      {/* STUDENT SUBMISSIONS WITH 3D EFFECTS */}
-      <section
-        id="submissions"
-        className={`relative rounded-2xl ${glassEffect} p-6 sm:p-7 overflow-hidden mb-8 ${card3DClass} parallax-card before:absolute before:top-0 before:left-8 before:right-8 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/[0.12] before:to-transparent after:absolute after:bottom-0 after:left-8 after:right-8 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/[0.04] after:to-transparent transform-gpu animate-[scaleIn_0.7s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0`}
-        style={{ transformStyle: 'preserve-3d' }}
-      >
-        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-sky-500/10 blur-3xl transition-all duration-700 group-hover:scale-110" />
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-sky-400/5 blur-3xl transition-all duration-700 group-hover:scale-110" />
-
-        <SectionHeader
-          icon={FileText}
-          themeKey="orange"
-          title="Student Submissions"
-          caption="Review homework and practical assignments from your learners."
-          badge={
-            pendingCount > 0 ? (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium bg-sky-500/15 text-orange-300 border border-sky-500/25 backdrop-blur-md shadow-[0_4px_16px_rgba(249,115,22,0.3)] animate-[pulse-subtle_2s_ease-in-out_infinite]">
-                <span className="w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(249,115,22,0.6)] animate-pulse" />
-                {pendingCount} Pending
-              </span>
-            ) : submissions.length > 0 ? (
-              <span className="inline-flex items-center px-3 py-1.5 rounded-lg text-[12px] font-medium bg-blue-500/15 text-blue-300 border border-blue-500/25 backdrop-blur-md shadow-[0_4px_16px_rgba(59,130,246,0.3)]">
-                <CheckCircle2 className="w-3.5 h-3.5 mr-1.5" />
-                All Reviewed
-              </span>
-            ) : undefined
-          }
-        />
-
-        {submissions.length > 0 ? (
-          <div className="space-y-4">
-            {submissions.map((submission, index) => {
-              const learnerInitial = submission.enrollment?.learner?.name?.charAt(0)?.toUpperCase() || 'L';
-              const learnerName = submission.enrollment?.learner?.name ?? 'Learner';
-              const videoTitle = submission.video?.title ?? 'Homework Submission';
-              const submissionContent = submission.textAnswer ?? submission.fileUrl ?? 'No submission content';
-              const isReviewed = submission.reviewed;
-
-              const avatarPalettes = [
-                { gradient: 'from-sky-500/25 to-orange-600/10', border: 'border-sky-500/20', text: 'text-orange-300' },
-                { gradient: 'from-blue-500/25 to-blue-600/10', border: 'border-blue-500/20', text: 'text-blue-300' },
-                { gradient: 'from-blue-600/25 to-blue-700/10', border: 'border-blue-600/20', text: 'text-blue-200' },
-                { gradient: 'from-orange-600/25 to-orange-700/10', border: 'border-orange-600/20', text: 'text-orange-200' },
-                { gradient: 'from-blue-500/30 to-blue-500/10', border: 'border-blue-400/20', text: 'text-blue-300' },
-              ];
-              const palette = avatarPalettes[submission.id.charCodeAt(1) % avatarPalettes.length];
-
-              return (
-                <div
-                  key={submission.id}
-                  className={`rounded-xl border p-5 transition-all duration-500 ease-out animate-[staggeredFadeIn_0.6s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0 parallax-card ${isReviewed
-                      ? 'border-gray-800/60 bg-gray-900/40 backdrop-blur-sm shadow-[0_4px_16px_rgba(26, 107, 46, 0.1)]'
-                      : 'border-gray-800 bg-gray-900/70 backdrop-blur-sm shadow-[0_8px_24px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_20px_60px_-12px_rgba(26, 107, 46, 0.1)] hover:-translate-y-2 hover:scale-[1.02] hover:rotate-y-0.5'
-                    } transform-gpu`}
-                  style={{ animationDelay: `${index * 120}ms`, transformStyle: 'preserve-3d' }}
-                >
-                  <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
-
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div
-                          className={`w-12 h-12 rounded-full bg-gradient-to-br ${palette.gradient} flex items-center justify-center text-[14px] font-semibold ${palette.text} border ${palette.border} flex-shrink-0 shadow-[0_4px_16px_-2px_rgba(26, 107, 46, 0.1)] transition-all duration-500 hover:scale-110 hover:rotate-6 relative overflow-hidden group`}
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-transparent rounded-full" />
-                          <span className="relative z-10">{learnerInitial}</span>
-                        </div>
-                        <div className="min-w-0">
-                          <p className="font-semibold text-[#0f3d1a] text-[14px] leading-snug">{learnerName}</p>
-                          <p className="text-[12px] text-[#7dab52] mt-0.5 truncate">{videoTitle}</p>
-                        </div>
-
-                        {!isReviewed && (
-                          <span className="ml-auto flex-shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-sky-500/15 text-orange-300 border border-sky-500/25 uppercase tracking-wider backdrop-blur-md shadow-[0_4px_12px_rgba(249,115,22,0.3)]">
-                            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-[pulse_1.5s_ease-in-out_infinite] shadow-[0_0_6px_rgba(249,115,22,0.6)]" />
-                            New
-                          </span>
-                        )}
-
-                        {isReviewed && submission.reviewDecision && (
-                          <span
-                            className={`ml-auto flex-shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold uppercase tracking-wider backdrop-blur-md shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] ${submission.reviewDecision === 'pass'
-                                ? 'bg-blue-500/12 text-blue-300 border border-blue-500/20'
-                                : submission.reviewDecision === 'fail'
-                                  ? 'bg-sky-500/12 text-orange-300 border border-sky-500/20'
-                                  : 'bg-sky-500/8 text-sky-400/70 border border-sky-500/10'
-                              }`}
-                          >
-                            {submission.reviewDecision === 'pass' ? <ThumbsUp className="w-3 h-3" /> : <ThumbsDown className="w-3 h-3" />}
-                            {submission.reviewDecision}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="mt-2 p-4 rounded-lg bg-gray-800/50 border border-gray-700/40 backdrop-blur-sm shadow-[inset_0_2px_4px_rgba(26, 107, 46, 0.1)] transition-all duration-500 hover:bg-gray-800/70 hover:border-gray-700/60 hover:shadow-[inset_0_2px_8px_rgba(26, 107, 46, 0.1)] group-hover:translate-z-2">
-                        <p className="text-[13px] text-[#1a6b2e] line-clamp-3 leading-relaxed">{submissionContent}</p>
-                      </div>
-                    </div>
-
-                    <div className="lg:flex-shrink-0 flex lg:flex-col gap-2 lg:gap-2.5">
-                      <Button
-                        onClick={() => reviewSubmission(submission.id, 'pass')}
-                        className="flex-1 lg:flex-none bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-[#0f3d1a] text-[12px] h-10 rounded-lg font-semibold transition-all duration-500 border-0 shadow-[0_4px_12px_-2px_rgba(37,99,235,0.4),0_2px_6px_-1px_rgba(37,99,235,0.3)] hover:shadow-[0_8px_20px_-4px_rgba(37,99,235,0.5),0_4px_12px_-2px_rgba(37,99,235,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(37,99,235,0.3)] transform-gpu"
-                      >
-                        <CheckCircle2 className="w-3.5 h-3.5 mr-1.5" />
-                        Pass
-                      </Button>
-                      <Button
-                        onClick={() => reviewSubmission(submission.id, 'fail')}
-                        variant="ghost"
-                        className="flex-1 lg:flex-none border border-sky-500/25 text-sky-400 hover:bg-sky-500/10 hover:border-sky-500/40 text-[12px] h-10 rounded-lg font-semibold transition-all duration-500 shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-sm"
-                      >
-                        <XCircle className="w-3.5 h-3.5 mr-1.5" />
-                        Fail
-                      </Button>
-                      <Button
-                        onClick={() => reviewSubmission(submission.id, 'improve')}
-                        variant="ghost"
-                        className="flex-1 lg:flex-none border border-blue-500/20 text-blue-400 hover:bg-blue-500/8 hover:border-blue-500/30 text-[12px] h-10 rounded-lg font-semibold transition-all duration-500 shadow-[0_4px_12px_rgba(26, 107, 46, 0.1)] hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-sm"
-                      >
-                        <AlertCircle className="w-3.5 h-3.5 mr-1.5" />
-                        Improve
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <EmptyState
-            title="No submissions yet"
-            detail="Homework submissions from learners will appear here for your review."
-          />
-        )}
-      </section>
-
-      {/* MEETINGS & REPORTS WITH 3D ANIMATIONS */}
-      <section className="grid gap-6 lg:grid-cols-2 mb-8" aria-label="Meetings and reports">
-        <FormSection
-          id="meetings"
-          icon={Calendar}
-          themeKey="orange"
-          title="Schedule Live Session"
-          caption="Create Q&A sessions via Zoom or Google Meet."
-        >
-          <form className="space-y-5" onSubmit={createMeeting}>
-            <Field label="Select Course">
-              <SelectInput
-                value={meetingForm.courseId}
-                onChange={(e) => setMeetingForm({ ...meetingForm, courseId: e.target.value })}
-                required
-              >
-                <option value="" disabled={courses.length > 0}>
-                  Choose a course...
-                </option>
-                {courses.length === 0 ? (
-                  <option value="" disabled>
-                    No active courses available
-                  </option>
-                ) : (
-                  courses.map((course) => (
-                    <option key={course.id} value={course.id}>
-                      {course.title}
-                    </option>
-                  ))
-                )}
-              </SelectInput>
-            </Field>
-
-            <Field label="Session Date & Time">
-              <TextInput
-                type="datetime-local"
-                value={meetingForm.startsAt}
-                onChange={(e) => setMeetingForm({ ...meetingForm, startsAt: e.target.value })}
-                required
-              />
-            </Field>
-
-            <div className="grid grid-cols-2 gap-4">
-              <Field label="Platform">
-                <SelectInput
-                  value={meetingForm.provider}
-                  onChange={(e) => setMeetingForm({ ...meetingForm, provider: e.target.value as 'zoom' | 'google_meet' })}
-                >
-                  <option value="zoom">Zoom</option>
-                  <option value="google_meet">Google Meet</option>
-                </SelectInput>
-              </Field>
-
-              <Field label="Meeting URL">
-                <TextInput
-                  value={meetingForm.meetingUrl}
-                  onChange={(e) => setMeetingForm({ ...meetingForm, meetingUrl: e.target.value })}
-                  placeholder="https://..."
-                  required
-                />
-              </Field>
-            </div>
-
-            <Field label="Session Agenda">
-              <TextArea
-                value={meetingForm.agenda}
-                onChange={(e) => setMeetingForm({ ...meetingForm, agenda: e.target.value })}
-                placeholder="Topics to discuss in this session..."
-              />
-            </Field>
-
-            <Button
-              type="submit"
-              className="w-full bg-gradient-to-r from-orange-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-[#0f3d1a] rounded-xl h-12 font-semibold transition-all duration-500 border-0 shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4),0_4px_12px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_12px_32px_-6px_rgba(234,88,12,0.5),0_8px_20px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] active:shadow-[0_2px_8px_-2px_rgba(234,88,12,0.3)] relative overflow-hidden group transform-gpu"
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <span className="relative z-10 flex items-center justify-center">
-                <Calendar className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-500" />
-                Schedule Session
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-              <div className="absolute inset-0 rounded-xl border border-white/[0.08]" />
-            </Button>
-          </form>
-        </FormSection>
-
-        <FormSection
-          id="reports"
-          icon={BarChart3}
-          themeKey="orange"
-          title="Analytics & Reports"
-          caption="Generate progress reports for your courses and learners."
-        >
-          <div className="space-y-5">
-            <div
-              className={`rounded-xl bg-gradient-to-br from-sky-500/8 to-orange-600/5 border border-sky-500/20 p-5 backdrop-blur-sm shadow-[0_4px_16px_rgba(26, 107, 46, 0.1),inset_0_1px_0_rgba(255,255,255,0.02)] transition-all duration-500 hover:bg-sky-500/12 hover:border-sky-500/30 hover:shadow-[0_8px_24px_-4px_rgba(249,115,22,0.3)] ${card3DClass}`}
-            >
-              <div className="flex items-start gap-3 mb-4">
-                <div className="relative">
-                  <Sparkles className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5 animate-[pulse-subtle_2s_ease-in-out_infinite]" />
-                  <div className="absolute inset-0 bg-sky-400/20 blur-xl animate-pulse" />
-                </div>
-                <div>
-                  <p className="text-[15px] font-semibold text-orange-200 mb-1.5">Report Generation</p>
-                  <p className="text-[13px] text-orange-300/70 leading-relaxed">Generate weekly or biweekly progress reports through the API service.</p>
+                <p className="text-[#c8e6c9]/80 text-sm font-semibold">{TRAINER.specialization}</p>
+                <div className="flex items-center gap-1 mt-1.5">
+                  {[1,2,3,4,5].map(i => (
+                    <Star key={i} className={`w-3.5 h-3.5 ${i <= Math.floor(TRAINER.rating) ? 'text-amber-400 fill-amber-400' : 'text-white/30'}`} />
+                  ))}
+                  <span className="text-white font-black text-sm ml-1">{TRAINER.rating}</span>
+                  <span className="text-[#c8e6c9]/60 text-xs ml-1">instructor rating</span>
                 </div>
               </div>
+              <div className="flex gap-2 flex-wrap">
+                <button onClick={() => setCreateCourseOpen(true)} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-[#0f3d1a] font-black text-sm shadow-lg hover:scale-105 transition-transform">
+                  <Plus className="w-4 h-4" /> New Course
+                </button>
+                <button onClick={() => setAnnouncementOpen(true)} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#c8e6c9]/20 border border-[#c8e6c9]/30 text-white font-black text-sm hover:bg-[#c8e6c9]/30 transition-colors">
+                  <Bell className="w-4 h-4" /> Announce
+                </button>
+              </div>
+            </div>
+          </div>
 
-              <div className="grid grid-cols-2 gap-2.5 mt-4">
+          {/* Stats */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { label: 'Total Students', value: TRAINER.totalStudents, icon: Users, col: 'emerald', trend: '+12 this week', up: true },
+              { label: 'Active Courses', value: TRAINER.activeCourses, icon: BookOpen, col: 'sky', trend: '2 in progress', up: true },
+              { label: 'Pending Reviews', value: pendingCount, icon: FileText, col: 'amber', trend: 'Need attention', up: false },
+              { label: 'This Month', value: 'PKR ' + (TRAINER.monthRevenue/1000).toFixed(0) + 'k', icon: DollarSign, col: 'violet', trend: '+18% vs last', up: true },
+            ].map((stat) => {
+              const Icon = stat.icon;
+              const cls = { emerald: 'bg-emerald-50 border-emerald-200 text-emerald-600', sky: 'bg-sky-50 border-sky-200 text-sky-600', amber: 'bg-amber-50 border-amber-200 text-amber-600', violet: 'bg-violet-50 border-violet-200 text-violet-600' }[stat.col];
+              return (
+                <div key={stat.label} className="bg-white rounded-2xl p-5 border border-[#1a6b2e]/10 shadow-sm hover:shadow-md transition-shadow">
+                  <div className={`inline-flex p-2 rounded-xl border mb-3 ${cls}`}><Icon className="w-5 h-5" /></div>
+                  <p className="text-2xl font-black text-[#0f3d1a]">{stat.value}</p>
+                  <p className="text-xs font-bold text-[#1a6b2e]/70 mt-0.5">{stat.label}</p>
+                  <div className={`flex items-center gap-1 mt-1.5 text-[11px] font-bold ${stat.up ? 'text-emerald-600' : 'text-amber-600'}`}>
+                    {stat.up ? <TrendingUp className="w-3 h-3" /> : <AlertCircle className="w-3 h-3" />}
+                    {stat.trend}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Performance + Schedule */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-[#1a6b2e]/10 shadow-sm">
+              <h3 className="font-black text-[#0f3d1a] text-base mb-5 flex items-center gap-2">
+                <Activity className="w-5 h-5 text-[#1a6b2e]" /> Teaching Performance Index
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-5">
                 {[
-                  { label: 'Engagement Metrics', icon: TrendingUp },
-                  { label: 'Pass Rates', icon: BarChart3 },
-                  { label: 'Completion Status', icon: CheckCircle2 },
-                  { label: 'Progress Tracking', icon: Play },
-                ].map(({ label, icon: ItemIcon }) => (
-                  <div
-                    key={label}
-                    className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-blue-500/8 border border-blue-500/15 backdrop-blur-sm shadow-[0_2px_8px_rgba(26, 107, 46, 0.1)] transition-all duration-300 hover:shadow-[0_8px_20px_-4px_rgba(59,130,246,0.3)] hover:-translate-y-1 hover:scale-[1.02] hover:bg-blue-500/12 hover:border-blue-500/25 cursor-pointer transform-gpu"
-                  >
-                    <ItemIcon className="w-3.5 h-3.5 text-blue-400/60 flex-shrink-0" />
-                    <span className="text-[12px] text-blue-300/70">{label}</span>
+                  { label: 'Avg Rating', value: 4.8, max: 5, color: '#10b981', suffix: '/5' },
+                  { label: 'Completion Rate', value: 76, max: 100, color: '#50BED9', suffix: '%' },
+                  { label: 'Response Rate', value: 94, max: 100, color: '#8b5cf6', suffix: '%' },
+                  { label: 'On-Time Reviews', value: 88, max: 100, color: '#f59e0b', suffix: '%' },
+                ].map((m) => {
+                  const pct = (m.value / m.max) * 100;
+                  const r = 38; const circ = 2 * Math.PI * r;
+                  return (
+                    <div key={m.label} className="flex flex-col items-center">
+                      <div className="relative w-24 h-24">
+                        <svg className="w-24 h-24 -rotate-90" viewBox="0 0 96 96">
+                          <circle cx="48" cy="48" r={r} fill="none" stroke="#e5e7eb" strokeWidth="8" />
+                          <circle cx="48" cy="48" r={r} fill="none" stroke={m.color} strokeWidth="8" strokeLinecap="round" strokeDasharray={`${(pct/100)*circ} ${circ}`} />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-xs font-black text-[#0f3d1a]">{m.value}{m.suffix}</span>
+                        </div>
+                      </div>
+                      <p className="text-[10px] font-bold text-[#1a6b2e]/80 text-center mt-1 leading-tight">{m.label}</p>
+                      <div className="w-full bg-gray-100 rounded-full h-1 mt-1">
+                        <div className="h-1 rounded-full" style={{ width: `${pct}%`, backgroundColor: m.color }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="bg-gradient-to-r from-[#c8e6c9] to-[#b2dfdb] rounded-xl p-4 flex items-start gap-3">
+                <Sparkles className="w-5 h-5 text-[#0f3d1a] shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-[#0f3d1a] font-black text-sm">AI Insight: Outstanding Performance!</p>
+                  <p className="text-[#1a6b2e] text-xs font-semibold">Your Next.js course has 98% completion in last 30 days. Consider adding an advanced module to retain students!</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 border border-[#1a6b2e]/10 shadow-sm">
+              <h3 className="font-black text-[#0f3d1a] text-base mb-4 flex items-center gap-2">
+                <Calendar className="w-5 h-5 text-[#1a6b2e]" /> Today's Schedule
+              </h3>
+              <div className="space-y-3">
+                {MEETINGS.filter(m => m.date === 'Today').map(meet => (
+                  <div key={meet.id} className="flex items-start gap-3 p-3 rounded-xl bg-[#c8e6c9]/30 border border-[#1a6b2e]/10">
+                    <div className="w-9 h-9 rounded-xl bg-[#0f3d1a] flex items-center justify-center text-white font-black text-sm shrink-0">{meet.avatar}</div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-black text-[#0f3d1a] truncate">{meet.title}</p>
+                      <p className="text-[10px] text-[#1a6b2e] font-semibold">{meet.time} · {meet.duration}</p>
+                      <span className={`text-[9px] font-black px-1.5 py-0.5 rounded-full ${meet.type === 'group' ? 'bg-sky-100 text-sky-700' : 'bg-violet-100 text-violet-700'}`}>
+                        {meet.type === 'group' ? 'Group' : '1-on-1'}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+                <button onClick={() => { window.location.hash = 'meetings'; }} className="w-full py-2 rounded-xl border border-[#1a6b2e]/20 text-[#1a6b2e] text-xs font-bold hover:bg-[#c8e6c9]/30 transition-colors">
+                  View All Meetings
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Pending + Top Students */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white rounded-2xl p-6 border border-[#1a6b2e]/10 shadow-sm">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-black text-[#0f3d1a] text-base flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-amber-500" /> Pending Reviews
+                  <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-black">{pendingCount}</span>
+                </h3>
+                <button onClick={() => { window.location.hash = 'submissions'; }} className="text-xs font-bold text-[#1a6b2e] hover:underline">View All</button>
+              </div>
+              <div className="space-y-3">
+                {submissions.filter(s => s.status === 'pending').slice(0,3).map(sub => (
+                  <div key={sub.id} className="flex items-center gap-3 p-3 rounded-xl bg-amber-50 border border-amber-100">
+                    <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center text-white font-black text-sm shrink-0">{sub.avatar}</div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-black text-[#0f3d1a]">{sub.student}</p>
+                      <p className="text-[10px] text-[#1a6b2e] font-semibold truncate">{sub.task}</p>
+                      <p className="text-[10px] text-amber-600 font-bold">{sub.submitted}</p>
+                    </div>
+                    <button onClick={() => setSelectedSubmission(sub)} className="px-3 py-1.5 rounded-lg bg-[#0f3d1a] text-white text-[10px] font-black hover:bg-[#1a6b2e] transition-colors">Grade</button>
                   </div>
                 ))}
               </div>
             </div>
 
-            <Button
-              variant="ghost"
-              onClick={() => {
-                setMessageType('info');
-                setMessage('Reports API is configured. Use POST /api/reports with course, learner, and institute IDs.');
-              }}
-              className="w-full border border-sky-500/25 text-sky-400 hover:bg-sky-500/10 hover:border-sky-500/40 rounded-xl h-12 font-semibold transition-all duration-500 shadow-[0_4px_16px_-2px_rgba(234,88,12,0.3)] hover:shadow-[0_8px_24px_-4px_rgba(234,88,12,0.4)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.99] backdrop-blur-sm group transform-gpu"
-            >
-              <BarChart3 className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-500" />
-              Generate Report
-              <ExternalLink className="w-4 h-4 ml-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500" />
-            </Button>
+            <div className="bg-white rounded-2xl p-6 border border-[#1a6b2e]/10 shadow-sm">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-black text-[#0f3d1a] text-base flex items-center gap-2">
+                  <Award className="w-5 h-5 text-amber-500" /> Top Students
+                </h3>
+                <button onClick={() => { window.location.hash = 'students'; }} className="text-xs font-bold text-[#1a6b2e] hover:underline">View All</button>
+              </div>
+              <div className="space-y-3">
+                {STUDENTS.filter(s => s.status === 'excellent').map((stu, i) => (
+                  <div key={stu.id} className="flex items-center gap-3 p-3 rounded-xl bg-emerald-50 border border-emerald-100">
+                    <div className="relative">
+                      <div className="w-9 h-9 rounded-xl bg-[#0f3d1a] flex items-center justify-center text-white font-black text-sm">{stu.avatar}</div>
+                      <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-black text-white ${i===0?'bg-amber-400':'bg-gray-400'}`}>{i+1}</div>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-black text-[#0f3d1a]">{stu.name}</p>
+                      <p className="text-[10px] text-[#1a6b2e] font-semibold truncate">{stu.course}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-black text-emerald-600">{stu.score}%</p>
+                      <p className="text-[10px] text-[#1a6b2e]/60">{stu.progress}% done</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-        </FormSection>
-      </section>
+        </>
+      )}
 
-      <div className="h-4" />
+      {/* ===== MY COURSES ===== */}
+      {activeTab === 'courses' && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-black text-[#0f3d1a]">My Courses</h2>
+              <p className="text-sm text-[#1a6b2e] font-semibold">{TRAINER.activeCourses} active · {TRAINER.completedCourses} completed</p>
+            </div>
+            <button onClick={() => setCreateCourseOpen(true)} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0f3d1a] text-white font-black text-sm shadow hover:bg-[#1a6b2e] transition-colors">
+              <Plus className="w-4 h-4" /> Create New Course
+            </button>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {MY_COURSES.map(course => (
+              <div key={course.id} className="bg-white rounded-2xl p-5 border border-[#1a6b2e]/10 shadow-sm hover:shadow-lg transition-shadow">
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0f3d1a] to-[#1a6b2e] flex items-center justify-center text-white font-black text-lg shrink-0">{course.thumbnail}</div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="font-black text-[#0f3d1a] text-sm leading-tight">{course.title}</h3>
+                      <span className={`shrink-0 text-[9px] font-black px-2 py-0.5 rounded-full ${course.status==='active'?'bg-emerald-100 text-emerald-700':'bg-amber-100 text-amber-700'}`}>{course.status.toUpperCase()}</span>
+                    </div>
+                    <p className="text-[10px] text-[#1a6b2e] font-semibold mt-0.5">{course.category} · {course.lectures} lectures · {course.duration}</p>
+                    <div className="flex items-center gap-1 mt-1">
+                      <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                      <span className="text-xs font-black text-[#0f3d1a]">{course.rating}</span>
+                      <span className="text-[10px] text-[#1a6b2e]/60 ml-1">· {course.students} students</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[10px] font-bold text-[#1a6b2e]">Avg Completion</span>
+                    <span className="text-[10px] font-black text-[#0f3d1a]">{course.progress}%</span>
+                  </div>
+                  <div className="w-full bg-gray-100 rounded-full h-2">
+                    <div className="h-2 rounded-full bg-gradient-to-r from-[#1a6b2e] to-emerald-400" style={{ width: `${course.progress}%` }} />
+                  </div>
+                </div>
+                <div className="mt-4 flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] text-[#1a6b2e]/60 font-semibold">Revenue</p>
+                    <p className="text-base font-black text-[#0f3d1a]">PKR {course.revenue.toLocaleString()}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button className="p-2 rounded-xl bg-[#c8e6c9] text-[#0f3d1a] hover:bg-[#1a6b2e] hover:text-white transition-colors"><Edit3 className="w-4 h-4" /></button>
+                    <button className="p-2 rounded-xl bg-[#c8e6c9] text-[#0f3d1a] hover:bg-[#1a6b2e] hover:text-white transition-colors"><Eye className="w-4 h-4" /></button>
+                    <button className="p-2 rounded-xl bg-[#c8e6c9] text-[#0f3d1a] hover:bg-[#1a6b2e] hover:text-white transition-colors"><Upload className="w-4 h-4" /></button>
+                  </div>
+                </div>
+                <p className="text-[9px] text-[#1a6b2e]/40 font-semibold mt-2">Last updated: {course.lastUpdated}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ===== SUBMISSIONS ===== */}
+      {activeTab === 'submissions' && (
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-xl font-black text-[#0f3d1a]">Student Submissions</h2>
+            <p className="text-sm text-[#1a6b2e] font-semibold">{pendingCount} pending · {gradedCount} graded · {revisionCount} revision</p>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            {[
+              { label: 'Pending', count: pendingCount, cls: 'text-amber-500 border-amber-100', Icon: Clock },
+              { label: 'Graded', count: gradedCount, cls: 'text-emerald-500 border-emerald-100', Icon: CheckCircle2 },
+              { label: 'Revision', count: revisionCount, cls: 'text-red-500 border-red-100', Icon: AlertCircle },
+            ].map(s => (
+              <div key={s.label} className={`bg-white rounded-2xl p-4 border shadow-sm text-center ${s.cls.split(' ').filter(c=>c.startsWith('border')).join(' ')}`}>
+                <s.Icon className={`w-6 h-6 mx-auto mb-2 ${s.cls.split(' ').filter(c=>c.startsWith('text')).join(' ')}`} />
+                <p className="text-2xl font-black text-[#0f3d1a]">{s.count}</p>
+                <p className="text-xs font-bold text-[#1a6b2e]/70">{s.label}</p>
+              </div>
+            ))}
+          </div>
+          <div className="bg-white rounded-2xl border border-[#1a6b2e]/10 shadow-sm overflow-hidden">
+            <div className="p-4 border-b border-[#1a6b2e]/10"><h3 className="font-black text-[#0f3d1a]">All Submissions</h3></div>
+            <div className="divide-y divide-[#1a6b2e]/5">
+              {submissions.map(sub => (
+                <div key={sub.id} className="p-4 flex items-center gap-4 hover:bg-[#c8e6c9]/20 transition-colors">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-sm shrink-0 ${sub.status==='pending'?'bg-amber-500':sub.status==='graded'?'bg-emerald-600':'bg-red-500'}`}>{sub.avatar}</div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-black text-[#0f3d1a] text-sm">{sub.student}</p>
+                    <p className="text-xs text-[#1a6b2e] font-semibold truncate">{sub.task} · {sub.course}</p>
+                    <p className="text-[10px] text-[#1a6b2e]/60 font-semibold">Submitted {sub.submitted}</p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    {sub.status === 'graded' && sub.score !== null && (
+                      <p className={`text-lg font-black ${sub.score>=80?'text-emerald-600':sub.score>=60?'text-amber-600':'text-red-500'}`}>{sub.score}%</p>
+                    )}
+                    {sub.status === 'revision' && sub.score !== null && (
+                      <p className="text-sm font-black text-red-500">{sub.score}% (Revision)</p>
+                    )}
+                    {sub.status === 'pending' ? (
+                      <button onClick={() => setSelectedSubmission(sub)} className="px-3 py-1.5 rounded-xl bg-[#0f3d1a] text-white text-xs font-black hover:bg-[#1a6b2e] transition-colors">Grade Now</button>
+                    ) : (
+                      <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${sub.status==='graded'?'bg-emerald-100 text-emerald-700':'bg-red-100 text-red-700'}`}>{sub.status.toUpperCase()}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===== MEETINGS ===== */}
+      {activeTab === 'meetings' && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-black text-[#0f3d1a]">Meetings & Sessions</h2>
+              <p className="text-sm text-[#1a6b2e] font-semibold">{MEETINGS.filter(m=>m.date==='Today').length} today · {MEETINGS.length} total</p>
+            </div>
+            <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0f3d1a] text-white font-black text-sm shadow hover:bg-[#1a6b2e] transition-colors">
+              <Plus className="w-4 h-4" /> Schedule Session
+            </button>
+          </div>
+          <div className="space-y-5">
+            {['Today','Tomorrow','Aug 22','Aug 23'].map(day => {
+              const dayMeetings = MEETINGS.filter(m=>m.date===day);
+              if (!dayMeetings.length) return null;
+              return (
+                <div key={day}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <p className="text-xs font-black text-[#1a6b2e]/60 uppercase tracking-widest">{day}</p>
+                    <div className="flex-1 h-px bg-[#1a6b2e]/10" />
+                  </div>
+                  <div className="space-y-3">
+                    {dayMeetings.map(meet => (
+                      <div key={meet.id} className="bg-white rounded-2xl p-5 border border-[#1a6b2e]/10 shadow-sm flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-2xl bg-[#0f3d1a] flex items-center justify-center text-white font-black text-lg shrink-0">{meet.avatar}</div>
+                        <div className="min-w-0 flex-1">
+                          <h3 className="font-black text-[#0f3d1a] text-sm">{meet.title}</h3>
+                          <p className="text-xs text-[#1a6b2e] font-semibold">{meet.student}</p>
+                          <div className="flex items-center gap-2 mt-1 flex-wrap">
+                            <span className="text-[10px] font-black text-[#0f3d1a] bg-[#c8e6c9] px-2 py-0.5 rounded-full">{meet.time}</span>
+                            <span className="text-[10px] font-semibold text-[#1a6b2e]/60">{meet.duration}</span>
+                            <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${meet.type==='group'?'bg-sky-100 text-sky-700':'bg-violet-100 text-violet-700'}`}>
+                              {meet.type==='group'?'Group Session':'1-on-1 Video'}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex flex-col items-end gap-2 shrink-0">
+                          <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${meet.status==='upcoming'?'bg-emerald-100 text-emerald-700':'bg-blue-100 text-blue-700'}`}>{meet.status.toUpperCase()}</span>
+                          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0f3d1a] text-white text-xs font-black hover:bg-[#1a6b2e] transition-colors">
+                            <Video className="w-3 h-3" /> Join
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ===== STUDENTS ===== */}
+      {activeTab === 'students' && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <h2 className="text-xl font-black text-[#0f3d1a]">My Students</h2>
+              <p className="text-sm text-[#1a6b2e] font-semibold">{TRAINER.totalStudents} total · {STUDENTS.filter(s=>s.status==='needs-help').length} need attention</p>
+            </div>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#1a6b2e]/50" />
+              <input type="text" placeholder="Search students..." value={searchStudents} onChange={e=>setSearchStudents(e.target.value)} className="pl-9 pr-4 py-2 rounded-xl border border-[#1a6b2e]/20 bg-white text-sm text-[#0f3d1a] focus:outline-none focus:ring-2 focus:ring-[#1a6b2e]/30 font-semibold" />
+            </div>
+          </div>
+          <div className="flex gap-3 flex-wrap">
+            {[
+              { s: 'excellent', label: 'Excellent', cls: 'bg-emerald-100 text-emerald-700' },
+              { s: 'good', label: 'Good', cls: 'bg-sky-100 text-sky-700' },
+              { s: 'average', label: 'Average', cls: 'bg-amber-100 text-amber-700' },
+              { s: 'needs-help', label: 'Needs Help', cls: 'bg-red-100 text-red-700' },
+            ].map(st => (
+              <span key={st.s} className={`text-xs font-black px-3 py-1 rounded-full ${st.cls}`}>{st.label}: {STUDENTS.filter(x=>x.status===st.s).length}</span>
+            ))}
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {filteredStudents.map(stu => {
+              const cfgMap: Record<string,{col:string,label:string,bg:string,avt:string}> = {
+                'excellent': { col:'text-emerald-600', label:'Excellent', bg:'bg-emerald-50 border-emerald-100', avt:'bg-emerald-600' },
+                'good': { col:'text-sky-600', label:'Good', bg:'bg-sky-50 border-sky-100', avt:'bg-sky-600' },
+                'average': { col:'text-amber-600', label:'Average', bg:'bg-amber-50 border-amber-100', avt:'bg-amber-500' },
+                'needs-help': { col:'text-red-600', label:'Needs Help', bg:'bg-red-50 border-red-100', avt:'bg-red-500' },
+              };
+              const cfg = cfgMap[stu.status];
+              return (
+                <div key={stu.id} className={`bg-white rounded-2xl p-5 border ${cfg.bg} shadow-sm`}>
+                  <div className="flex items-start gap-4">
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-white font-black text-lg shrink-0 ${cfg.avt}`}>{stu.avatar}</div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h3 className="font-black text-[#0f3d1a] text-sm">{stu.name}</h3>
+                          <p className="text-[10px] text-[#1a6b2e] font-semibold truncate">{stu.course}</p>
+                          <p className="text-[9px] text-[#1a6b2e]/50 font-semibold">Last active: {stu.lastActive}</p>
+                        </div>
+                        <span className={`text-[9px] font-black px-2 py-0.5 rounded-full border ${cfg.bg} ${cfg.col}`}>{cfg.label}</span>
+                      </div>
+                      <div className="mt-3 grid grid-cols-2 gap-2">
+                        <div>
+                          <div className="flex items-center justify-between mb-1"><span className="text-[9px] font-bold text-[#1a6b2e]/60">Progress</span><span className="text-[9px] font-black text-[#0f3d1a]">{stu.progress}%</span></div>
+                          <div className="w-full bg-gray-100 rounded-full h-1.5"><div className="h-1.5 rounded-full bg-gradient-to-r from-[#1a6b2e] to-emerald-400" style={{width:`${stu.progress}%`}} /></div>
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-between mb-1"><span className="text-[9px] font-bold text-[#1a6b2e]/60">Score</span><span className={`text-[9px] font-black ${cfg.col}`}>{stu.score}%</span></div>
+                          <div className="w-full bg-gray-100 rounded-full h-1.5"><div className="h-1.5 rounded-full" style={{width:`${stu.score}%`,backgroundColor:stu.score>=80?'#10b981':stu.score>=60?'#f59e0b':'#ef4444'}} /></div>
+                        </div>
+                      </div>
+                      {stu.status === 'needs-help' && (
+                        <button className="mt-2 w-full py-1.5 rounded-lg bg-red-500 text-white text-[10px] font-black hover:bg-red-600 transition-colors">Send Support Message</button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ===== EARNINGS ===== */}
+      {activeTab === 'earnings' && (
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-xl font-black text-[#0f3d1a]">Earnings & Revenue</h2>
+            <p className="text-sm text-[#1a6b2e] font-semibold">Lifetime earnings and monthly breakdown</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[
+              { label:'Total Lifetime', value:`PKR ${(TRAINER.totalRevenue/1000).toFixed(0)}k`, Icon:DollarSign, cls:'bg-emerald-100 text-emerald-600', sub:'Since joining' },
+              { label:'This Month', value:`PKR ${(TRAINER.monthRevenue/1000).toFixed(0)}k`, Icon:TrendingUp, cls:'bg-sky-100 text-sky-600', sub:'+18% vs last month' },
+              { label:'Pending Payout', value:'PKR 8,200', Icon:Clock, cls:'bg-amber-100 text-amber-600', sub:'Processing in 3 days' },
+            ].map(s => (
+              <div key={s.label} className="bg-white rounded-2xl p-6 border border-[#1a6b2e]/10 shadow-sm">
+                <div className={`inline-flex p-3 rounded-2xl mb-4 ${s.cls}`}><s.Icon className="w-6 h-6" /></div>
+                <p className="text-2xl font-black text-[#0f3d1a]">{s.value}</p>
+                <p className="text-xs font-bold text-[#1a6b2e]/70 mt-0.5">{s.label}</p>
+                <p className="text-[10px] font-semibold text-[#1a6b2e]/50 mt-1">{s.sub}</p>
+              </div>
+            ))}
+          </div>
+          <div className="bg-white rounded-2xl p-6 border border-[#1a6b2e]/10 shadow-sm">
+            <h3 className="font-black text-[#0f3d1a] text-base mb-6 flex items-center gap-2"><BarChart3 className="w-5 h-5 text-[#1a6b2e]" /> Monthly Revenue (Last 6 Months)</h3>
+            <div className="flex items-end gap-3 h-48">
+              {EARNINGS_MONTHLY.map(e => {
+                const pct = (e.amount/maxEarning)*100;
+                return (
+                  <div key={e.month} className="flex-1 flex flex-col items-center gap-2">
+                    <p className="text-[10px] font-black text-[#0f3d1a]">PKR {(e.amount/1000).toFixed(0)}k</p>
+                    <div className="w-full relative" style={{height:`${(pct/100)*160}px`}}>
+                      <div className="absolute inset-x-0 bottom-0 rounded-t-xl bg-gradient-to-t from-[#0f3d1a] to-[#1a6b2e] h-full" />
+                    </div>
+                    <p className="text-[10px] font-black text-[#1a6b2e]/60">{e.month}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-6 border border-[#1a6b2e]/10 shadow-sm">
+            <h3 className="font-black text-[#0f3d1a] text-base mb-4 flex items-center gap-2"><BookOpen className="w-5 h-5 text-[#1a6b2e]" /> Revenue by Course</h3>
+            <div className="space-y-4">
+              {MY_COURSES.filter(c=>c.status==='active').sort((a,b)=>b.revenue-a.revenue).map(course => {
+                const maxRev = Math.max(...MY_COURSES.map(c=>c.revenue));
+                const pct = (course.revenue/maxRev)*100;
+                return (
+                  <div key={course.id} className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0f3d1a] to-[#1a6b2e] flex items-center justify-center text-white font-black text-xs shrink-0">{course.thumbnail}</div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between mb-1">
+                        <p className="text-xs font-black text-[#0f3d1a] truncate pr-2">{course.title}</p>
+                        <p className="text-xs font-black text-[#0f3d1a] shrink-0">PKR {course.revenue.toLocaleString()}</p>
+                      </div>
+                      <div className="w-full bg-gray-100 rounded-full h-2"><div className="h-2 rounded-full bg-gradient-to-r from-[#1a6b2e] to-emerald-400" style={{width:`${pct}%`}} /></div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <button className="mt-4 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-[#1a6b2e]/20 text-[#1a6b2e] text-xs font-bold hover:bg-[#c8e6c9]/30 transition-colors">
+              <Download className="w-4 h-4" /> Download Earnings Report (PDF)
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ===== GRADE MODAL ===== */}
+      {selectedSubmission && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl border border-[#1a6b2e]/10">
+            <div className="p-5 border-b border-[#1a6b2e]/10 flex items-center justify-between">
+              <h3 className="font-black text-[#0f3d1a] text-base">Grade Submission</h3>
+              <button onClick={() => setSelectedSubmission(null)} className="p-1.5 rounded-lg bg-gray-100 hover:bg-gray-200"><X className="w-4 h-4" /></button>
+            </div>
+            <div className="p-5 space-y-4">
+              <div className="bg-[#c8e6c9]/40 rounded-xl p-4">
+                <p className="text-xs font-black text-[#0f3d1a]">{selectedSubmission.student}</p>
+                <p className="text-sm font-bold text-[#1a6b2e]">{selectedSubmission.task}</p>
+                <p className="text-xs text-[#1a6b2e]/60 font-semibold">{selectedSubmission.course} · Submitted {selectedSubmission.submitted}</p>
+              </div>
+              <div>
+                <label className="text-xs font-black text-[#0f3d1a] block mb-2">Score (0-100)</label>
+                <input type="number" min={0} max={100} placeholder="Enter score..." value={gradeInput} onChange={e=>setGradeInput(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-[#1a6b2e]/20 bg-[#c8e6c9]/10 text-[#0f3d1a] font-black text-lg focus:outline-none focus:ring-2 focus:ring-[#1a6b2e]/30" />
+              </div>
+              <div>
+                <label className="text-xs font-black text-[#0f3d1a] block mb-2">Feedback (optional)</label>
+                <textarea rows={3} placeholder="Write feedback for the student..." value={feedbackInput} onChange={e=>setFeedbackInput(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-[#1a6b2e]/20 bg-[#c8e6c9]/10 text-[#0f3d1a] text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#1a6b2e]/30 resize-none" />
+              </div>
+              <div className="flex gap-3">
+                <button onClick={handleGrade} disabled={!gradeInput} className="flex-1 py-3 rounded-xl bg-[#0f3d1a] text-white font-black text-sm hover:bg-[#1a6b2e] transition-colors disabled:opacity-40">Submit Grade</button>
+                <button onClick={() => { setSubmissions(prev=>prev.map(s=>s.id===selectedSubmission!.id?{...s,status:'revision'}:s)); setSelectedSubmission(null); }} className="px-4 py-3 rounded-xl border border-red-200 text-red-600 font-black text-sm hover:bg-red-50 transition-colors">Request Revision</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===== CREATE COURSE MODAL ===== */}
+      {createCourseOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl border border-[#1a6b2e]/10">
+            <div className="p-5 border-b border-[#1a6b2e]/10 flex items-center justify-between">
+              <h3 className="font-black text-[#0f3d1a] text-base">Create New Course</h3>
+              <button onClick={() => setCreateCourseOpen(false)} className="p-1.5 rounded-lg bg-gray-100 hover:bg-gray-200"><X className="w-4 h-4" /></button>
+            </div>
+            <div className="p-5 space-y-4">
+              <div>
+                <label className="text-xs font-black text-[#0f3d1a] block mb-1.5">Course Title</label>
+                <input type="text" placeholder="e.g. TypeScript Advanced Patterns" className="w-full px-4 py-2.5 rounded-xl border border-[#1a6b2e]/20 text-[#0f3d1a] font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b2e]/30" />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-black text-[#0f3d1a] block mb-1.5">Category</label>
+                  <select className="w-full px-3 py-2.5 rounded-xl border border-[#1a6b2e]/20 text-[#0f3d1a] font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b2e]/30">
+                    <option>Web Dev</option><option>AI and Data</option><option>Cloud and DevOps</option><option>UI/UX Design</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-black text-[#0f3d1a] block mb-1.5">Level</label>
+                  <select className="w-full px-3 py-2.5 rounded-xl border border-[#1a6b2e]/20 text-[#0f3d1a] font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b2e]/30">
+                    <option>Beginner</option><option>Intermediate</option><option>Advanced</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="text-xs font-black text-[#0f3d1a] block mb-1.5">Description</label>
+                <textarea rows={3} placeholder="What will students learn?" className="w-full px-4 py-2.5 rounded-xl border border-[#1a6b2e]/20 text-[#0f3d1a] font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b2e]/30 resize-none" />
+              </div>
+              <button onClick={() => setCreateCourseOpen(false)} className="w-full py-3 rounded-xl bg-[#0f3d1a] text-white font-black text-sm hover:bg-[#1a6b2e] transition-colors">Create and Start Building</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===== ANNOUNCEMENT MODAL ===== */}
+      {announcementOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl border border-[#1a6b2e]/10">
+            <div className="p-5 border-b border-[#1a6b2e]/10 flex items-center justify-between">
+              <h3 className="font-black text-[#0f3d1a] text-base flex items-center gap-2"><Bell className="w-5 h-5 text-[#1a6b2e]" /> Post Announcement</h3>
+              <button onClick={() => setAnnouncementOpen(false)} className="p-1.5 rounded-lg bg-gray-100 hover:bg-gray-200"><X className="w-4 h-4 text-[#0f3d1a]" /></button>
+            </div>
+            <div className="p-5 space-y-4">
+              <div>
+                <label className="text-xs font-black text-[#0f3d1a] block mb-1.5">Send To</label>
+                <select className="w-full px-3 py-2.5 rounded-xl border border-[#1a6b2e]/20 text-[#0f3d1a] font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b2e]/30">
+                  <option>All My Students (342)</option>
+                  <option>Next.js Course Students (128)</option>
+                  <option>AI/ML Course Students (96)</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-xs font-black text-[#0f3d1a] block mb-1.5">Message</label>
+                <textarea rows={4} placeholder="Write your announcement..." value={announcementText} onChange={e=>setAnnouncementText(e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-[#1a6b2e]/20 text-[#0f3d1a] font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b2e]/30 resize-none" />
+              </div>
+              <button onClick={() => { setAnnouncementOpen(false); setAnnouncementText(''); }} className="w-full py-3 rounded-xl bg-[#0f3d1a] text-white font-black text-sm hover:bg-[#1a6b2e] transition-colors flex items-center justify-center gap-2">
+                <Send className="w-4 h-4" /> Send Announcement
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
-

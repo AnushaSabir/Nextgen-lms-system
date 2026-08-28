@@ -1,19 +1,8 @@
-import { TrainerLayout } from '@/features/trainer/TrainerLayout';
-import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
-import { VideoListScreen } from '@/features/trainer/TrainerModuleScreens';
-
-interface VideoListPageProps {
-  params: Promise<{ courseId: string }>;
-}
-
-export default async function TrainerVideoListPage({ params }: VideoListPageProps) {
-  const { courseId } = await params;
-
-  return (
-    <ProtectedRoute>
-      <TrainerLayout>
-        <VideoListScreen courseId={courseId} />
-      </TrainerLayout>
-    </ProtectedRoute>
-  );
+'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+export default function Redirect() {
+  const router = useRouter();
+  useEffect(() => { router.replace('/'); }, [router]);
+  return null;
 }

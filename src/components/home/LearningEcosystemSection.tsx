@@ -7,26 +7,26 @@ export default function LearningEcosystemSection() {
   return (
     <section className="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden">
       <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-96 h-96 secondary-glow opacity-10 pointer-events-none" />
-      <div className="absolute -left-20 bottom-0 w-72 h-72 bg-[#5E6F58]/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute -left-20 bottom-0 w-72 h-72 bg-[#8b5cf6]/5 blur-[120px] rounded-full pointer-events-none" />
       
       <div className="container mx-auto max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-20 items-center">
           <div className="lg:col-span-7 space-y-8 sm:space-y-10 reveal-left">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#5E6F58]/10 border border-[#5E6F58]/20">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#5E6F58] animate-pulse" />
-              <span className="text-xs font-bold text-[#0f3d1a] uppercase tracking-widest">Zero Gap Education</span>
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#8b5cf6]/10 border border-[#8b5cf6]/20">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#8b5cf6] animate-pulse" />
+              <span className="text-xs font-bold text-white uppercase tracking-widest">Zero Gap Education</span>
             </div>
 
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#0f3d1a] leading-[1.1] tracking-tight text-3d">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight text-3d">
               The Complete <br />
-              <span className="text-[#0f3d1a] text-3d-orange">Learning Process</span>
+              <span className="text-white text-3d-orange">Learning Process</span>
             </h2>
 
-            <div className="space-y-5 text-base sm:text-lg text-[#1a6b2e] leading-relaxed max-w-2xl">
+            <div className="space-y-5 text-base sm:text-lg text-[#50BED9] leading-relaxed max-w-2xl">
               <p>NextGen LMS is a complete, structured learning platform built for students, educators, and professionals who want to grow their skills the right way.</p>
-              <p>Once you complete your course and pass your assessments, you receive an official <span className="text-[#0f3d1a] font-bold">NextGen LMS Certificate</span> along with a <span className="text-[#0f3d1a] font-bold">Verified Badge</span> — proof that your skills are real and recognized.</p>
-              <div className="pt-2 pb-4 pl-4 border-l-4 border-[#5E6F58] bg-white/[0.02] rounded-r-lg">
-                <p className="text-[#0f3d1a] font-bold text-lg sm:text-xl italic">"Learn smart. Get certified. Stand out."</p>
+              <p>Once you complete your course and pass your assessments, you receive an official <span className="text-white font-bold">NextGen LMS Certificate</span> along with a <span className="text-white font-bold">Verified Badge</span> — proof that your skills are real and recognized.</p>
+              <div className="pt-2 pb-4 pl-4 border-l-4 border-[#8b5cf6] bg-[#101010]/80 border border-white/10 text-white/[0.02] rounded-r-lg">
+                <p className="text-white font-bold text-lg sm:text-xl italic">"Learn smart. Get certified. Stand out."</p>
               </div>
             </div>
 
@@ -37,33 +37,33 @@ export default function LearningEcosystemSection() {
                 'Step 3: Start learning with interactive lessons.',
                 'Step 4: Complete assessments and earn your certificate.',
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-[#1a6b2e]/5 border border-[#1a6b2e]/10 hover:border-[#5E6F58]/30 transition-all duration-300 group/item cursor-default">
-                  <div className="w-8 h-8 rounded-lg bg-[#5E6F58]/10 flex items-center justify-center shrink-0 border border-[#5E6F58]/20 group-hover/item:bg-[#5E6F58]/20 transition-colors">
-                    <CheckCircle2 className="w-4 h-4 text-[#0f3d1a]" />
+                <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-[#50BED9]/5 border border-white/10 hover:border-[#8b5cf6]/30 transition-all duration-300 group/item cursor-default">
+                  <div className="w-8 h-8 rounded-lg bg-[#8b5cf6]/10 flex items-center justify-center shrink-0 border border-[#8b5cf6]/20 group-hover/item:bg-[#8b5cf6]/20 transition-colors">
+                    <CheckCircle2 className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-[#1a6b2e] font-semibold text-base">{item}</span>
+                  <span className="text-[#50BED9] font-semibold text-base">{item}</span>
                 </div>
               ))}
             </div>
 
             <div className="pt-4 flex flex-wrap gap-4">
-              <Link href="/how-it-works" className="inline-flex items-center gap-2.5 px-8 py-4 bg-[#5E6F58] hover:bg-[#d94f17] text-[#0f3d1a] font-bold text-base rounded-xl transition-all duration-300 group hover:-translate-y-1 shadow-[0_10px_30px_-10px_rgba(240,89,31,0.5)]">
+              <Link href="/how-it-works" className="inline-flex items-center gap-2.5 px-8 py-4 bg-[#8b5cf6] hover:bg-[#d94f17] text-white font-bold text-base rounded-xl transition-all duration-300 group hover:-translate-y-1 shadow-[0_10px_30px_-10px_rgba(240,89,31,0.5)]">
                 <span>See how it works</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link href="/courses" className="inline-flex items-center gap-2.5 px-8 py-4 bg-[#1a6b2e]/5 border border-[#1a6b2e]/20 hover:border-white/20 text-[#0f3d1a] font-bold text-base rounded-xl transition-all duration-300 hover:-translate-y-1 shadow-lg">
+              <Link href="/courses" className="inline-flex items-center gap-2.5 px-8 py-4 bg-[#50BED9]/5 border border-white/10 hover:border-white/20 text-white font-bold text-base rounded-xl transition-all duration-300 hover:-translate-y-1 shadow-lg">
                 Browse Courses
               </Link>
             </div>
           </div>
 
           <div className="lg:col-span-5 reveal-right" style={{ transitionDelay: '150ms' }}>
-            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl group hover:border-[#5E6F58]/20 transition-all duration-500 card-3d border border-white/[0.08]">
+            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl group hover:border-[#8b5cf6]/20 transition-all duration-500 card-3d border border-white/[0.08]">
               <Image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop&q=80" alt="Learning Ecosystem" fill className="absolute inset-0 w-full h-full object-cover opacity-[0.15] group-hover:opacity-[0.25] group-hover:scale-105 transition-all duration-700" sizes="(max-width: 1024px) 100vw, 50vw" />
-              <div className="absolute inset-0 bg-gradient-to-br from-[#0f3d1a]/95 to-[#0f3d1a]/90 z-10 group-hover:from-[#0f3d1a]/90 group-hover:to-[#133937]/85 transition-all duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#323232]/95 to-[#323232]/90 z-10 group-hover:from-[#323232]/90 group-hover:to-[#133937]/85 transition-all duration-500" />
               
               <div className="relative z-20 p-5 sm:p-8 lg:p-10 space-y-5 sm:space-y-6">
-                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#5E6F58] via-sky-400 to-[#5E6F58]/50 z-30" />
+                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#8b5cf6] via-sky-400 to-[#8b5cf6]/50 z-30" />
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -71,18 +71,18 @@ export default function LearningEcosystemSection() {
                     <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
                     <div className="w-3 h-3 rounded-full bg-green-500/80" />
                   </div>
-                  <span className="text-[10px] text-[#1a6b2e] uppercase tracking-widest font-bold">NextGen-LMS LMS</span>
+                  <span className="text-[10px] text-[#50BED9] uppercase tracking-widest font-bold">NextGen-LMS LMS</span>
                 </div>
 
-                <div className="bg-[#0f3d1a] rounded-2xl p-6 border border-[#1a6b2e]/30 text-center relative overflow-hidden shadow-2xl">
-                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#d94d19]/20 blur-3xl rounded-full pointer-events-none" />
+                <div className="bg-[#50BED9] rounded-2xl p-6 border border-white/10 text-center relative overflow-hidden shadow-2xl">
+                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#50BED9]/20 blur-3xl rounded-full pointer-events-none" />
                   <div className="relative z-10">
-                    <div className="w-20 h-20 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-5 border-4 border-[#d94d19]/30 shadow-[0_0_30px_rgba(240,89,31,0.2)] animate-float-slow backdrop-blur-sm">
-                      <Award className="w-10 h-10 text-[#0f3d1a]" />
+                    <div className="w-20 h-20 mx-auto bg-[#101010]/5 border border-white/10 rounded-full flex items-center justify-center mb-5 border-4 border-white/10 shadow-[0_0_30px_rgba(240,89,31,0.2)] animate-float-slow backdrop-blur-sm">
+                      <Award className="w-10 h-10 text-white" />
                     </div>
                     <h4 className="text-white font-black text-xl tracking-tight">Certificate of Completion</h4>
                     <p className="text-[#60a5fa] text-sm mt-1 font-bold">Full Stack Development</p>
-                    <div className="mt-5 inline-flex items-center gap-2 bg-[#d94d19]/15 text-[#0f3d1a] text-xs font-black px-4 py-1.5 rounded-full border border-[#d94d19]/40 uppercase tracking-wider shadow-md backdrop-blur-md">
+                    <div className="mt-5 inline-flex items-center gap-2 bg-[#50BED9]/15 text-white text-xs font-black px-4 py-1.5 rounded-full border border-white/10 uppercase tracking-wider shadow-md backdrop-blur-md">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       Verified Credential
                     </div>
@@ -90,24 +90,24 @@ export default function LearningEcosystemSection() {
                 </div>
 
                 <div className="space-y-3">
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-[#0f3d1a] border border-[#1a6b2e]/30 hover:border-[#d94d19]/50 transition-colors cursor-default group/card shadow-xl">
-                    <div className="w-12 h-12 rounded-xl bg-[#d94d19]/10 flex items-center justify-center shrink-0 border border-[#d94d19]/30 backdrop-blur-sm">
-                      <Globe className="w-6 h-6 text-[#0f3d1a]" />
+                  <div className="flex items-center gap-4 p-4 rounded-xl bg-[#50BED9] border border-white/10 hover:border-white/10 transition-colors cursor-default group/card shadow-xl">
+                    <div className="w-12 h-12 rounded-xl bg-[#50BED9]/10 flex items-center justify-center shrink-0 border border-white/10 backdrop-blur-sm">
+                      <Globe className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1.5">
                         <span className="text-sm font-black text-white">Skill Verified & Certified</span>
                         <span className="text-[10px] text-emerald-400 font-black uppercase">✓ Done</span>
                       </div>
-                      <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden border border-white/10">
-                        <div className="bg-gradient-to-r from-[#5E6F58] to-[#0f3d1a] h-2 rounded-full w-full transition-all duration-1000" />
+                      <div className="w-full bg-[#101010]/5 border border-white/10 rounded-full h-2 overflow-hidden border border-white/10">
+                        <div className="bg-gradient-to-r from-[#8b5cf6] to-[#323232] h-2 rounded-full w-full transition-all duration-1000" />
                       </div>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/[0.02] border border-dashed border-[#1a6b2e]/20">
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#101010]/80 border border-white/10 text-white/[0.02] border border-dashed border-white/10">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-[11px] text-[#1a6b2e] font-medium">Certificate ready to download & share</span>
+                    <span className="text-[11px] text-[#50BED9] font-medium">Certificate ready to download & share</span>
                   </div>
                 </div>
 
