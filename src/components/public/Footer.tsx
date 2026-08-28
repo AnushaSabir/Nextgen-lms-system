@@ -36,21 +36,36 @@ const Footer = () => {
   const TwitterIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
   );
-  const YoutubeIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
-  );
 
+  // Social links with REAL brand colors
   const socialLinks = [
-    { Icon: FacebookIcon, label: 'Facebook', href: 'https://www.facebook.com/nextgen-lms', hoverBg: 'hover:bg-blue-600 hover:border-blue-600' },
-    { Icon: InstagramIcon, label: 'Instagram', href: 'https://www.instagram.com/nextgen-lms', hoverBg: 'hover:bg-pink-600 hover:border-pink-600' },
-    { Icon: TwitterIcon, label: 'Twitter', href: 'https://x.com/nextgen-lms', hoverBg: 'hover:bg-gray-800 hover:border-gray-800' },
-    { Icon: YoutubeIcon, label: 'YouTube', href: 'https://www.youtube.com/@NextGen-LMS', hoverBg: 'hover:bg-red-600 hover:border-red-600' },
+    {
+      Icon: FacebookIcon,
+      label: 'Facebook',
+      href: 'https://www.facebook.com/nextgen-lms',
+      color: '#1877F2',          // Facebook Blue
+      hoverBg: '#0d6ef0',
+    },
+    {
+      Icon: InstagramIcon,
+      label: 'Instagram',
+      href: 'https://www.instagram.com/nextgen-lms',
+      color: '#E1306C',          // Instagram Pink
+      hoverBg: '#C13584',
+    },
+    {
+      Icon: TwitterIcon,
+      label: 'X (Twitter)',
+      href: 'https://x.com/nextgen-lms',
+      color: '#FFFFFF',          // X is black/white
+      hoverBg: '#111111',
+    },
   ];
 
   return (
-    <footer className="bg-navy-900 relative overflow-hidden">
+    <footer className="bg-[#101010] relative overflow-hidden">
       {/* Subtle ambient glow - SaaS style */}
-      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-[#8b5cf6]/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-[#50BED9]/5 blur-[120px] rounded-full pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-20 pb-8 relative z-10">
 
@@ -74,7 +89,7 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-            <p className="text-xs font-semibold text-[#7dab52] uppercase tracking-widest">Connect with us</p>
+            <p className="text-xs font-semibold text-[#D0D3D6] uppercase tracking-widest">Connect with us</p>
             <div className="flex items-center gap-3">
               {socialLinks.map((social) => {
                 const { Icon } = social;
@@ -85,7 +100,20 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className={`w-10 h-10 rounded-lg border border-[#50BED9]/20 flex items-center justify-center text-[#50BED9] transition-all duration-300 hover:text-white hover:-translate-y-1 ${social.hoverBg}`}
+                    className="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:scale-110 shadow-md"
+                    style={{
+                      background: social.color,
+                      color: '#FFFFFF',
+                      border: `2px solid ${social.color}`,
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLAnchorElement).style.background = social.hoverBg;
+                      (e.currentTarget as HTMLAnchorElement).style.borderColor = social.hoverBg;
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLAnchorElement).style.background = social.color;
+                      (e.currentTarget as HTMLAnchorElement).style.borderColor = social.color;
+                    }}
                   >
                     <Icon />
                   </a>

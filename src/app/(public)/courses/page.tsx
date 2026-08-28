@@ -65,7 +65,7 @@ const COURSES_DATA = [
     badge: 'Bestseller',
     hasVideoIntro: false,
     videoSrc: '',
-    thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&auto=format&fit=crop&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&auto=format&fit=crop&q=80',
     description: 'Build production-scale modern web applications with Server Actions, App Router, TypeScript, and Tailwind CSS.',
     highlights: ['Full SaaS Project Included', 'CI/CD & Cloud Deployment', 'Verified Industry Certificate'],
   },
@@ -90,25 +90,63 @@ const COURSES_DATA = [
   },
   {
     id: 4,
-    title: 'UI/UX Design Systems & High-Fidelity Prototyping',
+    title: 'Graphic Design Mastery — Photoshop, Illustrator & Figma',
     category: 'Design',
     level: 'All Levels',
     faculty: 'NextGen Design Studio',
     facultyTitle: 'Principal Product Designer',
-    students: '2.8k',
+    students: '2.1k',
     rating: 4.8,
-    reviews: 820,
+    reviews: 640,
     duration: '36 Hours',
-    lectures: 94,
+    lectures: 98,
     badge: 'Popular',
     hasVideoIntro: false,
     videoSrc: '',
-    thumbnail: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?w=600&auto=format&fit=crop&q=80',
-    description: 'Design world-class SaaS interfaces in Figma, build design tokens, auto-layout systems, and micro-interactions.',
-    highlights: ['Complete Design System', 'Figma to Code Workflow', 'User Research Methodologies'],
+    thumbnail: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&auto=format&fit=crop&q=80',
+    description: 'Create stunning graphics, logos, brand identities, and print materials using industry-standard Adobe tools and Figma.',
+    highlights: ['Real Brand Design Projects', 'Logo & Identity Design', 'Print & Digital Media'],
   },
   {
     id: 5,
+    title: 'Digital Marketing & Social Media Growth Masterclass',
+    category: 'Marketing',
+    level: 'All Levels',
+    faculty: 'NextGen Growth Team',
+    facultyTitle: 'Digital Marketing Strategist',
+    students: '3.2k',
+    rating: 4.8,
+    reviews: 980,
+    duration: '40 Hours',
+    lectures: 120,
+    badge: 'Hot',
+    hasVideoIntro: false,
+    videoSrc: '',
+    thumbnail: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=600&auto=format&fit=crop&q=80',
+    description: 'Master SEO, Google Ads, Facebook Ads, email marketing, and data-driven growth strategies that drive real business results.',
+    highlights: ['Live Ad Campaign Setup', 'SEO & Content Strategy', 'Analytics & ROI Tracking'],
+  },
+  {
+    id: 6,
+    title: 'Data Science with Python, Power BI & Tableau',
+    category: 'AI & Data',
+    level: 'Intermediate',
+    faculty: 'NextGen Data Analytics',
+    facultyTitle: 'Senior Data Scientist',
+    students: '2.8k',
+    rating: 4.8,
+    reviews: 820,
+    duration: '44 Hours',
+    lectures: 130,
+    badge: 'New',
+    hasVideoIntro: false,
+    videoSrc: '',
+    thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80',
+    description: 'Transform raw datasets into compelling insights using Python, Pandas, Power BI dashboards, and predictive modeling.',
+    highlights: ['Real Business Datasets', 'Power BI & Tableau Dashboards', 'Predictive Analytics'],
+  },
+  {
+    id: 7,
     title: 'Cloud Architecture & DevOps CI/CD Masterclass',
     category: 'Cloud',
     level: 'Intermediate',
@@ -119,7 +157,7 @@ const COURSES_DATA = [
     reviews: 690,
     duration: '42 Hours',
     lectures: 110,
-    badge: 'Hot',
+    badge: 'In Demand',
     hasVideoIntro: false,
     videoSrc: '',
     thumbnail: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80',
@@ -127,7 +165,7 @@ const COURSES_DATA = [
     highlights: ['Kubernetes & Docker in Depth', 'AWS Infrastructure as Code', 'Zero-Downtime Releases'],
   },
   {
-    id: 6,
+    id: 8,
     title: 'Cybersecurity Analyst & Threat Intelligence Bootcamp',
     category: 'Security',
     level: 'Intermediate',
@@ -138,23 +176,63 @@ const COURSES_DATA = [
     reviews: 510,
     duration: '38 Hours',
     lectures: 105,
-    badge: 'New',
+    badge: 'Expert',
     hasVideoIntro: false,
     videoSrc: '',
     thumbnail: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80',
     description: 'Network penetration testing, vulnerability assessment, SIEM tools, SOC analyst workflows, and cryptography.',
     highlights: ['Live Virtual Sandbox Labs', 'SOC Analyst Blue Team Drills', 'CompTIA Security+ Aligned'],
   },
+  {
+    id: 9,
+    title: 'UI/UX Design Systems & High-Fidelity Prototyping',
+    category: 'Design',
+    level: 'All Levels',
+    faculty: 'NextGen UX Lab',
+    facultyTitle: 'UX Research & Design Lead',
+    students: '1.7k',
+    rating: 4.7,
+    reviews: 480,
+    duration: '32 Hours',
+    lectures: 88,
+    badge: 'Creative',
+    hasVideoIntro: false,
+    videoSrc: '',
+    thumbnail: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?w=600&auto=format&fit=crop&q=80',
+    description: 'Design world-class SaaS interfaces in Figma, build design tokens, auto-layout systems, and micro-interactions.',
+    highlights: ['Complete Design System', 'Figma to Code Workflow', 'User Research Methodologies'],
+  },
+  {
+    id: 10,
+    title: 'Mobile App Development with React Native & Expo',
+    category: 'Development',
+    level: 'Intermediate',
+    faculty: 'NextGen Mobile Team',
+    facultyTitle: 'Senior Mobile Engineer',
+    students: '1.4k',
+    rating: 4.7,
+    reviews: 390,
+    duration: '38 Hours',
+    lectures: 102,
+    badge: 'New',
+    hasVideoIntro: false,
+    videoSrc: '',
+    thumbnail: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&auto=format&fit=crop&q=80',
+    description: 'Build cross-platform iOS & Android apps with React Native, Expo, and Supabase — from prototype to App Store.',
+    highlights: ['iOS & Android Deployment', 'Supabase Backend Integration', 'Push Notifications & Auth'],
+  },
 ];
 
 const CATEGORIES = [
   { id: 'All', label: 'All Courses', icon: Sparkles },
-  { id: 'AI & Data', label: 'Python & AI/Data', icon: Bot },
-  { id: 'Development', label: 'Web & Software', icon: Code },
-  { id: 'Design', label: 'UI/UX Design', icon: Palette },
+  { id: 'AI & Data', label: 'Python & AI', icon: Bot },
+  { id: 'Development', label: 'Web & Mobile', icon: Code },
+  { id: 'Design', label: 'Design', icon: Palette },
+  { id: 'Marketing', label: 'Marketing', icon: Megaphone },
   { id: 'Cloud', label: 'Cloud & DevOps', icon: Layers },
   { id: 'Security', label: 'Cybersecurity', icon: ShieldCheck },
 ];
+
 
 const LEVELS = ['All Levels', 'Beginner', 'Beginner to Pro', 'Intermediate', 'Advanced'];
 
@@ -309,7 +387,7 @@ export default function CoursesPage() {
         {/* Courses Cards Grid */}
         {filteredCourses.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {filteredCourses.map((course) => (
+            {filteredCourses.map((course, idx) => (
               <div
                 key={course.id}
                 className={`group flex flex-col justify-between bg-[#101010] border rounded-3xl overflow-hidden shadow-xl hover:-translate-y-1.5 transition-all duration-300 ${
@@ -331,10 +409,16 @@ export default function CoursesPage() {
                   
                   {/* Top Badges */}
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-                    <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#50BED9] text-[#101010] shadow-md flex items-center gap-1">
-                      {course.hasVideoIntro && <Video className="w-3 h-3" />}
-                      {course.badge}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      {/* Number badge */}
+                      <span className="w-8 h-8 rounded-xl bg-[#50BED9] text-[#101010] font-black text-[11px] flex items-center justify-center shadow-lg">
+                        #{String(idx + 1).padStart(2, '0')}
+                      </span>
+                      <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#101010]/80 text-[#50BED9] border border-[#50BED9]/30 shadow-md flex items-center gap-1 backdrop-blur-md">
+                        {course.hasVideoIntro && <Video className="w-3 h-3" />}
+                        {course.badge}
+                      </span>
+                    </div>
                     <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#151515]/90 border border-white/10 text-white backdrop-blur-md">
                       {course.level}
                     </span>

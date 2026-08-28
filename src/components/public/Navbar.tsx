@@ -294,7 +294,12 @@ const Navbar = () => {
           </div>
 
           <button 
-            className="lg:hidden relative p-2.5 -mr-2 text-[#50BED9] hover:text-white transition-all duration-300 rounded-xl hover:bg-[#50BED9]/5 active:bg-[#101010]/80 backdrop-blur-xl border border-white/10 text-white/10 group ripple-effect magnetic-button"
+            className="lg:hidden relative p-2.5 -mr-2 transition-all duration-300 rounded-xl active:scale-95 group ripple-effect"
+            style={{
+              background: 'linear-gradient(135deg, #50BED9, #159BD7)',
+              boxShadow: '0 4px 18px rgba(80,190,217,0.45)',
+              border: '1px solid rgba(80,190,217,0.5)',
+            }}
             onClick={toggleMobileMenu}
             aria-label="Toggle menu"
           >
@@ -302,16 +307,14 @@ const Navbar = () => {
               <div className={`absolute inset-0 transition-all duration-500 transform ${
                 mobileMenuOpen ? 'rotate-180 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'
               }`}>
-                <Menu className="w-full h-full transition-transform duration-300 group-hover:scale-110" />
+                <Menu className="w-full h-full text-white transition-transform duration-300 group-hover:scale-110" />
               </div>
               <div className={`absolute inset-0 transition-all duration-500 transform ${
                 mobileMenuOpen ? 'rotate-0 scale-100 opacity-100' : 'rotate-180 scale-0 opacity-0'
               }`}>
-                <X className="w-full h-full transition-transform duration-300 group-hover:scale-110" />
+                <X className="w-full h-full text-white transition-transform duration-300 group-hover:scale-110" />
               </div>
             </div>
-            
-            <span className="absolute top-1 right-1 w-2 h-2 bg-[#50BED9] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
           </button>
         </div>
       </header>
