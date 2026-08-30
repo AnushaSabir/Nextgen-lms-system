@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Users, Play, ArrowRight, Code, Terminal, Brain, Palette, TrendingUp, Database, ShieldCheck, Camera, Globe, Smartphone, Video } from 'lucide-react';
+import { Users, Play, ArrowRight, Code, Terminal, Brain, Palette, TrendingUp, Database, ShieldCheck, Sparkles, Globe, Smartphone, Video } from 'lucide-react';
 
 const TRENDING = [
   {
@@ -62,11 +62,11 @@ const TRENDING = [
   },
   {
     id: 8, num: '08',
-    title: 'Photography & Videography',
-    description: 'Professional camera techniques, lighting, composition, video editing, and post-production mastery.',
-    level: 'All Levels', Icon: Camera, students: '1.4k',
-    badge: '📷',
-    thumbnail: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=600&auto=format&fit=crop&q=80',
+    title: 'Prompt Engineering',
+    description: 'Master advanced prompt frameworks, ChatGPT, Claude, Midjourney, and AI workflow automations.',
+    level: 'All Levels', Icon: Sparkles, students: '3.8k',
+    badge: '⚡',
+    thumbnail: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80',
   },
   {
     id: 9, num: '09',
