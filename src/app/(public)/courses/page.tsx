@@ -304,18 +304,41 @@ export default function CoursesPage() {
               )}
             </div>
 
-            {/* Quick Skill Tags */}
-            <div className="flex flex-wrap items-center justify-center gap-2 mt-3 text-xs">
-              <span className="text-[#D0D3D6]/60 font-bold">Popular:</span>
-              {['Python', 'Machine Learning', 'Next.js', 'Generative AI', 'UI/UX', 'Cloud'].map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => setSearchQuery(tag)}
-                  className="px-2.5 py-1 rounded-lg bg-[#151515] border border-[#353638] text-[#D0D3D6] hover:text-[#50BED9] hover:border-[#50BED9]/40 font-semibold transition-colors"
-                >
-                  {tag}
-                </button>
-              ))}
+            {/* Quick 10 Popular Courses Tags */}
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-4 text-xs">
+              <span className="text-[#50BED9] font-black uppercase tracking-wider text-[11px] mr-1">Popular:</span>
+              {[
+                { num: '01', name: 'Python' },
+                { num: '02', name: 'Web Development' },
+                { num: '03', name: 'Artificial Intelligence' },
+                { num: '04', name: 'Graphic Design' },
+                { num: '05', name: 'Digital Marketing' },
+                { num: '06', name: 'Data Science' },
+                { num: '07', name: 'Cloud & DevOps' },
+                { num: '08', name: 'Cybersecurity' },
+                { num: '09', name: 'UI/UX Design' },
+                { num: '10', name: 'Mobile App' },
+              ].map((c) => {
+                const isActive = searchQuery.toLowerCase() === c.name.toLowerCase();
+                return (
+                  <button
+                    key={c.name}
+                    onClick={() => setSearchQuery(isActive ? '' : c.name)}
+                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm ${
+                      isActive
+                        ? 'bg-[#50BED9] text-[#101010] border-[#50BED9] shadow-md shadow-[#50BED9]/30 font-black'
+                        : 'bg-[#151515] border-[#353638] text-[#D0D3D6] hover:text-white hover:border-[#50BED9]/50 hover:bg-[#353638]/60'
+                    }`}
+                  >
+                    <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
+                      isActive ? 'bg-[#101010] text-[#50BED9]' : 'bg-[#101010] text-[#50BED9] border border-[#353638]'
+                    }`}>
+                      {c.num}
+                    </span>
+                    <span>{c.name}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>

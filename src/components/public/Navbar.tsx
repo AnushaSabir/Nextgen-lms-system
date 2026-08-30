@@ -330,31 +330,31 @@ const Navbar = () => {
             className="absolute inset-0"
             onClick={closeMobileMenu}
             style={{
-              background: 'rgba(255, 255, 255, 0.6)',
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)'
+              background: 'rgba(0, 0, 0, 0.75)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
             }}
           />
           
           <aside
-            className="relative z-50 h-full w-[min(22rem,calc(100vw-1rem))] ml-2 overflow-hidden border-r border-[#50BED9]/20 bg-[#151515] shadow-2xl rounded-r-3xl"
+            className="relative z-50 h-full w-[min(22rem,calc(100vw-1rem))] ml-2 overflow-hidden border-r border-[#50BED9]/30 bg-[#101010] shadow-2xl rounded-r-3xl"
             style={{
               animation: 'fadeInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) both',
-              boxShadow: '10px 0 30px rgba(0, 132, 255, 0.1)'
+              boxShadow: '10px 0 40px rgba(0, 0, 0, 0.6)'
             }}
           >
-            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#50BED9]/10 via-[#50BED9]/5 to-transparent pointer-events-none" />
+            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#50BED9]/15 via-[#50BED9]/5 to-transparent pointer-events-none" />
             <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#50BED9]/10 via-transparent to-transparent pointer-events-none" />
             
-            <div className="relative p-4 sm:p-8 flex flex-col space-y-2 overflow-y-auto max-h-[calc(100vh-60px)] sm:max-h-[calc(100vh-76px)]">
-              <div className="pb-5 mb-4 border-b border-[#50BED9]/20">
+            <div className="relative p-4 sm:p-6 flex flex-col space-y-2 overflow-y-auto max-h-[calc(100vh-60px)] sm:max-h-[calc(100vh-76px)]">
+              <div className="pb-4 mb-2 border-b border-[#353638]">
                 <Link href="/" onClick={closeMobileMenu} className="flex items-center">
-                  <div className="relative h-12 w-48 flex items-center">
+                  <div className="relative h-11 w-44 flex items-center">
                     <Image 
                       src="/logo.png" 
-                      alt="NEXTGEN Studio" 
+                      alt="NextGen Learning Management System" 
                       fill
-                      sizes="192px"
+                      sizes="176px"
                       className="object-contain object-left filter drop-shadow-md"
                     />
                   </div>
@@ -370,10 +370,10 @@ const Navbar = () => {
                     key={link.name}
                     href={link.href}
                     onClick={closeMobileMenu}
-                    className={`mobile-menu-item group relative flex items-center justify-between py-3.5 px-5 rounded-2xl transition-all duration-300 ${
+                    className={`mobile-menu-item group relative flex items-center justify-between py-3 px-4 rounded-2xl transition-all duration-300 ${
                       isActive 
-                        ? 'text-white bg-[#50BED9]/10 border border-[#50BED9]/20 font-bold' 
-                        : 'text-[#50BED9] hover:text-white hover:bg-[#151515] font-medium'
+                        ? 'text-white bg-[#50BED9]/15 border border-[#50BED9]/40 font-bold shadow-md shadow-[#50BED9]/10' 
+                        : 'text-[#D0D3D6] hover:text-white hover:bg-[#151515] border border-transparent hover:border-[#353638] font-medium'
                     }`}
                     style={{
                       animationDelay: `${index * 60}ms`,
@@ -382,66 +382,66 @@ const Navbar = () => {
                   >
                     <span className="flex items-center space-x-3">
                       {Icon && (
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
-                          isActive ? 'bg-[#50BED9]/20' : 'bg-[#95A68D] group-hover:bg-[#50BED9]/10'
+                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                          isActive 
+                            ? 'bg-gradient-to-br from-[#50BED9] to-[#159BD7] text-[#101010] shadow-md shadow-[#50BED9]/30' 
+                            : 'bg-[#151515] text-[#50BED9] border border-[#353638] group-hover:bg-[#50BED9] group-hover:text-[#101010] group-hover:border-[#50BED9]'
                         }`}>
-                          <Icon className={`w-4 h-4 transition-all duration-300 ${
-                            isActive ? 'text-white' : 'text-[#50BED9] group-hover:text-white group-hover:scale-110'
-                          }`} />
+                          <Icon className="w-4 h-4 transition-all duration-300 group-hover:scale-110" />
                         </div>
                       )}
-                      <span className="text-sm sm:text-base tracking-tight leading-snug">{link.name}</span>
+                      <span className="text-sm tracking-tight leading-snug font-semibold">{link.name}</span>
                     </span>
                     
                     <div className="flex items-center space-x-2">
                       <ChevronRight className={`w-4 h-4 transition-all duration-300 ${
-                        isActive ? 'text-white translate-x-1' : 'text-[#50BED9] group-hover:text-white group-hover:translate-x-2'
+                        isActive ? 'text-[#50BED9] translate-x-1' : 'text-[#D0D3D6]/50 group-hover:text-[#50BED9] group-hover:translate-x-1'
                       }`} />
                     </div>
                   </Link>
                 );
               })}
               
-              <div className="relative py-4">
+              <div className="relative py-3">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-[#50BED9]/20"></div>
+                  <div className="w-full border-t border-[#353638]"></div>
                 </div>
               </div>
               
-              <div className="space-y-3 pt-2">
+              <div className="space-y-2.5 pt-1">
                 <Link
                   href="/login"
                   onClick={closeMobileMenu}
-                  className="w-full flex items-center justify-center space-x-3 px-6 py-3.5 bg-[#151515] hover:bg-[#95A68D] border border-[#50BED9]/20 hover:border-[#50BED9]/30 text-white font-bold text-sm rounded-2xl transition-all duration-300 active:scale-[0.98] group relative overflow-hidden"
+                  className="w-full flex items-center justify-center space-x-2.5 px-6 py-3 bg-[#151515] hover:bg-[#353638] border border-[#353638] hover:border-[#50BED9]/40 text-white font-bold text-sm rounded-xl transition-all duration-300 active:scale-[0.98] group relative overflow-hidden"
                   style={{ animation: 'fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both' }}
                 >
-                  <LogIn className="w-4 h-4 transition-all duration-300 group-hover:-translate-x-1 group-hover:text-white" />
+                  <LogIn className="w-4 h-4 text-[#50BED9] transition-all duration-300 group-hover:-translate-x-1" />
                   <span>Login to Account</span>
                 </Link>
                 
                 <Link
                   href="/login?mode=signup"
                   onClick={closeMobileMenu}
-                  className="w-full flex items-center justify-center space-x-3 px-6 py-4 bg-gradient-to-r from-[#50BED9] to-[#4B5946] text-white font-extrabold text-sm rounded-2xl transition-all duration-500 shadow-lg shadow-[#50BED9]/20 active:scale-[0.98] group relative overflow-hidden"
+                  className="w-full flex items-center justify-center space-x-2 px-6 py-3.5 bg-gradient-to-r from-[#50BED9] to-[#159BD7] text-[#101010] font-black text-sm rounded-xl transition-all duration-500 shadow-lg shadow-[#50BED9]/30 active:scale-[0.98] group relative overflow-hidden hover:brightness-110"
                   style={{ animation: 'fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both' }}
                 >
-                  <UserPlus className="w-5 h-5 relative z-10 transition-all duration-300 group-hover:rotate-12 group-hover:scale-110" />
-                  <span className="relative z-10 text-base">Get Started Free</span>
-                  <Sparkles className="w-4 h-4 relative z-10 transition-all duration-300 group-hover:scale-125 animate-pulse" />
+                  <UserPlus className="w-4 h-4 transition-all duration-300 group-hover:rotate-12 group-hover:scale-110" />
+                  <span className="text-sm">Join Now — Free</span>
+                  <Sparkles className="w-4 h-4 transition-all duration-300 group-hover:scale-125 animate-pulse" />
                 </Link>
               </div>
               
-              <div className="mt-auto pt-8 pb-4">
-                <div className="bg-[#151515] rounded-2xl p-4 border border-[#50BED9]/20">
+              <div className="mt-auto pt-6 pb-2">
+                <div className="bg-[#151515] rounded-xl p-3.5 border border-[#353638]">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                      <p className="text-[10px] font-bold text-[#50BED9]">Live Platform</p>
+                      <div className="w-2 h-2 bg-[#33C6B6] rounded-full animate-pulse shadow-sm shadow-[#33C6B6]" />
+                      <p className="text-[11px] font-bold text-[#D0D3D6]">NextGen Live LMS</p>
                     </div>
-                    <p className="text-[10px] font-bold text-[#50BED9]">v2.0</p>
+                    <span className="text-[10px] font-black text-[#50BED9] bg-[#50BED9]/10 px-2 py-0.5 rounded-md border border-[#50BED9]/20">v2.0</span>
                   </div>
-                  <p className="text-[10px] text-center text-[#50BED9] mt-3">
-                    © 2024 NextGen-LMS • Skill-to-Earn
+                  <p className="text-[10px] text-center text-[#D0D3D6]/60 mt-2">
+                    © 2026 NextGen LMS • Learning Management System
                   </p>
                 </div>
               </div>
