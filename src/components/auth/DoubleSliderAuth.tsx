@@ -4,10 +4,24 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Mail, Lock, User, ArrowRight, Eye, EyeOff, ShieldCheck, GraduationCap, Building2 } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Eye, EyeOff, ShieldCheck, GraduationCap, Building2, Camera, Upload, Phone, BookOpen, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useToastStore } from '@/store/toast-store';
 import { getErrorMessage } from '@/utils/errorParser';
 import { useAuthStore } from '@/store/auth-store';
+import { syncStudentProfileToSupabase } from '@/lib/supabaseClient';
+
+const COURSE_TRACKS = [
+  'Python for Data Science, Analytics & AI',
+  'Next.js 15 & React 19 Full-Stack Mastery',
+  'Applied Generative AI & Large Language Models',
+  'Graphic Design Mastery (Photoshop & Figma)',
+  'Digital Marketing & Social Growth',
+  'Data Science with Python & Power BI',
+  'Cloud Architecture & DevOps CI/CD',
+  'Cybersecurity Analyst Bootcamp',
+  'UI/UX Design Systems',
+  'Mobile App Development (React Native)',
+];
 
 const AUTH_SLIDES = [
   {
@@ -26,7 +40,7 @@ const AUTH_SLIDES = [
     badge2: 'Get Certified',
     badge2Desc: 'Unlock potential',
     title: 'Join the NextGen Community',
-    desc: 'Sign up today and get access to expert-led courses, practical tasks, and a direct path to success.'
+    desc: 'Sign up today and get access to expert-led courses, practical tasks, and your official Student ID Card.'
   }
 ];
 
@@ -34,6 +48,7 @@ export default function DoubleSliderAuth() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
+  const courseParam = searchParams.get('course');
   const { showToast } = useToastStore();
   const { login: authLogin, register: authRegister } = useAuthStore();
 
@@ -45,13 +60,51 @@ export default function DoubleSliderAuth() {
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
+  // Sign up fields
+  const [signUpName, setSignUpName] = useState('');
+  const [signUpEmail, setSignUpEmail] = useState('');
+  const [signUpPassword, setSignUpPassword] = useState('');
+  const [signUpPhone, setSignUpPhone] = useState('');
+  const [signUpCourse, setSignUpCourse] = useState(COURSE_TRACKS[0]);
+  const [signUpAvatar, setSignUpAvatar] = useState<string | null>(null);
+
   useEffect(() => {
     if (mode === 'signup') {
       setIsSignUp(true);
     }
-  }, [mode]);
+    if (courseParam) {
+      const idx = parseInt(courseParam) - 1;
+      if (COURSE_TRACKS[idx]) {
+        setSignUpCourse(COURSE_TRACKS[idx]);
+      }
+    }
+  }, [mode, courseParam]);
 
   const togglePanel = () => setIsSignUp(!isSignUp);
+
+  // Handle Photo File Selection
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      showToast('Please select a valid image file (JPG, PNG, WEBP).', 'error');
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('Image size must be less than 5MB.', 'error');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const base64 = event.target?.result as string;
+      setSignUpAvatar(base64);
+      showToast('Photo uploaded successfully! 📸', 'success');
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleQuickLogin = async (roleType: 'student' | 'admin' | 'school') => {
     setIsLoading(true);
@@ -72,21 +125,45 @@ export default function DoubleSliderAuth() {
 
   const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const name = (form.querySelector('input[type="text"]') as HTMLInputElement)?.value?.trim();
-    const email = (form.querySelector('input[type="email"]') as HTMLInputElement)?.value?.trim();
-    const password = (form.querySelector('input[type="password"]') as HTMLInputElement)?.value;
 
-    if (!name || !email || !password) {
-      showToast('Please fill in all fields.', 'error');
+    if (!signUpName.trim() || !signUpEmail.trim() || !signUpPassword) {
+      showToast('Please fill in Name, Email and Password.', 'error');
       return;
     }
 
     setIsLoading(true);
     try {
-      await authRegister({ name, email, password, role: 'learner' });
-      showToast('Account created! Setting up profile...', 'success');
-      router.push('/onboarding');
+      const generatedRollNo = `NXG-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
+
+      await authRegister({
+        name: signUpName.trim(),
+        email: signUpEmail.trim(),
+        password: signUpPassword,
+        role: 'learner',
+        avatar: signUpAvatar || undefined,
+        studentId: generatedRollNo,
+        rollNo: generatedRollNo,
+        phone: signUpPhone.trim() || undefined,
+        enrolledCourse: signUpCourse,
+        batch: `Batch ${new Date().getFullYear()}-A`,
+        department: 'School of Artificial Intelligence & Computing',
+      });
+
+      // Try Syncing to Supabase
+      syncStudentProfileToSupabase({
+        name: signUpName.trim(),
+        email: signUpEmail.trim(),
+        avatar_url: signUpAvatar,
+        student_id: generatedRollNo,
+        roll_no: generatedRollNo,
+        phone: signUpPhone.trim(),
+        enrolled_course: signUpCourse,
+        batch: `Batch ${new Date().getFullYear()}-A`,
+        department: 'School of Artificial Intelligence & Computing',
+      }).catch(() => {});
+
+      showToast('Account created & Student ID Card issued! 🎉', 'success');
+      router.push('/student#id_card');
     } catch (err) {
       showToast(getErrorMessage(err, 'Registration failed. Please try again.'), 'error');
     } finally {
@@ -163,41 +240,135 @@ export default function DoubleSliderAuth() {
       <div className={`auth-container w-full h-full ${isSignUp ? 'right-panel-active' : ''}`}>
 
         {/* SIGN UP FORM */}
-        <div className="form-container sign-up-container flex items-start sm:items-center justify-center p-0 sm:p-10">
-          <form onSubmit={handleSignUpSubmit} className="flex flex-col items-center justify-center w-full sm:max-w-sm text-center">
-            <h1 className="text-2xl sm:text-3xl font-black text-white mb-1 tracking-tight">Create Account</h1>
-            <p className="text-xs sm:text-sm text-[#50BED9] mb-4">Join Pakistan&apos;s premier learning platform</p>
+        <div className="form-container sign-up-container flex items-start sm:items-center justify-center p-2 sm:p-8 overflow-y-auto max-h-full">
+          <form onSubmit={handleSignUpSubmit} className="flex flex-col items-center justify-center w-full sm:max-w-sm text-center py-2">
+            <h1 className="text-xl sm:text-2xl font-black text-white mb-0.5 tracking-tight">Student Registration</h1>
+            <p className="text-[11px] sm:text-xs text-[#50BED9] mb-3">Join NextGen LMS & get your Student ID Card</p>
 
-            <div className="w-full space-y-3">
-              <div className="relative group text-left">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <User className="h-4 w-4 text-[#50BED9]" />
+            {/* Student Photo Upload with Live Preview */}
+            <div className="flex flex-col items-center mb-3">
+              <label className="relative group cursor-pointer">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl p-0.5 bg-gradient-to-tr from-[#50BED9] via-[#159BD7] to-[#33C6B6] shadow-lg shadow-[#50BED9]/25 group-hover:scale-105 transition-all">
+                  <div className="w-full h-full rounded-[14px] bg-[#151515] overflow-hidden flex flex-col items-center justify-center relative">
+                    {signUpAvatar ? (
+                      <img src={signUpAvatar} alt="Student Preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center text-[#50BED9] p-1">
+                        <Camera className="w-6 h-6 mb-0.5 group-hover:scale-110 transition-transform" />
+                        <span className="text-[8px] font-black text-[#D0D3D6] uppercase tracking-wider">Photo</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <input type="text" placeholder="Full Name" required className="block w-full pl-10 pr-4 py-2.5 bg-[#353638] border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#50BED9]/40 focus:border-[#50BED9]/60 font-semibold" />
+
+                {/* Floating upload badge */}
+                <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#50BED9] text-[#101010] flex items-center justify-center shadow-md border-2 border-[#101010]">
+                  {signUpAvatar ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Upload className="w-3 h-3" />}
+                </div>
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoUpload}
+                  className="hidden"
+                />
+              </label>
+              <span className="text-[9px] font-bold text-[#D0D3D6]/70 mt-1">
+                {signUpAvatar ? '✓ Photo selected for ID card' : 'Upload student picture (For ID Card)'}
+              </span>
+            </div>
+
+            <div className="w-full space-y-2 text-left">
+              {/* Full Name */}
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User className="h-3.5 w-3.5 text-[#50BED9]" />
+                </div>
+                <input
+                  type="text"
+                  value={signUpName}
+                  onChange={(e) => setSignUpName(e.target.value)}
+                  placeholder="Full Name"
+                  required
+                  className="block w-full pl-9 pr-3 py-2 bg-[#353638] border border-white/10 rounded-xl text-xs text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#50BED9]/40 font-semibold"
+                />
               </div>
-              <div className="relative group text-left">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <Mail className="h-4 w-4 text-[#50BED9]" />
+
+              {/* Email */}
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Mail className="h-3.5 w-3.5 text-[#50BED9]" />
                 </div>
-                <input type="email" placeholder="Email address" required className="block w-full pl-10 pr-4 py-2.5 bg-[#353638] border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#50BED9]/40 font-semibold" />
+                <input
+                  type="email"
+                  value={signUpEmail}
+                  onChange={(e) => setSignUpEmail(e.target.value)}
+                  placeholder="Email address"
+                  required
+                  className="block w-full pl-9 pr-3 py-2 bg-[#353638] border border-white/10 rounded-xl text-xs text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#50BED9]/40 font-semibold"
+                />
               </div>
-              <div className="relative group text-left">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <Lock className="h-4 w-4 text-[#50BED9]" />
+
+              {/* Course Track Select */}
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <BookOpen className="h-3.5 w-3.5 text-[#50BED9]" />
                 </div>
-                <input type={showSignUpPassword ? 'text' : 'password'} placeholder="Create Password" required className="block w-full pl-10 pr-10 py-2.5 bg-[#353638] border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#50BED9]/40 font-semibold" />
-                <button type="button" onClick={() => setShowSignUpPassword(p => !p)} className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#50BED9]/60 hover:text-white">
-                  {showSignUpPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                <select
+                  value={signUpCourse}
+                  onChange={(e) => setSignUpCourse(e.target.value)}
+                  className="block w-full pl-9 pr-3 py-2 bg-[#353638] border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-[#50BED9]/40 font-semibold appearance-none cursor-pointer"
+                >
+                  {COURSE_TRACKS.map((track) => (
+                    <option key={track} value={track} className="bg-[#151515] text-white">
+                      {track}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Password */}
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock className="h-3.5 w-3.5 text-[#50BED9]" />
+                </div>
+                <input
+                  type={showSignUpPassword ? 'text' : 'password'}
+                  value={signUpPassword}
+                  onChange={(e) => setSignUpPassword(e.target.value)}
+                  placeholder="Create Password"
+                  required
+                  className="block w-full pl-9 pr-9 py-2 bg-[#353638] border border-white/10 rounded-xl text-xs text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#50BED9]/40 font-semibold"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowSignUpPassword(p => !p)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#50BED9]/60 hover:text-white"
+                >
+                  {showSignUpPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
                 </button>
               </div>
             </div>
 
-            <button type="submit" disabled={isLoading} className="w-full mt-4 py-3 bg-[#50BED9] hover:bg-[#159BD7] text-white font-bold text-sm rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 shadow-md disabled:opacity-60">
-              {isLoading ? <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : (<>Create Account <ArrowRight className="w-4 h-4" /></>)}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full mt-3 py-2.5 bg-gradient-to-r from-[#50BED9] to-[#159BD7] hover:brightness-110 text-[#101010] font-black text-xs rounded-xl transition-all active:scale-95 flex items-center justify-center gap-1.5 shadow-lg shadow-[#50BED9]/25 disabled:opacity-60"
+            >
+              {isLoading ? (
+                <span className="w-4 h-4 border-2 border-[#101010] border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <>
+                  <span>Create Account & Issue ID Card</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </>
+              )}
             </button>
 
-            <div className="sm:hidden w-full text-center mt-4">
-              <div className="text-xs text-[#D0D3D6]">Already a member? <button type="button" onClick={togglePanel} className="text-[#50BED9] font-black underline">Sign in here</button></div>
+            <div className="sm:hidden w-full text-center mt-3">
+              <div className="text-[11px] text-[#D0D3D6]">
+                Already a member? <button type="button" onClick={togglePanel} className="text-[#50BED9] font-black underline">Sign in here</button>
+              </div>
             </div>
           </form>
         </div>

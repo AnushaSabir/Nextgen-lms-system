@@ -137,6 +137,13 @@ export interface RegisterInput extends LoginInput {
   teachingExperience?: string;
   joiningReason?: string;
   institutionId?: string;
+  avatar?: string;
+  studentId?: string;
+  rollNo?: string;
+  phone?: string;
+  enrolledCourse?: string;
+  batch?: string;
+  department?: string;
 }
 
 export const authApi = {

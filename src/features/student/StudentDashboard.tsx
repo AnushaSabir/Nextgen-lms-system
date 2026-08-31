@@ -43,8 +43,14 @@ import {
   Smile,
   ShieldCheck,
   HelpCircle,
-  ExternalLink
-, Mic, MicOff, Volume2, VolumeX} from 'lucide-react';
+  ExternalLink,
+  IdCard,
+  Mic, 
+  MicOff, 
+  Volume2, 
+  VolumeX
+} from 'lucide-react';
+import StudentIDCard from '@/components/student/StudentIDCard';
 
 interface TaskItem {
   id: string;
@@ -83,7 +89,7 @@ interface QuizItem {
   questions: QuizQuestion[];
 }
 
-type TabType = 'progress' | 'courses' | 'profile' | 'testing' | 'certificates' | 'chat';
+type TabType = 'progress' | 'courses' | 'profile' | 'testing' | 'certificates' | 'chat' | 'id_card';
 
 export function StudentDashboard() {
   const { user } = useAuthStore();
@@ -490,6 +496,8 @@ export function StudentDashboard() {
         setActiveTab('testing');
       } else if (hash === '#certificates') {
         setActiveTab('certificates');
+      } else if (hash === '#id_card' || hash === '#id-card' || hash === '#card' || hash === '#student-id') {
+        setActiveTab('id_card');
       } else if (hash === '#jarvis' || hash === '#ai' || hash === '#chat' || hash === '#ask-trainer' || hash === '#trainer') {
         setActiveTab('chat');
       } else if (!hash || hash === '#dashboard' || hash === '#overview' || hash === '#progress') {
@@ -819,14 +827,14 @@ export function StudentDashboard() {
             </p>
           </div>
 
-          {/* Quick Action Navigation Tabs — All 5 Sections */}
+          {/* Quick Action Navigation Tabs — All 6 Sections */}
           <div className="flex flex-wrap items-center gap-2 pt-6 mt-4 border-t border-white/20">
             <button
               onClick={() => handleTabChange('progress')}
               className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
                 activeTab === 'progress'
-                  ? 'bg-[#101010] border border-white/10 text-white text-white shadow-lg scale-105'
-                  : 'bg-[#353638] border border-white/10/50 text-white hover:bg-[#101010]/15 border border-white/10 text-white border border-[#151515]/20'
+                  ? 'bg-[#50BED9] text-[#101010] shadow-lg shadow-[#50BED9]/30 scale-105'
+                  : 'bg-[#353638] text-[#D0D3D6] hover:bg-[#50BED9]/15 hover:text-white border border-white/10'
               }`}
             >
               <BookOpen className="w-3.5 h-3.5" />
@@ -837,8 +845,8 @@ export function StudentDashboard() {
               onClick={() => handleTabChange('courses')}
               className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
                 activeTab === 'courses'
-                  ? 'bg-[#101010] border border-white/10 text-white text-white shadow-lg scale-105'
-                  : 'bg-[#353638] border border-white/10/50 text-white hover:bg-[#101010]/15 border border-white/10 text-white border border-[#151515]/20'
+                  ? 'bg-[#50BED9] text-[#101010] shadow-lg shadow-[#50BED9]/30 scale-105'
+                  : 'bg-[#353638] text-[#D0D3D6] hover:bg-[#50BED9]/15 hover:text-white border border-white/10'
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
@@ -849,8 +857,8 @@ export function StudentDashboard() {
               onClick={() => handleTabChange('testing')}
               className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
                 activeTab === 'testing'
-                  ? 'bg-[#101010] border border-white/10 text-white text-white shadow-lg scale-105'
-                  : 'bg-[#353638] border border-white/10/50 text-white hover:bg-[#101010]/15 border border-white/10 text-white border border-[#151515]/20'
+                  ? 'bg-[#50BED9] text-[#101010] shadow-lg shadow-[#50BED9]/30 scale-105'
+                  : 'bg-[#353638] text-[#D0D3D6] hover:bg-[#50BED9]/15 hover:text-white border border-white/10'
               }`}
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
@@ -861,8 +869,8 @@ export function StudentDashboard() {
               onClick={() => handleTabChange('certificates')}
               className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
                 activeTab === 'certificates'
-                  ? 'bg-[#101010] border border-white/10 text-white text-white shadow-lg scale-105'
-                  : 'bg-[#353638] border border-white/10/50 text-white hover:bg-[#101010]/15 border border-white/10 text-white border border-[#151515]/20'
+                  ? 'bg-[#50BED9] text-[#101010] shadow-lg shadow-[#50BED9]/30 scale-105'
+                  : 'bg-[#353638] text-[#D0D3D6] hover:bg-[#50BED9]/15 hover:text-white border border-white/10'
               }`}
             >
               <Trophy className="w-3.5 h-3.5" />
@@ -870,11 +878,24 @@ export function StudentDashboard() {
             </button>
 
             <button
+              onClick={() => handleTabChange('id_card')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
+                activeTab === 'id_card'
+                  ? 'bg-[#50BED9] text-[#101010] shadow-lg shadow-[#50BED9]/30 scale-105 font-black'
+                  : 'bg-[#353638] text-white hover:bg-[#50BED9]/15 hover:text-[#50BED9] border border-[#50BED9]/40'
+              }`}
+            >
+              <IdCard className="w-3.5 h-3.5 text-[#50BED9] group-hover:text-white" />
+              <span>Student ID Card</span>
+              <span className="px-1.5 py-0.5 rounded text-[9px] font-black bg-[#50BED9]/20 text-[#50BED9]">PDF</span>
+            </button>
+
+            <button
               onClick={() => handleTabChange('chat')}
               className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
                 activeTab === 'chat'
-                  ? 'bg-[#101010] border border-white/10 text-white text-white shadow-lg scale-105'
-                  : 'bg-[#353638] border border-white/10/50 text-white hover:bg-[#101010]/15 border border-white/10 text-white border border-[#151515]/20'
+                  ? 'bg-[#50BED9] text-[#101010] shadow-lg shadow-[#50BED9]/30 scale-105'
+                  : 'bg-[#353638] text-[#D0D3D6] hover:bg-[#50BED9]/15 hover:text-white border border-white/10'
               }`}
             >
               <MessageSquare className="w-3.5 h-3.5" />
@@ -898,17 +919,21 @@ export function StudentDashboard() {
 
             {/* Avatar Pill */}
             <div className="relative shrink-0">
-              <div className="w-14 h-14 rounded-2xl bg-[#353638] border border-white/10 flex items-center justify-center text-white text-xl font-black shadow-lg border-2 border-white/10">
-                {user?.name ? user.name.charAt(0).toUpperCase() : 'S'}
+              <div className="w-14 h-14 rounded-2xl bg-[#353638] border border-[#50BED9]/30 flex items-center justify-center text-white text-xl font-black shadow-lg overflow-hidden">
+                {user?.avatar ? (
+                  <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
+                ) : (
+                  <span>{user?.name ? user.name.charAt(0).toUpperCase() : 'S'}</span>
+                )}
               </div>
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white shadow-sm animate-pulse" />
+              <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#101010] shadow-sm animate-pulse" />
             </div>
           </div>
 
           {/* Mini Status Metrics */}
           <div className="grid grid-cols-2 gap-3 my-4">
-            <div className="p-3.5 rounded-2xl bg-[#101010]/60 border border-white/10 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-orange-100 border border-orange-300 flex items-center justify-center text-[#50BED9] shrink-0">
+            <div className="p-3.5 rounded-2xl bg-[#151515] border border-white/10 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-[#50BED9] shrink-0">
                 <Flame className="w-5 h-5 animate-bounce" />
               </div>
               <div>
@@ -917,28 +942,36 @@ export function StudentDashboard() {
               </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#101010]/60 border border-white/10 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-[#353638] text-[#50BED9] border border-white/10 border border-emerald-300 flex items-center justify-center text-white shrink-0">
+            <div className="p-3.5 rounded-2xl bg-[#151515] border border-white/10 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
                 <Award className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-[10px] uppercase font-black text-[#50BED9]">Scholar Tier</p>
-                <p className="text-lg font-black text-white leading-none mt-0.5">Level 3</p>
+                <p className="text-[10px] uppercase font-black text-[#50BED9]">Roll No</p>
+                <p className="text-xs font-black text-white leading-none mt-0.5 font-mono">{user?.studentId || 'NXG-2026-84920'}</p>
               </div>
             </div>
           </div>
 
-          {/* Review Schedule Button */}
-          <button
-            onClick={() => {
-              const el = document.getElementById('daily-tasks-section');
-              el?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="w-full py-3 px-4 rounded-2xl bg-[#353638] border border-white/10 hover:bg-[#50BED9] text-white text-xs font-black shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group active:scale-98"
-          >
-            <span>Review Today&apos;s Study Schedule</span>
-            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+          {/* Action Buttons: ID Card & Schedule */}
+          <div className="flex gap-2">
+            <button
+              onClick={() => handleTabChange('id_card')}
+              className="flex-1 py-3 px-3 rounded-2xl bg-gradient-to-r from-[#50BED9] to-[#159BD7] text-[#101010] font-black text-xs shadow-lg shadow-[#50BED9]/25 flex items-center justify-center gap-1.5 active:scale-98 hover:brightness-110 transition-all"
+            >
+              <IdCard className="w-4 h-4" />
+              <span>My Student ID Card</span>
+            </button>
+            <button
+              onClick={() => {
+                const el = document.getElementById('daily-tasks-section');
+                el?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="py-3 px-4 rounded-2xl bg-[#353638] text-white hover:bg-[#151515] hover:text-[#50BED9] text-xs font-bold transition-all border border-white/10 flex items-center justify-center gap-1 active:scale-98"
+            >
+              <span>Schedule</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1828,6 +1861,13 @@ export function StudentDashboard() {
                   </button>
                 </form>
               </div>
+            </div>
+          )}
+
+          {/* ════════ TAB 6: OFFICIAL NEXTGEN STUDENT ID CARD ════════ */}
+          {activeTab === 'id_card' && (
+            <div className="rounded-3xl p-4 sm:p-7 bg-[#101010] border border-[#50BED9]/30 shadow-2xl space-y-6">
+              <StudentIDCard />
             </div>
           )}
 

@@ -23,6 +23,15 @@ export interface User {
   marketplaceGigAccess?: boolean;
   avatar?: string | null;
   verifiedBadge?: boolean;
+  studentId?: string;
+  rollNo?: string;
+  phone?: string;
+  enrolledCourse?: string;
+  batch?: string;
+  department?: string;
+  issueDate?: string;
+  expiryDate?: string;
+  emergencyContact?: string;
 }
 
 export interface Course {

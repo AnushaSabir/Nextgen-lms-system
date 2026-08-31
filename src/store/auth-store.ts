@@ -89,20 +89,53 @@ export const useAuthStore = create<AuthState>((set) => ({
   register: async (input) => {
     set({ loading: true, error: null });
     try {
+      const generatedId = `NXG-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
+      const issueDate = new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' });
+      const nextYear = new Date();
+      nextYear.setFullYear(nextYear.getFullYear() + 1);
+      const expiryDate = nextYear.toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' });
+
       let session;
       try {
         session = await authApi.register(input);
       } catch {
         session = {
-          accessToken: 'mock-token',
+          accessToken: `mock-token-${Date.now()}`,
           user: {
-            id: 'demo-id',
+            id: `user-${Date.now()}`,
             name: input.name,
             email: input.email,
             role: (input.role || 'learner') as any,
+            avatar: input.avatar || null,
+            studentId: input.studentId || generatedId,
+            rollNo: input.rollNo || generatedId,
+            phone: input.phone || '',
+            enrolledCourse: input.enrolledCourse || 'Python for Data Science, Analytics & AI',
+            batch: input.batch || `Batch ${new Date().getFullYear()}-A`,
+            department: input.department || 'School of Artificial Intelligence & Computing',
+            issueDate,
+            expiryDate,
+            verifiedBadge: true,
           },
         };
       }
+
+      if (!session?.user?.studentId) {
+        session.user = {
+          ...session.user,
+          avatar: input.avatar || session.user.avatar || null,
+          studentId: input.studentId || generatedId,
+          rollNo: input.rollNo || generatedId,
+          phone: input.phone || '',
+          enrolledCourse: input.enrolledCourse || 'Python for Data Science, Analytics & AI',
+          batch: input.batch || `Batch ${new Date().getFullYear()}-A`,
+          department: input.department || 'School of Artificial Intelligence & Computing',
+          issueDate,
+          expiryDate,
+          verifiedBadge: true,
+        };
+      }
+
       window.localStorage.setItem('nextgen-lms_lms_token', session.accessToken);
       window.localStorage.setItem('nextgen-lms_lms_user', JSON.stringify(session.user));
       set({ token: session.accessToken, user: session.user, loading: false });
