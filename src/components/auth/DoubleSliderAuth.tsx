@@ -382,7 +382,7 @@ export default function DoubleSliderAuth() {
 
             {/* 1-CLICK QUICK ROLE LOGIN BUTTONS */}
             <div className="w-full mb-4 space-y-1.5 text-left">
-              <p className="text-[10px] font-black text-[#D0D3D6] uppercase tracking-wider mb-1">⚡ 1-Click Quick Demo Login:</p>
+              <p className="text-[10px] font-black text-[#D0D3D6] uppercase tracking-wider mb-1">⚡ 1-Click Quick Access:</p>
               <div className="grid grid-cols-3 gap-1.5">
                 <button
                   type="button"
@@ -397,10 +397,10 @@ export default function DoubleSliderAuth() {
                   type="button"
                   onClick={() => handleQuickLogin('admin')}
                   disabled={isLoading}
-                  className="p-2 rounded-xl bg-[#353638] border border-white/10 hover:bg-[#50BED9] hover:border-[#50BED9] text-white transition-all text-center group shadow-sm active:scale-95"
+                  className="p-2 rounded-xl bg-[#353638] border border-[#50BED9]/30 hover:bg-[#50BED9] hover:border-[#50BED9] text-white transition-all text-center group shadow-sm active:scale-95"
                 >
                   <ShieldCheck className="w-4 h-4 mx-auto text-[#50BED9] group-hover:text-white mb-0.5" />
-                  <span className="block text-[10px] font-black text-white leading-tight">Admin</span>
+                  <span className="block text-[10px] font-black text-white leading-tight">Admin (Anusha)</span>
                 </button>
                 <button
                   type="button"

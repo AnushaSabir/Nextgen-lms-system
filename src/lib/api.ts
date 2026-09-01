@@ -55,29 +55,71 @@ function attachInterceptors(instance: AxiosInstance) {
         console.warn('Network Error caught. Using mock fallback for:', url);
         
         if (url.includes('graphql') || (error.config?.baseURL && error.config.baseURL.includes('graphql'))) {
+          let parsedInput: any = {};
+          try {
+            const body = typeof reqData === 'string' ? JSON.parse(reqData) : reqData;
+            parsedInput = body?.variables?.input || {};
+          } catch {}
+
           if (reqData.includes('Login')) {
-            let role = 'learner';
-            let name = 'Ali Hassan';
-            if (reqData.toLowerCase().includes('admin')) {
+            let role = parsedInput.role || 'learner';
+            let name = parsedInput.name || (parsedInput.email ? parsedInput.email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()) : 'Student');
+            const em = (parsedInput.email || reqData).toLowerCase();
+            if (em.includes('admin')) {
               role = 'admin';
-              name = 'Master Admin';
-            } else if (reqData.toLowerCase().includes('school') || reqData.toLowerCase().includes('institute')) {
+              name = 'Anusha Sabir (Admin)';
+            } else if (em.includes('school') || em.includes('institute')) {
               role = 'institute_head';
               name = 'Beaconhouse Admin';
             }
             return Promise.resolve({
               data: {
                 data: {
-                  login: { access_token: 'mock-token', user: { id: '1', name, email: 'demo@nextgen.lms', role } }
+                  login: {
+                    access_token: `mock-token-${Date.now()}`,
+                    user: {
+                      id: `user-${Date.now()}`,
+                      name,
+                      email: parsedInput.email || 'student@nextgen.lms',
+                      role,
+                      avatar: parsedInput.avatar || null,
+                      studentId: parsedInput.studentId || `NXG-2026-${Math.floor(10000 + Math.random() * 90000)}`,
+                      rollNo: parsedInput.rollNo || `NXG-2026-${Math.floor(10000 + Math.random() * 90000)}`,
+                      enrolledCourse: parsedInput.enrolledCourse || 'Python for Data Science, Analytics & AI',
+                      batch: 'Batch 2026-A',
+                      department: 'School of Artificial Intelligence & Computing',
+                    }
+                  }
                 }
               }
             });
           }
           if (reqData.includes('Register')) {
+            const registeredName = parsedInput.name || 'NextGen Student';
+            const registeredEmail = parsedInput.email || 'student@nextgen.lms';
+            const genId = parsedInput.studentId || parsedInput.rollNo || `NXG-2026-${Math.floor(10000 + Math.random() * 90000)}`;
             return Promise.resolve({
               data: {
                 data: {
-                  register: { access_token: 'mock-token', user: { id: '1', name: 'Demo User', email: 'demo@nextgen.lms', role: 'learner' } }
+                  register: {
+                    access_token: `mock-token-${Date.now()}`,
+                    user: {
+                      id: `user-${Date.now()}`,
+                      name: registeredName,
+                      email: registeredEmail,
+                      role: parsedInput.role || 'learner',
+                      avatar: parsedInput.avatar || null,
+                      studentId: genId,
+                      rollNo: genId,
+                      phone: parsedInput.phone || '',
+                      enrolledCourse: parsedInput.enrolledCourse || 'Python for Data Science, Analytics & AI',
+                      batch: parsedInput.batch || 'Batch 2026-A',
+                      department: parsedInput.department || 'School of Artificial Intelligence & Computing',
+                      issueDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' }),
+                      expiryDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' }),
+                      verifiedBadge: true,
+                    }
+                  }
                 }
               }
             });

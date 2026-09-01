@@ -38,37 +38,48 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ loading: true, error: null });
     try {
       let role = 'learner';
-      let name = 'Ali Hassan';
+      let name = input.email ? input.email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()) : 'Student';
       const em = input.email.toLowerCase();
       if (em.includes('admin')) {
         role = 'admin';
-        name = 'Master Admin';
+        name = 'Anusha Sabir';
       } else if (em.includes('school') || em.includes('institute')) {
         role = 'institute_head';
-        name = 'Beaconhouse Admin';
+        name = 'Beaconhouse Principal';
       }
 
       let session;
       try {
         session = await authApi.login(input);
       } catch {
-        // Fallback demo session
+        const storedUser = typeof window !== 'undefined' ? window.localStorage.getItem('nextgen-lms_lms_user') : null;
+        let parsed = storedUser ? JSON.parse(storedUser) : null;
+        const genId = `NXG-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
+
         session = {
-          accessToken: 'mock-token',
-          user: {
-            id: 'demo-id',
-            name,
+          accessToken: `token-${Date.now()}`,
+          user: (parsed && parsed.email?.toLowerCase() === em) ? parsed : {
+            id: `user-${Date.now()}`,
+            name: parsed?.name || name,
             email: input.email,
             role: role as any,
+            avatar: parsed?.avatar || null,
+            studentId: parsed?.studentId || genId,
+            rollNo: parsed?.rollNo || genId,
+            enrolledCourse: parsed?.enrolledCourse || 'Python for Data Science, Analytics & AI',
+            batch: parsed?.batch || 'Batch 2026-A',
+            department: 'School of Artificial Intelligence & Computing',
+            issueDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' }),
+            expiryDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' }),
           },
         };
       }
 
       if (!session?.user) {
         session = {
-          accessToken: 'mock-token',
+          accessToken: `token-${Date.now()}`,
           user: {
-            id: 'demo-id',
+            id: `user-${Date.now()}`,
             name,
             email: input.email,
             role: role as any,
