@@ -1,12 +1,15 @@
 -- =========================================================================
--- NEXTGEN LMS - SUPABASE DATABASE SCHEMA
--- Execute this SQL script in your Supabase Dashboard -> SQL Editor
+-- NEXTGEN LMS - SUPABASE COMPLETE DATABASE SCHEMA
+-- Copy and paste this ENTIRE file into Supabase Dashboard -> SQL Editor -> Run
 -- =========================================================================
+
+-- Enable UUID extension if not already enabled
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- 1. Create PROFILES Table (Students, Admins, Trainers)
 CREATE TABLE IF NOT EXISTS public.profiles (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  user_id UUID,
   full_name TEXT NOT NULL,
   email TEXT UNIQUE NOT NULL,
   role TEXT NOT NULL DEFAULT 'learner', -- 'learner', 'admin', 'trainer', 'institute_head'
@@ -17,7 +20,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   enrolled_course TEXT,
   batch TEXT DEFAULT 'Batch 2026-A',
   department TEXT DEFAULT 'School of Artificial Intelligence & Computing',
-  issue_date TEXT DEFAULT CURRENT_DATE,
+  issue_date TEXT DEFAULT to_char(CURRENT_DATE, 'Mon YYYY'),
   expiry_date TEXT,
   verified_badge BOOLEAN DEFAULT true,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
@@ -64,7 +67,22 @@ CREATE TABLE IF NOT EXISTS public.certificates (
   pdf_url TEXT
 );
 
--- 5. Storage Buckets (Avatars & ID Cards)
+-- 5. Create ATTENDANCE Table (For QR Scanner System)
+CREATE TABLE IF NOT EXISTS public.attendance (
+  id BIGSERIAL PRIMARY KEY,
+  student_id TEXT NOT NULL,
+  student_name TEXT NOT NULL,
+  student_email TEXT,
+  enrolled_course TEXT,
+  batch TEXT DEFAULT 'Batch 2026-A',
+  session_label TEXT NOT NULL,
+  scanned_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+  marked_by TEXT DEFAULT 'QR Scanner',
+  status TEXT DEFAULT 'present', -- 'present', 'late', 'absent'
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- 6. Storage Buckets (Avatars & ID Cards)
 INSERT INTO storage.buckets (id, name, public)
 VALUES ('student_avatars', 'student_avatars', true)
 ON CONFLICT (id) DO NOTHING;
@@ -73,13 +91,25 @@ INSERT INTO storage.buckets (id, name, public)
 VALUES ('certificates', 'certificates', true)
 ON CONFLICT (id) DO NOTHING;
 
--- 6. Enable Row Level Security (RLS)
+-- 7. Enable Row Level Security (RLS)
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.courses ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.enrollments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.certificates ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.attendance ENABLE ROW LEVEL SECURITY;
 
--- 7. RLS Policies (Allow Public Read for LMS, Authenticated Writes)
+-- 8. Clean up existing policies to avoid conflict
+DROP POLICY IF EXISTS "Public profiles are viewable by everyone." ON public.profiles;
+DROP POLICY IF EXISTS "Users can insert their own profile." ON public.profiles;
+DROP POLICY IF EXISTS "Users can update their own profile." ON public.profiles;
+DROP POLICY IF EXISTS "Courses are viewable by everyone." ON public.courses;
+DROP POLICY IF EXISTS "Enrollments are viewable by everyone." ON public.enrollments;
+DROP POLICY IF EXISTS "Enrollments can be inserted." ON public.enrollments;
+DROP POLICY IF EXISTS "Certificates are viewable by everyone." ON public.certificates;
+DROP POLICY IF EXISTS "Attendance is viewable by everyone." ON public.attendance;
+DROP POLICY IF EXISTS "Attendance can be inserted." ON public.attendance;
+
+-- 9. Create RLS Policies
 CREATE POLICY "Public profiles are viewable by everyone." ON public.profiles
   FOR SELECT USING (true);
 
@@ -90,10 +120,23 @@ CREATE POLICY "Users can update their own profile." ON public.profiles
   FOR UPDATE USING (true);
 
 CREATE POLICY "Courses are viewable by everyone." ON public.courses
-  FOR SELECT USING (true);
+  FOR ALL USING (true);
 
-CREATE POLICY "Enrollments are viewable by enrolled student." ON public.enrollments
-  FOR SELECT USING (true);
+CREATE POLICY "Enrollments are viewable by everyone." ON public.enrollments
+  FOR ALL USING (true);
 
-CREATE POLICY "Enrollments can be inserted by student." ON public.enrollments
-  FOR INSERT WITH CHECK (true);
+CREATE POLICY "Certificates are viewable by everyone." ON public.certificates
+  FOR ALL USING (true);
+
+CREATE POLICY "Attendance is viewable by everyone." ON public.attendance
+  FOR ALL USING (true);
+
+-- Storage bucket access policies
+DROP POLICY IF EXISTS "Public can upload avatars" ON storage.objects;
+DROP POLICY IF EXISTS "Public can view avatars" ON storage.objects;
+
+CREATE POLICY "Public can upload avatars" ON storage.objects
+  FOR INSERT WITH CHECK (bucket_id = 'student_avatars');
+
+CREATE POLICY "Public can view avatars" ON storage.objects
+  FOR SELECT USING (bucket_id = 'student_avatars');
