@@ -26,7 +26,8 @@ import {
   Building2,
   MessageSquare,
   DollarSign,
-  Award
+  Award,
+  ScanLine
 } from 'lucide-react';
 import { useState, useCallback, useEffect } from 'react';
 
@@ -45,6 +46,7 @@ const navByArea: Record<string, NavItem[]> = {
     { label: 'Users & Roles', href: '/admin/dashboard#users', icon: Users },
     { label: 'Financials', href: '/admin/dashboard#finance', icon: DollarSign },
     { label: 'Analytics', href: '/admin/dashboard#analytics', icon: BarChart3 },
+    { label: 'QR Attendance', href: '/admin/dashboard#attendance', icon: ScanLine },
     { label: 'JARVIS AI Engine', href: '/admin/dashboard#jarvis', icon: Sparkles },
   ],
   Student: [

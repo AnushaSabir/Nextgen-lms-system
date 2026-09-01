@@ -9,9 +9,10 @@ import {
   Activity, Globe, Lock, Unlock, RefreshCw, Check, X, Award,
   GraduationCap, FileText, UserPlus, Layers, Server, Video,
   Upload, Play, FolderPlus, Link as LinkIcon, Sparkle, Bot
-, Mic, MicOff, Volume2, VolumeX} from 'lucide-react';
+ , Mic, MicOff, Volume2, VolumeX, ScanLine} from 'lucide-react';
+import QRAttendanceScanner from '@/components/admin/QRAttendanceScanner';
 
-type AdminTab = 'overview' | 'studio' | 'courses' | 'users' | 'institutes' | 'finance' | 'analytics' | 'jarvis';
+type AdminTab = 'overview' | 'studio' | 'courses' | 'users' | 'institutes' | 'finance' | 'analytics' | 'attendance' | 'jarvis';
 
 const PLATFORM_STATS = {
   totalLearners: 1480,
@@ -242,6 +243,7 @@ export function AdminDashboard() {
       else if (h === '#users') setActiveTab('users');
       else if (h === '#finance') setActiveTab('finance');
       else if (h === '#analytics') setActiveTab('analytics');
+      else if (h === '#attendance') setActiveTab('attendance');
       else if (h === '#jarvis') setActiveTab('jarvis');
       else setActiveTab('overview');
     };
@@ -1329,6 +1331,11 @@ export function AdminDashboard() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* ─── ATTENDANCE TAB ─── */}
+      {activeTab === 'attendance' && (
+        <QRAttendanceScanner />
       )}
 
     </div>
