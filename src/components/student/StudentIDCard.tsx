@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import {
   Download, QrCode, ShieldCheck, CheckCircle2, RotateCw,
-  User, Award, Copy, IdCard, Printer, Zap, FileText
+  User, Award, Copy, IdCard, Printer, Zap, FileText, Sparkles
 } from 'lucide-react';
 import { useAuthStore } from '@/store/auth-store';
 import { useToastStore } from '@/store/toast-store';
@@ -56,12 +56,12 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
   const barcodePattern = generateBarcodePattern(studentId);
 
   /**
-   * High-Precision PDF Download
-   * Uses dedicated 1012x638 (CR80 300 DPI) capture elements for 100% exact fit without any borders or scaling distortion
+   * Mobile-Friendly High-Precision PDF Download
+   * Uses Blob URL to guarantee direct file saving on mobile and desktop
    */
   const handleDownloadPDF = async (mode: 'both' | 'front' | 'back' = 'both') => {
     setIsDownloading(true);
-    showToast('Generating Vector-Quality ID Card PDF...', 'info');
+    showToast('Preparing your Student ID Card PDF...', 'info');
 
     try {
       const jsPDFModule = await import('jspdf');
@@ -84,10 +84,10 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
 
       if (mode === 'both' || mode === 'front') {
         const frontCanvas = await html2canvas(frontEl, {
-          scale: 2,
+          scale: 2.5,
           useCORS: true,
           allowTaint: true,
-          backgroundColor: '#0c1017',
+          backgroundColor: '#ffffff',
           logging: false,
           width: 1012,
           height: 638,
@@ -102,10 +102,10 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
 
       if (mode === 'both' || mode === 'back') {
         const backCanvas = await html2canvas(backEl, {
-          scale: 2,
+          scale: 2.5,
           useCORS: true,
           allowTaint: true,
-          backgroundColor: '#0c1017',
+          backgroundColor: '#ffffff',
           logging: false,
           width: 1012,
           height: 638,
@@ -118,10 +118,25 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
         }
       }
 
-      pdf.save(`${studentName.replace(/\s+/g, '_')}_${studentId}_NextGen_StudentID.pdf`);
-      showToast('✅ High-Resolution ID Card PDF downloaded successfully!', 'success');
+      // Universal Mobile & Desktop Blob Download
+      const fileName = `${studentName.replace(/\s+/g, '_')}_${studentId}_NextGen_StudentID.pdf`;
+      const pdfBlob = pdf.output('blob');
+      const blobUrl = URL.createObjectURL(pdfBlob);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = blobUrl;
+      downloadLink.download = fileName;
+      downloadLink.target = '_blank';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+
+      setTimeout(() => {
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(blobUrl);
+      }, 3000);
+
+      showToast('✅ ID Card PDF saved to your device Downloads/Files!', 'success');
     } catch (error) {
-      console.error('PDF error:', error);
+      console.error('PDF download error:', error);
       showToast('Generating PNG image fallback...', 'info');
       await handleDownloadPNG();
     } finally {
@@ -130,7 +145,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
   };
 
   /**
-   * PNG Image Download
+   * PNG Image Download (Mobile Compatible)
    */
   const handleDownloadPNG = async () => {
     setIsDownloading(true);
@@ -142,23 +157,32 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
       if (!targetEl) throw new Error('Element not found');
 
       const canvas = await html2canvas(targetEl, {
-        scale: 2,
+        scale: 2.5,
         useCORS: true,
         allowTaint: true,
-        backgroundColor: '#0c1017',
+        backgroundColor: '#ffffff',
         logging: false,
         width: 1012,
         height: 638,
       });
 
       const side = isFlipped ? 'Back_QR' : 'Front';
-      const link = document.createElement('a');
-      link.download = `${studentName.replace(/\s+/g, '_')}_${studentId}_ID_${side}.png`;
-      link.href = canvas.toDataURL('image/png');
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      showToast(`✅ ID Card (${side}) image downloaded!`, 'success');
+      const fileName = `${studentName.replace(/\s+/g, '_')}_${studentId}_ID_${side}.png`;
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = fileName;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(() => {
+          document.body.removeChild(link);
+          URL.revokeObjectURL(blobUrl);
+        }, 3000);
+        showToast(`✅ ID Card (${side}) saved to your device!`, 'success');
+      }, 'image/png');
     } catch (error) {
       showToast('Download failed. Please try again.', 'error');
     } finally {
@@ -178,15 +202,15 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
       {/* Header Banner */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#151515] border border-[#353638] p-5 rounded-2xl shadow-xl">
         <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#50BED9] to-[#159BD7] flex items-center justify-center text-[#101010] shadow-lg shadow-[#50BED9]/30 shrink-0">
-            <IdCard className="w-6 h-6" />
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#0a2540] to-[#159BD7] border border-[#50BED9]/40 flex items-center justify-center text-white shadow-lg shadow-[#159BD7]/25 shrink-0">
+            <IdCard className="w-6 h-6 text-[#50BED9]" />
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-lg font-black text-white">Official NextGen Student ID Card</h2>
-              <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                CR80 Standard (85.6mm × 53.98mm)
+              <h2 className="text-lg font-black text-white">NextGen Official Student ID Card</h2>
+              <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-[#50BED9]/10 border border-[#50BED9]/30 text-[#50BED9] flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#50BED9] animate-pulse" />
+                CR80 Official Edition
               </span>
             </div>
             <p className="text-xs text-[#D0D3D6]/70 mt-0.5">
@@ -202,7 +226,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-[#353638] hover:bg-[#50BED9] hover:text-[#101010] text-white text-xs font-bold transition-all shadow-md"
           >
             <RotateCw className="w-3.5 h-3.5" />
-            <span>{isFlipped ? 'View Front' : 'View Back (QR)'}</span>
+            <span>{isFlipped ? 'View Front Side' : 'View Back (QR)'}</span>
           </button>
 
           <button
@@ -215,7 +239,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             ) : (
               <>
                 <Download className="w-3.5 h-3.5" />
-                <span>Download PDF (2-Sided)</span>
+                <span>Save to Phone / PDF</span>
               </>
             )}
           </button>
@@ -231,193 +255,191 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
         </div>
       </div>
 
-      {/* ── INTERACTIVE ON-SCREEN CARD PREVIEW ── */}
+      {/* ── INTERACTIVE ON-SCREEN CARD PREVIEW (MODERN CLEAN NAVY/WHITE DESIGN) ── */}
       <div className="flex justify-center items-center py-2">
 
         {/* FRONT SIDE (ON SCREEN) */}
         {!isFlipped ? (
           <div
-            className="relative w-full max-w-[560px] rounded-3xl overflow-hidden shadow-2xl text-white flex flex-col justify-between select-none"
+            className="relative w-full max-w-[560px] rounded-[1.75rem] overflow-hidden shadow-2xl flex flex-col justify-between select-none bg-white border border-[#0a2540]/20"
             style={{
               aspectRatio: '85.6 / 53.98',
-              background: 'linear-gradient(135deg, #090d15 0%, #101010 45%, #131d27 100%)',
-              border: '2px solid rgba(80,190,217,0.5)',
-              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8), 0 0 40px rgba(80,190,217,0.2)',
+              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.6), 0 0 35px rgba(21,155,215,0.2)',
               padding: '4.5% 5%',
             }}
           >
-            {/* Ambient glows */}
-            <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-[#50BED9]/20 via-[#159BD7]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-[#33C6B6]/15 to-transparent rounded-full blur-3xl pointer-events-none" />
+            {/* Top Left Modern Wavy Header Curves */}
+            <svg className="absolute top-0 left-0 w-[55%] h-[32%] pointer-events-none z-0" viewBox="0 0 300 100" preserveAspectRatio="none">
+              <path d="M 0,0 L 300,0 C 230,50 140,20 0,90 Z" fill="#0a2540" />
+              <path d="M 0,0 L 260,0 C 190,45 110,15 0,75 Z" fill="#159BD7" opacity="0.8" />
+              <path d="M 0,0 L 210,0 C 150,35 80,10 0,55 Z" fill="#50BED9" opacity="0.9" />
+            </svg>
 
-            {/* Grid security pattern */}
-            <div
-              className="absolute inset-0 opacity-[0.035] pointer-events-none"
-              style={{ backgroundImage: 'radial-gradient(#50BED9 1px, transparent 1px)', backgroundSize: '10px 10px' }}
-            />
+            {/* Bottom Right Modern Wavy Curves */}
+            <svg className="absolute bottom-0 right-0 w-[55%] h-[28%] pointer-events-none z-0" viewBox="0 0 300 100" preserveAspectRatio="none">
+              <path d="M 300,100 L 0,100 C 70,50 160,80 300,10 Z" fill="#0a2540" />
+              <path d="M 300,100 L 40,100 C 110,55 190,85 300,25 Z" fill="#159BD7" opacity="0.8" />
+              <path d="M 300,100 L 90,100 C 150,65 220,90 300,45 Z" fill="#50BED9" opacity="0.9" />
+            </svg>
 
-            {/* TOP BAR */}
-            <div className="relative z-10 flex items-center justify-between pb-2 border-b border-[#353638]/80">
-              <div className="relative h-6 sm:h-7 w-36 sm:w-44">
-                <Image src="/logo.png" alt="NextGen LMS" fill sizes="200px" className="object-contain object-left" />
-              </div>
-              <div className="text-right">
-                <span className="block text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-[#50BED9]">
-                  STUDENT IDENTITY CARD
-                </span>
-                <span className="block text-[7px] sm:text-[9px] font-bold text-[#D0D3D6]/60">
-                  Academic Year {new Date().getFullYear()}
+            {/* Top Right Punch Hole / Lanyard Slot Indicator */}
+            <div className="absolute top-3 right-4 w-7 h-7 rounded-full bg-gradient-to-br from-gray-300 to-gray-400/80 shadow-inner flex items-center justify-center border border-gray-400 z-10 opacity-70" />
+
+            {/* TOP HEADER */}
+            <div className="relative z-10 flex items-center justify-center pt-1 pb-1">
+              <div className="flex flex-col items-center text-center">
+                <div className="relative h-6 sm:h-7 w-32 sm:w-40">
+                  <Image src="/logo.png" alt="NextGen LMS" fill sizes="200px" className="object-contain" />
+                </div>
+                <span className="text-[7.5px] sm:text-[9px] font-black uppercase tracking-[2px] text-[#0a2540] mt-0.5">
+                  LEARNING MANAGEMENT SYSTEM
                 </span>
               </div>
             </div>
 
-            {/* MIDDLE: Photo + Info */}
-            <div className="relative z-10 flex gap-3 sm:gap-4 items-center flex-1 py-2">
+            {/* CARD TITLE */}
+            <div className="relative z-10 pl-2">
+              <h3 className="text-xs sm:text-sm font-black uppercase tracking-[1.5px] text-[#0a2540]">
+                STUDENT CARD
+              </h3>
+            </div>
 
-              {/* Photo */}
-              <div className="flex flex-col items-center shrink-0 w-20 sm:w-28">
-                <div className="w-full aspect-square rounded-xl p-[2.5px] bg-gradient-to-tr from-[#50BED9] via-[#159BD7] to-[#33C6B6] shadow-lg">
-                  <div className="w-full h-full rounded-[10px] overflow-hidden bg-[#1a1a1a] flex items-center justify-center relative">
+            {/* MIDDLE BODY: Details on Left + Photo on Right */}
+            <div className="relative z-10 flex items-center justify-between gap-3 px-2 flex-1 py-1">
+
+              {/* Left Details */}
+              <div className="flex-1 min-w-0 space-y-1 sm:space-y-1.5 text-[8px] sm:text-[10.5px]">
+                <div className="flex items-baseline gap-2">
+                  <span className="w-24 sm:w-28 font-black uppercase text-[#0a2540] shrink-0">STUDENT NAME</span>
+                  <span className="font-bold text-[#0a2540]">:</span>
+                  <span className="font-black text-[#0a2540] uppercase truncate">{studentName}</span>
+                </div>
+
+                <div className="flex items-baseline gap-2">
+                  <span className="w-24 sm:w-28 font-black uppercase text-[#0a2540] shrink-0">STUDENT ID</span>
+                  <span className="font-bold text-[#0a2540]">:</span>
+                  <span className="font-black font-mono text-[#159BD7]">{studentId}</span>
+                </div>
+
+                <div className="flex items-baseline gap-2">
+                  <span className="w-24 sm:w-28 font-black uppercase text-[#0a2540] shrink-0">COURSE</span>
+                  <span className="font-bold text-[#0a2540]">:</span>
+                  <span className="font-bold text-[#0a2540] leading-tight break-words">{enrolledCourse}</span>
+                </div>
+
+                <div className="flex items-baseline gap-2">
+                  <span className="w-24 sm:w-28 font-black uppercase text-[#0a2540] shrink-0">BATCH</span>
+                  <span className="font-bold text-[#0a2540]">:</span>
+                  <span className="font-bold text-gray-700">{batch}</span>
+                </div>
+
+                <div className="flex items-baseline gap-2">
+                  <span className="w-24 sm:w-28 font-black uppercase text-[#0a2540] shrink-0">VALID THRU</span>
+                  <span className="font-bold text-[#0a2540]">:</span>
+                  <span className="font-bold text-gray-700">{expiryDate}</span>
+                </div>
+              </div>
+
+              {/* Right Photo (Curved Rounded Frame matching reference image) */}
+              <div className="shrink-0 flex flex-col items-center">
+                <div className="w-20 sm:w-28 aspect-[3/3.8] rounded-2xl p-[3px] bg-gradient-to-br from-[#0a2540] via-[#159BD7] to-[#0a2540] shadow-xl">
+                  <div className="w-full h-full rounded-[13px] overflow-hidden bg-gray-100 flex items-center justify-center relative">
                     {avatarUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={avatarUrl} alt={studentName} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-[#353638] text-[#50BED9]">
+                      <div className="w-full h-full flex items-center justify-center bg-[#0a2540] text-white">
                         <User className="w-10 h-10" />
                       </div>
                     )}
                   </div>
                 </div>
-                <span className="text-[7px] sm:text-[8px] font-black tracking-widest text-[#33C6B6] uppercase mt-1">
-                  VERIFIED
-                </span>
-              </div>
-
-              {/* Info */}
-              <div className="flex-1 min-w-0 space-y-1 sm:space-y-1.5">
-                <div>
-                  <span className="block text-[7px] sm:text-[8px] font-bold text-[#D0D3D6]/50 uppercase tracking-wider">Student Name</span>
-                  <h3 className="text-xs sm:text-base font-black text-white tracking-tight leading-tight truncate">{studentName}</h3>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <span className="block text-[6px] sm:text-[7px] font-bold text-[#D0D3D6]/50 uppercase tracking-wider">Roll No / ID</span>
-                    <p className="text-[8px] sm:text-[10px] font-black text-[#50BED9] tracking-wider font-mono leading-tight">{studentId}</p>
-                  </div>
-                  <div>
-                    <span className="block text-[6px] sm:text-[7px] font-bold text-[#D0D3D6]/50 uppercase tracking-wider">Batch</span>
-                    <p className="text-[8px] sm:text-[10px] font-bold text-white leading-tight">{batch}</p>
-                  </div>
-                </div>
-                <div>
-                  <span className="block text-[6px] sm:text-[7px] font-bold text-[#D0D3D6]/50 uppercase tracking-wider">Enrolled Program</span>
-                  <p className="text-[7.5px] sm:text-[9.5px] font-bold text-[#33C6B6] leading-tight break-words">{enrolledCourse}</p>
-                </div>
-                <div className="flex justify-between text-[7px] sm:text-[8px] font-semibold text-[#D0D3D6]/60">
-                  <span>Issued: <strong className="text-white">{issueDate}</strong></span>
-                  <span>Valid Thru: <strong className="text-[#50BED9]">{expiryDate}</strong></span>
-                </div>
               </div>
             </div>
 
-            {/* FOOTER BAR */}
-            <div className="relative z-10 flex items-center justify-between pt-2 border-t border-[#353638]/70">
-              {/* EMV Chip */}
-              <div className="flex items-center gap-1.5">
-                <div
-                  className="rounded-[3px] opacity-90 border border-amber-500/50 flex flex-col justify-between p-[3px] shrink-0 w-7 h-4.5"
-                  style={{ background: 'linear-gradient(135deg, #f59e0b, #fbbf24, #d97706)' }}
-                >
-                  <div className="w-full h-px bg-amber-800/40" />
-                  <div className="w-full h-px bg-amber-800/40" />
-                  <div className="w-full h-px bg-amber-800/40" />
-                </div>
-                <span className="text-[6px] sm:text-[7px] font-mono text-[#50BED9] hidden sm:block">RFID/NFC</span>
-              </div>
-
+            {/* FOOTER BAR: Barcode on Left + Signature on Right */}
+            <div className="relative z-10 flex items-end justify-between px-2 pt-1">
               {/* Barcode */}
-              <div className="flex flex-col items-center">
-                <div className="flex items-center gap-[1px] h-3 sm:h-4 opacity-90">
+              <div className="flex flex-col">
+                <div className="flex items-center gap-[1px] h-3 sm:h-4">
                   {barcodePattern.map((w, i) => (
-                    <span key={i} className="bg-white h-full inline-block rounded-[0.5px]" style={{ width: `${w}px` }} />
+                    <span key={i} className="bg-[#0a2540] h-full inline-block rounded-[0.5px]" style={{ width: `${w}px` }} />
                   ))}
                 </div>
-                <span className="text-[5px] sm:text-[6px] font-mono text-[#D0D3D6]/60 tracking-widest mt-0.5">{studentId}</span>
+                <span className="text-[5.5px] sm:text-[6.5px] font-mono font-bold text-gray-600 tracking-widest mt-0.5">{studentId}</span>
               </div>
 
               {/* Signature */}
               <div className="text-right">
-                <p className="text-[8px] sm:text-[10px] font-black italic text-[#50BED9] font-serif">Anusha Sabir</p>
-                <p className="text-[6px] sm:text-[7px] uppercase font-bold text-[#D0D3D6]/60">Directed by Anusha Sabir</p>
+                <p className="text-[8px] sm:text-[10px] font-black italic text-[#0a2540] font-serif">Anusha Sabir</p>
+                <p className="text-[5.5px] sm:text-[6.5px] uppercase font-black text-gray-600">Directed by Anusha Sabir</p>
               </div>
             </div>
           </div>
         ) : (
           /* BACK SIDE (ON SCREEN) */
           <div
-            className="relative w-full max-w-[560px] rounded-3xl overflow-hidden shadow-2xl text-white flex flex-col justify-between select-none"
+            className="relative w-full max-w-[560px] rounded-[1.75rem] overflow-hidden shadow-2xl flex flex-col justify-between select-none bg-white border border-[#0a2540]/20"
             style={{
               aspectRatio: '85.6 / 53.98',
-              background: 'linear-gradient(135deg, #090d15 0%, #151515 50%, #0d141e 100%)',
-              border: '2px solid rgba(80,190,217,0.5)',
-              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8), 0 0 40px rgba(80,190,217,0.15)',
+              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.6), 0 0 35px rgba(21,155,215,0.15)',
               padding: '4.5% 5%',
             }}
           >
             {/* Magnetic Stripe */}
-            <div className="absolute top-[8%] left-0 right-0 h-[17%] bg-[#050505] border-y border-white/5 pointer-events-none" />
+            <div className="absolute top-[8%] left-0 right-0 h-[17%] bg-[#0a2540] border-y border-[#159BD7]/30 pointer-events-none" />
 
-            {/* Grid pattern */}
-            <div
-              className="absolute inset-0 opacity-[0.03] pointer-events-none"
-              style={{ backgroundImage: 'radial-gradient(#50BED9 1px, transparent 1px)', backgroundSize: '10px 10px' }}
-            />
+            {/* Top and Bottom Wavy Curves */}
+            <svg className="absolute bottom-0 left-0 w-[50%] h-[25%] pointer-events-none z-0" viewBox="0 0 300 100" preserveAspectRatio="none">
+              <path d="M 0,100 L 300,100 C 230,50 140,80 0,10 Z" fill="#0a2540" />
+              <path d="M 0,100 L 260,100 C 190,55 110,85 0,25 Z" fill="#159BD7" opacity="0.8" />
+            </svg>
 
             {/* Content below stripe */}
             <div className="relative z-10 flex h-full pt-[22%] gap-4 items-center">
 
               {/* QR Code Container */}
               <div className="flex flex-col items-center justify-center shrink-0 w-24 sm:w-28">
-                <div className="p-2 bg-white rounded-xl shadow-xl border-2 border-[#50BED9]/40">
+                <div className="p-2 bg-white rounded-xl shadow-xl border-2 border-[#0a2540]">
                   <QRCodeSVG
                     value={qrPayload}
                     size={80}
                     level="H"
                     includeMargin={false}
                     bgColor="#ffffff"
-                    fgColor="#101010"
+                    fgColor="#0a2540"
                   />
                 </div>
-                <span className="text-[7px] sm:text-[8px] font-black text-[#50BED9] mt-1 text-center uppercase tracking-wide">
+                <span className="text-[7px] sm:text-[8px] font-black text-[#0a2540] mt-1 text-center uppercase tracking-wide">
                   SCAN FOR ATTENDANCE
                 </span>
               </div>
 
               {/* Terms & Verification Info */}
               <div className="flex-1 flex flex-col justify-between h-full py-1 space-y-1">
-                <div className="space-y-1">
-                  <span className="block text-[7px] sm:text-[8px] font-black uppercase text-[#50BED9] tracking-wider">
+                <div className="space-y-1 text-gray-800">
+                  <span className="block text-[7.5px] sm:text-[8.5px] font-black uppercase text-[#0a2540] tracking-wider">
                     NextGen Official Student Pass
                   </span>
-                  <p className="text-[6.5px] sm:text-[7.5px] text-[#D0D3D6]/70 leading-relaxed">
-                    • This ID card is non-transferable and remains property of NextGen LMS.
+                  <p className="text-[6.5px] sm:text-[7.5px] text-gray-600 leading-relaxed">
+                    • This ID card is property of NextGen LMS and non-transferable.
                   </p>
-                  <p className="text-[6.5px] sm:text-[7.5px] text-[#D0D3D6]/70 leading-relaxed">
-                    • Required for live lectures, attendance verification, and exam validation.
+                  <p className="text-[6.5px] sm:text-[7.5px] text-gray-600 leading-relaxed">
+                    • Required for online attendance, lab access, and examinations.
                   </p>
-                  <p className="text-[6.5px] sm:text-[7.5px] text-[#D0D3D6]/70 leading-relaxed">
+                  <p className="text-[6.5px] sm:text-[7.5px] text-gray-600 leading-relaxed">
                     • In case of loss, report immediately to student administration.
                   </p>
                 </div>
 
-                <div className="pt-1 border-t border-[#353638]/60 flex items-end justify-between">
+                <div className="pt-1 border-t border-gray-300 flex items-end justify-between">
                   <div>
-                    <span className="block text-[6px] sm:text-[7px] font-bold text-[#D0D3D6]/50">Online Verification:</span>
-                    <p className="text-[7px] sm:text-[8px] font-mono font-bold text-[#50BED9]">nextgen-lms.edu/verify/{studentId}</p>
+                    <span className="block text-[6px] sm:text-[7px] font-bold text-gray-500">Online Verification:</span>
+                    <p className="text-[7px] sm:text-[8px] font-mono font-bold text-[#159BD7]">nextgen-lms.edu/verify/{studentId}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-[7px] sm:text-[8px] font-serif font-black italic text-white">Anusha Sabir</p>
-                    <p className="text-[5.5px] sm:text-[6.5px] text-[#D0D3D6]/50 uppercase">Authorized Officer</p>
+                    <p className="text-[7px] sm:text-[8px] font-serif font-black italic text-[#0a2540]">Anusha Sabir</p>
+                    <p className="text-[5.5px] sm:text-[6.5px] text-gray-500 uppercase font-bold">Authorized Officer</p>
                   </div>
                 </div>
               </div>
@@ -430,18 +452,17 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
       {/* ── 100% ACCURATE 1012x638 PIXEL-PERFECT EXPORT TEMPLATES (OFFSCREEN) ── */}
       <div style={{ position: 'fixed', left: '-9999px', top: '0', zIndex: -100, pointerEvents: 'none' }}>
         
-        {/* EXACT FRONT SIDE (1012px × 638px) */}
+        {/* EXACT FRONT SIDE (1012px × 638px - Clean Modern Navy/White Edition) */}
         <div
           id="pdf-export-front"
           style={{
             width: '1012px',
             height: '638px',
-            background: 'linear-gradient(135deg, #090d15 0%, #101010 45%, #131d27 100%)',
-            border: '4px solid #50BED9',
+            background: '#ffffff',
             boxSizing: 'border-box',
             padding: '36px 44px',
             fontFamily: 'system-ui, -apple-system, sans-serif',
-            color: '#ffffff',
+            color: '#0a2540',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
@@ -449,113 +470,116 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             overflow: 'hidden',
           }}
         >
-          {/* Top Bar */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid rgba(53,54,56,0.9)', paddingBottom: '16px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="NextGen LMS" style={{ height: '42px', objectFit: 'contain' }} />
-            </div>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '17px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '2px', color: '#50BED9' }}>
-                STUDENT IDENTITY CARD
-              </div>
-              <div style={{ fontSize: '13px', fontWeight: '700', color: 'rgba(208,211,214,0.7)', marginTop: '2px' }}>
-                Academic Year {new Date().getFullYear()}
-              </div>
+          {/* Top Left Wavy SVG Curves */}
+          <svg style={{ position: 'absolute', top: 0, left: 0, width: '450px', height: '140px', pointerEvents: 'none' }} viewBox="0 0 450 140" preserveAspectRatio="none">
+            <path d="M 0,0 L 450,0 C 330,80 180,30 0,130 Z" fill="#0a2540" />
+            <path d="M 0,0 L 390,0 C 280,70 140,25 0,110 Z" fill="#159BD7" opacity="0.85" />
+            <path d="M 0,0 L 320,0 C 220,55 100,20 0,85 Z" fill="#50BED9" opacity="0.9" />
+          </svg>
+
+          {/* Bottom Right Wavy SVG Curves */}
+          <svg style={{ position: 'absolute', bottom: 0, right: 0, width: '450px', height: '130px', pointerEvents: 'none' }} viewBox="0 0 450 130" preserveAspectRatio="none">
+            <path d="M 450,130 L 0,130 C 120,60 270,110 450,15 Z" fill="#0a2540" />
+            <path d="M 450,130 L 60,130 C 170,70 310,115 450,35 Z" fill="#159BD7" opacity="0.85" />
+            <path d="M 450,130 L 130,130 C 230,85 350,120 450,60 Z" fill="#50BED9" opacity="0.9" />
+          </svg>
+
+          {/* Punch Hole */}
+          <div style={{ position: 'absolute', top: '24px', right: '36px', width: '32px', height: '32px', borderRadius: '50%', background: '#d1d5db', border: '2px solid #9ca3af', opacity: 0.6 }} />
+
+          {/* Top Bar Logo */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', zIndex: 10 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="NextGen LMS" style={{ height: '44px', objectFit: 'contain' }} />
+            <div style={{ fontSize: '11px', fontWeight: '900', letterSpacing: '2.5px', textTransform: 'uppercase', color: '#0a2540', marginTop: '2px' }}>
+              LEARNING MANAGEMENT SYSTEM
             </div>
           </div>
 
+          {/* Card Heading */}
+          <div style={{ fontSize: '20px', fontWeight: '900', letterSpacing: '2px', textTransform: 'uppercase', color: '#0a2540', zIndex: 10, marginTop: '2px' }}>
+            STUDENT CARD
+          </div>
+
           {/* Middle Body */}
-          <div style={{ display: 'flex', gap: '32px', alignItems: 'center', flex: 1, padding: '16px 0' }}>
-            {/* Photo */}
-            <div style={{ width: '175px', textAlign: 'center', flexShrink: 0 }}>
-              <div style={{ width: '175px', height: '175px', borderRadius: '20px', padding: '4px', background: 'linear-gradient(135deg, #50BED9, #159BD7, #33C6B6)', boxSizing: 'border-box' }}>
-                <div style={{ width: '100%', height: '100%', borderRadius: '16px', overflow: 'hidden', background: '#1a1a1a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {avatarUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={avatarUrl} alt={studentName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  ) : (
-                    <div style={{ fontSize: '48px', color: '#50BED9', fontWeight: '900' }}>{studentName.charAt(0)}</div>
-                  )}
-                </div>
+          <div style={{ display: 'flex', gap: '32px', alignItems: 'center', flex: 1, padding: '12px 0', zIndex: 10 }}>
+            {/* Left Info Table */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px', fontSize: '16px' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '14px' }}>
+                <span style={{ width: '170px', fontWeight: '900', textTransform: 'uppercase', color: '#0a2540', letterSpacing: '0.5px' }}>STUDENT NAME</span>
+                <span style={{ fontWeight: '900', color: '#0a2540' }}>:</span>
+                <span style={{ fontWeight: '900', color: '#0a2540', fontSize: '22px', letterSpacing: '-0.5px' }}>{studentName}</span>
               </div>
-              <div style={{ fontSize: '13px', fontWeight: '900', letterSpacing: '3px', color: '#33C6B6', textTransform: 'uppercase', marginTop: '10px' }}>
-                ★ VERIFIED ★
+
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '14px' }}>
+                <span style={{ width: '170px', fontWeight: '900', textTransform: 'uppercase', color: '#0a2540', letterSpacing: '0.5px' }}>STUDENT ID</span>
+                <span style={{ fontWeight: '900', color: '#0a2540' }}>:</span>
+                <span style={{ fontWeight: '900', fontFamily: 'monospace', color: '#159BD7', fontSize: '19px' }}>{studentId}</span>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '14px' }}>
+                <span style={{ width: '170px', fontWeight: '900', textTransform: 'uppercase', color: '#0a2540', letterSpacing: '0.5px' }}>COURSE</span>
+                <span style={{ fontWeight: '900', color: '#0a2540' }}>:</span>
+                <span style={{ fontWeight: '800', color: '#0a2540', fontSize: enrolledCourse.length > 32 ? '15px' : '17px', lineHeight: '1.25' }}>{enrolledCourse}</span>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '14px' }}>
+                <span style={{ width: '170px', fontWeight: '900', textTransform: 'uppercase', color: '#0a2540', letterSpacing: '0.5px' }}>BATCH</span>
+                <span style={{ fontWeight: '900', color: '#0a2540' }}>:</span>
+                <span style={{ fontWeight: '700', color: '#374151' }}>{batch}</span>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '14px' }}>
+                <span style={{ width: '170px', fontWeight: '900', textTransform: 'uppercase', color: '#0a2540', letterSpacing: '0.5px' }}>VALID THRU</span>
+                <span style={{ fontWeight: '900', color: '#0a2540' }}>:</span>
+                <span style={{ fontWeight: '700', color: '#374151' }}>{expiryDate}</span>
               </div>
             </div>
 
-            {/* Info Grid */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div>
-                <div style={{ fontSize: '12px', fontWeight: '700', color: 'rgba(208,211,214,0.6)', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Student Name</div>
-                <div style={{ fontSize: '28px', fontWeight: '900', color: '#ffffff', letterSpacing: '-0.5px', marginTop: '2px' }}>{studentName}</div>
-              </div>
-
-              <div style={{ display: 'flex', gap: '24px' }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(208,211,214,0.6)', textTransform: 'uppercase', letterSpacing: '1px' }}>Roll No / ID</div>
-                  <div style={{ fontSize: '18px', fontWeight: '900', color: '#50BED9', fontFamily: 'monospace', marginTop: '2px' }}>{studentId}</div>
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(208,211,214,0.6)', textTransform: 'uppercase', letterSpacing: '1px' }}>Batch</div>
-                  <div style={{ fontSize: '18px', fontWeight: '800', color: '#ffffff', marginTop: '2px' }}>{batch}</div>
-                </div>
-              </div>
-
-              <div>
-                <div style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(208,211,214,0.6)', textTransform: 'uppercase', letterSpacing: '1px' }}>Enrolled Track</div>
-                <div style={{ fontSize: enrolledCourse.length > 32 ? '15px' : '17px', fontWeight: '800', color: '#33C6B6', marginTop: '2px', lineHeight: '1.25', wordBreak: 'break-word' }}>{enrolledCourse}</div>
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: '700', color: 'rgba(208,211,214,0.7)', marginTop: '4px' }}>
-                <div>Issued: <span style={{ color: '#ffffff' }}>{issueDate}</span></div>
-                <div>Valid Thru: <span style={{ color: '#50BED9' }}>{expiryDate}</span></div>
+            {/* Right Photo Frame (Curved border like reference image) */}
+            <div style={{ width: '200px', height: '240px', borderRadius: '26px', padding: '4px', background: 'linear-gradient(135deg, #0a2540, #159BD7, #0a2540)', boxSizing: 'border-box', flexShrink: 0, boxShadow: '0 12px 28px rgba(0,0,0,0.2)' }}>
+              <div style={{ width: '100%', height: '100%', borderRadius: '22px', overflow: 'hidden', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {avatarUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={avatarUrl} alt={studentName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  <div style={{ fontSize: '64px', color: '#0a2540', fontWeight: '900' }}>{studentName.charAt(0)}</div>
+                )}
               </div>
             </div>
           </div>
 
           {/* Footer Bar */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '2px solid rgba(53,54,56,0.9)', paddingTop: '14px' }}>
-            {/* EMV Chip */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div style={{ width: '48px', height: '34px', borderRadius: '6px', background: 'linear-gradient(135deg, #f59e0b, #fbbf24, #d97706)', border: '1.5px solid #fbbf24', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', padding: '4px', boxSizing: 'border-box' }}>
-                <div style={{ width: '100%', height: '1px', background: 'rgba(120,53,15,0.5)' }} />
-                <div style={{ width: '100%', height: '1px', background: 'rgba(120,53,15,0.5)' }} />
-                <div style={{ width: '100%', height: '1px', background: 'rgba(120,53,15,0.5)' }} />
-              </div>
-              <span style={{ fontSize: '12px', fontFamily: 'monospace', color: '#50BED9', fontWeight: '700' }}>RFID 2.4GHz</span>
-            </div>
-
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', zIndex: 10, paddingTop: '10px' }}>
             {/* Barcode */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ display: 'flex', gap: '2px', height: '24px', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', gap: '2px', height: '28px', alignItems: 'center' }}>
                 {barcodePattern.map((w, i) => (
-                  <span key={i} style={{ width: `${w * 2}px`, height: '100%', background: '#ffffff', display: 'inline-block', borderRadius: '1px' }} />
+                  <span key={i} style={{ width: `${w * 2}px`, height: '100%', background: '#0a2540', display: 'inline-block', borderRadius: '1px' }} />
                 ))}
               </div>
-              <span style={{ fontSize: '10px', fontFamily: 'monospace', color: 'rgba(208,211,214,0.8)', letterSpacing: '3px', marginTop: '3px' }}>{studentId}</span>
+              <span style={{ fontSize: '11px', fontFamily: 'monospace', color: '#4b5563', letterSpacing: '3px', marginTop: '3px' }}>{studentId}</span>
             </div>
 
             {/* Signature */}
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '18px', fontWeight: '900', fontStyle: 'italic', color: '#50BED9', fontFamily: 'Georgia, serif' }}>Anusha Sabir</div>
-              <div style={{ fontSize: '10px', fontWeight: '800', textTransform: 'uppercase', color: 'rgba(208,211,214,0.7)', letterSpacing: '1px' }}>Directed by Anusha Sabir</div>
+              <div style={{ fontSize: '20px', fontWeight: '900', fontStyle: 'italic', color: '#0a2540', fontFamily: 'Georgia, serif' }}>Anusha Sabir</div>
+              <div style={{ fontSize: '11px', fontWeight: '900', textTransform: 'uppercase', color: '#4b5563', letterSpacing: '1px' }}>Directed by Anusha Sabir</div>
             </div>
           </div>
         </div>
 
-        {/* EXACT BACK SIDE (1012px × 638px) */}
+        {/* EXACT BACK SIDE (1012px × 638px - Matching Clean Edition) */}
         <div
           id="pdf-export-back"
           style={{
             width: '1012px',
             height: '638px',
-            background: 'linear-gradient(135deg, #090d15 0%, #151515 50%, #0d141e 100%)',
-            border: '4px solid #50BED9',
+            background: '#ffffff',
             boxSizing: 'border-box',
             padding: '36px 44px',
             fontFamily: 'system-ui, -apple-system, sans-serif',
-            color: '#ffffff',
+            color: '#0a2540',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
@@ -564,26 +588,32 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
           }}
         >
           {/* Magnetic Stripe */}
-          <div style={{ position: 'absolute', top: '32px', left: 0, right: 0, height: '90px', background: '#050505', borderTop: '2px solid rgba(255,255,255,0.1)', borderBottom: '2px solid rgba(255,255,255,0.1)' }} />
+          <div style={{ position: 'absolute', top: '34px', left: 0, right: 0, height: '90px', background: '#0a2540', borderTop: '2px solid #159BD7', borderBottom: '2px solid #159BD7' }} />
 
           {/* Top spacer */}
           <div style={{ height: '90px' }} />
 
+          {/* Bottom Wavy Curves */}
+          <svg style={{ position: 'absolute', bottom: 0, left: 0, width: '450px', height: '130px', pointerEvents: 'none' }} viewBox="0 0 450 130" preserveAspectRatio="none">
+            <path d="M 0,130 L 450,130 C 330,60 180,110 0,15 Z" fill="#0a2540" />
+            <path d="M 0,130 L 390,130 C 280,70 140,115 0,35 Z" fill="#159BD7" opacity="0.85" />
+          </svg>
+
           {/* Content Area */}
-          <div style={{ display: 'flex', gap: '36px', alignItems: 'center', flex: 1, paddingTop: '20px' }}>
+          <div style={{ display: 'flex', gap: '36px', alignItems: 'center', flex: 1, paddingTop: '20px', zIndex: 10 }}>
             {/* QR Code */}
             <div style={{ width: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
-              <div style={{ background: '#ffffff', padding: '12px', borderRadius: '18px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)', border: '2px solid #50BED9' }}>
+              <div style={{ background: '#ffffff', padding: '12px', borderRadius: '18px', boxShadow: '0 10px 25px rgba(0,0,0,0.15)', border: '3px solid #0a2540' }}>
                 <QRCodeSVG
                   value={qrPayload}
                   size={150}
                   level="H"
                   includeMargin={false}
                   bgColor="#ffffff"
-                  fgColor="#101010"
+                  fgColor="#0a2540"
                 />
               </div>
-              <div style={{ fontSize: '11px', fontWeight: '900', color: '#50BED9', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '10px' }}>
+              <div style={{ fontSize: '12px', fontWeight: '900', color: '#0a2540', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '10px' }}>
                 SCAN FOR ATTENDANCE
               </div>
             </div>
@@ -591,28 +621,28 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             {/* Terms & Info */}
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', padding: '8px 0' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <div style={{ fontSize: '15px', fontWeight: '900', color: '#50BED9', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
+                <div style={{ fontSize: '16px', fontWeight: '900', color: '#0a2540', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
                   NextGen LMS Official Student Pass
                 </div>
-                <div style={{ fontSize: '13px', color: 'rgba(208,211,214,0.8)', lineHeight: '1.5' }}>
-                  • This card is non-transferable and remains property of NextGen LMS.
+                <div style={{ fontSize: '13px', color: '#4b5563', lineHeight: '1.5' }}>
+                  • This ID card is property of NextGen LMS and non-transferable.
                 </div>
-                <div style={{ fontSize: '13px', color: 'rgba(208,211,214,0.8)', lineHeight: '1.5' }}>
-                  • Required for live lectures, attendance verification, and exam validation.
+                <div style={{ fontSize: '13px', color: '#4b5563', lineHeight: '1.5' }}>
+                  • Required for live lectures, online attendance, and examinations.
                 </div>
-                <div style={{ fontSize: '13px', color: 'rgba(208,211,214,0.8)', lineHeight: '1.5' }}>
+                <div style={{ fontSize: '13px', color: '#4b5563', lineHeight: '1.5' }}>
                   • In case of loss, report immediately to student administration.
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '2px solid rgba(53,54,56,0.8)', paddingTop: '12px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '2px solid #e5e7eb', paddingTop: '12px' }}>
                 <div>
-                  <div style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(208,211,214,0.6)' }}>Online Verification:</div>
-                  <div style={{ fontSize: '14px', fontFamily: 'monospace', fontWeight: '900', color: '#50BED9', marginTop: '2px' }}>nextgen-lms.edu/verify/{studentId}</div>
+                  <div style={{ fontSize: '11px', fontWeight: '700', color: '#6b7280' }}>Online Verification:</div>
+                  <div style={{ fontSize: '14px', fontFamily: 'monospace', fontWeight: '900', color: '#159BD7', marginTop: '2px' }}>nextgen-lms.edu/verify/{studentId}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: '16px', fontWeight: '900', fontStyle: 'italic', color: '#ffffff', fontFamily: 'Georgia, serif' }}>Anusha Sabir</div>
-                  <div style={{ fontSize: '10px', fontWeight: '800', textTransform: 'uppercase', color: 'rgba(208,211,214,0.6)' }}>Authorized Officer</div>
+                  <div style={{ fontSize: '18px', fontWeight: '900', fontStyle: 'italic', color: '#0a2540', fontFamily: 'Georgia, serif' }}>Anusha Sabir</div>
+                  <div style={{ fontSize: '10px', fontWeight: '900', textTransform: 'uppercase', color: '#6b7280' }}>Authorized Officer</div>
                 </div>
               </div>
             </div>
