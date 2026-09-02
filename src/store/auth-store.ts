@@ -37,9 +37,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   login: async (input) => {
     set({ loading: true, error: null });
     try {
+      const em = input.email.trim().toLowerCase();
       let role = 'learner';
-      let name = input.email ? input.email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()) : 'Student';
-      const em = input.email.toLowerCase();
+      let name = 'Student';
+
       if (em.includes('admin')) {
         role = 'admin';
         name = 'Anusha Sabir';
@@ -52,22 +53,40 @@ export const useAuthStore = create<AuthState>((set) => ({
       try {
         session = await authApi.login(input);
       } catch {
-        const storedUser = typeof window !== 'undefined' ? window.localStorage.getItem('nextgen-lms_lms_user') : null;
-        let parsed = storedUser ? JSON.parse(storedUser) : null;
-        const genId = `NXG-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
+        // Look up registered students registry
+        let foundStudent: any = null;
+        if (typeof window !== 'undefined') {
+          try {
+            const registry = JSON.parse(window.localStorage.getItem('nextgen_registered_students') || '[]');
+            foundStudent = registry.find((s: any) => s.email?.toLowerCase() === em);
+            if (!foundStudent) {
+              const lastUser = window.localStorage.getItem('nextgen-lms_lms_user');
+              const parsedLast = lastUser ? JSON.parse(lastUser) : null;
+              if (parsedLast && parsedLast.email?.toLowerCase() === em) {
+                foundStudent = parsedLast;
+              }
+            }
+          } catch {}
+        }
 
+        // If not admin/school and not registered, require registration
+        if (role === 'learner' && !foundStudent) {
+          throw new Error('No registered account found with this email. Please click "Register" to create your student account!');
+        }
+
+        const genId = `NXG-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
         session = {
           accessToken: `token-${Date.now()}`,
-          user: (parsed && parsed.email?.toLowerCase() === em) ? parsed : {
+          user: foundStudent || {
             id: `user-${Date.now()}`,
-            name: parsed?.name || name,
+            name: name,
             email: input.email,
             role: role as any,
-            avatar: parsed?.avatar || null,
-            studentId: parsed?.studentId || genId,
-            rollNo: parsed?.rollNo || genId,
-            enrolledCourse: parsed?.enrolledCourse || 'Python for Data Science, Analytics & AI',
-            batch: parsed?.batch || 'Batch 2026-A',
+            avatar: null,
+            studentId: genId,
+            rollNo: genId,
+            enrolledCourse: 'Artificial Intelligence (AI) Advance',
+            batch: 'Batch 2026-A',
             department: 'School of Artificial Intelligence & Computing',
             issueDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' }),
             expiryDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' }),
@@ -76,15 +95,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       }
 
       if (!session?.user) {
-        session = {
-          accessToken: `token-${Date.now()}`,
-          user: {
-            id: `user-${Date.now()}`,
-            name,
-            email: input.email,
-            role: role as any,
-          },
-        };
+        throw new Error('Authentication failed. Please verify your credentials.');
       }
 
       window.localStorage.setItem('nextgen-lms_lms_token', session.accessToken);
@@ -106,45 +117,45 @@ export const useAuthStore = create<AuthState>((set) => ({
       nextYear.setFullYear(nextYear.getFullYear() + 1);
       const expiryDate = nextYear.toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' });
 
+      const registeredUser: User = {
+        id: `user-${Date.now()}`,
+        name: input.name.trim(),
+        email: input.email.trim(),
+        role: (input.role || 'learner') as any,
+        avatar: input.avatar || null,
+        studentId: input.studentId || generatedId,
+        rollNo: input.rollNo || generatedId,
+        phone: input.phone || '',
+        enrolledCourse: input.enrolledCourse || 'Artificial Intelligence (AI) Advance',
+        batch: input.batch || `Batch ${new Date().getFullYear()}-A`,
+        department: input.department || 'School of Artificial Intelligence & Computing',
+        issueDate,
+        expiryDate,
+        verifiedBadge: true,
+      };
+
+      // Save into registered students list
+      if (typeof window !== 'undefined') {
+        try {
+          const registry = JSON.parse(window.localStorage.getItem('nextgen_registered_students') || '[]');
+          const updated = registry.filter((s: any) => s.email?.toLowerCase() !== input.email.trim().toLowerCase());
+          updated.push(registeredUser);
+          window.localStorage.setItem('nextgen_registered_students', JSON.stringify(updated));
+        } catch {}
+      }
+
       let session;
       try {
         session = await authApi.register(input);
       } catch {
         session = {
           accessToken: `mock-token-${Date.now()}`,
-          user: {
-            id: `user-${Date.now()}`,
-            name: input.name,
-            email: input.email,
-            role: (input.role || 'learner') as any,
-            avatar: input.avatar || null,
-            studentId: input.studentId || generatedId,
-            rollNo: input.rollNo || generatedId,
-            phone: input.phone || '',
-            enrolledCourse: input.enrolledCourse || 'Python for Data Science, Analytics & AI',
-            batch: input.batch || `Batch ${new Date().getFullYear()}-A`,
-            department: input.department || 'School of Artificial Intelligence & Computing',
-            issueDate,
-            expiryDate,
-            verifiedBadge: true,
-          },
+          user: registeredUser,
         };
       }
 
       if (!session?.user?.studentId) {
-        session.user = {
-          ...session.user,
-          avatar: input.avatar || session.user.avatar || null,
-          studentId: input.studentId || generatedId,
-          rollNo: input.rollNo || generatedId,
-          phone: input.phone || '',
-          enrolledCourse: input.enrolledCourse || 'Python for Data Science, Analytics & AI',
-          batch: input.batch || `Batch ${new Date().getFullYear()}-A`,
-          department: input.department || 'School of Artificial Intelligence & Computing',
-          issueDate,
-          expiryDate,
-          verifiedBadge: true,
-        };
+        session.user = registeredUser;
       }
 
       window.localStorage.setItem('nextgen-lms_lms_token', session.accessToken);

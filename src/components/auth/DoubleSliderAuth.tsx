@@ -11,9 +11,10 @@ import { useAuthStore } from '@/store/auth-store';
 import { syncStudentProfileToSupabase } from '@/lib/supabaseClient';
 
 const COURSE_TRACKS = [
+  'Artificial Intelligence (AI) Advance',
   'Python for Data Science, Analytics & AI',
   'Next.js 15 & React 19 Full-Stack Mastery',
-  'Applied Generative AI & Large Language Models',
+  'Prompt Engineering & Generative AI',
   'Graphic Design Mastery (Photoshop & Figma)',
   'Digital Marketing & Social Growth',
   'Data Science with Python & Power BI',
@@ -380,43 +381,39 @@ export default function DoubleSliderAuth() {
             <h1 className="text-2xl sm:text-3xl font-black text-white mb-1 tracking-tight">Sign In</h1>
             <p className="text-xs sm:text-sm text-[#50BED9] mb-4">Choose your role or enter credentials</p>
 
-            {/* 1-CLICK QUICK ROLE LOGIN BUTTONS */}
-            <div className="w-full mb-4 space-y-1.5 text-left">
-              <p className="text-[10px] font-black text-[#D0D3D6] uppercase tracking-wider mb-1">⚡ 1-Click Quick Access:</p>
-              <div className="grid grid-cols-3 gap-1.5">
+            {/* QUICK ROLE & REGISTRATION NOTICE */}
+            <div className="w-full mb-3 space-y-2 text-left">
+              <div className="p-2.5 rounded-xl bg-gradient-to-r from-[#50BED9]/10 to-[#159BD7]/10 border border-[#50BED9]/30 flex items-center justify-between gap-2">
+                <div className="text-left">
+                  <p className="text-[10px] font-black text-white">New Student?</p>
+                  <p className="text-[9px] text-[#D0D3D6]/70">Register first to issue your official ID Card</p>
+                </div>
                 <button
                   type="button"
-                  onClick={() => handleQuickLogin('student')}
-                  disabled={isLoading}
-                  className="p-2 rounded-xl bg-[#353638] border border-white/10 hover:bg-[#50BED9] hover:border-[#50BED9] text-white transition-all text-center group shadow-sm active:scale-95"
+                  onClick={() => setIsSignUp(true)}
+                  className="px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-[#50BED9] to-[#159BD7] text-[#101010] text-[10px] font-black hover:brightness-110 shadow-sm shrink-0"
                 >
-                  <GraduationCap className="w-4 h-4 mx-auto text-[#50BED9] group-hover:text-white mb-0.5" />
-                  <span className="block text-[10px] font-black text-white leading-tight">Student</span>
+                  Register Now →
                 </button>
+              </div>
+
+              {/* Admin Direct Access */}
+              <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => handleQuickLogin('admin')}
                   disabled={isLoading}
-                  className="p-2 rounded-xl bg-[#353638] border border-[#50BED9]/30 hover:bg-[#50BED9] hover:border-[#50BED9] text-white transition-all text-center group shadow-sm active:scale-95"
+                  className="flex-1 p-2 rounded-xl bg-[#353638] border border-[#50BED9]/30 hover:bg-[#50BED9] hover:border-[#50BED9] text-white transition-all text-center group shadow-sm active:scale-95 flex items-center justify-center gap-1.5"
                 >
-                  <ShieldCheck className="w-4 h-4 mx-auto text-[#50BED9] group-hover:text-white mb-0.5" />
-                  <span className="block text-[10px] font-black text-white leading-tight">Admin (Anusha)</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleQuickLogin('school')}
-                  disabled={isLoading}
-                  className="p-2 rounded-xl bg-[#353638] border border-white/10 hover:bg-[#50BED9] hover:border-[#50BED9] text-white transition-all text-center group shadow-sm active:scale-95"
-                >
-                  <Building2 className="w-4 h-4 mx-auto text-[#50BED9] group-hover:text-white mb-0.5" />
-                  <span className="block text-[10px] font-black text-white leading-tight">Institute</span>
+                  <ShieldCheck className="w-4 h-4 text-[#50BED9] group-hover:text-white" />
+                  <span className="text-[10px] font-black text-white">Direct Admin Access (Anusha)</span>
                 </button>
               </div>
             </div>
 
             <div className="relative w-full flex items-center justify-center my-2">
               <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/10"></div></div>
-              <div className="relative bg-[#101010] px-2 text-[10px] font-bold text-[#50BED9] uppercase">or manual login</div>
+              <div className="relative bg-[#101010] px-2 text-[10px] font-bold text-[#50BED9] uppercase">registered student login</div>
             </div>
 
             {/* MANUAL LOGIN FORM */}

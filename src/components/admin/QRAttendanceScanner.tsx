@@ -390,9 +390,10 @@ export default function QRAttendanceScanner() {
                   className="w-full px-4 py-2.5 rounded-xl bg-[#101010] border border-[#353638] text-white font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-[#50BED9]/30"
                 >
                   <option value="">Select Course</option>
+                  <option value="Artificial Intelligence (AI) Advance">Artificial Intelligence (AI) Advance</option>
                   <option value="Python for Data Science, Analytics & AI">Python for Data Science</option>
                   <option value="Next.js 15 & React 19 Full-Stack Mastery">Web Development</option>
-                  <option value="Applied Generative AI & LLMs">Artificial Intelligence</option>
+                  <option value="Prompt Engineering & Generative AI">Prompt Engineering & AI</option>
                   <option value="Graphic Design Mastery">Graphic Design</option>
                   <option value="Digital Marketing & Social Growth">Digital Marketing</option>
                   <option value="Data Science with Python & Power BI">Data Science</option>

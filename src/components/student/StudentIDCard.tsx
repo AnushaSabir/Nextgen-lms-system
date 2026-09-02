@@ -25,7 +25,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
   const studentName = user?.name || 'NextGen Student';
   const studentEmail = user?.email || 'student@nextgen.lms';
   const studentId = user?.studentId || user?.rollNo || `NXG-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
-  const enrolledCourse = user?.enrolledCourse || 'Python for Data Science, Analytics & AI';
+  const enrolledCourse = user?.enrolledCourse || 'Artificial Intelligence (AI) Advance';
   const batch = user?.batch || `Batch ${new Date().getFullYear()}-A`;
   const issueDate = user?.issueDate || new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' });
   const expiryDate = user?.expiryDate || new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' });
@@ -311,7 +311,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
                 </div>
                 <div>
                   <span className="block text-[6px] sm:text-[7px] font-bold text-[#D0D3D6]/50 uppercase tracking-wider">Enrolled Program</span>
-                  <p className="text-[7.5px] sm:text-[9.5px] font-bold text-[#33C6B6] leading-tight truncate">{enrolledCourse}</p>
+                  <p className="text-[7.5px] sm:text-[9.5px] font-bold text-[#33C6B6] leading-tight break-words">{enrolledCourse}</p>
                 </div>
                 <div className="flex justify-between text-[7px] sm:text-[8px] font-semibold text-[#D0D3D6]/60">
                   <span>Issued: <strong className="text-white">{issueDate}</strong></span>
@@ -504,7 +504,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
 
               <div>
                 <div style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(208,211,214,0.6)', textTransform: 'uppercase', letterSpacing: '1px' }}>Enrolled Track</div>
-                <div style={{ fontSize: '17px', fontWeight: '800', color: '#33C6B6', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{enrolledCourse}</div>
+                <div style={{ fontSize: enrolledCourse.length > 32 ? '15px' : '17px', fontWeight: '800', color: '#33C6B6', marginTop: '2px', lineHeight: '1.25', wordBreak: 'break-word' }}>{enrolledCourse}</div>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: '700', color: 'rgba(208,211,214,0.7)', marginTop: '4px' }}>
