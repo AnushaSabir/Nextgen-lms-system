@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Download, RotateCw, User, Award, Copy, IdCard, Printer, Zap
 } from 'lucide-react';
@@ -16,17 +16,22 @@ interface StudentIDCardProps {
 export default function StudentIDCard({ onClose }: StudentIDCardProps) {
   const { user } = useAuthStore();
   const { showToast } = useToastStore();
+  const [mounted, setMounted] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Student Details with real registered user data
   const studentName = user?.name || 'NextGen Student';
   const studentEmail = user?.email || 'student@nextgen.lms';
-  const studentId = user?.studentId || user?.rollNo || `NXG-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
+  const studentId = user?.studentId || user?.rollNo || 'NXG-2026-88219';
   const enrolledCourse = user?.enrolledCourse || 'Artificial Intelligence (AI) Advance';
-  const batch = user?.batch || `Batch ${new Date().getFullYear()}-A`;
-  const issueDate = user?.issueDate || new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' });
-  const expiryDate = user?.expiryDate || new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', year: 'numeric', day: 'numeric' });
+  const batch = user?.batch || 'Batch 2026-A';
+  const issueDate = user?.issueDate || 'Sep 3, 2026';
+  const expiryDate = user?.expiryDate || 'Sep 3, 2027';
   const avatarUrl = user?.avatar || null;
 
   // Generate QR payload for attendance scanning

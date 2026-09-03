@@ -206,7 +206,12 @@ export const authApi = {
       variables: { input },
     });
 
-    const { access_token, user } = data.data.login;
+    const loginData = data?.data?.login;
+    if (!loginData) {
+      const err = data?.errors?.[0]?.message || 'Login failed. Please verify your credentials.';
+      throw new Error(err);
+    }
+    const { access_token, user } = loginData;
     return { accessToken: access_token, user };
   },
 
@@ -229,7 +234,12 @@ export const authApi = {
       variables: { input },
     });
 
-    const { access_token, user } = data.data.register;
+    const registerData = data?.data?.register;
+    if (!registerData) {
+      const err = data?.errors?.[0]?.message || 'Registration failed. Please try again.';
+      throw new Error(err);
+    }
+    const { access_token, user } = registerData;
     return { accessToken: access_token, user };
   },
 
