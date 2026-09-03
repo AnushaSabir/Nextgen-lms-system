@@ -293,13 +293,13 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             {/* CARD CONTENT */}
             <div className="relative z-10 flex flex-col justify-between h-full p-4 sm:p-5">
 
-              {/* TOP: Logo firmly on DARK NAVY BLUE portion + Title & Year on right */}
+              {/* TOP: Logo on DARK NAVY portion + Title & Year on right */}
               <div className="flex items-start justify-between">
-                {/* Logo on dark blue part — negative margin pushes it into the wave */}
+                {/* Logo on dark blue part */}
                 <div className="flex flex-col -mt-2">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/logo.png" alt="NextGen LMS" className="h-8 sm:h-10 object-contain object-left drop-shadow brightness-0 invert" />
-                  <span className="text-[7px] sm:text-[9px] font-black text-white tracking-wider uppercase mt-0.5 drop-shadow">
+                  <img src="/logo.png" alt="NextGen LMS" className="h-8 sm:h-10 object-contain object-left drop-shadow" />
+                  <span className="text-[7px] sm:text-[9px] font-black text-[#0284C7] tracking-wider uppercase mt-0.5 drop-shadow">
                     LEARNING MANAGEMENT SYSTEM
                   </span>
                 </div>
@@ -555,8 +555,8 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid rgba(15,44,89,0.12)', paddingBottom: '8px' }}>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt="NextGen LMS" style={{ height: '46px', objectFit: 'contain', objectPosition: 'left', filter: 'brightness(0) invert(1)' }} />
-                <div style={{ fontSize: '11.5px', fontWeight: '900', color: '#ffffff', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '2px' }}>
+                <img src="/logo.png" alt="NextGen LMS" style={{ height: '46px', objectFit: 'contain', objectPosition: 'left' }} />
+                <div style={{ fontSize: '11.5px', fontWeight: '900', color: '#0284C7', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '2px' }}>
                   LEARNING MANAGEMENT SYSTEM
                 </div>
               </div>
