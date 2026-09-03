@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
 import {
-  Download, QrCode, ShieldCheck, CheckCircle2, RotateCw,
-  User, Award, Copy, IdCard, Printer, Zap, FileText, Smartphone
+  Download, RotateCw, User, Award, Copy, IdCard, Printer, Zap
 } from 'lucide-react';
 import { useAuthStore } from '@/store/auth-store';
 import { useToastStore } from '@/store/toast-store';
@@ -74,7 +72,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
 
   /**
    * High-Precision PDF Download (CR80 Standard 85.6mm x 53.98mm at 300 DPI)
-   * Designed to save directly to Mobile Files / Downloads folder and Laptop
+   * Saves directly to device Downloads / Files on both Mobile & Laptop
    */
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
@@ -126,7 +124,6 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
       const backImg = backCanvas.toDataURL('image/jpeg', 0.98);
       pdf.addImage(backImg, 'JPEG', 0, 0, 85.6, 53.98, undefined, 'FAST');
 
-      // Save PDF via robust blob stream for Mobile & Laptop
       const fileName = `${studentName.replace(/\s+/g, '_')}_${studentId}_NextGen_StudentID.pdf`;
       const pdfBlob = pdf.output('blob');
       saveBlobFile(pdfBlob, fileName);
@@ -247,7 +244,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
       {/* ── INTERACTIVE ON-SCREEN CARD PREVIEW ── */}
       <div className="flex justify-center items-center py-2">
 
-        {/* FRONT SIDE (MATCHING REFERENCE DESIGN WITH WAVES) */}
+        {/* FRONT SIDE */}
         {!isFlipped ? (
           <div
             className="relative w-full max-w-[560px] rounded-3xl overflow-hidden shadow-2xl text-[#0F2C59] flex flex-col justify-between select-none bg-white border-2 border-[#0284C7]/30"
@@ -257,44 +254,41 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             }}
           >
             {/* TOP WAVY HEADER RIBBON */}
-            <div className="absolute top-0 left-0 right-0 h-[22%] pointer-events-none overflow-hidden z-0">
-              <svg viewBox="0 0 500 110" preserveAspectRatio="none" className="w-full h-full">
-                <path d="M0,0 L500,0 L500,65 C380,105 240,40 120,75 C60,90 0,55 0,55 Z" fill="#0284C7" opacity="0.85" />
-                <path d="M0,0 L500,0 L500,45 C350,85 200,35 90,60 C40,70 0,35 0,35 Z" fill="#0F2C59" />
+            <div className="absolute top-0 left-0 right-0 h-[24%] pointer-events-none overflow-hidden z-0">
+              <svg viewBox="0 0 500 120" preserveAspectRatio="none" className="w-full h-full">
+                <path d="M0,0 L500,0 L500,60 C380,95 240,40 120,70 C60,85 0,50 0,50 Z" fill="#0284C7" opacity="0.9" />
+                <path d="M0,0 L500,0 L500,40 C350,75 200,30 90,55 C40,65 0,30 0,30 Z" fill="#0F2C59" />
               </svg>
             </div>
 
-            {/* BOTTOM WAVY FOOTER RIBBON */}
-            <div className="absolute bottom-0 left-0 right-0 h-[20%] pointer-events-none overflow-hidden z-0">
-              <svg viewBox="0 0 500 100" preserveAspectRatio="none" className="w-full h-full">
-                <path d="M0,45 C120,10 260,75 380,35 C440,20 500,55 500,55 L500,100 L0,100 Z" fill="#0284C7" opacity="0.85" />
-                <path d="M0,65 C150,25 300,75 410,50 C460,40 500,75 500,75 L500,100 L0,100 Z" fill="#0F2C59" />
+            {/* BOTTOM WAVY FOOTER RIBBON (Thin background accent at very bottom) */}
+            <div className="absolute bottom-0 left-0 right-0 h-[10%] pointer-events-none overflow-hidden z-0">
+              <svg viewBox="0 0 500 50" preserveAspectRatio="none" className="w-full h-full">
+                <path d="M0,25 C120,5 260,35 380,18 C440,10 500,28 500,28 L500,50 L0,50 Z" fill="#0284C7" opacity="0.85" />
+                <path d="M0,35 C150,15 300,38 410,25 C460,20 500,38 500,38 L500,50 L0,50 Z" fill="#0F2C59" />
               </svg>
             </div>
 
             {/* CARD CONTENT */}
             <div className="relative z-10 flex flex-col justify-between h-full p-4 sm:p-5">
 
-              {/* TOP: Centered Logo + Title */}
-              <div className="flex items-center justify-between pt-1">
-                <div className="flex items-center gap-2">
+              {/* TOP: Logo (Higher Left) + Title & Year (White text in top-right blue wave) */}
+              <div className="flex items-start justify-between">
+                {/* Logo & Subtitle */}
+                <div className="flex flex-col">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/logo.png" alt="NextGen LMS" className="h-6 sm:h-7 object-contain" />
-                  <div>
-                    <span className="block text-[8px] sm:text-[10px] font-black tracking-widest text-[#0F2C59] uppercase leading-none">
-                      NEXTGEN LMS
-                    </span>
-                    <span className="block text-[6px] sm:text-[7px] font-bold text-[#0284C7] uppercase tracking-wider">
-                      Learning Management System
-                    </span>
-                  </div>
+                  <img src="/logo.png" alt="NextGen LMS" className="h-6 sm:h-7 object-contain object-left drop-shadow-sm" />
+                  <span className="text-[6.5px] sm:text-[8px] font-black text-[#0F2C59] tracking-wider uppercase mt-0.5">
+                    LEARNING MANAGEMENT SYSTEM
+                  </span>
                 </div>
 
-                <div className="text-right">
-                  <span className="block text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-[#0F2C59]">
+                {/* Header text on top of blue wave */}
+                <div className="text-right pr-1">
+                  <span className="block text-[10px] sm:text-[12px] font-black uppercase tracking-wider text-white drop-shadow">
                     STUDENT CARD
                   </span>
-                  <span className="block text-[6.5px] sm:text-[8px] font-bold text-slate-500">
+                  <span className="block text-[7px] sm:text-[8.5px] font-bold text-sky-200">
                     Academic Year {new Date().getFullYear()}
                   </span>
                 </div>
@@ -357,8 +351,8 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
                 </div>
               </div>
 
-              {/* BOTTOM: Barcode (Left) + Signature (Right) */}
-              <div className="flex items-end justify-between pt-1 border-t border-slate-200">
+              {/* BOTTOM: Barcode (Left on White Area) + Single Signature (Right on White Area) */}
+              <div className="flex items-end justify-between pt-1 border-t border-slate-200/80 mb-1 z-10">
                 {/* Barcode */}
                 <div className="flex flex-col">
                   <div className="flex items-center gap-[1px] h-3.5 sm:h-4.5">
@@ -366,20 +360,21 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
                       <span key={i} className="bg-[#0F2C59] h-full inline-block rounded-[0.5px]" style={{ width: `${w}px` }} />
                     ))}
                   </div>
-                  <span className="text-[5px] sm:text-[6.5px] font-mono text-slate-600 tracking-widest mt-0.5">{studentId}</span>
+                  <span className="text-[5.5px] sm:text-[7px] font-mono font-bold text-[#0F2C59] tracking-widest mt-0.5">{studentId}</span>
                 </div>
 
-                {/* Director Signature */}
+                {/* Single Directed by Signature */}
                 <div className="text-right">
-                  <p className="text-[9px] sm:text-[11px] font-black italic text-[#0F2C59] font-serif">Anusha Sabir</p>
-                  <p className="text-[5.5px] sm:text-[7px] uppercase font-bold text-slate-500 tracking-wider">DIRECTED BY ANUSHA SABIR</p>
+                  <p className="text-[9.5px] sm:text-[12px] font-black italic text-[#0F2C59] font-serif">
+                    Directed by Anusha Sabir
+                  </p>
                 </div>
               </div>
 
             </div>
           </div>
         ) : (
-          /* BACK SIDE (WITH QR CODE & MATCHING WAVES) */
+          /* BACK SIDE */
           <div
             className="relative w-full max-w-[560px] rounded-3xl overflow-hidden shadow-2xl text-[#0F2C59] flex flex-col justify-between select-none bg-white border-2 border-[#0284C7]/30"
             style={{
@@ -388,18 +383,18 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             }}
           >
             {/* Top wave */}
-            <div className="absolute top-0 left-0 right-0 h-[22%] pointer-events-none overflow-hidden z-0">
-              <svg viewBox="0 0 500 110" preserveAspectRatio="none" className="w-full h-full">
-                <path d="M0,0 L500,0 L500,65 C380,105 240,40 120,75 C60,90 0,55 0,55 Z" fill="#0284C7" opacity="0.85" />
-                <path d="M0,0 L500,0 L500,45 C350,85 200,35 90,60 C40,70 0,35 0,35 Z" fill="#0F2C59" />
+            <div className="absolute top-0 left-0 right-0 h-[24%] pointer-events-none overflow-hidden z-0">
+              <svg viewBox="0 0 500 120" preserveAspectRatio="none" className="w-full h-full">
+                <path d="M0,0 L500,0 L500,60 C380,95 240,40 120,70 C60,85 0,50 0,50 Z" fill="#0284C7" opacity="0.9" />
+                <path d="M0,0 L500,0 L500,40 C350,75 200,30 90,55 C40,65 0,30 0,30 Z" fill="#0F2C59" />
               </svg>
             </div>
 
             {/* Bottom wave */}
-            <div className="absolute bottom-0 left-0 right-0 h-[20%] pointer-events-none overflow-hidden z-0">
-              <svg viewBox="0 0 500 100" preserveAspectRatio="none" className="w-full h-full">
-                <path d="M0,45 C120,10 260,75 380,35 C440,20 500,55 500,55 L500,100 L0,100 Z" fill="#0284C7" opacity="0.85" />
-                <path d="M0,65 C150,25 300,75 410,50 C460,40 500,75 500,75 L500,100 L0,100 Z" fill="#0F2C59" />
+            <div className="absolute bottom-0 left-0 right-0 h-[10%] pointer-events-none overflow-hidden z-0">
+              <svg viewBox="0 0 500 50" preserveAspectRatio="none" className="w-full h-full">
+                <path d="M0,25 C120,5 260,35 380,18 C440,10 500,28 500,28 L500,50 L0,50 Z" fill="#0284C7" opacity="0.85" />
+                <path d="M0,35 C150,15 300,38 410,25 C460,20 500,38 500,50 L0,50 Z" fill="#0F2C59" />
               </svg>
             </div>
 
@@ -407,11 +402,11 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             <div className="relative z-10 flex flex-col justify-between h-full p-4 sm:p-5">
 
               {/* Top Header */}
-              <div className="flex items-center justify-between pt-1">
-                <span className="text-[9px] sm:text-[11px] font-black text-[#0F2C59] uppercase tracking-wider">
-                  STUDENT ATTENDANCE & VERIFICATION PASS
+              <div className="flex items-center justify-between">
+                <span className="text-[9.5px] sm:text-[11.5px] font-black text-white uppercase tracking-wider drop-shadow">
+                  ATTENDANCE & IDENTITY PASS
                 </span>
-                <span className="text-[6.5px] sm:text-[8px] font-bold text-[#0284C7]">
+                <span className="text-[7.5px] sm:text-[9px] font-bold text-sky-200">
                   NextGen LMS
                 </span>
               </div>
@@ -436,23 +431,24 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
                 </div>
 
                 {/* Terms */}
-                <div className="flex-1 space-y-1 text-[7px] sm:text-[8.5px] text-slate-700">
+                <div className="flex-1 space-y-1 text-[7px] sm:text-[8.5px] text-[#0F2C59]">
                   <p className="font-black text-[#0F2C59] uppercase text-[7.5px] sm:text-[9px]">Official NextGen Identity Terms:</p>
-                  <p>• This card is non-transferable and remains property of NextGen LMS.</p>
-                  <p>• Required for live lectures, attendance scanning, and exam validation.</p>
-                  <p>• In case of loss or inquiry, contact administration immediately.</p>
+                  <p className="text-slate-700">• This card is non-transferable and remains property of NextGen LMS.</p>
+                  <p className="text-slate-700">• Required for live lectures, attendance scanning, and exam validation.</p>
+                  <p className="text-slate-700">• In case of loss or inquiry, contact administration immediately.</p>
                 </div>
               </div>
 
               {/* Bottom: Verification Link + Auth Officer */}
-              <div className="flex items-end justify-between pt-1 border-t border-slate-200">
+              <div className="flex items-end justify-between pt-1 border-t border-slate-200/80 mb-1 z-10">
                 <div>
                   <span className="block text-[6px] sm:text-[7px] font-bold text-slate-500">Online Verification:</span>
                   <p className="text-[7.5px] sm:text-[9px] font-mono font-bold text-[#0284C7]">nextgen-lms.edu/verify/{studentId}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[9px] sm:text-[11px] font-black italic text-[#0F2C59] font-serif">Anusha Sabir</p>
-                  <p className="text-[5.5px] sm:text-[7px] uppercase font-bold text-slate-500 tracking-wider">AUTHORIZED OFFICER</p>
+                  <p className="text-[9.5px] sm:text-[12px] font-black italic text-[#0F2C59] font-serif">
+                    Directed by Anusha Sabir
+                  </p>
                 </div>
               </div>
 
@@ -484,54 +480,49 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
           }}
         >
           {/* Top Wavy SVG */}
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '140px', zIndex: 0 }}>
-            <svg viewBox="0 0 1000 140" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
-              <path d="M0,0 L1000,0 L1000,85 C750,135 500,50 250,95 C120,115 0,70 0,70 Z" fill="#0284C7" opacity="0.85" />
-              <path d="M0,0 L1000,0 L1000,60 C700,110 400,45 180,80 C80,95 0,45 0,45 Z" fill="#0F2C59" />
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '145px', zIndex: 0 }}>
+            <svg viewBox="0 0 1000 145" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
+              <path d="M0,0 L1000,0 L1000,80 C750,130 500,50 250,90 C120,110 0,65 0,65 Z" fill="#0284C7" opacity="0.9" />
+              <path d="M0,0 L1000,0 L1000,55 C700,105 400,40 180,75 C80,90 0,40 0,40 Z" fill="#0F2C59" />
             </svg>
           </div>
 
-          {/* Bottom Wavy SVG */}
-          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '130px', zIndex: 0 }}>
-            <svg viewBox="0 0 1000 130" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
-              <path d="M0,60 C250,15 500,95 750,50 C880,30 1000,70 1000,70 L1000,130 L0,130 Z" fill="#0284C7" opacity="0.85" />
-              <path d="M0,85 C300,35 600,95 820,70 C920,55 1000,95 1000,95 L1000,130 L0,130 Z" fill="#0F2C59" />
+          {/* Bottom Wavy SVG (Thin Accent) */}
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '60px', zIndex: 0 }}>
+            <svg viewBox="0 0 1000 60" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
+              <path d="M0,30 C250,10 500,45 750,25 C880,15 1000,35 1000,35 L1000,60 L0,60 Z" fill="#0284C7" opacity="0.85" />
+              <path d="M0,42 C300,20 600,48 820,35 C920,28 1000,48 1000,48 L1000,60 L0,60 Z" fill="#0F2C59" />
             </svg>
           </div>
 
           {/* Foreground Content */}
-          <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', padding: '32px 42px', boxSizing: 'border-box' }}>
+          <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', padding: '30px 42px', boxSizing: 'border-box' }}>
 
-            {/* Top Bar: Logo + Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid rgba(15,44,89,0.15)', paddingBottom: '12px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            {/* Top Bar: Logo (Higher Left) + Header (White in top-right blue wave) */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid rgba(15,44,89,0.15)', paddingBottom: '10px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt="NextGen LMS" style={{ height: '42px', objectFit: 'contain' }} />
-                <div>
-                  <div style={{ fontSize: '18px', fontWeight: '900', color: '#0F2C59', letterSpacing: '2px', textTransform: 'uppercase', lineHeight: '1.1' }}>
-                    NEXTGEN LMS
-                  </div>
-                  <div style={{ fontSize: '11px', fontWeight: '800', color: '#0284C7', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                    Learning Management System
-                  </div>
+                <img src="/logo.png" alt="NextGen LMS" style={{ height: '42px', objectFit: 'contain', objectPosition: 'left' }} />
+                <div style={{ fontSize: '11px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '3px' }}>
+                  LEARNING MANAGEMENT SYSTEM
                 </div>
               </div>
 
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '20px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '2px', color: '#0F2C59' }}>
+              <div style={{ textAlign: 'right', paddingRight: '4px' }}>
+                <div style={{ fontSize: '21px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '2px', color: '#ffffff' }}>
                   STUDENT CARD
                 </div>
-                <div style={{ fontSize: '12px', fontWeight: '700', color: '#64748b', marginTop: '2px' }}>
+                <div style={{ fontSize: '13px', fontWeight: '700', color: '#bae6fd', marginTop: '2px' }}>
                   Academic Year {new Date().getFullYear()}
                 </div>
               </div>
             </div>
 
             {/* Middle: Details (Left) + Photo (Right) */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '32px', flex: 1, padding: '14px 0' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '32px', flex: 1, padding: '12px 0' }}>
 
               {/* Details List */}
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '11px' }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
 
                 <div style={{ display: 'flex', alignItems: 'baseline', fontSize: '18px' }}>
                   <span style={{ width: '190px', fontSize: '13px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px', flexShrink: 0 }}>STUDENT NAME</span>
@@ -584,8 +575,8 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
 
             </div>
 
-            {/* Bottom Bar: Barcode (Left) + Director Signature (Right) */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '2px solid rgba(15,44,89,0.15)', paddingTop: '12px' }}>
+            {/* Bottom Bar: Barcode (Left on White) + Single Signature (Right on White) */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '2px solid rgba(15,44,89,0.15)', paddingTop: '10px', marginBottom: '8px' }}>
               {/* Barcode */}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', gap: '2px', height: '26px', alignItems: 'center' }}>
@@ -593,13 +584,14 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
                     <span key={i} style={{ width: `${w * 2}px`, height: '100%', background: '#0F2C59', display: 'inline-block', borderRadius: '1px' }} />
                   ))}
                 </div>
-                <span style={{ fontSize: '11px', fontFamily: 'monospace', color: '#64748b', letterSpacing: '3px', marginTop: '3px' }}>{studentId}</span>
+                <span style={{ fontSize: '11px', fontFamily: 'monospace', fontWeight: '700', color: '#0F2C59', letterSpacing: '3px', marginTop: '3px' }}>{studentId}</span>
               </div>
 
-              {/* Signature */}
+              {/* Single Signature */}
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '20px', fontWeight: '900', fontStyle: 'italic', color: '#0F2C59', fontFamily: 'Georgia, serif' }}>Anusha Sabir</div>
-                <div style={{ fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', color: '#64748b', letterSpacing: '1px' }}>DIRECTED BY ANUSHA SABIR</div>
+                <div style={{ fontSize: '20px', fontWeight: '900', fontStyle: 'italic', color: '#0F2C59', fontFamily: 'Georgia, serif' }}>
+                  Directed by Anusha Sabir
+                </div>
               </div>
             </div>
 
@@ -625,36 +617,36 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
           }}
         >
           {/* Top Wavy SVG */}
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '140px', zIndex: 0 }}>
-            <svg viewBox="0 0 1000 140" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
-              <path d="M0,0 L1000,0 L1000,85 C750,135 500,50 250,95 C120,115 0,70 0,70 Z" fill="#0284C7" opacity="0.85" />
-              <path d="M0,0 L1000,0 L1000,60 C700,110 400,45 180,80 C80,95 0,45 0,45 Z" fill="#0F2C59" />
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '145px', zIndex: 0 }}>
+            <svg viewBox="0 0 1000 145" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
+              <path d="M0,0 L1000,0 L1000,80 C750,130 500,50 250,90 C120,110 0,65 0,65 Z" fill="#0284C7" opacity="0.9" />
+              <path d="M0,0 L1000,0 L1000,55 C700,105 400,40 180,75 C80,90 0,40 0,40 Z" fill="#0F2C59" />
             </svg>
           </div>
 
           {/* Bottom Wavy SVG */}
-          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '130px', zIndex: 0 }}>
-            <svg viewBox="0 0 1000 130" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
-              <path d="M0,60 C250,15 500,95 750,50 C880,30 1000,70 1000,70 L1000,130 L0,130 Z" fill="#0284C7" opacity="0.85" />
-              <path d="M0,85 C300,35 600,95 820,70 C920,55 1000,95 1000,95 L1000,130 L0,130 Z" fill="#0F2C59" />
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '60px', zIndex: 0 }}>
+            <svg viewBox="0 0 1000 60" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
+              <path d="M0,30 C250,10 500,45 750,25 C880,15 1000,35 1000,35 L1000,60 L0,60 Z" fill="#0284C7" opacity="0.85" />
+              <path d="M0,42 C300,20 600,48 820,35 C920,28 1000,48 1000,48 L1000,60 L0,60 Z" fill="#0F2C59" />
             </svg>
           </div>
 
           {/* Foreground Content */}
-          <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', padding: '32px 42px', boxSizing: 'border-box' }}>
+          <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', padding: '30px 42px', boxSizing: 'border-box' }}>
 
             {/* Top Bar */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid rgba(15,44,89,0.15)', paddingBottom: '12px' }}>
-              <div style={{ fontSize: '17px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
-                STUDENT ATTENDANCE & VERIFICATION PASS
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid rgba(15,44,89,0.15)', paddingBottom: '10px' }}>
+              <div style={{ fontSize: '18px', fontWeight: '900', color: '#ffffff', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
+                ATTENDANCE & IDENTITY PASS
               </div>
-              <div style={{ fontSize: '13px', fontWeight: '800', color: '#0284C7', textTransform: 'uppercase' }}>
-                NextGen LMS Official
+              <div style={{ fontSize: '14px', fontWeight: '800', color: '#bae6fd', textTransform: 'uppercase' }}>
+                NextGen LMS
               </div>
             </div>
 
             {/* Middle: QR Code + Terms */}
-            <div style={{ display: 'flex', gap: '36px', alignItems: 'center', flex: 1, padding: '16px 0' }}>
+            <div style={{ display: 'flex', gap: '36px', alignItems: 'center', flex: 1, padding: '14px 0' }}>
               {/* QR Code */}
               <div style={{ width: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
                 <div style={{ background: '#ffffff', padding: '12px', borderRadius: '18px', boxShadow: '0 10px 25px rgba(15,44,89,0.2)', border: '2px solid #0284C7' }}>
@@ -690,14 +682,15 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             </div>
 
             {/* Bottom Bar: Verification URL + Authorized Officer */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '2px solid rgba(15,44,89,0.15)', paddingTop: '12px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '2px solid rgba(15,44,89,0.15)', paddingTop: '10px', marginBottom: '8px' }}>
               <div>
                 <div style={{ fontSize: '11px', fontWeight: '700', color: '#64748b' }}>Online Card Verification:</div>
                 <div style={{ fontSize: '14px', fontFamily: 'monospace', fontWeight: '900', color: '#0284C7', marginTop: '2px' }}>nextgen-lms.edu/verify/{studentId}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '18px', fontWeight: '900', fontStyle: 'italic', color: '#0F2C59', fontFamily: 'Georgia, serif' }}>Anusha Sabir</div>
-                <div style={{ fontSize: '10px', fontWeight: '800', textTransform: 'uppercase', color: '#64748b', letterSpacing: '1px' }}>AUTHORIZED OFFICER</div>
+                <div style={{ fontSize: '20px', fontWeight: '900', fontStyle: 'italic', color: '#0F2C59', fontFamily: 'Georgia, serif' }}>
+                  Directed by Anusha Sabir
+                </div>
               </div>
             </div>
 
