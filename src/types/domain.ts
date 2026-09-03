@@ -32,6 +32,7 @@ export interface User {
   issueDate?: string;
   expiryDate?: string;
   emergencyContact?: string;
+  photoOffset?: number;
 }
 
 export interface Course {

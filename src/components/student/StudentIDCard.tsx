@@ -33,6 +33,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
   const issueDate = user?.issueDate || 'Sep 3, 2026';
   const expiryDate = user?.expiryDate || 'Sep 3, 2027';
   const avatarUrl = user?.avatar || null;
+  const photoOffset = typeof user?.photoOffset === 'number' ? user.photoOffset : 20;
 
   // Generate QR payload for attendance scanning (Clean lightweight payload without bulky base64)
   const qrPayload = encodeQRPayload({
@@ -58,27 +59,36 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
   const barcodePattern = generateBarcodePattern(studentId);
 
   /**
-   * Cross-Platform File Downloader (Supports Mobile Android/iOS & Desktop)
+   * Cross-Platform File Downloader — works on Android, iOS Safari, and Desktop
    */
-  const triggerDownload = (urlOrBlob: string | Blob, fileName: string) => {
-    const url = typeof urlOrBlob === 'string' ? urlOrBlob : window.URL.createObjectURL(urlOrBlob);
+  const triggerDownload = async (blob: Blob, fileName: string) => {
+    // iOS Safari: use Web Share API which lets user save to Files
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (isIOS && navigator.canShare && navigator.canShare({ files: [new File([blob], fileName, { type: blob.type })] })) {
+      try {
+        const file = new File([blob, ], fileName, { type: blob.type });
+        await navigator.share({ files: [file], title: fileName });
+        return;
+      } catch { /* fall through to link download */ }
+    }
+
+    // Android + Desktop: direct blob URL download
+    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
     link.download = fileName;
-    link.target = '_self';
+    link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
     setTimeout(() => {
       document.body.removeChild(link);
-      if (typeof urlOrBlob !== 'string') {
-        window.URL.revokeObjectURL(url);
-      }
-    }, 1500);
+      URL.revokeObjectURL(url);
+    }, 2000);
   };
 
   /**
    * High-Precision PDF Download (CR80 Standard 85.6mm x 53.98mm at 300 DPI)
-   * Guaranteed to work on Mobile Chrome, Safari, Firefox, and Laptop browsers
+   * Reliable on Mobile Chrome, Android, iOS Safari, and Desktop
    */
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
@@ -90,13 +100,11 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
       const html2canvasModule = await import('html2canvas');
       const html2canvas = html2canvasModule.default;
 
-      // Get export container elements
       const frontEl = document.getElementById('pdf-render-front');
       const backEl = document.getElementById('pdf-render-back');
-
       if (!frontEl || !backEl) throw new Error('Render elements not found');
 
-      // 1. Capture Front Side Canvas
+      // Capture Front Side
       const frontCanvas = await html2canvas(frontEl, {
         scale: 2,
         useCORS: true,
@@ -108,7 +116,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
       });
       const frontImg = frontCanvas.toDataURL('image/jpeg', 0.98);
 
-      // 2. Capture Back Side Canvas
+      // Capture Back Side
       const backCanvas = await html2canvas(backEl, {
         scale: 2,
         useCORS: true,
@@ -120,7 +128,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
       });
       const backImg = backCanvas.toDataURL('image/jpeg', 0.98);
 
-      // Create standard CR80 Landscape PDF
+      // Build CR80 PDF
       const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'mm',
@@ -134,17 +142,14 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
 
       const fileName = `${studentName.replace(/\s+/g, '_')}_${studentId}_NextGen_StudentID.pdf`;
 
-      // Save via native jsPDF save method
-      pdf.save(fileName);
+      // Get PDF as blob and use our reliable cross-platform downloader
+      const pdfBlob = pdf.output('blob');
+      await triggerDownload(pdfBlob, fileName);
 
-      // Also trigger direct blob download for mobile files
-      const blob = pdf.output('blob');
-      triggerDownload(blob, fileName);
-
-      showToast('✅ ID Card PDF downloaded to your device!', 'success');
+      showToast('✅ ID Card PDF saved to your device!', 'success');
     } catch (error) {
       console.error('PDF generation error:', error);
-      showToast('Generating PNG image fallback...', 'info');
+      showToast('Falling back to image download...', 'info');
       await handleDownloadPNG();
     } finally {
       setIsDownloading(false);
@@ -176,12 +181,15 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
       const side = isFlipped ? 'Back_QR' : 'Front';
       const fileName = `${studentName.replace(/\s+/g, '_')}_${studentId}_ID_${side}.png`;
 
-      canvas.toBlob((blob) => {
-        if (blob) {
-          triggerDownload(blob, fileName);
-          showToast(`✅ ID Card (${side}) image downloaded!`, 'success');
-        }
-      }, 'image/png');
+      await new Promise<void>((resolve) => {
+        canvas.toBlob(async (blob) => {
+          if (blob) {
+            await triggerDownload(blob, fileName);
+            showToast(`✅ ID Card (${side}) image saved!`, 'success');
+          }
+          resolve();
+        }, 'image/png');
+      });
     } catch (error) {
       showToast('Download failed. Please try again.', 'error');
     } finally {
@@ -285,13 +293,13 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             {/* CARD CONTENT */}
             <div className="relative z-10 flex flex-col justify-between h-full p-4 sm:p-5">
 
-              {/* TOP: Logo (Higher Left) + Title & Year (White text in top-right blue wave) */}
+              {/* TOP: Logo firmly on DARK NAVY BLUE portion + Title & Year on right */}
               <div className="flex items-start justify-between">
-                {/* Logo & Subtitle positioned high up */}
-                <div className="flex flex-col -mt-1">
+                {/* Logo on dark blue part — negative margin pushes it into the wave */}
+                <div className="flex flex-col -mt-2">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/logo.png" alt="NextGen LMS" className="h-7 sm:h-8 object-contain object-left drop-shadow-sm" />
-                  <span className="text-[7px] sm:text-[9px] font-black text-[#0F2C59] tracking-wider uppercase mt-0.5">
+                  <img src="/logo.png" alt="NextGen LMS" className="h-8 sm:h-10 object-contain object-left drop-shadow brightness-0 invert" />
+                  <span className="text-[7px] sm:text-[9px] font-black text-white tracking-wider uppercase mt-0.5 drop-shadow">
                     LEARNING MANAGEMENT SYSTEM
                   </span>
                 </div>
@@ -352,7 +360,8 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
                         <img
                           src={avatarUrl}
                           alt={studentName}
-                          className="w-full h-full object-cover object-top"
+                          className="w-full h-full object-cover"
+                          style={{ objectPosition: `center ${photoOffset}%` }}
                         />
                       ) : (
                         <div className="w-full h-full flex flex-col items-center justify-center bg-slate-200 text-[#0284C7]">
@@ -475,6 +484,33 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
 
       </div>
 
+      {/* Photo Position Adjustment Strip — shows only when user has a photo on front side */}
+      {avatarUrl && !isFlipped && (
+        <div className="flex items-center justify-center gap-3 py-2.5 px-4 bg-[#151515] border border-[#353638] rounded-2xl">
+          <span className="text-[10px] font-black text-[#D0D3D6]/70 uppercase tracking-wider">Adjust Photo Position:</span>
+          <button
+            type="button"
+            onClick={() => {
+              const newOffset = Math.max(0, photoOffset - 10);
+              useAuthStore.setState((s: any) => ({ user: s.user ? { ...s.user, photoOffset: newOffset } : s.user }));
+            }}
+            className="w-8 h-8 rounded-xl bg-[#353638] hover:bg-[#0284C7] text-white font-black text-base transition-all flex items-center justify-center"
+          >▲</button>
+          <div className="w-24 h-2 bg-[#353638] rounded-full relative overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-[#0284C7] to-[#0F2C59] rounded-full transition-all" style={{ width: `${photoOffset}%` }} />
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              const newOffset = Math.min(100, photoOffset + 10);
+              useAuthStore.setState((s: any) => ({ user: s.user ? { ...s.user, photoOffset: newOffset } : s.user }));
+            }}
+            className="w-8 h-8 rounded-xl bg-[#353638] hover:bg-[#0284C7] text-white font-black text-base transition-all flex items-center justify-center"
+          >▼</button>
+          <span className="text-[9px] text-[#D0D3D6]/50 font-mono">{photoOffset}%</span>
+        </div>
+      )}
+
       {/* ── 100% RELIABLE CAPTURE CONTAINER (VISIBLE IN DOM BUFFER FOR HTML2CANVAS) ── */}
       <div style={{ position: 'fixed', top: '0', left: '0', opacity: 0, pointerEvents: 'none', zIndex: -100 }}>
         
@@ -519,8 +555,8 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid rgba(15,44,89,0.12)', paddingBottom: '8px' }}>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt="NextGen LMS" style={{ height: '46px', objectFit: 'contain', objectPosition: 'left' }} />
-                <div style={{ fontSize: '11.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '2px' }}>
+                <img src="/logo.png" alt="NextGen LMS" style={{ height: '46px', objectFit: 'contain', objectPosition: 'left', filter: 'brightness(0) invert(1)' }} />
+                <div style={{ fontSize: '11.5px', fontWeight: '900', color: '#ffffff', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '2px' }}>
                   LEARNING MANAGEMENT SYSTEM
                 </div>
               </div>
@@ -582,7 +618,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
                       <img
                         src={avatarUrl}
                         alt={studentName}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%' }}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: `center ${photoOffset}%` }}
                       />
                     ) : (
                       <div style={{ fontSize: '48px', color: '#0284C7', fontWeight: '900' }}>{studentName.charAt(0)}</div>

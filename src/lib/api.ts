@@ -185,6 +185,7 @@ export interface RegisterInput extends LoginInput {
   enrolledCourse?: string;
   batch?: string;
   department?: string;
+  photoOffset?: number;
 }
 
 export const authApi = {

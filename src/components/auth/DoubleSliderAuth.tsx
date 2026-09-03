@@ -68,6 +68,7 @@ export default function DoubleSliderAuth() {
   const [signUpPhone, setSignUpPhone] = useState('');
   const [signUpCourse, setSignUpCourse] = useState(COURSE_TRACKS[0]);
   const [signUpAvatar, setSignUpAvatar] = useState<string | null>(null);
+  const [photoOffset, setPhotoOffset] = useState(20); // vertical % position (0=top, 100=bottom)
 
   useEffect(() => {
     if (mode === 'signup') {
@@ -179,6 +180,7 @@ export default function DoubleSliderAuth() {
         password: signUpPassword,
         role: 'learner',
         avatar: signUpAvatar || undefined,
+        photoOffset: photoOffset,
         studentId: generatedRollNo,
         rollNo: generatedRollNo,
         phone: signUpPhone.trim() || undefined,
@@ -283,36 +285,63 @@ export default function DoubleSliderAuth() {
             <h1 className="text-xl sm:text-2xl font-black text-white mb-0.5 tracking-tight">Student Registration</h1>
             <p className="text-[11px] sm:text-xs text-[#50BED9] mb-3">Join NextGen LMS & get your Student ID Card</p>
 
-            {/* Student Photo Upload with Live Preview */}
-            <div className="flex flex-col items-center mb-3">
-              <label className="relative group cursor-pointer">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl p-0.5 bg-gradient-to-tr from-[#50BED9] via-[#159BD7] to-[#33C6B6] shadow-lg shadow-[#50BED9]/25 group-hover:scale-105 transition-all">
-                  <div className="w-full h-full rounded-[14px] bg-[#151515] overflow-hidden flex flex-col items-center justify-center relative">
-                    {signUpAvatar ? (
-                      <img src={signUpAvatar} alt="Student Preview" className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="flex flex-col items-center justify-center text-[#50BED9] p-1">
-                        <Camera className="w-6 h-6 mb-0.5 group-hover:scale-110 transition-transform" />
-                        <span className="text-[8px] font-black text-[#D0D3D6] uppercase tracking-wider">Photo</span>
-                      </div>
-                    )}
+            {/* Student Photo Upload with Live Preview + Adjust Position */}
+            <div className="flex flex-col items-center mb-3 w-full">
+              <div className="flex items-center gap-4">
+                {/* Photo Preview - Passport Frame */}
+                <label className="relative group cursor-pointer shrink-0">
+                  <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-2xl p-0.5 bg-gradient-to-tr from-[#50BED9] via-[#159BD7] to-[#33C6B6] shadow-lg shadow-[#50BED9]/25 group-hover:scale-105 transition-all">
+                    <div className="w-full h-full rounded-[14px] bg-[#151515] overflow-hidden flex flex-col items-center justify-center relative">
+                      {signUpAvatar ? (
+                        <img
+                          src={signUpAvatar}
+                          alt="Student Preview"
+                          className="w-full h-full object-cover"
+                          style={{ objectPosition: `center ${photoOffset}%` }}
+                        />
+                      ) : (
+                        <div className="flex flex-col items-center justify-center text-[#50BED9] p-1">
+                          <Camera className="w-6 h-6 mb-0.5 group-hover:scale-110 transition-transform" />
+                          <span className="text-[8px] font-black text-[#D0D3D6] uppercase tracking-wider">Photo</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
+                  {/* Floating upload badge */}
+                  <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#50BED9] text-[#101010] flex items-center justify-center shadow-md border-2 border-[#101010]">
+                    {signUpAvatar ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Upload className="w-3 h-3" />}
+                  </div>
+                  <input type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
+                </label>
 
-                {/* Floating upload badge */}
-                <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#50BED9] text-[#101010] flex items-center justify-center shadow-md border-2 border-[#101010]">
-                  {signUpAvatar ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Upload className="w-3 h-3" />}
-                </div>
-
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handlePhotoUpload}
-                  className="hidden"
-                />
-              </label>
-              <span className="text-[9px] font-bold text-[#D0D3D6]/70 mt-1">
-                {signUpAvatar ? '✓ Photo selected for ID card' : 'Upload student picture (For ID Card)'}
+                {/* Up/Down Adjust Controls - only show after photo is selected */}
+                {signUpAvatar && (
+                  <div className="flex flex-col items-center gap-1.5">
+                    <span className="text-[8px] font-black text-[#50BED9] uppercase tracking-wider">Adjust</span>
+                    <button
+                      type="button"
+                      onClick={() => setPhotoOffset(v => Math.max(0, v - 10))}
+                      className="w-8 h-8 rounded-xl bg-[#353638] hover:bg-[#50BED9] hover:text-[#101010] text-white flex items-center justify-center text-sm font-black transition-all border border-white/10"
+                    >▲</button>
+                    <div className="w-8 h-1.5 rounded-full bg-[#353638] relative overflow-hidden">
+                      <div className="h-full rounded-full bg-[#50BED9] transition-all" style={{ width: `${photoOffset}%` }} />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setPhotoOffset(v => Math.min(100, v + 10))}
+                      className="w-8 h-8 rounded-xl bg-[#353638] hover:bg-[#50BED9] hover:text-[#101010] text-white flex items-center justify-center text-sm font-black transition-all border border-white/10"
+                    >▼</button>
+                    <button
+                      type="button"
+                      onClick={() => setSignUpAvatar(null)}
+                      className="w-8 h-8 rounded-xl bg-red-500/20 hover:bg-red-500/40 text-red-400 flex items-center justify-center text-xs font-black transition-all border border-red-500/20"
+                      title="Remove photo"
+                    >✕</button>
+                  </div>
+                )}
+              </div>
+              <span className="text-[9px] font-bold text-[#D0D3D6]/70 mt-2">
+                {signUpAvatar ? '✓ Use ▲▼ buttons to adjust face position' : 'Upload student picture (For ID Card)'}
               </span>
             </div>
 

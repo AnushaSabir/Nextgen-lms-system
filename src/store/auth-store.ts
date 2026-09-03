@@ -159,6 +159,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         issueDate,
         expiryDate,
         verifiedBadge: true,
+        photoOffset: typeof input.photoOffset === 'number' ? input.photoOffset : 20,
       };
 
       // Save into registered students list
