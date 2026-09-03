@@ -5,6 +5,35 @@ import { authApi, type LoginInput, type RegisterInput } from '@/lib/api';
 import { dashboardForRole } from '@/lib/routes';
 import type { User } from '@/types/domain';
 
+// Safe LocalStorage wrapper to prevent QuotaExceededError or SSR exceptions
+const safeStorage = {
+  setItem: (key: string, value: string) => {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(key, value);
+    } catch {
+      try {
+        window.localStorage.removeItem('nextgen_registered_students');
+        window.localStorage.setItem(key, value);
+      } catch {}
+    }
+  },
+  getItem: (key: string) => {
+    if (typeof window === 'undefined') return null;
+    try {
+      return window.localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  },
+  removeItem: (key: string) => {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.removeItem(key);
+    } catch {}
+  }
+};
+
 interface AuthState {
   token: string | null;
   user: User | null;
@@ -24,13 +53,13 @@ export const useAuthStore = create<AuthState>((set) => ({
   error: null,
   hydrate: () => {
     if (typeof window === 'undefined') return;
-    const token = window.localStorage.getItem('nextgen-lms_lms_token');
-    const rawUser = window.localStorage.getItem('nextgen-lms_lms_user');
+    const token = safeStorage.getItem('nextgen-lms_lms_token');
+    const rawUser = safeStorage.getItem('nextgen-lms_lms_user');
     try {
       set({ token, user: rawUser ? JSON.parse(rawUser) : null });
     } catch {
-      window.localStorage.removeItem('nextgen-lms_lms_token');
-      window.localStorage.removeItem('nextgen-lms_lms_user');
+      safeStorage.removeItem('nextgen-lms_lms_token');
+      safeStorage.removeItem('nextgen-lms_lms_user');
       set({ token: null, user: null });
     }
   },
@@ -55,19 +84,17 @@ export const useAuthStore = create<AuthState>((set) => ({
       } catch {
         // Look up registered students registry
         let foundStudent: any = null;
-        if (typeof window !== 'undefined') {
-          try {
-            const registry = JSON.parse(window.localStorage.getItem('nextgen_registered_students') || '[]');
-            foundStudent = registry.find((s: any) => s.email?.toLowerCase() === em);
-            if (!foundStudent) {
-              const lastUser = window.localStorage.getItem('nextgen-lms_lms_user');
-              const parsedLast = lastUser ? JSON.parse(lastUser) : null;
-              if (parsedLast && parsedLast.email?.toLowerCase() === em) {
-                foundStudent = parsedLast;
-              }
+        try {
+          const registry = JSON.parse(safeStorage.getItem('nextgen_registered_students') || '[]');
+          foundStudent = registry.find((s: any) => s.email?.toLowerCase() === em);
+          if (!foundStudent) {
+            const lastUser = safeStorage.getItem('nextgen-lms_lms_user');
+            const parsedLast = lastUser ? JSON.parse(lastUser) : null;
+            if (parsedLast && parsedLast.email?.toLowerCase() === em) {
+              foundStudent = parsedLast;
             }
-          } catch {}
-        }
+          }
+        } catch {}
 
         // If not admin/school and not registered, require registration
         if (role === 'learner' && !foundStudent) {
@@ -98,8 +125,8 @@ export const useAuthStore = create<AuthState>((set) => ({
         throw new Error('Authentication failed. Please verify your credentials.');
       }
 
-      window.localStorage.setItem('nextgen-lms_lms_token', session.accessToken);
-      window.localStorage.setItem('nextgen-lms_lms_user', JSON.stringify(session.user));
+      safeStorage.setItem('nextgen-lms_lms_token', session.accessToken);
+      safeStorage.setItem('nextgen-lms_lms_user', JSON.stringify(session.user));
       set({ token: session.accessToken, user: session.user, loading: false });
       return dashboardForRole(session.user.role);
     } catch (error) {
@@ -135,14 +162,12 @@ export const useAuthStore = create<AuthState>((set) => ({
       };
 
       // Save into registered students list
-      if (typeof window !== 'undefined') {
-        try {
-          const registry = JSON.parse(window.localStorage.getItem('nextgen_registered_students') || '[]');
-          const updated = registry.filter((s: any) => s.email?.toLowerCase() !== input.email.trim().toLowerCase());
-          updated.push(registeredUser);
-          window.localStorage.setItem('nextgen_registered_students', JSON.stringify(updated));
-        } catch {}
-      }
+      try {
+        const registry = JSON.parse(safeStorage.getItem('nextgen_registered_students') || '[]');
+        const updated = registry.filter((s: any) => s.email?.toLowerCase() !== input.email.trim().toLowerCase());
+        updated.push(registeredUser);
+        safeStorage.setItem('nextgen_registered_students', JSON.stringify(updated));
+      } catch {}
 
       let session;
       try {
@@ -158,8 +183,8 @@ export const useAuthStore = create<AuthState>((set) => ({
         session.user = registeredUser;
       }
 
-      window.localStorage.setItem('nextgen-lms_lms_token', session.accessToken);
-      window.localStorage.setItem('nextgen-lms_lms_user', JSON.stringify(session.user));
+      safeStorage.setItem('nextgen-lms_lms_token', session.accessToken);
+      safeStorage.setItem('nextgen-lms_lms_user', JSON.stringify(session.user));
       set({ token: session.accessToken, user: session.user, loading: false });
       return dashboardForRole(session.user.role);
     } catch (error) {
@@ -169,15 +194,15 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
   logout: () => {
-    window.localStorage.removeItem('nextgen-lms_lms_token');
-    window.localStorage.removeItem('nextgen-lms_lms_user');
+    safeStorage.removeItem('nextgen-lms_lms_token');
+    safeStorage.removeItem('nextgen-lms_lms_user');
     set({ token: null, user: null });
   },
   updateUser: (updates) => {
     set((state) => {
       if (!state.user) return state;
       const updatedUser = { ...state.user, ...updates };
-      window.localStorage.setItem('nextgen-lms_lms_user', JSON.stringify(updatedUser));
+      safeStorage.setItem('nextgen-lms_lms_user', JSON.stringify(updatedUser));
       return { user: updatedUser as User };
     });
   },

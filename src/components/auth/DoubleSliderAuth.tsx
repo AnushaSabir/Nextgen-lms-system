@@ -83,7 +83,7 @@ export default function DoubleSliderAuth() {
 
   const togglePanel = () => setIsSignUp(!isSignUp);
 
-  // Handle Photo File Selection
+  // Handle Photo File Selection with automatic high-performance compression
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -93,16 +93,53 @@ export default function DoubleSliderAuth() {
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      showToast('Image size must be less than 5MB.', 'error');
-      return;
-    }
-
     const reader = new FileReader();
     reader.onload = (event) => {
-      const base64 = event.target?.result as string;
-      setSignUpAvatar(base64);
-      showToast('Photo uploaded successfully! 📸', 'success');
+      const rawBase64 = event.target?.result as string;
+      if (typeof window === 'undefined') {
+        setSignUpAvatar(rawBase64);
+        return;
+      }
+
+      const img = new (window as any).Image();
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          const maxDim = 280;
+          let width = img.width;
+          let height = img.height;
+          if (width > height) {
+            if (width > maxDim) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            }
+          } else {
+            if (height > maxDim) {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.85);
+            setSignUpAvatar(compressedBase64);
+          } else {
+            setSignUpAvatar(rawBase64);
+          }
+          showToast('Photo uploaded successfully! 📸', 'success');
+        } catch {
+          setSignUpAvatar(rawBase64);
+          showToast('Photo uploaded! 📸', 'success');
+        }
+      };
+      img.onerror = () => {
+        setSignUpAvatar(rawBase64);
+        showToast('Photo uploaded! 📸', 'success');
+      };
+      img.src = rawBase64;
     };
     reader.readAsDataURL(file);
   };
