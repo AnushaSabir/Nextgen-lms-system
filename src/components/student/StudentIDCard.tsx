@@ -260,7 +260,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
         {/* FRONT SIDE */}
         {!isFlipped ? (
           <div
-            className="relative w-full max-w-[560px] rounded-3xl overflow-hidden shadow-2xl text-[#0F2C59] flex flex-col justify-between select-none bg-white border-2 border-[#0284C7]/30"
+            className="relative w-full max-w-[580px] rounded-3xl overflow-hidden shadow-2xl text-[#0F2C59] flex flex-col justify-between select-none bg-white border-2 border-[#0284C7]/30"
             style={{
               aspectRatio: '85.6 / 53.98',
               boxShadow: '0 25px 50px -12px rgba(0,0,0,0.6), 0 0 35px rgba(2,132,199,0.2)',
@@ -283,82 +283,86 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             </div>
 
             {/* CARD CONTENT */}
-            <div className="relative z-10 flex flex-col justify-between h-full p-3 sm:p-4">
+            <div className="relative z-10 flex flex-col justify-between h-full p-4 sm:p-5">
 
               {/* TOP: Logo (Higher Left) + Title & Year (White text in top-right blue wave) */}
               <div className="flex items-start justify-between">
                 {/* Logo & Subtitle positioned high up */}
-                <div className="flex flex-col -mt-0.5">
+                <div className="flex flex-col -mt-1">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/logo.png" alt="NextGen LMS" className="h-5 sm:h-6 object-contain object-left drop-shadow-sm" />
-                  <span className="text-[6px] sm:text-[7.5px] font-black text-[#0F2C59] tracking-wider uppercase mt-0.5">
+                  <img src="/logo.png" alt="NextGen LMS" className="h-7 sm:h-8 object-contain object-left drop-shadow-sm" />
+                  <span className="text-[7px] sm:text-[9px] font-black text-[#0F2C59] tracking-wider uppercase mt-0.5">
                     LEARNING MANAGEMENT SYSTEM
                   </span>
                 </div>
 
                 {/* Header text inside top blue wave */}
-                <div className="text-right pr-1 -mt-0.5">
-                  <span className="block text-[10px] sm:text-[12px] font-black uppercase tracking-wider text-white drop-shadow">
+                <div className="text-right pr-1 -mt-1">
+                  <span className="block text-[11px] sm:text-[14px] font-black uppercase tracking-wider text-white drop-shadow">
                     STUDENT CARD
                   </span>
-                  <span className="block text-[6.5px] sm:text-[8px] font-bold text-sky-200">
+                  <span className="block text-[7px] sm:text-[9px] font-bold text-sky-200">
                     Academic Year {new Date().getFullYear()}
                   </span>
                 </div>
               </div>
 
-              {/* MIDDLE: Info Table (Left) + Student Photo (Right) */}
-              <div className="flex items-center justify-between gap-3 my-auto py-0.5">
+              {/* MIDDLE: Info Table (Left) + Student Photo (Right with FIXED PASSPORT SIZE) */}
+              <div className="flex items-center justify-between gap-4 my-auto py-1">
 
-                {/* Left Side: Detail Rows with aligned colons */}
-                <div className="flex-1 space-y-1 sm:space-y-1.5 text-[8px] sm:text-[10.5px] font-bold text-[#0F2C59]">
-                  <div className="flex items-start">
-                    <span className="w-22 sm:w-28 uppercase text-[6.5px] sm:text-[8.5px] font-black text-[#0F2C59] tracking-wider shrink-0">STUDENT NAME</span>
-                    <span className="mx-1 text-[#0284C7] font-black">:</span>
-                    <span className="font-black text-[#0F2C59] text-[8.5px] sm:text-[11.5px] truncate leading-tight">{studentName}</span>
+                {/* Left Side: Detail Rows with aligned colons & LARGER, CRISPER FONTS */}
+                <div className="flex-1 space-y-1.5 sm:space-y-2 text-[#0F2C59]">
+                  <div className="flex items-baseline">
+                    <span className="w-24 sm:w-32 uppercase text-[7.5px] sm:text-[10px] font-black text-[#0F2C59] tracking-wider shrink-0">STUDENT NAME</span>
+                    <span className="mx-1.5 text-[#0284C7] font-black">:</span>
+                    <span className="font-black text-[#0F2C59] text-[11px] sm:text-[15px] truncate leading-tight">{studentName}</span>
                   </div>
 
                   <div className="flex items-center">
-                    <span className="w-22 sm:w-28 uppercase text-[6.5px] sm:text-[8.5px] font-black text-[#0F2C59] tracking-wider shrink-0">STUDENT ID</span>
-                    <span className="mx-1 text-[#0284C7] font-black">:</span>
-                    <span className="font-black font-mono text-[#0284C7] text-[8px] sm:text-[10.5px] leading-tight">{studentId}</span>
+                    <span className="w-24 sm:w-32 uppercase text-[7.5px] sm:text-[10px] font-black text-[#0F2C59] tracking-wider shrink-0">STUDENT ID</span>
+                    <span className="mx-1.5 text-[#0284C7] font-black">:</span>
+                    <span className="font-black font-mono text-[#0284C7] text-[10px] sm:text-[13px] leading-tight">{studentId}</span>
                   </div>
 
-                  <div className="flex items-start">
-                    <span className="w-22 sm:w-28 uppercase text-[6.5px] sm:text-[8.5px] font-black text-[#0F2C59] tracking-wider shrink-0">COURSE TRACK</span>
-                    <span className="mx-1 text-[#0284C7] font-black">:</span>
-                    <span className="font-bold text-[#0F2C59] text-[7.5px] sm:text-[9.5px] leading-tight break-words">{enrolledCourse}</span>
-                  </div>
-
-                  <div className="flex items-center">
-                    <span className="w-22 sm:w-28 uppercase text-[6.5px] sm:text-[8.5px] font-black text-[#0F2C59] tracking-wider shrink-0">BATCH</span>
-                    <span className="mx-1 text-[#0284C7] font-black">:</span>
-                    <span className="font-bold text-slate-700 text-[7.5px] sm:text-[9.5px] leading-tight">{batch}</span>
+                  <div className="flex items-baseline">
+                    <span className="w-24 sm:w-32 uppercase text-[7.5px] sm:text-[10px] font-black text-[#0F2C59] tracking-wider shrink-0">COURSE TRACK</span>
+                    <span className="mx-1.5 text-[#0284C7] font-black">:</span>
+                    <span className="font-bold text-[#0F2C59] text-[9.5px] sm:text-[12px] leading-tight break-words">{enrolledCourse}</span>
                   </div>
 
                   <div className="flex items-center">
-                    <span className="w-22 sm:w-28 uppercase text-[6.5px] sm:text-[8.5px] font-black text-[#0F2C59] tracking-wider shrink-0">VALIDITY</span>
-                    <span className="mx-1 text-[#0284C7] font-black">:</span>
-                    <span className="font-semibold text-slate-600 text-[7px] sm:text-[9px] leading-tight">{issueDate} - {expiryDate}</span>
+                    <span className="w-24 sm:w-32 uppercase text-[7.5px] sm:text-[10px] font-black text-[#0F2C59] tracking-wider shrink-0">BATCH</span>
+                    <span className="mx-1.5 text-[#0284C7] font-black">:</span>
+                    <span className="font-bold text-slate-700 text-[9px] sm:text-[11.5px] leading-tight">{batch}</span>
+                  </div>
+
+                  <div className="flex items-center">
+                    <span className="w-24 sm:w-32 uppercase text-[7.5px] sm:text-[10px] font-black text-[#0F2C59] tracking-wider shrink-0">VALIDITY</span>
+                    <span className="mx-1.5 text-[#0284C7] font-black">:</span>
+                    <span className="font-semibold text-slate-600 text-[8.5px] sm:text-[11px] leading-tight">{issueDate} - {expiryDate}</span>
                   </div>
                 </div>
 
-                {/* Right Side: Student Photo */}
+                {/* Right Side: Student Photo (STRICT FIXED PASSPORT PROPORTIONS) */}
                 <div className="shrink-0 flex flex-col items-center">
-                  <div className="w-18 h-22 sm:w-26 sm:h-30 rounded-2xl p-[2.5px] bg-gradient-to-b from-[#0284C7] to-[#0F2C59] shadow-md">
+                  <div className="w-[85px] h-[105px] sm:w-[115px] sm:h-[140px] rounded-2xl p-[3px] bg-gradient-to-b from-[#0284C7] to-[#0F2C59] shadow-md shrink-0">
                     <div className="w-full h-full rounded-[13px] overflow-hidden bg-slate-100 flex items-center justify-center relative">
                       {avatarUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img src={avatarUrl} alt={studentName} className="w-full h-full object-cover" />
+                        <img
+                          src={avatarUrl}
+                          alt={studentName}
+                          className="w-full h-full object-cover object-top"
+                        />
                       ) : (
                         <div className="w-full h-full flex flex-col items-center justify-center bg-slate-200 text-[#0284C7]">
-                          <User className="w-9 h-9" />
-                          <span className="text-[6.5px] font-black text-slate-600 uppercase mt-0.5">Photo</span>
+                          <User className="w-10 h-10" />
+                          <span className="text-[7px] font-black text-slate-600 uppercase mt-0.5">Photo</span>
                         </div>
                       )}
                     </div>
                   </div>
-                  <span className="text-[6.5px] sm:text-[7.5px] font-black tracking-widest text-emerald-600 uppercase mt-0.5">
+                  <span className="text-[7.5px] sm:text-[9.5px] font-black tracking-widest text-emerald-600 uppercase mt-1">
                     ★ VERIFIED ★
                   </span>
                 </div>
@@ -368,17 +372,17 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
               <div className="flex items-end justify-between pt-1 border-t border-slate-200/80 z-10">
                 {/* Barcode */}
                 <div className="flex flex-col">
-                  <div className="flex items-center gap-[1px] h-3 sm:h-4">
+                  <div className="flex items-center gap-[1px] h-3.5 sm:h-4.5">
                     {barcodePattern.map((w, i) => (
                       <span key={i} className="bg-[#0F2C59] h-full inline-block rounded-[0.5px]" style={{ width: `${w}px` }} />
                     ))}
                   </div>
-                  <span className="text-[5.5px] sm:text-[6.5px] font-mono font-bold text-[#0F2C59] tracking-widest mt-0.5">{studentId}</span>
+                  <span className="text-[6.5px] sm:text-[8px] font-mono font-bold text-[#0F2C59] tracking-widest mt-0.5">{studentId}</span>
                 </div>
 
                 {/* Single Directed by Signature */}
                 <div className="text-right">
-                  <p className="text-[9.5px] sm:text-[11.5px] font-black italic text-[#0F2C59] font-serif">
+                  <p className="text-[11px] sm:text-[14px] font-black italic text-[#0F2C59] font-serif">
                     Directed by Anusha Sabir
                   </p>
                 </div>
@@ -389,7 +393,7 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
         ) : (
           /* BACK SIDE */
           <div
-            className="relative w-full max-w-[560px] rounded-3xl overflow-hidden shadow-2xl text-[#0F2C59] flex flex-col justify-between select-none bg-white border-2 border-[#0284C7]/30"
+            className="relative w-full max-w-[580px] rounded-3xl overflow-hidden shadow-2xl text-[#0F2C59] flex flex-col justify-between select-none bg-white border-2 border-[#0284C7]/30"
             style={{
               aspectRatio: '85.6 / 53.98',
               boxShadow: '0 25px 50px -12px rgba(0,0,0,0.6), 0 0 35px rgba(2,132,199,0.2)',
@@ -412,14 +416,14 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             </div>
 
             {/* Content */}
-            <div className="relative z-10 flex flex-col justify-between h-full p-3 sm:p-4">
+            <div className="relative z-10 flex flex-col justify-between h-full p-4 sm:p-5">
 
               {/* Top Header */}
-              <div className="flex items-center justify-between -mt-0.5">
-                <span className="text-[9px] sm:text-[11px] font-black text-white uppercase tracking-wider drop-shadow">
+              <div className="flex items-center justify-between -mt-1">
+                <span className="text-[10px] sm:text-[13px] font-black text-white uppercase tracking-wider drop-shadow">
                   ATTENDANCE & IDENTITY PASS
                 </span>
-                <span className="text-[7px] sm:text-[8.5px] font-bold text-sky-200">
+                <span className="text-[8px] sm:text-[10px] font-bold text-sky-200">
                   NextGen LMS
                 </span>
               </div>
@@ -428,24 +432,24 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
               <div className="flex items-center gap-4 my-auto py-1">
                 {/* QR Code */}
                 <div className="flex flex-col items-center shrink-0">
-                  <div className="p-1.5 bg-white rounded-xl shadow-md border-2 border-[#0284C7]">
+                  <div className="p-2 bg-white rounded-xl shadow-md border-2 border-[#0284C7]">
                     <QRCodeSVG
                       value={qrPayload}
-                      size={75}
+                      size={85}
                       level="H"
                       includeMargin={false}
                       bgColor="#ffffff"
                       fgColor="#0F2C59"
                     />
                   </div>
-                  <span className="text-[6px] sm:text-[7px] font-black text-[#0284C7] mt-1 text-center uppercase tracking-wider">
+                  <span className="text-[7px] sm:text-[8.5px] font-black text-[#0284C7] mt-1 text-center uppercase tracking-wider">
                     SCAN FOR ATTENDANCE
                   </span>
                 </div>
 
                 {/* Terms */}
-                <div className="flex-1 space-y-1 text-[6.5px] sm:text-[8px] text-[#0F2C59]">
-                  <p className="font-black text-[#0F2C59] uppercase text-[7px] sm:text-[8.5px]">Official NextGen Identity Terms:</p>
+                <div className="flex-1 space-y-1 text-[7.5px] sm:text-[9.5px] text-[#0F2C59]">
+                  <p className="font-black text-[#0F2C59] uppercase text-[8px] sm:text-[10px]">Official NextGen Identity Terms:</p>
                   <p className="text-slate-700">• This card is non-transferable and remains property of NextGen LMS.</p>
                   <p className="text-slate-700">• Required for live lectures, attendance scanning, and exam validation.</p>
                   <p className="text-slate-700">• In case of loss or inquiry, contact administration immediately.</p>
@@ -455,11 +459,11 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
               {/* Bottom: Verification Link + Auth Officer */}
               <div className="flex items-end justify-between pt-1 border-t border-slate-200/80 z-10">
                 <div>
-                  <span className="block text-[5.5px] sm:text-[6.5px] font-bold text-slate-500">Online Verification:</span>
-                  <p className="text-[7px] sm:text-[8.5px] font-mono font-bold text-[#0284C7]">nextgen-lms.edu/verify/{studentId}</p>
+                  <span className="block text-[6.5px] sm:text-[8px] font-bold text-slate-500">Online Verification:</span>
+                  <p className="text-[8px] sm:text-[10px] font-mono font-bold text-[#0284C7]">nextgen-lms.edu/verify/{studentId}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[9.5px] sm:text-[11.5px] font-black italic text-[#0F2C59] font-serif">
+                  <p className="text-[11px] sm:text-[14px] font-black italic text-[#0F2C59] font-serif">
                     Directed by Anusha Sabir
                   </p>
                 </div>
@@ -509,79 +513,83 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
           </div>
 
           {/* Foreground Content */}
-          <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', padding: '24px 38px 20px', boxSizing: 'border-box' }}>
+          <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', padding: '22px 38px 18px', boxSizing: 'border-box' }}>
 
             {/* Top Bar: Logo (Higher Left) + Header (White in top-right blue wave) */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid rgba(15,44,89,0.12)', paddingBottom: '8px' }}>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt="NextGen LMS" style={{ height: '38px', objectFit: 'contain', objectPosition: 'left' }} />
-                <div style={{ fontSize: '10.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '2px' }}>
+                <img src="/logo.png" alt="NextGen LMS" style={{ height: '46px', objectFit: 'contain', objectPosition: 'left' }} />
+                <div style={{ fontSize: '11.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '2px' }}>
                   LEARNING MANAGEMENT SYSTEM
                 </div>
               </div>
 
               <div style={{ textAlign: 'right', paddingRight: '4px' }}>
-                <div style={{ fontSize: '20px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '2px', color: '#ffffff' }}>
+                <div style={{ fontSize: '22px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '2px', color: '#ffffff' }}>
                   STUDENT CARD
                 </div>
-                <div style={{ fontSize: '12px', fontWeight: '700', color: '#bae6fd', marginTop: '2px' }}>
+                <div style={{ fontSize: '13px', fontWeight: '700', color: '#bae6fd', marginTop: '2px' }}>
                   Academic Year {new Date().getFullYear()}
                 </div>
               </div>
             </div>
 
-            {/* Middle: Details (Left) + Photo (Right) */}
+            {/* Middle: Details (Left) + Photo (Right with FIXED PASSPORT PROPORTIONS) */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '30px', flex: 1, padding: '10px 0' }}>
 
               {/* Details List */}
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '9px' }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '11px' }}>
 
-                <div style={{ display: 'flex', alignItems: 'baseline', fontSize: '18px' }}>
-                  <span style={{ width: '185px', fontSize: '12.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px', flexShrink: 0 }}>STUDENT NAME</span>
+                <div style={{ display: 'flex', alignItems: 'baseline', fontSize: '19px' }}>
+                  <span style={{ width: '190px', fontSize: '13.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px', flexShrink: 0 }}>STUDENT NAME</span>
                   <span style={{ color: '#0284C7', fontWeight: '900', margin: '0 8px' }}>:</span>
-                  <span style={{ fontSize: '23px', fontWeight: '900', color: '#0F2C59', letterSpacing: '-0.5px' }}>{studentName}</span>
+                  <span style={{ fontSize: '25px', fontWeight: '900', color: '#0F2C59', letterSpacing: '-0.5px' }}>{studentName}</span>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px' }}>
-                  <span style={{ width: '185px', fontSize: '12.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px', flexShrink: 0 }}>STUDENT ID</span>
+                <div style={{ display: 'flex', alignItems: 'center', fontSize: '19px' }}>
+                  <span style={{ width: '190px', fontSize: '13.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px', flexShrink: 0 }}>STUDENT ID</span>
                   <span style={{ color: '#0284C7', fontWeight: '900', margin: '0 8px' }}>:</span>
-                  <span style={{ fontSize: '18.5px', fontWeight: '900', color: '#0284C7', fontFamily: 'monospace' }}>{studentId}</span>
+                  <span style={{ fontSize: '20px', fontWeight: '900', color: '#0284C7', fontFamily: 'monospace' }}>{studentId}</span>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'baseline', fontSize: '18px' }}>
-                  <span style={{ width: '185px', fontSize: '12.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px', flexShrink: 0 }}>COURSE TRACK</span>
+                <div style={{ display: 'flex', alignItems: 'baseline', fontSize: '19px' }}>
+                  <span style={{ width: '190px', fontSize: '13.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px', flexShrink: 0 }}>COURSE TRACK</span>
                   <span style={{ color: '#0284C7', fontWeight: '900', margin: '0 8px' }}>:</span>
-                  <span style={{ fontSize: enrolledCourse.length > 32 ? '14.5px' : '16.5px', fontWeight: '800', color: '#0F2C59', lineHeight: '1.25' }}>{enrolledCourse}</span>
+                  <span style={{ fontSize: enrolledCourse.length > 32 ? '15px' : '17.5px', fontWeight: '800', color: '#0F2C59', lineHeight: '1.25' }}>{enrolledCourse}</span>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px' }}>
-                  <span style={{ width: '185px', fontSize: '12.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px', flexShrink: 0 }}>BATCH</span>
+                <div style={{ display: 'flex', alignItems: 'center', fontSize: '19px' }}>
+                  <span style={{ width: '190px', fontSize: '13.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px', flexShrink: 0 }}>BATCH</span>
                   <span style={{ color: '#0284C7', fontWeight: '900', margin: '0 8px' }}>:</span>
-                  <span style={{ fontSize: '15.5px', fontWeight: '800', color: '#334155' }}>{batch}</span>
+                  <span style={{ fontSize: '16.5px', fontWeight: '800', color: '#334155' }}>{batch}</span>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px' }}>
-                  <span style={{ width: '185px', fontSize: '12.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px', flexShrink: 0 }}>VALIDITY</span>
+                <div style={{ display: 'flex', alignItems: 'center', fontSize: '19px' }}>
+                  <span style={{ width: '190px', fontSize: '13.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px', flexShrink: 0 }}>VALIDITY</span>
                   <span style={{ color: '#0284C7', fontWeight: '900', margin: '0 8px' }}>:</span>
-                  <span style={{ fontSize: '14.5px', fontWeight: '700', color: '#475569' }}>{issueDate} - {expiryDate}</span>
+                  <span style={{ fontSize: '15.5px', fontWeight: '700', color: '#475569' }}>{issueDate} - {expiryDate}</span>
                 </div>
 
               </div>
 
-              {/* Photo Frame */}
-              <div style={{ width: '175px', display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
-                <div style={{ width: '170px', height: '200px', borderRadius: '20px', padding: '3.5px', background: 'linear-gradient(135deg, #0284C7, #0F2C59)', boxSizing: 'border-box', boxShadow: '0 10px 20px rgba(15,44,89,0.18)' }}>
+              {/* Photo Frame (FIXED 180px × 220px PASSPORT PROPORTIONS) */}
+              <div style={{ width: '185px', display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+                <div style={{ width: '175px', height: '215px', borderRadius: '20px', padding: '4px', background: 'linear-gradient(135deg, #0284C7, #0F2C59)', boxSizing: 'border-box', boxShadow: '0 10px 20px rgba(15,44,89,0.18)', flexShrink: 0 }}>
                   <div style={{ width: '100%', height: '100%', borderRadius: '16px', overflow: 'hidden', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {avatarUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={avatarUrl} alt={studentName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <img
+                        src={avatarUrl}
+                        alt={studentName}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%' }}
+                      />
                     ) : (
-                      <div style={{ fontSize: '46px', color: '#0284C7', fontWeight: '900' }}>{studentName.charAt(0)}</div>
+                      <div style={{ fontSize: '48px', color: '#0284C7', fontWeight: '900' }}>{studentName.charAt(0)}</div>
                     )}
                   </div>
                 </div>
-                <div style={{ fontSize: '11.5px', fontWeight: '900', letterSpacing: '2.5px', color: '#059669', textTransform: 'uppercase', marginTop: '6px' }}>
+                <div style={{ fontSize: '12.5px', fontWeight: '900', letterSpacing: '2.5px', color: '#059669', textTransform: 'uppercase', marginTop: '6px' }}>
                   ★ VERIFIED ★
                 </div>
               </div>
@@ -592,17 +600,17 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '2px solid rgba(15,44,89,0.12)', paddingTop: '8px' }}>
               {/* Barcode */}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', gap: '2px', height: '24px', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '2px', height: '26px', alignItems: 'center' }}>
                   {barcodePattern.map((w, i) => (
                     <span key={i} style={{ width: `${w * 2}px`, height: '100%', background: '#0F2C59', display: 'inline-block', borderRadius: '1px' }} />
                   ))}
                 </div>
-                <span style={{ fontSize: '10.5px', fontFamily: 'monospace', fontWeight: '700', color: '#0F2C59', letterSpacing: '3px', marginTop: '2px' }}>{studentId}</span>
+                <span style={{ fontSize: '11px', fontFamily: 'monospace', fontWeight: '700', color: '#0F2C59', letterSpacing: '3px', marginTop: '2px' }}>{studentId}</span>
               </div>
 
               {/* Single Signature */}
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '19px', fontWeight: '900', fontStyle: 'italic', color: '#0F2C59', fontFamily: 'Georgia, serif' }}>
+                <div style={{ fontSize: '21px', fontWeight: '900', fontStyle: 'italic', color: '#0F2C59', fontFamily: 'Georgia, serif' }}>
                   Directed by Anusha Sabir
                 </div>
               </div>
@@ -646,14 +654,14 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
           </div>
 
           {/* Foreground Content */}
-          <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', padding: '24px 38px 20px', boxSizing: 'border-box' }}>
+          <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', padding: '22px 38px 18px', boxSizing: 'border-box' }}>
 
             {/* Top Bar */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid rgba(15,44,89,0.12)', paddingBottom: '8px' }}>
-              <div style={{ fontSize: '17px', fontWeight: '900', color: '#ffffff', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
+              <div style={{ fontSize: '18px', fontWeight: '900', color: '#ffffff', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
                 ATTENDANCE & IDENTITY PASS
               </div>
-              <div style={{ fontSize: '13px', fontWeight: '800', color: '#bae6fd', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '13.5px', fontWeight: '800', color: '#bae6fd', textTransform: 'uppercase' }}>
                 NextGen LMS
               </div>
             </div>
@@ -672,23 +680,23 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
                     fgColor="#0F2C59"
                   />
                 </div>
-                <div style={{ fontSize: '10.5px', fontWeight: '900', color: '#0284C7', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '8px' }}>
+                <div style={{ fontSize: '11px', fontWeight: '900', color: '#0284C7', textTransform: 'uppercase', letterSpacing: '1.5px', marginTop: '8px' }}>
                   SCAN FOR ATTENDANCE
                 </div>
               </div>
 
               {/* Terms */}
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '9px' }}>
-                <div style={{ fontSize: '14.5px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <div style={{ fontSize: '15px', fontWeight: '900', color: '#0F2C59', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   Official NextGen Identity Terms & Guidelines:
                 </div>
-                <div style={{ fontSize: '12.5px', color: '#334155', lineHeight: '1.55' }}>
+                <div style={{ fontSize: '13px', color: '#334155', lineHeight: '1.55' }}>
                   • This ID card is strictly non-transferable and remains official property of NextGen LMS.
                 </div>
-                <div style={{ fontSize: '12.5px', color: '#334155', lineHeight: '1.55' }}>
+                <div style={{ fontSize: '13px', color: '#334155', lineHeight: '1.55' }}>
                   • Must be scanned for physical & online class attendance, AI evaluation, and certification.
                 </div>
-                <div style={{ fontSize: '12.5px', color: '#334155', lineHeight: '1.55' }}>
+                <div style={{ fontSize: '13px', color: '#334155', lineHeight: '1.55' }}>
                   • Report lost, damaged, or stolen cards immediately to NextGen student administration.
                 </div>
               </div>
@@ -697,11 +705,11 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
             {/* Bottom Bar: Verification URL + Authorized Officer */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '2px solid rgba(15,44,89,0.12)', paddingTop: '8px' }}>
               <div>
-                <div style={{ fontSize: '10.5px', fontWeight: '700', color: '#64748b' }}>Online Card Verification:</div>
-                <div style={{ fontSize: '13.5px', fontFamily: 'monospace', fontWeight: '900', color: '#0284C7', marginTop: '2px' }}>nextgen-lms.edu/verify/{studentId}</div>
+                <div style={{ fontSize: '11px', fontWeight: '700', color: '#64748b' }}>Online Card Verification:</div>
+                <div style={{ fontSize: '14px', fontFamily: 'monospace', fontWeight: '900', color: '#0284C7', marginTop: '2px' }}>nextgen-lms.edu/verify/{studentId}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '19px', fontWeight: '900', fontStyle: 'italic', color: '#0F2C59', fontFamily: 'Georgia, serif' }}>
+                <div style={{ fontSize: '21px', fontWeight: '900', fontStyle: 'italic', color: '#0F2C59', fontFamily: 'Georgia, serif' }}>
                   Directed by Anusha Sabir
                 </div>
               </div>
