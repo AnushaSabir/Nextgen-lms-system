@@ -34,14 +34,13 @@ export default function StudentIDCard({ onClose }: StudentIDCardProps) {
   const expiryDate = user?.expiryDate || 'Sep 3, 2027';
   const avatarUrl = user?.avatar || null;
 
-  // Generate QR payload for attendance scanning
+  // Generate QR payload for attendance scanning (Clean lightweight payload without bulky base64)
   const qrPayload = encodeQRPayload({
     studentId,
     studentName,
     studentEmail,
     enrolledCourse,
     batch,
-    avatarUrl: avatarUrl || undefined,
     institution: 'NextGen Learning Management System',
   });
 

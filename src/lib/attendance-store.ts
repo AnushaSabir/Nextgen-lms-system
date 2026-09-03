@@ -162,11 +162,16 @@ export function markAttendance(
 // ─── QR Payload encoder/decoder ───────────────────────────────────────────────
 
 export function encodeQRPayload(data: QRPayload): string {
+  const cleanData = { ...data };
+  // Never embed base64 strings in QR code (QR codes have strict 2KB limit)
+  if (cleanData.avatarUrl && cleanData.avatarUrl.startsWith('data:')) {
+    delete cleanData.avatarUrl;
+  }
   return JSON.stringify({
-    ...data,
+    ...cleanData,
     institution: 'NextGen Learning Management System',
     version: '2.0',
-    ts: Date.now(), // For uniqueness per scan
+    ts: Date.now(),
   });
 }
 

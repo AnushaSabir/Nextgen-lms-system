@@ -171,7 +171,12 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       let session;
       try {
-        session = await authApi.register(input);
+        session = await authApi.register({
+          name: input.name.trim(),
+          email: input.email.trim(),
+          password: input.password,
+          role: input.role || 'learner',
+        });
       } catch {
         session = {
           accessToken: `mock-token-${Date.now()}`,
@@ -179,9 +184,10 @@ export const useAuthStore = create<AuthState>((set) => ({
         };
       }
 
-      if (!session?.user?.studentId) {
-        session.user = registeredUser;
-      }
+      session.user = {
+        ...session.user,
+        ...registeredUser,
+      };
 
       safeStorage.setItem('nextgen-lms_lms_token', session.accessToken);
       safeStorage.setItem('nextgen-lms_lms_user', JSON.stringify(session.user));
